@@ -1,0 +1,1 @@
+{"version":3,"file":"mathHelper.js","sourceRoot":"","sources":["../../src/helpers/mathHelper.ts"],"names":[],"mappings":"AAAA;IACI,OAAO,SAAS,CAAC,GAAG,EAAE,GAAG;QACrB,MAAM,CAAC,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC,MAAM,EAAE,GAAG,GAAG,CAAC,GAAG,GAAG,CAAC;IACjD,CAAC;AACL,CAAC;AAAA"}
