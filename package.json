@@ -4,6 +4,7 @@
   "description": "JumpOverJump.com core library",
   "main": "./src/game.ts",
   "scripts": {
+    "pretest": "tsc",
     "test": "mocha ./dist/test"
   },
   "repository": {
