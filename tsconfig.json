@@ -1,0 +1,19 @@
+﻿{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "target": "ES6",
+    "sourceMap": true,
+    "listFiles": false,
+    "outDir": "dist/"
+  },
+  "include": [
+    "typings/**/*",
+    "src/**/*",
+    "test/*.spec.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

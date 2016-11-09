@@ -1,0 +1,3 @@
+interface IBoardOptions {
+    size: IBoardSize;
+}
