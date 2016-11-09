@@ -1,13 +1,24 @@
-# joj-core
+joj-core
+================
+[![Build Status](https://travis-ci.org/ManifestWebDesign/angular-gridster.svg)](https://travis-ci.org/ManifestWebDesign/angular-gridster)
+
 JumpOverJump.com core library
 
+## Install
 
-# Install
-git clone https://github.com/angeloocana/joj-core.git
+```bash
+    git clone https://github.com/angeloocana/joj-core.git
+```
 
-# Setup
-npm install 
-typings install
+## Setup
 
-# Test
-npm test 
+```bash
+    npm install 
+    typings install
+```
+
+## Test
+
+```bash
+    npm test
+``` 
