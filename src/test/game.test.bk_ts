@@ -1,18 +1,29 @@
-﻿describe("jojGameService", function () {
-    var jojGameService = {};
+﻿import Game from '../game';
+import {ok} from "assert";
 
-    beforeEach(module("jojApp"));
-    beforeEach(inject(function (_jojGameService_) {
-        jojGameService = _jojGameService_;
-    }));
+describe("Game", function () {
+    let game:IGame;
 
-    it("isComputerTurn game ended return false", function () {
-        var game = {
-            ended : true
-        };
-        expect(jojGameService.isComputerTurn(game)).toBe(false);
+    describe("needToValidateMovements", ()=>{
+        it("when null should validate");
+        it("when undefined should validate");
+        it("when true should validate");
+        it("when false should NOT validate");
     });
 
+    describe("Game ended", ()=>{
+        
+        beforeEach(()=>{
+            game = new Game();
+        });
+
+        it("isComputerTurn() should return false", function () {
+            let isComputerTurn = game.isComputerTurn();
+            ok(!isComputerTurn);
+        });
+
+    });
+    /*
     it("isComputerTurn game vsComputer false return false", function () {
         var game = {
             ended: false,
@@ -327,4 +338,5 @@
 
         expect(jojGameService.backMove(game).movements).toEqual(gameBeforeLastMove.movements);
     });
+    */
 });

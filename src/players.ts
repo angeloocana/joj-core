@@ -4,7 +4,7 @@ export default class Players implements IPlayers {
     vsComputer: boolean;
     computerIsWhite: boolean;
 
-    constructor() {
+    constructor(args:IPlayers = null) {
         this.white.color = "WHITE";
         this.black.color = "BLACK";
     }
