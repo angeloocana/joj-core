@@ -3,7 +3,8 @@ export default class Player implements IPlayer {
     isComputer: boolean;
     color: string;
 
-    constructor(parameters) {
-
+    constructor(name:string, isComputer:boolean) {
+        this.isComputer = isComputer;
+        this.name = name;
     }
 }

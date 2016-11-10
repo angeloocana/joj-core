@@ -1,5 +1,5 @@
-﻿// import Game from '../game';
-// import {ok} from "assert";
+﻿import Game from '../game';
+import {ok} from "assert";
 
 describe("Game", function () {
     let game:IGame;
@@ -13,12 +13,12 @@ describe("Game", function () {
 
     describe("Game ended", ()=>{
         beforeEach(()=>{
-            //game = new Game();
+            game = new Game();
         });
 
         it("isComputerTurn() should return false", function () {
-            // let isComputerTurn = game.isComputerTurn();
-            // ok(!isComputerTurn);
+             let isComputerTurn = game.isComputerTurn();
+             ok(!isComputerTurn);
         });
     });
 });
