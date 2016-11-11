@@ -1,4 +1,4 @@
-import Player from "../player";
+import Player from "../Player";
 import { ok } from "assert";
 
 describe("Player", () => {

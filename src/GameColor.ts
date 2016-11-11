@@ -1,4 +1,4 @@
-import PieceHelper from "./helpers/pieceHelper";
+import PieceHelper from "./helpers/PieceHelper";
 
 export default class GameColor implements IGameColor {
     winners: number = 0;

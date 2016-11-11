@@ -1,6 +1,6 @@
-import BoardHelper from "./helpers/boardHelper";
-import PieceHelper from "./helpers/pieceHelper";
-import MathHelper from "./helpers/mathHelper";
+import BoardHelper from "./helpers/BoardHelper";
+import PieceHelper from "./helpers/PieceHelper";
+import MathHelper from "./helpers/MathHelper";
 
 export default class AiMedium implements IAi {
 

@@ -30,3 +30,47 @@ or clone from github:
 ```bash
     $ npm test
 ``` 
+
+## Usage
+
+### New Game - Human vs Human
+
+```js
+
+import {Game, Players, Player} from 'joj-core';
+
+let players = new Players({
+    white: new Player({ name: "Angelo" }),
+    black: new Player({ name: "Gabi" })
+});
+
+let game = new Game({
+    players
+});
+
+game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+
+```
+
+### New Game - AI vs Human
+
+```js
+
+import {Game, Players, Player, AiMedium} from 'joj-core';
+
+let players = new Players({
+    white: new Player({
+        name: "Computer",
+        getMove: new AiMedium().getComputerMove
+    }),
+    black: new Player({ name: "Gabi" })
+});
+
+let game = new Game({
+    players
+});
+
+game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
+
+```

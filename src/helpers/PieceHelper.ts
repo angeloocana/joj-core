@@ -1,5 +1,5 @@
-import BoardHelper from "./boardHelper";
-import GamePieceType from "../gamePieceType";
+import BoardHelper from "./BoardHelper";
+import GamePieceType from "../GamePieceType";
 
 export default class PieceHelper {
 
@@ -18,7 +18,7 @@ export default class PieceHelper {
     static isBlackPiece(position: IGamePosition)
         : boolean {
 
-        if (!position)
+        if (!position || !position.piece)
             return null;
 
         return position.piece === GamePieceType.black;

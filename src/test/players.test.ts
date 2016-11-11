@@ -1,7 +1,7 @@
-import Players from "../players";
-import Player from "../player";
+import Players from "../Players";
+import Player from "../Player";
 import { ok } from "assert";
-import GamePieceType from "../gamePieceType";
+import GamePieceType from "../GamePieceType";
 
 describe("Players", () => {
 

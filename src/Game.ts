@@ -1,7 +1,8 @@
-import PieceHelper from "./helpers/pieceHelper";
-import GameBoard from "./gameBoard";
-import GameColor from "./gameColor";
-import Players from "./players";
+import PieceHelper from "./helpers/PieceHelper";
+import GameBoard from "./GameBoard";
+import GameColor from "./GameColor";
+import Players from "./Players";
+import ObjectHelper from "./helpers/ObjectHelper";
 
 export default class Game implements IGame {
     ended: boolean = false;
@@ -38,20 +39,6 @@ export default class Game implements IGame {
 
     isWhiteTurn(): boolean {
         return this.movements.length % 2 == 0;
-    }
-
-    //Tested
-    isComputerTurn(): boolean {
-        if (this.ended)
-            return false;
-
-        if (!this.players)
-            return undefined;
-
-        if (!this.players.vsComputer)
-            return false;
-
-        return this.players.computerIsWhite === this.isWhiteTurn();
     }
 
     getCleanGameToSaveOnServer(): ICleanGame {
@@ -138,8 +125,8 @@ export default class Game implements IGame {
 
         if (lastMove)
             this.move(lastMove.nextPosition, lastMove.startPosition, true);
-
-        if (this.players.vsComputer) {
+  
+        if (this.getPlayerTurn().isComputer()) {
             lastMove = this.movements.pop();
             if (lastMove) {
                 this.board.cleanBoardWhereCanIGo();
@@ -148,13 +135,19 @@ export default class Game implements IGame {
         }
     }
 
-    getComputerGameColor(): IGameColor {
-        var black = !this.players.computerIsWhite;
-        return black ? this.black : this.white;
+    getColorTurn(): IGameColor {
+        return this.isWhiteTurn ? this.white : this.black;
+    }
+
+    getPlayerTurn(): IPlayer {
+        return this.isWhiteTurn ? this.players.white : this.players.black;
     }
 
     getNewCopy(): IGame {
-        //Need to create a new game
-        return new Game({ players: this.players, movements: this.movements, needToValidateMovements: false });
+        return new Game(this);
+    }
+
+    getCopy(): IGame {       
+        return ObjectHelper.getCopy(this);
     }
 }

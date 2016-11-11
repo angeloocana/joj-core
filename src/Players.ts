@@ -1,6 +1,6 @@
-import Player from "./player";
+import Player from "./Player";
 import {ok} from "assert";
-import GamePieceType from "./gamePieceType";
+import GamePieceType from "./GamePieceType";
 
 export default class Players implements IPlayers {
     white: IPlayer;

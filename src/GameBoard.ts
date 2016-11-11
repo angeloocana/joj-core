@@ -1,6 +1,6 @@
-import BoardHelper from "./helpers/boardHelper";
-import PieceHelper from "./helpers/pieceHelper";
-import GamePieceType from "./gamePieceType";
+import BoardHelper from "./helpers/BoardHelper";
+import PieceHelper from "./helpers/PieceHelper";
+import GamePieceType from "./GamePieceType";
 
 export default class GameBoard implements IGameBoard {
 

@@ -1,8 +1,8 @@
-﻿import Game from '../game';
+﻿import Game from '../Game';
 import { ok, deepEqual, equal } from "assert";
-import Players from "../players";
-import Player from "../player";
-import AiMedium from '../aiMedium';
+import Players from "../Players";
+import Player from "../Player";
+import AiMedium from '../AiMedium';
 
 describe("Game", function () {
     let game: IGame;
