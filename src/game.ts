@@ -2,6 +2,7 @@ import PieceHelper from "./helpers/pieceHelper";
 import GameBoard from "./gameBoard";
 import GameColor from "./gameColor";
 import Players from "./players";
+import ObjectHelper from "./helpers/objectHelper";
 
 export default class Game implements IGame {
     ended: boolean = false;
@@ -124,7 +125,7 @@ export default class Game implements IGame {
 
         if (lastMove)
             this.move(lastMove.nextPosition, lastMove.startPosition, true);
-
+  
         if (this.getPlayerTurn().isComputer()) {
             lastMove = this.movements.pop();
             if (lastMove) {
@@ -143,7 +144,10 @@ export default class Game implements IGame {
     }
 
     getNewCopy(): IGame {
-        //Need to create a new game
-        return new Game({ players: this.players, movements: this.movements, needToValidateMovements: false });
+        return new Game(this);
+    }
+
+    getCopy(): IGame {       
+        return ObjectHelper.getCopy(this);
     }
 }

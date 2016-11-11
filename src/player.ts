@@ -4,11 +4,13 @@ export default class Player implements IPlayer {
      * Fill color whith GamePieceType .white or .black
      */
     color: string;
+    foto?: string;
     getMove?: (game: IGame) => IMove;
 
-    constructor(name: string, getMove?: (game: IGame) => IMove) {
-        this.getMove = getMove;
-        this.name = name;
+    constructor(args:IPlayerArgs) {
+        this.getMove = args.getMove;
+        this.name = args.name;
+        this.foto = args.foto;
     }
 
     isComputer(): boolean {

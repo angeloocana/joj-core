@@ -74,11 +74,14 @@ export default class GameBoard implements IGameBoard {
     //Tested
     getNearPositions(position, onlyEmpty): IGamePosition[] {
         let positions: IGamePosition[] = [];
+        let board = this;
         let add = function (plusX, plusY) {
-            let newPosition = { x: position.x + plusX, y: position.y + plusY }
+            let newPosition: IGamePosition = {
+                x: position.x + plusX, 
+                y: position.y + plusY
+            }
 
-            if (!this.boardHasThisPosition(newPosition,
-                this.boardOptions))
+            if (!board.boardHasThisPosition(newPosition))
                 return;
 
             if (typeof onlyEmpty != "undefined") {

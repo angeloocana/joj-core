@@ -21,4 +21,5 @@ interface IGame extends ICleanGame {
     getPlayerTurn(): IPlayer;
 
     getNewCopy(): IGame;
+    getCopy(): IGame;
 }

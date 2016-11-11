@@ -6,13 +6,13 @@ describe("Player", () => {
     let player:IPlayer;
 
     describe("new", () => {
-        let playerName = "John";
+        let name = "John";
         beforeEach(() => {
-            player = new Player(playerName);
+            player = new Player({name});
         });
 
         it("Setting name", ()=>{
-             ok(playerName == player.name);
+             ok(name == player.name);
         });
     });
 });

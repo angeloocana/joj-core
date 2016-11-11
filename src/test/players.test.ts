@@ -6,8 +6,8 @@ import GamePieceType from "../gamePieceType";
 describe("Players", () => {
 
     let players: IPlayers;
-    let white = new Player("P White");
-    let black = new Player("P Black");
+    let white = new Player({name:"P White"});
+    let black = new Player({name:"P Black"});
 
     beforeEach(() => {
         players = new Players({

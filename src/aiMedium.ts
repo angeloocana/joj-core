@@ -2,7 +2,7 @@ import BoardHelper from "./helpers/boardHelper";
 import PieceHelper from "./helpers/pieceHelper";
 import MathHelper from "./helpers/mathHelper";
 
-export class AiMedium implements IAi {
+export default class AiMedium implements IAi {
 
     addBestMoviment(bestMoviments: IMove[][][], positionsAHead: number,
         startPosition: IGamePosition, nextPosition: IGamePosition,
