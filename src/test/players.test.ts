@@ -1,31 +1,48 @@
 import Players from "../players";
+import Player from "../player";
 import { ok } from "assert";
+import GamePieceType from "../gamePieceType";
 
 describe("Players", () => {
 
-    let players:IPlayers;
+    let players: IPlayers;
+    let white = new Player("P White");
+    let black = new Player("P Black");
 
-    describe("New with defaults", () => {
-        it("Set white player to unkown");
-        it("Set black player to pc ai medium");
+    beforeEach(() => {
+        players = new Players({
+            black,
+            white
+        });
     });
 
     describe("New setting players", () => {
-        it("Set white player to given player");
-        it("Set black player to given player");
+
+        it("Set white player name", () => {
+            ok(players.white.name == white.name);
+        });
+
+        it("Set black player name", () => {
+            ok(players.black.name == black.name);
+        });
+
+        it("Set white player getMove", () => {
+            ok(players.white.getMove == white.getMove);
+        });
+
+        it("Set black player getMove", () => {
+            ok(players.black.getMove == black.getMove);
+        });
     });
 
-    describe("Colors", () => {
-        beforeEach(() => {
-            players = new Players({});
+    describe("Set Colors", () => {
+
+        it("White", () => {
+            ok(players.white.color == GamePieceType.white);
         });
 
-        it("White", ()=>{
-             ok(players.white.color == "WHITE");
-        });
-
-        it("Black", ()=>{
-             ok(players.black.color == "BLACK");
+        it("Black", () => {
+            ok(players.black.color == GamePieceType.black);
         });
     });
 });

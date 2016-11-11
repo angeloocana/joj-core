@@ -6,7 +6,7 @@ interface IGame extends ICleanGame {
     board: IGameBoard;
 
     isWhiteTurn(): boolean;
-    isComputerTurn(): boolean;
+    
     getCleanGameToSaveOnServer(): ICleanGame;
 
     setWhereCanIGo(startPosition): void;
@@ -17,7 +17,8 @@ interface IGame extends ICleanGame {
         nextPosition: IGamePosition, backMove?: boolean): void;
     backMove(): void;
 
-    getComputerGameColor(): IGameColor;
+    getColorTurn(): IGameColor;
+    getPlayerTurn(): IPlayer;
 
     getNewCopy(): IGame;
 }

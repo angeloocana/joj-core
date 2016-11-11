@@ -15,10 +15,5 @@ describe("Game", function () {
         beforeEach(()=>{
             game = new Game();
         });
-
-        it("isComputerTurn() should return false", function () {
-             let isComputerTurn = game.isComputerTurn();
-             ok(!isComputerTurn);
-        });
     });
 });

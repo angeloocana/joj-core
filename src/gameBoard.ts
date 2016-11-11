@@ -1,6 +1,6 @@
 import BoardHelper from "./helpers/boardHelper";
 import PieceHelper from "./helpers/pieceHelper";
-import {GamePieceType} from "./enums/gamePieceType";
+import GamePieceType from "./gamePieceType";
 
 export default class GameBoard implements IGameBoard {
 
@@ -46,8 +46,8 @@ export default class GameBoard implements IGameBoard {
             }
         }
 
-        this.fillPiecesOnBoard(whitePieces, GamePieceType.White.toString());
-        this.fillPiecesOnBoard(blackPieces, GamePieceType.Black.toString());
+        this.fillPiecesOnBoard(whitePieces, GamePieceType.white);
+        this.fillPiecesOnBoard(blackPieces, GamePieceType.black);
 
         return this.board;
     }
@@ -228,8 +228,8 @@ export default class GameBoard implements IGameBoard {
         if (backMove) {
             this.board[nextPosition.x][nextPosition.y].piece
                 = whiteTurn
-                    ? GamePieceType.Black.toString()
-                    : GamePieceType.White.toString();
+                    ? GamePieceType.black
+                    : GamePieceType.white;
             this.board[startPosition.x][startPosition.y].piece = null;
         } else {
             this.board[nextPosition.x][nextPosition.y].piece = this.board[startPosition.x][startPosition.y].piece;

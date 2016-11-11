@@ -1,5 +1,5 @@
 import BoardHelper from "./boardHelper";
-import {GamePieceType} from "../enums/gamePieceType"; 
+import GamePieceType from "../gamePieceType";
 
 export default class PieceHelper {
 
@@ -21,7 +21,7 @@ export default class PieceHelper {
         if (!position)
             return null;
 
-        return position.piece === GamePieceType.Black.toString();
+        return position.piece === GamePieceType.black;
     }
 
     static getOtherPieces(pieces: IGamePiece[], remove: IGamePiece)

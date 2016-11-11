@@ -1,5 +1,6 @@
 interface IPlayer {
     name: string;
-    isComputer: boolean;
     color: string;
+    getMove?:(game:IGame)=>IMove;
+    isComputer:()=>boolean;
 }

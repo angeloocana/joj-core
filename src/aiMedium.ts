@@ -195,7 +195,7 @@ export class AiMedium implements IAi {
 
             gameCopy.move(move.startPosition, move.nextPosition);
 
-            let pieces = game.getComputerGameColor().pieces;
+            let pieces = game.getColorTurn().pieces;
             pieces = this.fillPiecesWhereCanTheyGo(gameCopy, pieces, isBlack);
             let furtherPiece =
                 this.getPiecesFurtherAway(pieces, isBlack);
@@ -343,8 +343,8 @@ export class AiMedium implements IAi {
     }
 
     getBestMove(game: IGame): IMove {
-        let pcColor = game.getComputerGameColor();
-        let isBlack = !game.players.computerIsWhite;
+        let pcColor = game.getColorTurn();
+        let isBlack = !game.isWhiteTurn;
         let bestMoviments = [];
         let winPositions = [];
 
@@ -403,12 +403,6 @@ export class AiMedium implements IAi {
     getComputerMove(game: IGame): IMove {
 
         if (game.ended)
-            return null;
-
-        if (!game.players.vsComputer)
-            return null;
-
-        if (game.players.computerIsWhite !== game.isWhiteTurn())
             return null;
 
         return this.getBestMove(game);

@@ -40,20 +40,6 @@ export default class Game implements IGame {
         return this.movements.length % 2 == 0;
     }
 
-    //Tested
-    isComputerTurn(): boolean {
-        if (this.ended)
-            return false;
-
-        if (!this.players)
-            return undefined;
-
-        if (!this.players.vsComputer)
-            return false;
-
-        return this.players.computerIsWhite === this.isWhiteTurn();
-    }
-
     getCleanGameToSaveOnServer(): ICleanGame {
         let cleanGame: ICleanGame = {
             ended: this.ended,
@@ -139,7 +125,7 @@ export default class Game implements IGame {
         if (lastMove)
             this.move(lastMove.nextPosition, lastMove.startPosition, true);
 
-        if (this.players.vsComputer) {
+        if (this.getPlayerTurn().isComputer()) {
             lastMove = this.movements.pop();
             if (lastMove) {
                 this.board.cleanBoardWhereCanIGo();
@@ -148,9 +134,12 @@ export default class Game implements IGame {
         }
     }
 
-    getComputerGameColor(): IGameColor {
-        var black = !this.players.computerIsWhite;
-        return black ? this.black : this.white;
+    getColorTurn(): IGameColor {
+        return this.isWhiteTurn ? this.white : this.black;
+    }
+
+    getPlayerTurn(): IPlayer {
+        return this.isWhiteTurn ? this.players.white : this.players.black;
     }
 
     getNewCopy(): IGame {

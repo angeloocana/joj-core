@@ -1,4 +1,6 @@
 import Player from "./player";
+import {ok} from "assert";
+import GamePieceType from "./gamePieceType";
 
 export default class Players implements IPlayers {
     white: IPlayer;
@@ -6,13 +8,13 @@ export default class Players implements IPlayers {
     vsComputer: boolean;
     computerIsWhite: boolean;
 
-    constructor(args:IPlayersArgs = null) {
-        if(!args) args = {};
+    constructor(args:IPlayers = null) {
+        ok(args && args.black && args.white, "ERROR_BLACK_AND_WHITE_PlAYERS_REQUIRED")
 
-        this.white = args.white || new Player("Computer", true);
-        this.black = args.black || new Player("Black Player", false); 
+        this.white = args.white;
+        this.black = args.black; 
 
-        this.white.color = "WHITE";
-        this.black.color = "BLACK";
+        this.white.color = GamePieceType.white;
+        this.black.color = GamePieceType.black;
     }
 }
