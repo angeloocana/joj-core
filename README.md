@@ -1,9 +1,8 @@
 joj-core
 ================
-[![Build Status](https://travis-ci.org/angeloocana/joj-core.svg)](https://travis-ci.org/angeloocana/joj-core)   
+[![Build Status](https://travis-ci.org/angeloocana/joj-core.svg)](https://travis-ci.org/angeloocana/joj-core)
 [![NPM](https://img.shields.io/npm/v/joj-core.svg)](https://www.npmjs.com/package/joj-core)
-[![Code Climate]()](https://img.shields.io/codeclimate/github/angeloocana/joj-core.svg)
-[![Code Coverage]()](https://img.shields.io/codeclimate/coverage/github/angeloocana/joj-core.svg)
+[![codecov.io](http://codecov.io/github/angeloocana/joj-core/coverage.svg)](http://codecov.io/github/angeloocana/joj-core)
 [![Dependency Status](https://gemnasium.com/angeloocana/joj-core.svg)](https://gemnasium.com/angeloocana/joj-core)
 [![bitHound Score](https://www.bithound.io/github/gotwarlost/istanbul/badges/score.svg)](https://www.bithound.io/github/angeloocana/joj-core)
 ![License](https://img.shields.io/npm/l/joj-core.svg)
