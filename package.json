@@ -6,8 +6,8 @@
   "scripts": {
     "postinstall": "typings install",
     "pretest": "tsc",
-    "test": "mocha --compilers js:babel-core/register ./dist/test",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=ceb536c1-556e-43dc-99b7-8d41c7b52413"
+    "mocha": "mocha --compilers js:babel-core/register ./dist/test",
+    "test": "nyc npm run mocha && nyc report --reporter=text-lcov > coverage.lcov && codecov --token=ceb536c1-556e-43dc-99b7-8d41c7b52413"
   },
   "repository": {
     "type": "git",
