@@ -8,6 +8,9 @@ joj-core
 ![License](https://img.shields.io/npm/l/joj-core.svg)
 
 > JumpOverJump.com core library
+> 
+> JumpOverJump is an opensource AI game board.
+> Be welcome to learn, help and play!!!
 
 ## Install
 

@@ -37,7 +37,7 @@
     "typings": "^2.0.0"
   },
   "dependencies": {
-    "assert": "^1.4.1"
+    "ptz-assert": "^1.0.0"
   },
   "babel": {
     "presets": [

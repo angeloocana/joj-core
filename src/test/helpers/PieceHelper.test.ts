@@ -1,5 +1,5 @@
 ﻿import { equal, deepEqual, ok } from "assert";
-import PieceHelper from "../helpers/PieceHelper";
+import PieceHelper from "../../helpers/PieceHelper";
 
 describe("PieceHelper", function () {
 
