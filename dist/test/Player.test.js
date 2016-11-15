@@ -1,5 +1,5 @@
 import Player from "../Player";
-import { ok } from "assert";
+import { ok } from "ptz-assert";
 describe("Player", () => {
     let player;
     describe("new", () => {

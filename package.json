@@ -33,11 +33,12 @@
     "mocha": "^3.1.2",
     "mocha-lcov-reporter": "^1.2.0",
     "nyc": "^8.4.0",
+    "ptz-assert": "^1.0.7",
     "typescript": "^2.0.8",
     "typings": "^2.0.0"
   },
   "dependencies": {
-    "ptz-assert": "^1.0.0"
+    "ptz-assert": "^1.0.8"
   },
   "babel": {
     "presets": [

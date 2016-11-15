@@ -1,5 +1,5 @@
 import GameColor from "../GameColor";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal } from "ptz-assert";
 describe("GameColor", function () {
     let boardOptions = { size: { x: 3, y: 3 } };
     let assertColor = function (actual, expected) {

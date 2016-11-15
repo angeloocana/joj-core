@@ -1,5 +1,6 @@
 ﻿import GameColor from "../GameColor";
-import { deepEqual, equal } from "assert";
+// import { deepEqual, equal } from "ptz-assert";
+import { deepEqual, equal } from "ptz-assert";
 
 describe("GameColor", function () {
 

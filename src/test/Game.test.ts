@@ -1,5 +1,5 @@
 ﻿import Game from '../Game';
-import { ok, deepEqual, equal } from "assert";
+import { ok, deepEqual, equal } from "ptz-assert";
 import Players from "../Players";
 import Player from "../Player";
 import AiMedium from '../AiMedium';

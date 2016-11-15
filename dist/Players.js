@@ -1,4 +1,4 @@
-import { ok } from "assert";
+import { ok } from "ptz-assert";
 import GamePieceType from "./GamePieceType";
 export default class Players {
     constructor(args = null) {

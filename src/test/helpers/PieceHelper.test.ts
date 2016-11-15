@@ -1,4 +1,4 @@
-﻿import { equal, deepEqual, ok } from "assert";
+﻿import { equal, deepEqual, ok } from "ptz-assert";
 import PieceHelper from "../../helpers/PieceHelper";
 
 describe("PieceHelper", function () {
