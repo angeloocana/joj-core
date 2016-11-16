@@ -1,7 +1,7 @@
 import PieceHelper from "./helpers/PieceHelper";
 import GameBoard from "./GameBoard";
 import GameColor from "./GameColor";
-import ObjectHelper from "./helpers/ObjectHelper";
+import copy from "ptz-copy";
 export default class Game {
     constructor(args = {}) {
         this.ended = false;
@@ -99,7 +99,7 @@ export default class Game {
         return new Game(this);
     }
     getCopy() {
-        return ObjectHelper.getCopy(this);
+        return copy(this);
     }
 }
 //# sourceMappingURL=Game.js.map
