@@ -34,7 +34,7 @@ describe("Game", function () {
         it("ended", () => {
             deepEqual(gameCopy.ended, game.ended);
         });
-        it("ended", () => {
+        it("board", () => {
             deepEqual(gameCopy.board, game.board);
         });
     });

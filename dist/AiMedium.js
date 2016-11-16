@@ -1,6 +1,6 @@
 import BoardHelper from "./helpers/BoardHelper";
 import PieceHelper from "./helpers/PieceHelper";
-import MathHelper from "./helpers/MathHelper";
+import { random } from "ptz-math";
 export default class AiMedium {
     addBestMoviment(bestMoviments, positionsAHead, startPosition, nextPosition, nivel, isBlack) {
         if (!bestMoviments)
@@ -144,7 +144,7 @@ export default class AiMedium {
         }
         for (let j = 0; j < bestMoviment.length; j++) {
             if (bestMoviment[j]) {
-                const randomIndex = MathHelper.getRandom(1, bestMoviment[j].length) - 1;
+                const randomIndex = random(1, bestMoviment[j].length) - 1;
                 return bestMoviment[j][randomIndex];
             }
         }

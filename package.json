@@ -38,8 +38,9 @@
     "typings": "^2.0.0"
   },
   "dependencies": {
+    "ptz-assert": "^1.0.8",
     "ptz-copy": "^1.0.1",
-    "ptz-assert": "^1.0.8"    
+    "ptz-math": "^1.0.2"
   },
   "babel": {
     "presets": [
