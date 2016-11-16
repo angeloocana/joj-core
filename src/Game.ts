@@ -2,7 +2,7 @@ import PieceHelper from "./helpers/PieceHelper";
 import GameBoard from "./GameBoard";
 import GameColor from "./GameColor";
 import Players from "./Players";
-import ObjectHelper from "./helpers/ObjectHelper";
+import copy from "ptz-copy";
 
 export default class Game implements IGame {
     ended: boolean = false;
@@ -148,6 +148,6 @@ export default class Game implements IGame {
     }
 
     getCopy(): IGame {       
-        return ObjectHelper.getCopy(this);
+        return copy(this);
     }
 }

@@ -1,5 +1,5 @@
 ﻿import Game from '../Game';
-import { ok, deepEqual, equal } from "ptz-assert";
+import { ok, deepEqual, equal, notEqual } from "ptz-assert";
 import Players from "../Players";
 import Player from "../Player";
 import AiMedium from '../AiMedium';
@@ -17,6 +17,31 @@ describe("Game", function () {
     describe("Game ended", () => {
         beforeEach(() => {
             game = new Game();
+        });
+    });
+
+    describe("getCopy", () => {
+        let gameCopy;
+
+        beforeEach(() => {
+            game = new Game();
+            gameCopy = game.getCopy();
+        });
+
+        it("notEqual = not using same reference", () => {
+            notEqual(gameCopy, game);
+        });
+        it("movements", () => {
+            deepEqual(gameCopy.movements, game.movements);
+        });
+        it("players", () => {
+            deepEqual(gameCopy.players, game.players);
+        });
+        it("ended", () => {
+            deepEqual(gameCopy.ended, game.ended);
+        });
+        it("ended", () => {
+            deepEqual(gameCopy.board, game.board);
         });
     });
 
@@ -57,7 +82,7 @@ describe("Game", function () {
             let game = new Game({
                 players
             });
-            
+
             game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
             game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
 
