@@ -41,40 +41,7 @@ describe("GameBoard", function () {
 
     // var boardOptions = { size: { x: 2, y: 3 } };
 
-    // it("boardHasThisPosition x1 y1 should return true", function () {
-    //     var position = { x: 1, y: 1 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(true);
-    // });
-
-    // it("boardHasThisPosition x-1 y0 should return false", function () {
-    //     var position = { x: -1, y: 0 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
-
-    // it("boardHasThisPosition x0 y-1 should return false", function () {
-    //     var position = { x: 0, y: -1 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
-
-    // it("boardHasThisPosition x-1 y-1 should return false", function () {
-    //     var position = { x: -1, y: -1 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
-
-    // it("boardHasThisPosition x8 y1 should return false", function () {
-    //     var position = { x: 8, y: 1 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
-
-    // it("boardHasThisPosition x1 y-8 should return false", function () {
-    //     var position = { x: 1, y: 8 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
-
-    // it("boardHasThisPosition x8 y8 should return false", function () {
-    //     var position = { x: 8, y: 8 };
-    //     expect(jojBoardService.boardHasThisPosition(position, boardOptions)).toEqual(false);
-    // });
+    
 
     // it("getPosition x2 y3 should return position", function () {
     //     var position = {
