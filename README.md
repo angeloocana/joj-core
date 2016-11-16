@@ -33,6 +33,12 @@ or clone from github:
     $ typings install
 ```
 
+*Add to your typings/index.d.ts
+
+```ts
+/// <reference path="../node_modules/joj-core/src/typings/index.d.ts" />
+```
+
 ## Test
 
 ```bash
