@@ -8,9 +8,9 @@ export default class Game implements IGame {
     ended: boolean = false;
     players: IPlayers;
     movements: IMove[];
-    board: IGameBoard = new GameBoard();
-    white: IGameColor = new GameColor(this.board.boardOptions, false);
-    black: IGameColor = new GameColor(this.board.boardOptions, true);
+    board: IGameBoard;
+    white: IGameColor;
+    black: IGameColor;
     blackWin: boolean;
 
     /**
@@ -19,6 +19,11 @@ export default class Game implements IGame {
     constructor(args: IGameArgs = {}) {
         if (args.needToValidateMovements !== true && args.needToValidateMovements !== false)
             args.needToValidateMovements = true;
+
+        this.board = new GameBoard(args.boardArgs);
+
+        this.white = new GameColor(this.board.boardOptions, false);
+        this.black = new GameColor(this.board.boardOptions, true);
 
         this.setMovements(args.movements, args.needToValidateMovements);
         this.setPlayers(args.players);
@@ -34,7 +39,7 @@ export default class Game implements IGame {
         //if(needToValidateMovements)
 
         this.movements = movements;
-        this.board.generateBoard(this.white.pieces, this.black.pieces);
+        this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
     }
 
     isWhiteTurn(): boolean {
@@ -125,7 +130,7 @@ export default class Game implements IGame {
 
         if (lastMove)
             this.move(lastMove.nextPosition, lastMove.startPosition, true);
-  
+
         if (this.getPlayerTurn().isComputer()) {
             lastMove = this.movements.pop();
             if (lastMove) {
@@ -147,7 +152,7 @@ export default class Game implements IGame {
         return new Game(this);
     }
 
-    getCopy(): IGame {       
+    getCopy(): IGame {
         return copy(this);
     }
 }

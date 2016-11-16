@@ -13,16 +13,6 @@ describe("GameBoard", function () {
         });
     });
 
-    // it("fillPiecesOnBoard should return board filled whith pieces", function () {
-    //     var board = [[{}, {}]];
-    //     var pieces = [{ x: 0, y: 0 }, { x: 0, y: 1 }];
-
-    //     var boardFilled = [[{ piece: 1 }, { piece: 1 }]];
-
-    //     //console.log(angular.mock.dump(boardFilled));
-    //     expect(jojBoardService.fillPiecesOnBoard(board, pieces, 1)).toEqual(boardFilled);
-    // });
-
     // it("generateBoard should return board filled whith pieces", function () {
     //     var game = {
     //         boardOptions: {

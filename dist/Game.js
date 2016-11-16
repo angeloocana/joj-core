@@ -33,10 +33,10 @@ var Game = function () {
         _classCallCheck(this, Game);
 
         this.ended = false;
-        this.board = new _GameBoard2.default();
+        if (args.needToValidateMovements !== true && args.needToValidateMovements !== false) args.needToValidateMovements = true;
+        this.board = new _GameBoard2.default(args.boardArgs);
         this.white = new _GameColor2.default(this.board.boardOptions, false);
         this.black = new _GameColor2.default(this.board.boardOptions, true);
-        if (args.needToValidateMovements !== true && args.needToValidateMovements !== false) args.needToValidateMovements = true;
         this.setMovements(args.movements, args.needToValidateMovements);
         this.setPlayers(args.players);
     }
@@ -53,7 +53,7 @@ var Game = function () {
             var needToValidateMovements = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
             this.movements = movements;
-            this.board.generateBoard(this.white.pieces, this.black.pieces);
+            this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
         }
     }, {
         key: "isWhiteTurn",

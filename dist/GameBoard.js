@@ -23,23 +23,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GameBoard = function () {
-    function GameBoard() {
+    function GameBoard(args) {
         _classCallCheck(this, GameBoard);
 
-        this.boardOptions = { size: { x: 8, y: 8 } };
+        if (!args) args = {};
+        this.boardOptions = args.boardOptions || { size: { x: 8, y: 8 } };
+        this.generateBoard();
+        this.fillAllPiecesOnBoard(args.whitePieces, args.blackPieces);
     }
 
     _createClass(GameBoard, [{
         key: "fillPiecesOnBoard",
         value: function fillPiecesOnBoard(pieces, pieceType) {
+            if (!pieces) return;
             for (var i = 0; i < pieces.length; i++) {
                 var piece = pieces[i];
                 this.board[piece.x][piece.y].piece = pieceType.toString();
             }
         }
     }, {
+        key: "fillAllPiecesOnBoard",
+        value: function fillAllPiecesOnBoard(whitePieces, blackPieces) {
+            this.fillPiecesOnBoard(whitePieces, _GamePieceType2.default.white);
+            this.fillPiecesOnBoard(blackPieces, _GamePieceType2.default.black);
+        }
+    }, {
         key: "generateBoard",
-        value: function generateBoard(whitePieces, blackPieces) {
+        value: function generateBoard() {
             this.board = [];
             for (var x = 0; x < this.boardOptions.size.x; x++) {
                 for (var y = 0; y < this.boardOptions.size.y; y++) {
@@ -47,17 +57,13 @@ var GameBoard = function () {
                     var position = {
                         x: x,
                         y: y,
-                        backgroundBlack: _BoardHelper2.default.isBackGroundBlack(x, y),
-                        whiteHome: y === this.boardOptions.size.y - 1,
-                        blackHome: y === 0,
+                        isWhiteHome: y === this.boardOptions.size.y - 1,
+                        isBlackHome: y === 0,
                         piece: null
                     };
                     this.board[x][y] = position;
                 }
             }
-            this.fillPiecesOnBoard(whitePieces, _GamePieceType2.default.white);
-            this.fillPiecesOnBoard(blackPieces, _GamePieceType2.default.black);
-            return this.board;
         }
     }, {
         key: "boardHasThisPosition",

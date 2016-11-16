@@ -2,10 +2,15 @@ interface IGameBoard {
     board: IGamePosition[][];
     boardOptions: IBoardOptions;
 
-    fillPiecesOnBoard(pieces: IGamePosition[], piece: string /*GamePieceType*/)
+    /**
+     * 
+     * @piece GamePieceType
+     */
+    fillPiecesOnBoard(pieces: IGamePosition[], piece: string)
         : void;
-    generateBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[])
-        : IGamePosition[][];
+
+    generateBoard();
+    fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[]);
     boardHasThisPosition(position: IGamePosition): boolean;
     getPosition(position: IGamePosition): IGamePosition;
     isPositionEmpty(position: IGamePosition): boolean;
@@ -22,4 +27,10 @@ interface IGameBoard {
     cleanBoardWhereCanIGo(): void;
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
         backMove: boolean, whiteTurn): void
+}
+
+interface IGameBoardArgs {
+    boardOptions?: IBoardOptions;
+    whitePieces?: IGamePiece[];
+    blackPieces?: IGamePiece[];
 }

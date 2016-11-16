@@ -1,6 +1,5 @@
 export default class BoardHelper {
 
-    //Tested
     static isBackGroundBlack(x: number, y: number): boolean {
         if (x % 2 === 0) {
             if (y % 2 === 0)
@@ -15,7 +14,6 @@ export default class BoardHelper {
         }
     }
 
-    //Tested
     static isPositionNotAdded(position: IGamePosition, positions: IGamePosition[])
         : boolean {
 
@@ -47,7 +45,6 @@ export default class BoardHelper {
         }
     }
 
-    //Tested
     static getY0Start7End(y: number, isBlack: boolean)
         : number {
         if (isBlack)
@@ -75,7 +72,6 @@ export default class BoardHelper {
         }
     }
 
-    //Tested
     static getY7Start0End(y: number, isBlack: boolean): number {
         if (!isBlack)
             return y;

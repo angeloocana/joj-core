@@ -13,4 +13,7 @@ interface IGamePosition {
     iCanGoHere?: boolean;
     lastMove?: boolean;
     lastMoveJump?: boolean;
+
+    isWhiteHome?:boolean;
+    isBlackHome?:boolean;
 }
