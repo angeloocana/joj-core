@@ -1,4 +1,4 @@
 export default class GamePieceType {
-    static white: string = "WHITE";
-    static black: string = "BLACK";
+    static white: string = "W";
+    static black: string = "B";
 }

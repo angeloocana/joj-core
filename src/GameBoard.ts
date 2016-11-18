@@ -26,7 +26,7 @@ export default class GameBoard implements IGameBoard {
 
         for (let i = 0; i < pieces.length; i++) {
             let piece = pieces[i];
-            this.board[piece.x][piece.y].piece = pieceType.toString();
+            this.board[piece.x][piece.y].piece = pieceType;
         }
     }
 
@@ -46,7 +46,7 @@ export default class GameBoard implements IGameBoard {
                 if (!this.board[x])
                     this.board[x] = [];
 
-                let position:IGamePosition = {
+                let position: IGamePosition = {
                     x: x,
                     y: y,
                     isWhiteHome: y === this.boardOptions.size.y - 1,
@@ -78,7 +78,7 @@ export default class GameBoard implements IGameBoard {
     getNearPositions(position, onlyEmpty): IGamePosition[] {
         let positions: IGamePosition[] = [];
         let board = this;
-        let add = function (plusX, plusY) {
+        let add = function (plusX: number, plusY: number, board: IGameBoard) {
             let newPosition: IGamePosition = {
                 x: position.x + plusX,
                 y: position.y + plusY
@@ -88,24 +88,24 @@ export default class GameBoard implements IGameBoard {
                 return;
 
             if (typeof onlyEmpty != "undefined") {
-                let positionEmpty: IGamePosition =
-                    this.isPositionEmpty(newPosition);
+                let positionEmpty = board.isPositionEmpty(newPosition);
+
                 if (onlyEmpty === positionEmpty)
                     positions.push(newPosition);
             } else
                 positions.push(newPosition);
         }
 
-        add(-1, -1);
-        add(0, -1);
-        add(+1, -1);
+        add(-1, -1, this);
+        add(0, -1, this);
+        add(+1, -1, this);
 
-        add(-1, 0);
-        add(+1, 0);
+        add(-1, 0, this);
+        add(+1, 0, this);
 
-        add(-1, +1);
-        add(0, +1);
-        add(+1, +1);
+        add(-1, +1, this);
+        add(0, +1, this);
+        add(+1, +1, this);
 
         return positions;
     }

@@ -38,7 +38,7 @@ var GameBoard = function () {
             if (!pieces) return;
             for (var i = 0; i < pieces.length; i++) {
                 var piece = pieces[i];
-                this.board[piece.x][piece.y].piece = pieceType.toString();
+                this.board[piece.x][piece.y].piece = pieceType;
             }
         }
     }, {
@@ -85,25 +85,25 @@ var GameBoard = function () {
         value: function getNearPositions(position, onlyEmpty) {
             var positions = [];
             var board = this;
-            var add = function add(plusX, plusY) {
+            var add = function add(plusX, plusY, board) {
                 var newPosition = {
                     x: position.x + plusX,
                     y: position.y + plusY
                 };
                 if (!board.boardHasThisPosition(newPosition)) return;
                 if (typeof onlyEmpty != "undefined") {
-                    var positionEmpty = this.isPositionEmpty(newPosition);
+                    var positionEmpty = board.isPositionEmpty(newPosition);
                     if (onlyEmpty === positionEmpty) positions.push(newPosition);
                 } else positions.push(newPosition);
             };
-            add(-1, -1);
-            add(0, -1);
-            add(+1, -1);
-            add(-1, 0);
-            add(+1, 0);
-            add(-1, +1);
-            add(0, +1);
-            add(+1, +1);
+            add(-1, -1, this);
+            add(0, -1, this);
+            add(+1, -1, this);
+            add(-1, 0, this);
+            add(+1, 0, this);
+            add(-1, +1, this);
+            add(0, +1, this);
+            add(+1, +1, this);
             return positions;
         }
     }, {

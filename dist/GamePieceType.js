@@ -12,5 +12,5 @@ var GamePieceType = function GamePieceType() {
 
 exports.default = GamePieceType;
 
-GamePieceType.white = "WHITE";
-GamePieceType.black = "BLACK";
+GamePieceType.white = "W";
+GamePieceType.black = "B";
