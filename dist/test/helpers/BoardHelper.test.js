@@ -17,4 +17,40 @@ describe("GameBoard", function () {
             (0, _ptzAssert.ok)(!_BoardHelper2.default.isBackGroundBlack(0, 1));
         });
     });
+    describe("isPositionNotAdded", function () {
+        it("added", function () {
+            var position = { "x": 5, "y": 2 };
+            var positions = [{ "x": 4, "y": 0 }, { "x": 3, "y": 0 }];
+            (0, _ptzAssert.ok)(_BoardHelper2.default.isPositionNotAdded(position, positions));
+        });
+        it("not added", function () {
+            var position = { "x": 3, "y": 0 };
+            var positions = [{ "x": 4, "y": 0 }, { "x": 3, "y": 0 }];
+            (0, _ptzAssert.notOk)(_BoardHelper2.default.isPositionNotAdded(position, positions));
+        });
+    });
+    describe("getY0Start7End", function () {
+        it("for white y2 should return 5", function () {
+            var y = 2;
+            var isBlack = false;
+            (0, _ptzAssert.equal)(_BoardHelper2.default.getY0Start7End(y, isBlack), 5);
+        });
+        it("for black y2 should return 2", function () {
+            var y = 2;
+            var isBlack = true;
+            (0, _ptzAssert.equal)(_BoardHelper2.default.getY0Start7End(y, isBlack), 2);
+        });
+    });
+    describe("getY7Start0End", function () {
+        it("for white y2 should return 2", function () {
+            var y = 2;
+            var isBlack = false;
+            (0, _ptzAssert.equal)(_BoardHelper2.default.getY7Start0End(y, isBlack), 2);
+        });
+        it("for black y2 should return 5", function () {
+            var y = 2;
+            var isBlack = true;
+            (0, _ptzAssert.equal)(_BoardHelper2.default.getY7Start0End(y, isBlack), 5);
+        });
+    });
 });

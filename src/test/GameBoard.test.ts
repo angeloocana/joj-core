@@ -1,6 +1,6 @@
 import GameBoard from "../GameBoard";
 import { equal, deepEqual, ok, notOk } from "ptz-assert";
-import { cleanBoard } from "./testData/board.data";
+import { cleanBoard } from "./testData/board.data.test";
 import PieceHelper from "../helpers/PieceHelper";
 import GamePieceType from "../GamePieceType";
 import GameColor from "../GameColor";
@@ -30,37 +30,37 @@ describe("GameBoard", () => {
 
         describe("boardHasThisPosition", () => {
             it("x1 y1 should return true", function () {
-                var position = { x: 1, y: 1 };
+                let position = { x: 1, y: 1 };
                 equal(board.boardHasThisPosition(position), true);
             });
 
             it("x-1 y0 should return false", function () {
-                var position = { x: -1, y: 0 };
+                let position = { x: -1, y: 0 };
                 equal(board.boardHasThisPosition(position), false);
             });
 
             it("x0 y-1 should return false", function () {
-                var position = { x: 0, y: -1 };
+                let position = { x: 0, y: -1 };
                 equal(board.boardHasThisPosition(position), false);
             });
 
             it("x-1 y-1 should return false", function () {
-                var position = { x: -1, y: -1 };
+                let position = { x: -1, y: -1 };
                 equal(board.boardHasThisPosition(position), false);
             });
 
             it("x8 y1 should return false", function () {
-                var position = { x: 8, y: 1 };
+                let position = { x: 8, y: 1 };
                 equal(board.boardHasThisPosition(position), false);
             });
 
             it("x1 y-8 should return false", function () {
-                var position = { x: 1, y: 8 };
+                let position = { x: 1, y: 8 };
                 equal(board.boardHasThisPosition(position), false);
             });
 
             it("x8 y8 should return false", function () {
-                var position = { x: 8, y: 8 };
+                let position = { x: 8, y: 8 };
                 equal(board.boardHasThisPosition(position), false);
             });
         });
@@ -113,5 +113,73 @@ describe("GameBoard", () => {
                 deepEqual(actual, expected);
             });
         });
+
+        describe("getJumpPosition", () => {
+            it("jumping up and rigth", function () {
+                let startPosition = { "x": 0, "y": 0 };
+                let toJumpPosition = { "x": 1, "y": 1 };
+                let expected = { "x": 2, "y": 2 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("jumping up and left", function () {
+                let startPosition = { "x": 2, "y": 0 };
+                let toJumpPosition = { "x": 1, "y": 1 };
+                let expected = { "x": 0, "y": 2 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("jumping up", function () {
+                let startPosition = { "x": 0, "y": 0 };
+
+                let toJumpPosition = { "x": 1, "y": 1 };
+
+                let expected = { "x": 2, "y": 2 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("jumping down and rigth", function () {
+                let startPosition = { "x": 0, "y": 7 };
+                let toJumpPosition = { "x": 1, "y": 6 };
+                let expected = { "x": 2, "y": 5 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("jumping down and left", function () {
+                let startPosition = { "x": 2, "y": 7 };
+                let toJumpPosition = { "x": 1, "y": 6 };
+                let expected = { "x": 0, "y": 5 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("jumping down", function () {
+                let startPosition = { "x": 1, "y": 7 };
+                let toJumpPosition = { "x": 1, "y": 6 };
+                let expected = { "x": 1, "y": 5 };
+
+                let actual = board.getJumpPosition(startPosition, toJumpPosition);
+                deepEqual(actual, expected);
+            });
+
+            it("should return undefined because position is not empty", function () {
+                let startPosition = { "x": 3, "y": 0 };
+                let toJumpPosition = { "x": 4, "y": 0 };
+
+                notOk(board.getJumpPosition(startPosition, toJumpPosition));
+            });
+
+        });
+
+        
     });
 });

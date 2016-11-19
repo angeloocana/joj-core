@@ -26,7 +26,7 @@ interface IGameBoard {
     setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void;
     cleanBoardWhereCanIGo(): void;
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
-        backMove: boolean, whiteTurn): void
+        backMove?: boolean, whiteTurn?:boolean): void
 }
 
 interface IGameBoardArgs {

@@ -229,7 +229,7 @@ export default class GameBoard implements IGameBoard {
     }
 
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
-        backMove: boolean, whiteTurn): void {
+        backMove?: boolean, whiteTurn?:boolean): void {
         if (backMove) {
             this.board[nextPosition.x][nextPosition.y].piece
                 = whiteTurn

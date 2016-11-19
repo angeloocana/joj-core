@@ -6,7 +6,7 @@ var _GameBoard2 = _interopRequireDefault(_GameBoard);
 
 var _ptzAssert = require("ptz-assert");
 
-var _board = require("./testData/board.data");
+var _boardData = require("./testData/board.data.test");
 
 var _GameColor = require("../GameColor");
 
@@ -31,7 +31,7 @@ describe("GameBoard", function () {
             (0, _ptzAssert.equal)(board.board[7].length, 8);
         });
         it("cleanBoard", function () {
-            (0, _ptzAssert.deepEqual)(board.board, _board.cleanBoard);
+            (0, _ptzAssert.deepEqual)(board.board, _boardData.cleanBoard);
         });
         describe("boardHasThisPosition", function () {
             it("x1 y1 should return true", function () {
@@ -99,6 +99,55 @@ describe("GameBoard", function () {
                 var expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }, { x: 6, y: 7 }];
                 var actual = board.getNearPositions(position, onlyEmpty);
                 (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+        });
+        describe("getJumpPosition", function () {
+            it("jumping up and rigth", function () {
+                var startPosition = { "x": 0, "y": 0 };
+                var toJumpPosition = { "x": 1, "y": 1 };
+                var expected = { "x": 2, "y": 2 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("jumping up and left", function () {
+                var startPosition = { "x": 2, "y": 0 };
+                var toJumpPosition = { "x": 1, "y": 1 };
+                var expected = { "x": 0, "y": 2 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("jumping up", function () {
+                var startPosition = { "x": 0, "y": 0 };
+                var toJumpPosition = { "x": 1, "y": 1 };
+                var expected = { "x": 2, "y": 2 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("jumping down and rigth", function () {
+                var startPosition = { "x": 0, "y": 7 };
+                var toJumpPosition = { "x": 1, "y": 6 };
+                var expected = { "x": 2, "y": 5 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("jumping down and left", function () {
+                var startPosition = { "x": 2, "y": 7 };
+                var toJumpPosition = { "x": 1, "y": 6 };
+                var expected = { "x": 0, "y": 5 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("jumping down", function () {
+                var startPosition = { "x": 1, "y": 7 };
+                var toJumpPosition = { "x": 1, "y": 6 };
+                var expected = { "x": 1, "y": 5 };
+                var actual = board.getJumpPosition(startPosition, toJumpPosition);
+                (0, _ptzAssert.deepEqual)(actual, expected);
+            });
+            it("should return undefined because position is not empty", function () {
+                var startPosition = { "x": 3, "y": 0 };
+                var toJumpPosition = { "x": 4, "y": 0 };
+                (0, _ptzAssert.notOk)(board.getJumpPosition(startPosition, toJumpPosition));
             });
         });
     });
