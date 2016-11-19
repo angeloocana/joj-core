@@ -54,13 +54,9 @@ var GameBoard = function () {
             for (var x = 0; x < this.boardOptions.size.x; x++) {
                 for (var y = 0; y < this.boardOptions.size.y; y++) {
                     if (!this.board[x]) this.board[x] = [];
-                    var position = {
-                        x: x,
-                        y: y,
-                        isWhiteHome: y === this.boardOptions.size.y - 1,
-                        isBlackHome: y === 0,
-                        piece: null
-                    };
+                    var position = { x: x, y: y };
+                    if (y === this.boardOptions.size.y - 1) position.isWhiteHome = true;
+                    if (y === 0) position.isBlackHome = true;
                     this.board[x][y] = position;
                 }
             }

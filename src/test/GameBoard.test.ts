@@ -1,6 +1,6 @@
 import GameBoard from "../GameBoard";
 import { equal, deepEqual, ok, notOk } from "ptz-assert";
-import { cleanBoard } from "./testData/board.data.test";
+import { cleanBoard, boardStartPositions } from "./testData/board.data.test";
 import PieceHelper from "../helpers/PieceHelper";
 import GamePieceType from "../GamePieceType";
 import GameColor from "../GameColor";
@@ -24,8 +24,8 @@ describe("GameBoard", () => {
             equal(board.board[7].length, 8);
         });
 
-        it("cleanBoard", () => {
-            deepEqual(board.board, cleanBoard);
+        it("boardStartPositions", () => {
+            deepEqual(board.board, boardStartPositions);
         });
 
         describe("boardHasThisPosition", () => {
@@ -67,7 +67,7 @@ describe("GameBoard", () => {
 
         it("getPosition", () => {
             let actual = board.getPosition({ x: 2, y: 3 });
-            let expected = { x: 2, y: 3, isWhiteHome: false, isBlackHome: false, piece: null };
+            let expected = { x: 2, y: 3};
             deepEqual(actual, expected)
         });
 
@@ -179,7 +179,11 @@ describe("GameBoard", () => {
             });
 
         });
+    });
 
-        
+    it("generateBoard", function () {
+        let board = new GameBoard();
+        board.generateBoard();
+        deepEqual(board.board, cleanBoard);
     });
 });

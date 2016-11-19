@@ -64,32 +64,4 @@ describe("GameBoard", function () {
             equal(BoardHelper.getY7Start0End(y, isBlack), 5);
         });
     });
-
-
-    // it("generateBoard should return board filled whith pieces", function () {
-    //     let game = {
-    //         boardOptions: {
-    //             size: {
-    //                 x: 1,
-    //                 y: 2
-    //             }
-    //         },
-    //         white: {
-    //             pieces: [{ x: 0, y: 0 }]
-    //         },
-    //         black: {
-    //             pieces: [{ x: 0, y: 1 }]
-    //         }
-    //     };
-    //     let board = [
-    //         [
-    //             { x: 0, y: 0, backgroundBlack: true, whiteHome: false, blackHome: true, piece: 1 },
-    //             { x: 0, y: 1, backgroundBlack: false, whiteHome: true, blackHome: false, piece: 0 }
-    //         ]
-    //     ];
-
-    //     //console.log(angular.mock.dump(board));
-    //     expect(jojBoardService.generateBoard(game)).toEqual(board);
-    // });
-
 });

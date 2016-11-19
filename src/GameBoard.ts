@@ -46,13 +46,13 @@ export default class GameBoard implements IGameBoard {
                 if (!this.board[x])
                     this.board[x] = [];
 
-                let position: IGamePosition = {
-                    x: x,
-                    y: y,
-                    isWhiteHome: y === this.boardOptions.size.y - 1,
-                    isBlackHome: y === 0,
-                    piece: null
-                };
+                let position: IGamePosition = { x, y };
+
+                if (y === this.boardOptions.size.y - 1)
+                    position.isWhiteHome = true;
+
+                if (y === 0)
+                    position.isBlackHome = true;
 
                 this.board[x][y] = position;
             }
@@ -229,7 +229,7 @@ export default class GameBoard implements IGameBoard {
     }
 
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
-        backMove?: boolean, whiteTurn?:boolean): void {
+        backMove?: boolean, whiteTurn?: boolean): void {
         if (backMove) {
             this.board[nextPosition.x][nextPosition.y].piece
                 = whiteTurn

@@ -30,8 +30,8 @@ describe("GameBoard", function () {
             (0, _ptzAssert.equal)(board.board[0].length, 8);
             (0, _ptzAssert.equal)(board.board[7].length, 8);
         });
-        it("cleanBoard", function () {
-            (0, _ptzAssert.deepEqual)(board.board, _boardData.cleanBoard);
+        it("boardStartPositions", function () {
+            (0, _ptzAssert.deepEqual)(board.board, _boardData.boardStartPositions);
         });
         describe("boardHasThisPosition", function () {
             it("x1 y1 should return true", function () {
@@ -65,7 +65,7 @@ describe("GameBoard", function () {
         });
         it("getPosition", function () {
             var actual = board.getPosition({ x: 2, y: 3 });
-            var expected = { x: 2, y: 3, isWhiteHome: false, isBlackHome: false, piece: null };
+            var expected = { x: 2, y: 3 };
             (0, _ptzAssert.deepEqual)(actual, expected);
         });
         describe("isPositionEmpty", function () {
@@ -150,5 +150,10 @@ describe("GameBoard", function () {
                 (0, _ptzAssert.notOk)(board.getJumpPosition(startPosition, toJumpPosition));
             });
         });
+    });
+    it("generateBoard", function () {
+        var board = new _GameBoard2.default();
+        board.generateBoard();
+        (0, _ptzAssert.deepEqual)(board.board, _boardData.cleanBoard);
     });
 });
