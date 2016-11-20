@@ -1,14 +1,14 @@
-import Game from "../Game";
-import GameBoard from "../GameBoard";
-import GameColor from "../GameColor";
-import GamePiece from "../GamePiece";
-import GamePieceType from "../GamePieceType";
-import Player from "../Player";
-import Players from "../Players";
-import BoardHelper from "../helpers/BoardHelper";
-import PieceHelper from "../helpers/PieceHelper";
-
 declare module "joj-core" {
+    let Game: IGame;
+    let GameBoard: IGameBoard;
+    let GameColor: IGameColor;
+    let GamePiece: IGamePiece;
+    let GamePieceType: IGamePieceType;
+    let Player: IPlayer;
+    let Players: IPlayers;
+    let BoardHelper: IBoardHelper;
+    let PieceHelper: IPieceHelper;
+
     export {
         Game,
         GameBoard,
@@ -19,5 +19,5 @@ declare module "joj-core" {
         Players,
         BoardHelper,
         PieceHelper
-    };
+    }
 }

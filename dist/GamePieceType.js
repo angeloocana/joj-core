@@ -3,7 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = {
+var gamePieceType = {
     white: "W",
     black: "B"
 };
+exports.default = gamePieceType;
