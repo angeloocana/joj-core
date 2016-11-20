@@ -1,4 +1,4 @@
-export default class GamePieceType {
-    static white: string = "W";
-    static black: string = "B";
+export default {
+    white: "W",
+    black: "B"
 }

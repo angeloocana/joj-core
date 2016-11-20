@@ -1,16 +1,9 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var GamePieceType = function GamePieceType() {
-  _classCallCheck(this, GamePieceType);
+exports.default = {
+    white: "W",
+    black: "B"
 };
-
-exports.default = GamePieceType;
-
-GamePieceType.white = "W";
-GamePieceType.black = "B";
