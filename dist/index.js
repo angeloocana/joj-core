@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PieceHelper = exports.BoardHelper = exports.Players = exports.Player = exports.GamePieceType = exports.GamePiece = exports.GameColor = exports.GameBoard = exports.Game = undefined;
+exports.PieceHelper = exports.BoardHelper = exports.Players = exports.Player = exports.GamePieceType = exports.GameColor = exports.GameBoard = exports.Game = undefined;
 
 var _Game = require("./Game");
 
@@ -16,10 +16,6 @@ var _GameBoard2 = _interopRequireDefault(_GameBoard);
 var _GameColor = require("./GameColor");
 
 var _GameColor2 = _interopRequireDefault(_GameColor);
-
-var _GamePiece = require("./GamePiece");
-
-var _GamePiece2 = _interopRequireDefault(_GamePiece);
 
 var _GamePieceType = require("./GamePieceType");
 
@@ -46,7 +42,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.Game = _Game2.default;
 exports.GameBoard = _GameBoard2.default;
 exports.GameColor = _GameColor2.default;
-exports.GamePiece = _GamePiece2.default;
 exports.GamePieceType = _GamePieceType2.default;
 exports.Player = _Player2.default;
 exports.Players = _Players2.default;

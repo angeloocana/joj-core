@@ -2,9 +2,9 @@ import BoardHelper from "./BoardHelper";
 import GamePieceType from "../GamePieceType";
 
 let getStartPieces = function (boardOptions: IBoardOptions, startRow: number): IGamePiece[] {
-    let pieces = [];
+    let pieces: IGamePiece[] = [];
     for (let x = 0; x < boardOptions.size.x; x++) {
-        let piece = {
+        let piece: IGamePiece = {
             x: x,
             y: startRow
         };
