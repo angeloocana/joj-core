@@ -177,7 +177,6 @@ describe("GameBoard", () => {
 
                 notOk(board.getJumpPosition(startPosition, toJumpPosition));
             });
-
         });
     });
 

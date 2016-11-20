@@ -26,12 +26,12 @@ describe("Players", () => {
             ok(players.black.name == black.name);
         });
 
-        it("Set white player getMove", () => {
-            ok(players.white.getMove == white.getMove);
+        it("Set white player ai", () => {
+            ok(players.white.ai == white.ai);
         });
 
-        it("Set black player getMove", () => {
-            ok(players.black.getMove == black.getMove);
+        it("Set black player ai", () => {
+            ok(players.black.ai == black.ai);
         });
     });
 

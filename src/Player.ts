@@ -5,18 +5,15 @@ export default class Player implements IPlayer {
      */
     color: string;
     foto?: string;
-    getMove?: (game: IGame) => IMove;
+    ai?: IAi;
 
-    constructor(args:IPlayerArgs) {
-        this.getMove = args.getMove;
+    constructor(args: IPlayerArgs) {
+        this.ai = args.ai;
         this.name = args.name;
         this.foto = args.foto;
     }
 
     isComputer(): boolean {
-        if (this.getMove)
-            return true;
-        else
-            return false;
+        return this.ai ? true : false;
     }
 }

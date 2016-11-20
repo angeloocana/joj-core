@@ -71,11 +71,12 @@ game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
 ```js
 
 import {Game, Players, Player, AiMedium} from 'joj-core';
+import ai from 'joj-ai';
 
 let players = new Players({
     white: new Player({
         name: "Computer",
-        getMove: new AiMedium().getComputerMove
+        ai
     }),
     black: new Player({ name: "Gabi" })
 });
@@ -85,6 +86,7 @@ let game = new Game({
 });
 
 game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+//Computer plays automatic after a move
 game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
 
 ```

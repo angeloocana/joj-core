@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PieceHelper = exports.BoardHelper = exports.AiMedium = exports.Players = exports.Player = exports.GamePieceType = exports.GamePiece = exports.GameColor = exports.GameBoard = exports.Game = undefined;
+exports.PieceHelper = exports.BoardHelper = exports.Players = exports.Player = exports.GamePieceType = exports.GamePiece = exports.GameColor = exports.GameBoard = exports.Game = undefined;
 
 var _Game = require("./Game");
 
@@ -33,10 +33,6 @@ var _Players = require("./Players");
 
 var _Players2 = _interopRequireDefault(_Players);
 
-var _AiMedium = require("./AiMedium");
-
-var _AiMedium2 = _interopRequireDefault(_AiMedium);
-
 var _BoardHelper = require("./helpers/BoardHelper");
 
 var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
@@ -54,6 +50,5 @@ exports.GamePiece = _GamePiece2.default;
 exports.GamePieceType = _GamePieceType2.default;
 exports.Player = _Player2.default;
 exports.Players = _Players2.default;
-exports.AiMedium = _AiMedium2.default;
 exports.BoardHelper = _BoardHelper2.default;
 exports.PieceHelper = _PieceHelper2.default;

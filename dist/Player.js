@@ -12,7 +12,7 @@ var Player = function () {
     function Player(args) {
         _classCallCheck(this, Player);
 
-        this.getMove = args.getMove;
+        this.ai = args.ai;
         this.name = args.name;
         this.foto = args.foto;
     }
@@ -20,7 +20,7 @@ var Player = function () {
     _createClass(Player, [{
         key: "isComputer",
         value: function isComputer() {
-            if (this.getMove) return true;else return false;
+            return this.ai ? true : false;
         }
     }]);
 

@@ -5,7 +5,6 @@ import GamePiece from "./GamePiece";
 import GamePieceType from "./GamePieceType";
 import Player from "./Player";
 import Players from "./Players";
-import AiMedium from "./AiMedium";
 import BoardHelper from "./helpers/BoardHelper";
 import PieceHelper from "./helpers/PieceHelper";
 
@@ -17,7 +16,6 @@ export {
     GamePieceType,
     Player,
     Players,
-    AiMedium,
     BoardHelper,
     PieceHelper
 }

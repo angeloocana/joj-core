@@ -14,10 +14,6 @@ var _Player = require("../Player");
 
 var _Player2 = _interopRequireDefault(_Player);
 
-var _AiMedium = require("../AiMedium");
-
-var _AiMedium2 = _interopRequireDefault(_AiMedium);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe("Game", function () {
@@ -67,27 +63,6 @@ describe("Game", function () {
             game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
             var gameBeforeLastMove = game.getCopy();
             game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
-            game.backMove();
-            (0, _ptzAssert.equal)(gameBeforeLastMove.movements.length, game.movements.length);
-            (0, _ptzAssert.deepEqual)(gameBeforeLastMove.movements, game.movements);
-        });
-        it("backMove vsComputer game", function () {
-            var players = new _Players2.default({
-                white: new _Player2.default({
-                    name: "Angelo",
-                    foto: "img/black_user.png",
-                    getMove: new _AiMedium2.default().getComputerMove
-                }),
-                black: new _Player2.default({ name: "Gabi", foto: "img/white_user.png" })
-            });
-            var game = new _Game2.default({
-                players: players
-            });
-            game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
-            game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
-            var gameBeforeLastMove = game.getCopy();
-            game.move({ x: 2, y: 6 }, { x: 2, y: 5 });
-            game.move({ x: 2, y: 1 }, { x: 2, y: 2 });
             game.backMove();
             (0, _ptzAssert.equal)(gameBeforeLastMove.movements.length, game.movements.length);
             (0, _ptzAssert.deepEqual)(gameBeforeLastMove.movements, game.movements);
