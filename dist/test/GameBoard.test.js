@@ -150,6 +150,10 @@ describe("GameBoard", function () {
                 (0, _ptzAssert.notOk)(board.getJumpPosition(startPosition, toJumpPosition));
             });
         });
+        it("printUnicode", function printUnicodeTest() {
+            var actual = board.printUnicode();
+            (0, _ptzAssert.equal)(actual, _boardData.unicodeStartBoard);
+        });
     });
     it("generateBoard", function () {
         var board = new _GameBoard2.default();

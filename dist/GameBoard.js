@@ -69,7 +69,14 @@ var GameBoard = function () {
     }, {
         key: "getPosition",
         value: function getPosition(position) {
-            return this.board[position.x][position.y];
+            try {
+                return this.board[position.x][position.y];
+            } catch (e) {
+                console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+                console.log(position);
+                console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+                throw "Error getting position";
+            }
         }
     }, {
         key: "isPositionEmpty",
@@ -204,6 +211,20 @@ var GameBoard = function () {
             }
             this.board[nextPosition.x][nextPosition.y].lastMove = true;
             this.board[startPosition.x][startPosition.y].lastMove = true;
+            console.log(this.printUnicode());
+        }
+    }, {
+        key: "printUnicode",
+        value: function printUnicode() {
+            var board = "";
+            for (var y = 0; y < this.board.length; y++) {
+                for (var x = 0; x < this.board[y].length; x++) {
+                    var position = this.board[x][y];
+                    if (position.piece == _GamePieceType2.default.white) board += "\u25CF";else if (position.piece == _GamePieceType2.default.black) board += "\u25CB";else if (_BoardHelper2.default.isBackGroundBlack(x, y)) board += "\u25A0";else board += "\u25A1";
+                }
+                board += "\n";
+            }
+            return board;
         }
     }]);
 

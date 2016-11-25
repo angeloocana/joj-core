@@ -16,7 +16,7 @@ interface IGameBoard {
     isPositionEmpty(position: IGamePosition): boolean;
     getNearPositions(position, onlyEmpty): IGamePosition[];
     getJumpPosition(startPosition: IGamePosition, toJumpPosition: IGamePosition)
-        : IGamePosition
+        : IGamePosition;
 
     whereCanIJump(jumpStartPosition: IGamePosition, positions,
         orderedPositions: IGamePosition[][], isBlack: boolean): void;
@@ -26,7 +26,8 @@ interface IGameBoard {
     setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void;
     cleanBoardWhereCanIGo(): void;
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
-        backMove?: boolean, whiteTurn?:boolean): void
+        backMove?: boolean, whiteTurn?: boolean): void;
+    printUnicode(): string;
 }
 
 interface IGameBoardArgs {

@@ -68,7 +68,15 @@ export default class GameBoard implements IGameBoard {
     }
 
     getPosition(position: IGamePosition): IGamePosition {
-        return this.board[position.x][position.y];
+        try {
+            return this.board[position.x][position.y];
+        }
+        catch (e) {
+            console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+            console.log(position);
+            console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+            throw "Error getting position";
+        }
     }
 
     isPositionEmpty(position: IGamePosition): boolean {
@@ -249,5 +257,29 @@ export default class GameBoard implements IGameBoard {
 
         this.board[nextPosition.x][nextPosition.y].lastMove = true;
         this.board[startPosition.x][startPosition.y].lastMove = true;
+
+        console.log(this.printUnicode());
+    }
+
+    printUnicode(): string {
+        var board = "";
+        for (var y = 0; y < this.board.length; y++) {
+            for (var x = 0; x < this.board[y].length; x++) {
+                var position = this.board[x][y];
+
+                if (position.piece == GamePieceType.white)
+                    board += "\u{25CF}";
+                else if (position.piece == GamePieceType.black)
+                    board += "\u{25CB}";
+                else if (BoardHelper.isBackGroundBlack(x, y))
+                    board += "\u{25A0}"
+                else
+                    board += "\u{25A1}"
+            }
+
+            board += "\n";
+        }
+
+        return board;
     }
 }
