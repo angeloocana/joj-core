@@ -6,6 +6,7 @@ export default class GameBoard implements IGameBoard {
 
     board: IGamePosition[][];
     boardOptions: IBoardOptions;
+    logMove:boolean;
 
     /**
      * Game Board
@@ -13,6 +14,7 @@ export default class GameBoard implements IGameBoard {
     constructor(args?: IGameBoardArgs) {
         if (!args) args = {};
 
+        this.logMove = args.logMove || false;
         this.boardOptions = args.boardOptions || { size: { x: 8, y: 8 } };
         this.generateBoard();
         this.fillAllPiecesOnBoard(args.whitePieces, args.blackPieces);
@@ -258,7 +260,8 @@ export default class GameBoard implements IGameBoard {
         this.board[nextPosition.x][nextPosition.y].lastMove = true;
         this.board[startPosition.x][startPosition.y].lastMove = true;
 
-        console.log(this.printUnicode());
+        if (this.logMove)
+            console.log(this.printUnicode());
     }
 
     printUnicode(): string {

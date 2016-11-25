@@ -28,10 +28,12 @@ interface IGameBoard {
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
         backMove?: boolean, whiteTurn?: boolean): void;
     printUnicode(): string;
+    logMove:boolean;
 }
 
 interface IGameBoardArgs {
     boardOptions?: IBoardOptions;
     whitePieces?: IGamePiece[];
     blackPieces?: IGamePiece[];
+    logMove?:boolean;
 }
