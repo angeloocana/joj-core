@@ -26,13 +26,21 @@ describe("Game", function () {
     });
     describe("Game ended", function () {
         beforeEach(function () {
-            game = new _Game2.default();
+            game = new _Game2.default({
+                boardArgs: {
+                    logMove: true
+                }
+            });
         });
     });
     describe("getCopy", function () {
         var gameCopy = void 0;
         beforeEach(function () {
-            game = new _Game2.default();
+            game = new _Game2.default({
+                boardArgs: {
+                    logMove: true
+                }
+            });
             gameCopy = game.getCopy();
         });
         it("notEqual = not using same reference", function () {
@@ -58,7 +66,10 @@ describe("Game", function () {
                 black: new _Player2.default({ name: "Gabi", foto: "img/white_user.png" })
             });
             var game = new _Game2.default({
-                players: players
+                players: players,
+                boardArgs: {
+                    logMove: true
+                }
             });
             game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
             var gameBeforeLastMove = game.getCopy();

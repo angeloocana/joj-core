@@ -6,7 +6,7 @@ export default class GameBoard implements IGameBoard {
 
     board: IGamePosition[][];
     boardOptions: IBoardOptions;
-    logMove:boolean;
+    logMove: boolean;
 
     /**
      * Game Board
@@ -238,6 +238,36 @@ export default class GameBoard implements IGameBoard {
         }
     }
 
+    printUnicode(): string {
+        var board = "";
+        for (var y = 0; y < this.board.length; y++) {
+            for (var x = 0; x < this.board[y].length; x++) {
+                var position = this.board[x][y];
+
+                if (BoardHelper.isBackGroundBlack(x, y)) {
+                    if (position.piece == GamePieceType.white)
+                        board += "\u{25CF}";
+                    else if (position.piece == GamePieceType.black)
+                        board += "\u{25CB}";
+                    else
+                        board += " ";
+                }
+                else {
+                    if (position.piece == GamePieceType.white)
+                        board += "\u{25D9}";
+                    else if (position.piece == GamePieceType.black)
+                        board += "\u{25D8}";
+                    else
+                        board += "\u{2588}";
+                }
+            }
+
+            board += "\n";
+        }
+
+        return board;
+    }
+
     move(startPosition: IGamePosition, nextPosition: IGamePosition,
         backMove?: boolean, whiteTurn?: boolean): void {
         if (backMove) {
@@ -262,27 +292,6 @@ export default class GameBoard implements IGameBoard {
 
         if (this.logMove)
             console.log(this.printUnicode());
-    }
+    }   
+} 
 
-    printUnicode(): string {
-        var board = "";
-        for (var y = 0; y < this.board.length; y++) {
-            for (var x = 0; x < this.board[y].length; x++) {
-                var position = this.board[x][y];
-
-                if (position.piece == GamePieceType.white)
-                    board += "\u{25CF}";
-                else if (position.piece == GamePieceType.black)
-                    board += "\u{25CB}";
-                else if (BoardHelper.isBackGroundBlack(x, y))
-                    board += "\u{25A0}"
-                else
-                    board += "\u{25A1}"
-            }
-
-            board += "\n";
-        }
-
-        return board;
-    }
-}

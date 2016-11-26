@@ -196,6 +196,23 @@ var GameBoard = function () {
             }
         }
     }, {
+        key: "printUnicode",
+        value: function printUnicode() {
+            var board = "";
+            for (var y = 0; y < this.board.length; y++) {
+                for (var x = 0; x < this.board[y].length; x++) {
+                    var position = this.board[x][y];
+                    if (_BoardHelper2.default.isBackGroundBlack(x, y)) {
+                        if (position.piece == _GamePieceType2.default.white) board += "\u25CF";else if (position.piece == _GamePieceType2.default.black) board += "\u25CB";else board += " ";
+                    } else {
+                        if (position.piece == _GamePieceType2.default.white) board += "\u25D9";else if (position.piece == _GamePieceType2.default.black) board += "\u25D8";else board += "\u2588";
+                    }
+                }
+                board += "\n";
+            }
+            return board;
+        }
+    }, {
         key: "move",
         value: function move(startPosition, nextPosition, backMove, whiteTurn) {
             if (backMove) {
@@ -213,19 +230,6 @@ var GameBoard = function () {
             this.board[nextPosition.x][nextPosition.y].lastMove = true;
             this.board[startPosition.x][startPosition.y].lastMove = true;
             if (this.logMove) console.log(this.printUnicode());
-        }
-    }, {
-        key: "printUnicode",
-        value: function printUnicode() {
-            var board = "";
-            for (var y = 0; y < this.board.length; y++) {
-                for (var x = 0; x < this.board[y].length; x++) {
-                    var position = this.board[x][y];
-                    if (position.piece == _GamePieceType2.default.white) board += "\u25CF";else if (position.piece == _GamePieceType2.default.black) board += "\u25CB";else if (_BoardHelper2.default.isBackGroundBlack(x, y)) board += "\u25A0";else board += "\u25A1";
-                }
-                board += "\n";
-            }
-            return board;
         }
     }]);
 

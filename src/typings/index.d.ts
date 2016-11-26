@@ -81,7 +81,9 @@ declare module jojCore {
         setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void;
         cleanBoardWhereCanIGo(): void;
         move(startPosition: IGamePosition, nextPosition: IGamePosition,
-            backMove?: boolean, whiteTurn?: boolean): void
+            backMove?: boolean, whiteTurn?: boolean): void;
+        printUnicode(): string;
+        logMove:boolean;
     }
 
     class GameColor implements IGameColor {

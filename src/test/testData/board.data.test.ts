@@ -20,10 +20,10 @@ let boardStartPositions: IGamePosition[][] = [
   [{ x: 7, y: 0, isBlackHome: true, piece: 'B' }, { x: 7, y: 1 }, { x: 7, y: 2 }, { x: 7, y: 3 }, { x: 7, y: 4 }, { x: 7, y: 5 }, { x: 7, y: 6 }, { x: 7, y: 7, isWhiteHome: true, piece: 'W' }]
 ];
 
-let whiteRow = "\u{25CF}\u{25CF}\u{25CF}\u{25CF}\u{25CF}\u{25CF}\u{25CF}\u{25CF}\n";
-let cleanRowWhite = "\u{25A1}\u{25A0}\u{25A1}\u{25A0}\u{25A1}\u{25A0}\u{25A1}\u{25A0}\n";
-let cleanRowBlack = "\u{25A0}\u{25A1}\u{25A0}\u{25A1}\u{25A0}\u{25A1}\u{25A0}\u{25A1}\n";
-let blackRow = "\u{25CB}\u{25CB}\u{25CB}\u{25CB}\u{25CB}\u{25CB}\u{25CB}\u{25CB}\n";
+let whiteRow = "\u{25D9}\u{25CF}\u{25D9}\u{25CF}\u{25D9}\u{25CF}\u{25D9}\u{25CF}\n";
+let cleanRowWhite = "\u{2588} \u{2588} \u{2588} \u{2588} \n";
+let cleanRowBlack = " \u{2588} \u{2588} \u{2588} \u{2588}\n";
+let blackRow = "\u{25CB}\u{25D8}\u{25CB}\u{25D8}\u{25CB}\u{25D8}\u{25CB}\u{25D8}\n";
 
 let unicodeStartBoard = blackRow 
 + cleanRowWhite

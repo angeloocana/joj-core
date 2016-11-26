@@ -15,7 +15,11 @@ describe("Game", function () {
 
     describe("Game ended", () => {
         beforeEach(() => {
-            game = new Game();
+            game = new Game({
+                boardArgs: {
+                    logMove: true
+                }
+            });
         });
     });
 
@@ -23,7 +27,11 @@ describe("Game", function () {
         let gameCopy;
 
         beforeEach(() => {
-            game = new Game();
+            game = new Game({
+                boardArgs: {
+                    logMove: true
+                }
+            });
             gameCopy = game.getCopy();
         });
 
@@ -53,7 +61,10 @@ describe("Game", function () {
             });
 
             let game = new Game({
-                players
+                players,
+                boardArgs: {
+                    logMove: true
+                }
             });
 
             game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
