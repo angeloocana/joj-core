@@ -40,4 +40,18 @@ describe("BoardPosition", function () {
             equal(actual,null);
         });
     });
+
+    describe("isSamePositionAs",function(){
+        it("true", function(){
+            var position1 = new BoardPosition({x:2, y:3});
+            var position2 = new BoardPosition({x:2, y:3});
+            equal(position1.isSamePositionAs(position2),true);
+        });
+
+        it("false", function(){
+            var position1 = new BoardPosition({x:3, y:2});
+            var position2 = new BoardPosition({x:2, y:3});
+            equal(position1.isSamePositionAs(position2),false);
+        });
+    });
 });

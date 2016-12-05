@@ -41,4 +41,16 @@ describe("BoardPosition", function () {
             (0, _ptzAssert.equal)(actual, null);
         });
     });
+    describe("isSamePositionAs", function () {
+        it("true", function () {
+            var position1 = new _BoardPosition2.default({ x: 2, y: 3 });
+            var position2 = new _BoardPosition2.default({ x: 2, y: 3 });
+            (0, _ptzAssert.equal)(position1.isSamePositionAs(position2), true);
+        });
+        it("false", function () {
+            var position1 = new _BoardPosition2.default({ x: 3, y: 2 });
+            var position2 = new _BoardPosition2.default({ x: 2, y: 3 });
+            (0, _ptzAssert.equal)(position1.isSamePositionAs(position2), false);
+        });
+    });
 });

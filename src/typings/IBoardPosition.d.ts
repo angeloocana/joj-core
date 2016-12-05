@@ -18,6 +18,7 @@ interface IBoardPosition {
     isBlackHome?:boolean;
 
     isBlackPiece(): boolean;
+    isSamePositionAs(comparePosition:IBoardPosition):boolean;
 }
 
 interface IBoardPositionArgs{

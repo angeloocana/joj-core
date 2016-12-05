@@ -104,12 +104,15 @@ export default class Game implements IGame {
         return nextPositionFound;
     }
 
-    move(startPosition: IBoardPosition,
-        nextPosition: IBoardPosition, backMove: boolean = false): void {
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition
+        , backMove: boolean = false): void {
+
+        if (startPosition.isSamePositionAs(nextPosition))
+            throw "ERROR_CANT_MOVE_TO_SAME_POSITION";
 
         if (!backMove)
             if (!this.canMove(startPosition, nextPosition))
-                return;
+                throw "ERROR_CANT_MOVE_TO_POSITION";
 
         this.board.move(startPosition, nextPosition
             , backMove, this.isWhiteTurn());

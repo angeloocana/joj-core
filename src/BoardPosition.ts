@@ -32,5 +32,9 @@ export default class BoardPosition implements IBoardPosition {
             return null;
 
         return this.piece === GamePieceType.black;
-    };
+    }
+
+    isSamePositionAs(comparePosition:IBoardPosition):boolean{
+        return this.x === comparePosition.x && this.y === comparePosition.y;
+    }
 }

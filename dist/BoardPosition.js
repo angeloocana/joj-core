@@ -28,6 +28,11 @@ var BoardPosition = function () {
             if (!this.piece) return null;
             return this.piece === _GamePieceType2.default.black;
         }
+    }, {
+        key: "isSamePositionAs",
+        value: function isSamePositionAs(comparePosition) {
+            return this.x === comparePosition.x && this.y === comparePosition.y;
+        }
     }]);
 
     return BoardPosition;

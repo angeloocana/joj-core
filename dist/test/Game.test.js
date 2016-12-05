@@ -21,7 +21,7 @@ var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe("Game", function () {
-    var game = void 0;
+    var game;
     describe("needToValidateMovements", function () {
         it("when null should validate");
         it("when undefined should validate");
@@ -81,6 +81,27 @@ describe("Game", function () {
             game.backMove();
             (0, _ptzAssert.equal)(gameBeforeLastMove.movements.length, game.movements.length);
             (0, _ptzAssert.deepEqual)(gameBeforeLastMove.movements, game.movements);
+        });
+    });
+    describe("Move", function () {
+        beforeEach(function () {
+            var players = new _Players2.default({
+                white: new _Player2.default({ name: "Angelo", foto: "img/black_user.png" }),
+                black: new _Player2.default({ name: "Gabi", foto: "img/white_user.png" })
+            });
+            game = new _Game2.default({
+                players: players,
+                boardArgs: {
+                    logMove: true
+                }
+            });
+        });
+        it("Block moving to same position", function () {
+            var startPosition = new _BoardPosition2.default({ x: 0, y: 0 });
+            var nextPosition = new _BoardPosition2.default({ x: 0, y: 0 });
+            (0, _ptzAssert.throws)(function () {
+                game.move(startPosition, nextPosition);
+            });
         });
     });
 });

@@ -108,7 +108,8 @@ var Game = function () {
         value: function move(startPosition, nextPosition) {
             var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-            if (!backMove) if (!this.canMove(startPosition, nextPosition)) return;
+            if (startPosition.isSamePositionAs(nextPosition)) throw "ERROR_CANT_MOVE_TO_SAME_POSITION";
+            if (!backMove) if (!this.canMove(startPosition, nextPosition)) throw "ERROR_CANT_MOVE_TO_POSITION";
             this.board.move(startPosition, nextPosition, backMove, this.isWhiteTurn());
             this.black.move(startPosition, nextPosition);
             this.white.move(startPosition, nextPosition);

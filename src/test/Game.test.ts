@@ -1,11 +1,11 @@
 ﻿import Game from "../Game";
-import { ok, deepEqual, equal, notEqual } from "ptz-assert";
+import { ok, deepEqual, equal, notEqual, throws } from "ptz-assert";
 import Players from "../Players";
 import Player from "../Player";
 import BoardPosition from "../BoardPosition";
 
 describe("Game", function () {
-    let game: IGame;
+    var game: IGame;
 
     describe("needToValidateMovements", () => {
         it("when null should validate");
@@ -78,6 +78,31 @@ describe("Game", function () {
 
             equal(gameBeforeLastMove.movements.length, game.movements.length);
             deepEqual(gameBeforeLastMove.movements, game.movements);
+        });
+    });
+
+    describe("Move", () => {
+        beforeEach(() => {
+            var players = new Players({
+                white: new Player({ name: "Angelo", foto: "img/black_user.png" }),
+                black: new Player({ name: "Gabi", foto: "img/white_user.png" })
+            });
+
+            game = new Game({
+                players,
+                boardArgs: {
+                    logMove: true
+                }
+            });
+        });
+
+        it("Block moving to same position", () => {
+            var startPosition = new BoardPosition({ x: 0, y: 0 });
+            var nextPosition = new BoardPosition({ x: 0, y: 0 });
+
+            throws(() => {
+                game.move(startPosition, nextPosition);
+            });
         });
     });
 });
