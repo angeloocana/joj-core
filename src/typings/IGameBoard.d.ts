@@ -1,31 +1,31 @@
 interface IGameBoard {
-    board: IGamePosition[][];
+    board: IBoardPosition[][];
     boardOptions: IBoardOptions;
 
     /**
      * 
      * @piece GamePieceType
      */
-    fillPiecesOnBoard(pieces: IGamePosition[], piece: string)
+    fillPiecesOnBoard(pieces: IBoardPosition[], piece: string)
         : void;
 
     generateBoard();
     fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[]);
-    boardHasThisPosition(position: IGamePosition): boolean;
-    getPosition(position: IGamePosition): IGamePosition;
-    isPositionEmpty(position: IGamePosition): boolean;
-    getNearPositions(position, onlyEmpty): IGamePosition[];
-    getJumpPosition(startPosition: IGamePosition, toJumpPosition: IGamePosition)
-        : IGamePosition;
+    boardHasThisPosition(position: IBoardPosition): boolean;
+    getPosition(position: IBoardPosition): IBoardPosition;
+    isPositionEmpty(position: IBoardPosition): boolean;
+    getNearPositions(position, onlyEmpty): IBoardPosition[];
+    getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition)
+        : IBoardPosition;
 
-    whereCanIJump(jumpStartPosition: IGamePosition, positions,
-        orderedPositions: IGamePosition[][], isBlack: boolean): void;
+    whereCanIJump(jumpStartPosition: IBoardPosition, positions,
+        orderedPositions: IBoardPosition[][], isBlack: boolean): void;
 
-    getPositionsWhereCanIGo(startPosition: IGamePosition,
+    getPositionsWhereCanIGo(startPosition: IBoardPosition,
         isBlack: boolean): IPositionsWhereCanIGo;
-    setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void;
+    setWhereCanIGo(startPosition: IBoardPosition, blackPiece: boolean): void;
     cleanBoardWhereCanIGo(): void;
-    move(startPosition: IGamePosition, nextPosition: IGamePosition,
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
         backMove?: boolean, whiteTurn?: boolean): void;
     printUnicode(): string;
     logMove:boolean;

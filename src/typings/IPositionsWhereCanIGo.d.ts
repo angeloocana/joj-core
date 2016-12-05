@@ -1,4 +1,4 @@
 interface IPositionsWhereCanIGo {
-    positions: IGamePosition[];
-    orderedPositions: IGamePosition[][];
+    positions: IBoardPosition[];
+    orderedPositions: IBoardPosition[][];
 }

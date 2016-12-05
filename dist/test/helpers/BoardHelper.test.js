@@ -6,6 +6,10 @@ var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
 
 var _ptzAssert = require("ptz-assert");
 
+var _BoardPosition = require("../../BoardPosition");
+
+var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe("GameBoard", function () {
@@ -19,13 +23,13 @@ describe("GameBoard", function () {
     });
     describe("isPositionNotAdded", function () {
         it("added", function () {
-            var position = { "x": 5, "y": 2 };
-            var positions = [{ "x": 4, "y": 0 }, { "x": 3, "y": 0 }];
+            var position = new _BoardPosition2.default({ "x": 5, "y": 2 });
+            var positions = [new _BoardPosition2.default({ "x": 4, "y": 0 }), new _BoardPosition2.default({ "x": 3, "y": 0 })];
             (0, _ptzAssert.ok)(_BoardHelper2.default.isPositionNotAdded(position, positions));
         });
         it("not added", function () {
-            var position = { "x": 3, "y": 0 };
-            var positions = [{ "x": 4, "y": 0 }, { "x": 3, "y": 0 }];
+            var position = new _BoardPosition2.default({ "x": 3, "y": 0 });
+            var positions = [new _BoardPosition2.default({ "x": 4, "y": 0 }), new _BoardPosition2.default({ "x": 3, "y": 0 })];
             (0, _ptzAssert.notOk)(_BoardHelper2.default.isPositionNotAdded(position, positions));
         });
     });

@@ -10,6 +10,6 @@ interface IGameColor {
 
     setColorWinners(): void;
     win(): boolean;
-    move(startPosition: IGamePosition, nextPosition: IGamePosition)
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition)
         : void;
 }

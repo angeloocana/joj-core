@@ -10,13 +10,13 @@ var _BoardHelper = require("./helpers/BoardHelper");
 
 var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
 
-var _PieceHelper = require("./helpers/PieceHelper");
-
-var _PieceHelper2 = _interopRequireDefault(_PieceHelper);
-
 var _GamePieceType = require("./GamePieceType");
 
 var _GamePieceType2 = _interopRequireDefault(_GamePieceType);
+
+var _BoardPosition = require("./BoardPosition");
+
+var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,7 +55,7 @@ var GameBoard = function () {
             for (var x = 0; x < this.boardOptions.size.x; x++) {
                 for (var y = 0; y < this.boardOptions.size.y; y++) {
                     if (!this.board[x]) this.board[x] = [];
-                    var position = { x: x, y: y };
+                    var position = new _BoardPosition2.default({ x: x, y: y });
                     if (y === this.boardOptions.size.y - 1) position.isWhiteHome = true;
                     if (y === 0) position.isBlackHome = true;
                     this.board[x][y] = position;
@@ -90,10 +90,10 @@ var GameBoard = function () {
             var positions = [];
             var board = this;
             var add = function add(plusX, plusY, board) {
-                var newPosition = {
+                var newPosition = new _BoardPosition2.default({
                     x: position.x + plusX,
                     y: position.y + plusY
-                };
+                });
                 if (!board.boardHasThisPosition(newPosition)) return;
                 if (typeof onlyEmpty != "undefined") {
                     var positionEmpty = board.isPositionEmpty(newPosition);
@@ -113,10 +113,7 @@ var GameBoard = function () {
     }, {
         key: "getJumpPosition",
         value: function getJumpPosition(startPosition, toJumpPosition) {
-            var jumpPosition = {
-                x: 0,
-                y: 0
-            };
+            var jumpPosition = new _BoardPosition2.default({ x: 0, y: 0 });
             if (startPosition.x < toJumpPosition.x) jumpPosition.x = toJumpPosition.x + 1;else if (startPosition.x > toJumpPosition.x) jumpPosition.x = toJumpPosition.x - 1;else jumpPosition.x = toJumpPosition.x;
             if (startPosition.y < toJumpPosition.y) jumpPosition.y = toJumpPosition.y + 1;else if (startPosition.y > toJumpPosition.y) jumpPosition.y = toJumpPosition.y - 1;else jumpPosition.y = toJumpPosition.y;
             if (this.boardHasThisPosition(jumpPosition) && this.isPositionEmpty(jumpPosition)) return jumpPosition;
@@ -132,7 +129,7 @@ var GameBoard = function () {
                 if (jumpPosition) {
                     if (_BoardHelper2.default.isPositionNotAdded(jumpPosition, positions)) {
                         jumpPosition.lastPosition = jumpStartPosition;
-                        jumpPosition.jumpingBlackPiece = _PieceHelper2.default.isBlackPiece(nearFilledPosition);
+                        jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlackPiece();
                         jumpPosition.jumps = jumpStartPosition.jumps ? jumpStartPosition.jumps++ : 2;
                         positions.push(jumpPosition);
                         var y = _BoardHelper2.default.getY0Start7End(jumpPosition.y, isBlack);

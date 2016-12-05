@@ -1,4 +1,4 @@
-let cleanBoard: IGamePosition[][] = [
+let cleanBoard = [
   [{ x: 0, y: 0, isBlackHome: true }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4 }, { x: 0, y: 5 }, { x: 0, y: 6 }, { x: 0, y: 7, isWhiteHome: true }],
   [{ x: 1, y: 0, isBlackHome: true }, { x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 4 }, { x: 1, y: 5 }, { x: 1, y: 6 }, { x: 1, y: 7, isWhiteHome: true }],
   [{ x: 2, y: 0, isBlackHome: true }, { x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 5 }, { x: 2, y: 6 }, { x: 2, y: 7, isWhiteHome: true }],
@@ -9,7 +9,7 @@ let cleanBoard: IGamePosition[][] = [
   [{ x: 7, y: 0, isBlackHome: true }, { x: 7, y: 1 }, { x: 7, y: 2 }, { x: 7, y: 3 }, { x: 7, y: 4 }, { x: 7, y: 5 }, { x: 7, y: 6 }, { x: 7, y: 7, isWhiteHome: true }]
 ];
 
-let boardStartPositions: IGamePosition[][] = [
+let boardStartPositions = [
   [{ x: 0, y: 0, isBlackHome: true, piece: 'B' }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4 }, { x: 0, y: 5 }, { x: 0, y: 6 }, { x: 0, y: 7, isWhiteHome: true, piece: 'W' }],
   [{ x: 1, y: 0, isBlackHome: true, piece: 'B' }, { x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 4 }, { x: 1, y: 5 }, { x: 1, y: 6 }, { x: 1, y: 7, isWhiteHome: true, piece: 'W' }],
   [{ x: 2, y: 0, isBlackHome: true, piece: 'B' }, { x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 5 }, { x: 2, y: 6 }, { x: 2, y: 7, isWhiteHome: true, piece: 'W' }],

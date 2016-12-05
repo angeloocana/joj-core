@@ -14,6 +14,10 @@ var _Player = require("../Player");
 
 var _Player2 = _interopRequireDefault(_Player);
 
+var _BoardPosition = require("../BoardPosition");
+
+var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe("Game", function () {
@@ -71,9 +75,9 @@ describe("Game", function () {
                     logMove: true
                 }
             });
-            game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+            game.move(new _BoardPosition2.default({ x: 2, y: 7 }), new _BoardPosition2.default({ x: 2, y: 6 }));
             var gameBeforeLastMove = game.getCopy();
-            game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
+            game.move(new _BoardPosition2.default({ x: 2, y: 0 }), new _BoardPosition2.default({ x: 2, y: 1 }));
             game.backMove();
             (0, _ptzAssert.equal)(gameBeforeLastMove.movements.length, game.movements.length);
             (0, _ptzAssert.deepEqual)(gameBeforeLastMove.movements, game.movements);

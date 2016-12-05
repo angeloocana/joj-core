@@ -1,7 +1,7 @@
 interface IBoardHelper {
     isBackGroundBlack(x: number, y: number): boolean;
 
-    isPositionNotAdded(position: IGamePosition, positions: IGamePosition[]): boolean;
+    isPositionNotAdded(position: IBoardPosition, positions: IBoardPosition[]): boolean;
 
     getIndexToSearchOrder(x: number): number;
 

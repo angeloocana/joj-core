@@ -8,7 +8,7 @@ export default class GameColor implements IGameColor {
     nMoves: number = 0;
     startRow: number;
     endRow: number;
-    pieces: IGamePosition[];
+    pieces: IBoardPosition[];
 
     /**
      * Get a clean game color
@@ -40,7 +40,7 @@ export default class GameColor implements IGameColor {
         return this.winners === this.pieces.length;
     }
 
-    move(startPosition: IGamePosition, nextPosition: IGamePosition)
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition)
         : void {
 
         this.pieces.forEach(piece => {

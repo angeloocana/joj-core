@@ -12,7 +12,7 @@ let isBackGroundBlack = function (x: number, y: number): boolean {
     }
 };
 
-let isPositionNotAdded = function (position: IGamePosition, positions: IGamePosition[])
+let isPositionNotAdded = function (position: IBoardPosition, positions: IBoardPosition[])
     : boolean {
 
     return positions.find(p =>

@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _PieceHelper = require("./helpers/PieceHelper");
-
-var _PieceHelper2 = _interopRequireDefault(_PieceHelper);
-
 var _GameBoard = require("./GameBoard");
 
 var _GameBoard2 = _interopRequireDefault(_GameBoard);
@@ -21,6 +17,10 @@ var _GameColor2 = _interopRequireDefault(_GameColor);
 var _ptzCopy = require("ptz-copy");
 
 var _ptzCopy2 = _interopRequireDefault(_ptzCopy);
+
+var _BoardPosition = require("./BoardPosition");
+
+var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -70,10 +70,9 @@ var Game = function () {
             };
             for (var i = 0; i < this.movements.length; i++) {
                 var move = this.movements[i];
-                cleanGame.movements.push({
-                    startPosition: { x: move.startPosition.x, y: move.startPosition.y },
-                    nextPosition: { x: move.nextPosition.x, y: move.nextPosition.y }
-                });
+                var startPosition = new _BoardPosition2.default({ x: move.startPosition.x, y: move.startPosition.y });
+                var nextPosition = new _BoardPosition2.default({ x: move.nextPosition.x, y: move.nextPosition.y });
+                cleanGame.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
             }
             return cleanGame;
         }
@@ -81,7 +80,7 @@ var Game = function () {
         key: "setWhereCanIGo",
         value: function setWhereCanIGo(startPosition) {
             this.board.cleanBoardWhereCanIGo();
-            var blackPiece = _PieceHelper2.default.isBlackPiece(startPosition);
+            var blackPiece = startPosition.isBlackPiece();
             var whiteTurn = this.isWhiteTurn();
             if (this.ended || blackPiece === null || !blackPiece && !whiteTurn || blackPiece && whiteTurn) return;
             this.board.setWhereCanIGo(startPosition, blackPiece);

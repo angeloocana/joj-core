@@ -3,7 +3,7 @@
 /// <reference path="IGamePiece.d.ts" />
 /// <reference path="IMove.d.ts" />
 /// <reference path="IAi.d.ts" />
-/// <reference path="IGamePosition.d.ts" />
+/// <reference path="IBoardPosition.d.ts" />
 /// <reference path="IPlayer.d.ts" />
 /// <reference path="IPlayers.d.ts" />
 /// <reference path="IGameBoard.d.ts" />
@@ -39,10 +39,10 @@ declare module jojCore {
 
         setWhereCanIGo(startPosition): void;
         verifyWinner(): void;
-        canMove(startPosition: IGamePosition,
-            nextPosition: IGamePosition): boolean;
-        move(startPosition: IGamePosition,
-            nextPosition: IGamePosition, backMove?: boolean): void;
+        canMove(startPosition: IBoardPosition,
+            nextPosition: IBoardPosition): boolean;
+        move(startPosition: IBoardPosition,
+            nextPosition: IBoardPosition, backMove?: boolean): void;
         backMove(): void;
 
         getColorTurn(): IGameColor;
@@ -54,33 +54,33 @@ declare module jojCore {
 
     class GameBoard implements IGameBoard {
         constructor(args?: IGameBoardArgs);
-        board: IGamePosition[][];
+        board: IBoardPosition[][];
         boardOptions: IBoardOptions;
 
         /**
          * 
          * @piece GamePieceType
          */
-        fillPiecesOnBoard(pieces: IGamePosition[], piece: string)
+        fillPiecesOnBoard(pieces: IBoardPosition[], piece: string)
             : void;
 
         generateBoard();
         fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[]);
-        boardHasThisPosition(position: IGamePosition): boolean;
-        getPosition(position: IGamePosition): IGamePosition;
-        isPositionEmpty(position: IGamePosition): boolean;
-        getNearPositions(position, onlyEmpty): IGamePosition[];
-        getJumpPosition(startPosition: IGamePosition, toJumpPosition: IGamePosition)
-            : IGamePosition
+        boardHasThisPosition(position: IBoardPosition): boolean;
+        getPosition(position: IBoardPosition): IBoardPosition;
+        isPositionEmpty(position: IBoardPosition): boolean;
+        getNearPositions(position, onlyEmpty): IBoardPosition[];
+        getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition)
+            : IBoardPosition
 
-        whereCanIJump(jumpStartPosition: IGamePosition, positions,
-            orderedPositions: IGamePosition[][], isBlack: boolean): void;
+        whereCanIJump(jumpStartPosition: IBoardPosition, positions,
+            orderedPositions: IBoardPosition[][], isBlack: boolean): void;
 
-        getPositionsWhereCanIGo(startPosition: IGamePosition,
+        getPositionsWhereCanIGo(startPosition: IBoardPosition,
             isBlack: boolean): IPositionsWhereCanIGo;
-        setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void;
+        setWhereCanIGo(startPosition: IBoardPosition, blackPiece: boolean): void;
         cleanBoardWhereCanIGo(): void;
-        move(startPosition: IGamePosition, nextPosition: IGamePosition,
+        move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
             backMove?: boolean, whiteTurn?: boolean): void;
         printUnicode(): string;
         logMove:boolean;
@@ -99,7 +99,7 @@ declare module jojCore {
 
         setColorWinners(): void;
         win(): boolean;
-        move(startPosition: IGamePosition, nextPosition: IGamePosition)
+        move(startPosition: IBoardPosition, nextPosition: IBoardPosition)
             : void;
     }
 

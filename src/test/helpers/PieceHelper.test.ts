@@ -9,33 +9,5 @@ describe("PieceHelper", function () {
         let pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
 
         deepEqual(PieceHelper.getStartPieces(boardOptions, row), pieces);
-    });
-
-    it("isBlackPiece should return true", function () {
-        let position: IGamePosition = {
-            piece: "BLACK",
-            x: 0,
-            y: 0
-        }
-        ok(PieceHelper.isBlackPiece(position));
-    });
-
-    it("isBlackPiece should return false", function () {
-        let position: IGamePosition = {
-            piece: "WHITE",
-            x: 0,
-            y: 0
-        }
-        ok(!PieceHelper.isBlackPiece(position));
-    });
-
-    it("isBlackPiece should return null", function () {
-        let position: IGamePosition = {
-            piece: null,
-            x: 0,
-            y: 0
-        }
-
-        equal(PieceHelper.isBlackPiece(position), null);
-    });
+    });    
 });

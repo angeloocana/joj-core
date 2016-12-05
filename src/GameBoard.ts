@@ -1,10 +1,11 @@
 import BoardHelper from "./helpers/BoardHelper";
 import PieceHelper from "./helpers/PieceHelper";
 import GamePieceType from "./GamePieceType";
+import BoardPosition from "./BoardPosition";
 
 export default class GameBoard implements IGameBoard {
 
-    board: IGamePosition[][];
+    board: IBoardPosition[][];
     boardOptions: IBoardOptions;
     logMove: boolean;
 
@@ -48,7 +49,7 @@ export default class GameBoard implements IGameBoard {
                 if (!this.board[x])
                     this.board[x] = [];
 
-                let position: IGamePosition = { x, y };
+                let position: IBoardPosition = new BoardPosition({ x, y });
 
                 if (y === this.boardOptions.size.y - 1)
                     position.isWhiteHome = true;
@@ -61,7 +62,7 @@ export default class GameBoard implements IGameBoard {
         }
     }
 
-    boardHasThisPosition(position: IGamePosition): boolean {
+    boardHasThisPosition(position: IBoardPosition): boolean {
         return (position.x < 0
             || position.y < 0
             || position.x >= this.boardOptions.size.x
@@ -69,7 +70,7 @@ export default class GameBoard implements IGameBoard {
             ? false : true;
     }
 
-    getPosition(position: IGamePosition): IGamePosition {
+    getPosition(position: IBoardPosition): IBoardPosition {
         try {
             return this.board[position.x][position.y];
         }
@@ -81,18 +82,18 @@ export default class GameBoard implements IGameBoard {
         }
     }
 
-    isPositionEmpty(position: IGamePosition): boolean {
+    isPositionEmpty(position: IBoardPosition): boolean {
         return !(this.getPosition(position).piece);
     }
 
-    getNearPositions(position, onlyEmpty): IGamePosition[] {
-        let positions: IGamePosition[] = [];
+    getNearPositions(position, onlyEmpty): IBoardPosition[] {
+        let positions: IBoardPosition[] = [];
         let board = this;
         let add = function (plusX: number, plusY: number, board: IGameBoard) {
-            let newPosition: IGamePosition = {
+            let newPosition: IBoardPosition = new BoardPosition({
                 x: position.x + plusX,
                 y: position.y + plusY
-            }
+            });
 
             if (!board.boardHasThisPosition(newPosition))
                 return;
@@ -120,12 +121,9 @@ export default class GameBoard implements IGameBoard {
         return positions;
     }
 
-    getJumpPosition(startPosition: IGamePosition, toJumpPosition: IGamePosition)
-        : IGamePosition {
-        let jumpPosition: IGamePosition = {
-            x: 0,
-            y: 0
-        };
+    getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition)
+        : IBoardPosition {
+        let jumpPosition: IBoardPosition = new BoardPosition({ x: 0, y: 0 });
 
         if (startPosition.x < toJumpPosition.x)
             jumpPosition.x = toJumpPosition.x + 1;
@@ -145,15 +143,15 @@ export default class GameBoard implements IGameBoard {
     }
 
 
-    whereCanIJump(jumpStartPosition: IGamePosition, positions,
-        orderedPositions: IGamePosition[][], isBlack: boolean)
+    whereCanIJump(jumpStartPosition: IBoardPosition, positions,
+        orderedPositions: IBoardPosition[][], isBlack: boolean)
         : void {
 
-        let nearFilledPositions: IGamePosition[]
+        let nearFilledPositions: IBoardPosition[]
             = this.getNearPositions(jumpStartPosition, false);
 
         nearFilledPositions.forEach(nearFilledPosition => {
-            let jumpPosition: IGamePosition
+            let jumpPosition: IBoardPosition
                 = this.getJumpPosition(jumpStartPosition,
                     nearFilledPosition);
 
@@ -162,7 +160,7 @@ export default class GameBoard implements IGameBoard {
                     positions)) {
 
                     jumpPosition.lastPosition = jumpStartPosition;
-                    jumpPosition.jumpingBlackPiece = PieceHelper.isBlackPiece(nearFilledPosition);
+                    jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlackPiece();
                     jumpPosition.jumps = jumpStartPosition.jumps ? jumpStartPosition.jumps++ : 2;
 
                     positions.push(jumpPosition);
@@ -177,7 +175,7 @@ export default class GameBoard implements IGameBoard {
         });
     }
 
-    getPositionsWhereCanIGo(startPosition: IGamePosition,
+    getPositionsWhereCanIGo(startPosition: IBoardPosition,
         isBlack: boolean): IPositionsWhereCanIGo {
         if (!startPosition)
             return null;
@@ -220,7 +218,7 @@ export default class GameBoard implements IGameBoard {
         }
     }
 
-    setWhereCanIGo(startPosition: IGamePosition, blackPiece: boolean): void {
+    setWhereCanIGo(startPosition: IBoardPosition, blackPiece: boolean): void {
         let positions = this.getPositionsWhereCanIGo(startPosition, blackPiece).positions;
 
         positions.forEach(position => {
@@ -268,7 +266,7 @@ export default class GameBoard implements IGameBoard {
         return board;
     }
 
-    move(startPosition: IGamePosition, nextPosition: IGamePosition,
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
         backMove?: boolean, whiteTurn?: boolean): void {
         if (backMove) {
             this.board[nextPosition.x][nextPosition.y].piece
@@ -292,6 +290,6 @@ export default class GameBoard implements IGameBoard {
 
         if (this.logMove)
             console.log(this.printUnicode());
-    }   
-} 
+    }
+}
 

@@ -15,28 +15,4 @@ describe("PieceHelper", function () {
         var pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
         (0, _ptzAssert.deepEqual)(_PieceHelper2.default.getStartPieces(boardOptions, row), pieces);
     });
-    it("isBlackPiece should return true", function () {
-        var position = {
-            piece: "BLACK",
-            x: 0,
-            y: 0
-        };
-        (0, _ptzAssert.ok)(_PieceHelper2.default.isBlackPiece(position));
-    });
-    it("isBlackPiece should return false", function () {
-        var position = {
-            piece: "WHITE",
-            x: 0,
-            y: 0
-        };
-        (0, _ptzAssert.ok)(!_PieceHelper2.default.isBlackPiece(position));
-    });
-    it("isBlackPiece should return null", function () {
-        var position = {
-            piece: null,
-            x: 0,
-            y: 0
-        };
-        (0, _ptzAssert.equal)(_PieceHelper2.default.isBlackPiece(position), null);
-    });
 });

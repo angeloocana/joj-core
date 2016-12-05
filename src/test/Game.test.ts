@@ -1,7 +1,8 @@
-﻿import Game from '../Game';
+﻿import Game from "../Game";
 import { ok, deepEqual, equal, notEqual } from "ptz-assert";
 import Players from "../Players";
 import Player from "../Player";
+import BoardPosition from "../BoardPosition";
 
 describe("Game", function () {
     let game: IGame;
@@ -67,11 +68,11 @@ describe("Game", function () {
                 }
             });
 
-            game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+            game.move(new BoardPosition({ x: 2, y: 7 }), new BoardPosition({ x: 2, y: 6 }));
 
             let gameBeforeLastMove = game.getCopy();
 
-            game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
+            game.move(new BoardPosition({ x: 2, y: 0 }), new BoardPosition({ x: 2, y: 1 }));
 
             game.backMove();
 

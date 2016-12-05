@@ -3,6 +3,7 @@ import GameBoard from "./GameBoard";
 import GameColor from "./GameColor";
 import Players from "./Players";
 import copy from "ptz-copy";
+import BoardPosition from "./BoardPosition";
 
 export default class Game implements IGame {
     ended: boolean = false;
@@ -55,19 +56,18 @@ export default class Game implements IGame {
 
         for (let i = 0; i < this.movements.length; i++) {
             let move = this.movements[i];
-            cleanGame.movements.push({
-                startPosition: { x: move.startPosition.x, y: move.startPosition.y },
-                nextPosition: { x: move.nextPosition.x, y: move.nextPosition.y }
-            });
+            let startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
+            let nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
+            cleanGame.movements.push({ startPosition, nextPosition });
         }
 
         return cleanGame;
     }
 
-    setWhereCanIGo(startPosition): void {
+    setWhereCanIGo(startPosition: IBoardPosition): void {
         this.board.cleanBoardWhereCanIGo();
 
-        let blackPiece = PieceHelper.isBlackPiece(startPosition);
+        let blackPiece = startPosition.isBlackPiece();
         let whiteTurn = this.isWhiteTurn();
 
         if (this.ended || blackPiece === null
@@ -88,8 +88,8 @@ export default class Game implements IGame {
             this.blackWin = true;
     }
 
-    canMove(startPosition: IGamePosition,
-        nextPosition: IGamePosition): boolean {
+    canMove(startPosition: IBoardPosition,
+        nextPosition: IBoardPosition): boolean {
 
         var positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
         var nextPositionFound = false;
@@ -104,8 +104,8 @@ export default class Game implements IGame {
         return nextPositionFound;
     }
 
-    move(startPosition: IGamePosition,
-        nextPosition: IGamePosition, backMove: boolean = false): void {
+    move(startPosition: IBoardPosition,
+        nextPosition: IBoardPosition, backMove: boolean = false): void {
 
         if (!backMove)
             if (!this.canMove(startPosition, nextPosition))

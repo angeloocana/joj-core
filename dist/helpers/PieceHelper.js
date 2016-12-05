@@ -8,26 +8,19 @@ var _BoardHelper = require("./BoardHelper");
 
 var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
 
-var _GamePieceType = require("../GamePieceType");
+var _BoardPosition = require("../BoardPosition");
 
-var _GamePieceType2 = _interopRequireDefault(_GamePieceType);
+var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var getStartPieces = function getStartPieces(boardOptions, startRow) {
     var pieces = [];
     for (var x = 0; x < boardOptions.size.x; x++) {
-        var piece = {
-            x: x,
-            y: startRow
-        };
+        var piece = new _BoardPosition2.default({ x: x, y: startRow });
         pieces.push(piece);
     }
     return pieces;
-};
-var isBlackPiece = function isBlackPiece(position) {
-    if (!position || !position.piece) return null;
-    return position.piece === _GamePieceType2.default.black;
 };
 var getOtherPieces = function getOtherPieces(pieces, remove) {
     return pieces.filter(function (piece) {
@@ -45,7 +38,6 @@ var getPiecesOrdered = function getPiecesOrdered(pieces, isBlack) {
 var pieceHelper = {
     getOtherPieces: getOtherPieces,
     getPiecesOrdered: getPiecesOrdered,
-    getStartPieces: getStartPieces,
-    isBlackPiece: isBlackPiece
+    getStartPieces: getStartPieces
 };
 exports.default = pieceHelper;

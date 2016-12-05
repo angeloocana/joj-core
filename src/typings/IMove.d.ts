@@ -1,4 +1,4 @@
 interface IMove {
-    startPosition: IGamePosition;
-    nextPosition: IGamePosition;
+    startPosition: IBoardPosition;
+    nextPosition: IBoardPosition;
 } 

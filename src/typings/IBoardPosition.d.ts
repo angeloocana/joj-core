@@ -1,4 +1,4 @@
-interface IGamePosition {
+interface IBoardPosition {
     x: number;
     y: number;
 
@@ -6,7 +6,7 @@ interface IGamePosition {
 
     lastMoviment?: IMove;
 
-    lastPosition?: IGamePosition;
+    lastPosition?: IBoardPosition;
     jumpingBlackPiece?: boolean;
     jumps?: number;
 
@@ -16,4 +16,11 @@ interface IGamePosition {
 
     isWhiteHome?:boolean;
     isBlackHome?:boolean;
+
+    isBlackPiece(): boolean;
+}
+
+interface IBoardPositionArgs{
+    x: number;
+    y: number;
 }

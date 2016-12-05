@@ -1,5 +1,6 @@
 ﻿import BoardHelper from "../../helpers/BoardHelper";
 import { ok, notOk, equal } from "ptz-assert";
+import BoardPosition from "../../BoardPosition";
 
 describe("GameBoard", function () {
 
@@ -15,19 +16,19 @@ describe("GameBoard", function () {
 
     describe("isPositionNotAdded", () => {
         it("added", function () {
-            let position = { "x": 5, "y": 2 };
+            let position = new BoardPosition({ "x": 5, "y": 2 });
 
-            let positions = [{ "x": 4, "y": 0 },
-            { "x": 3, "y": 0 }];
+            let positions = [new BoardPosition({ "x": 4, "y": 0 }),
+                             new BoardPosition({ "x": 3, "y": 0 })];
 
             ok(BoardHelper.isPositionNotAdded(position, positions));
         });
 
         it("not added", function () {
-            let position = { "x": 3, "y": 0 };
+            let position = new BoardPosition({ "x": 3, "y": 0 });
 
-            let positions = [{ "x": 4, "y": 0 },
-            { "x": 3, "y": 0 }];
+            let positions = [new BoardPosition({ "x": 4, "y": 0 }),
+            new BoardPosition({ "x": 3, "y": 0 })];
 
             notOk(BoardHelper.isPositionNotAdded(position, positions));
         });

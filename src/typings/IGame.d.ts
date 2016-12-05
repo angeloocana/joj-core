@@ -6,15 +6,13 @@ interface IGame extends ICleanGame {
     board: IGameBoard;
 
     isWhiteTurn(): boolean;
-    
+
     getCleanGameToSaveOnServer(): ICleanGame;
 
     setWhereCanIGo(startPosition): void;
     verifyWinner(): void;
-    canMove(startPosition: IGamePosition,
-        nextPosition: IGamePosition): boolean;
-    move(startPosition: IGamePosition,
-        nextPosition: IGamePosition, backMove?: boolean): void;
+    canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean;
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove?: boolean): void;
     backMove(): void;
 
     getColorTurn(): IGameColor;
