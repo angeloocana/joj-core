@@ -12,18 +12,18 @@ function getStartPieces(boardOptions: IBoardOptions, startRow: number, isBlack: 
     return pieces;
 };
 
-function getOtherPieces(pieces: IBoardPosition[], remove: IBoardPosition)
-    : IBoardPosition[] {
+function getOtherPieces(pieces: IGamePiece[], remove: IGamePiece)
+    : IGamePiece[] {
     return pieces.filter(piece =>
-        piece && (piece.x !== remove.x || piece.y !== remove.y));
+        piece && !piece.position.isSamePositionAs(remove.position));
 };
 
-function getPiecesOrdered(pieces: IBoardPosition[], isBlack: boolean)
-    : IBoardPosition[][] {
-    let ordered: IBoardPosition[][] = [];
+function getPiecesOrdered(pieces: IGamePiece[], isBlack: boolean)
+    : IGamePiece[][] {
+    let ordered: IGamePiece[][] = [];
 
     pieces.forEach(piece => {
-        let y = BoardHelper.getY0Start7End(piece.y, isBlack);
+        let y = BoardHelper.getY0Start7End(piece.position.y, isBlack);
         if (!ordered[y])
             ordered[y] = [piece];
         else

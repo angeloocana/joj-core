@@ -25,14 +25,14 @@ function getStartPieces(boardOptions, startRow, isBlack) {
 ;
 function getOtherPieces(pieces, remove) {
     return pieces.filter(function (piece) {
-        return piece && (piece.x !== remove.x || piece.y !== remove.y);
+        return piece && !piece.position.isSamePositionAs(remove.position);
     });
 }
 ;
 function getPiecesOrdered(pieces, isBlack) {
     var ordered = [];
     pieces.forEach(function (piece) {
-        var y = _BoardHelper2.default.getY0Start7End(piece.y, isBlack);
+        var y = _BoardHelper2.default.getY0Start7End(piece.position.y, isBlack);
         if (!ordered[y]) ordered[y] = [piece];else ordered[y].push(piece);
     });
     return ordered;

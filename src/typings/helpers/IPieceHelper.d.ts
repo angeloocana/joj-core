@@ -1,9 +1,7 @@
 interface IPieceHelper {
     getStartPieces(boardOptions: IBoardOptions, startRow: number, isBlack: boolean): IGamePiece[];
 
-    getOtherPieces(pieces: IBoardPosition[], remove: IBoardPosition)
-        : IBoardPosition[];
+    getOtherPieces(pieces: IGamePiece[], remove: IGamePiece): IGamePiece[];
 
-    getPiecesOrdered(pieces: IBoardPosition[], isBlack: boolean)
-        : IBoardPosition[][];
+    getPiecesOrdered(pieces: IGamePiece[], isBlack: boolean): IGamePiece[][];
 }
