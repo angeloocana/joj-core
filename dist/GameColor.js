@@ -26,7 +26,7 @@ var GameColor = function () {
         var y = boardOptions.size.y - 1;
         this.startRow = isBlack ? 0 : y;
         this.endRow = isBlack ? y : 0;
-        this.pieces = _PieceHelper2.default.getStartPieces(boardOptions, this.startRow);
+        this.pieces = _PieceHelper2.default.getStartPieces(boardOptions, this.startRow, isBlack);
     }
 
     _createClass(GameColor, [{
@@ -36,7 +36,7 @@ var GameColor = function () {
             this.preWinnersPoints = 0;
             for (var i = 0; i < this.pieces.length; i++) {
                 var piece = this.pieces[i];
-                if (piece.y === this.endRow) this.winners++;else this.preWinnersPoints += this.endRow === 0 ? this.startRow - piece.y : piece.y;
+                if (piece.position.y === this.endRow) this.winners++;else this.preWinnersPoints += this.endRow === 0 ? this.startRow - piece.position.y : piece.position.y;
             }
         }
     }, {
@@ -48,9 +48,9 @@ var GameColor = function () {
         key: "move",
         value: function move(startPosition, nextPosition) {
             this.pieces.forEach(function (piece) {
-                if (piece.x === startPosition.x && piece.y === startPosition.y) {
-                    piece.x = nextPosition.x;
-                    piece.y = nextPosition.y;
+                if (piece.position.x === startPosition.x && piece.position.y === startPosition.y) {
+                    piece.position.x = nextPosition.x;
+                    piece.position.y = nextPosition.y;
                 }
             });
         }

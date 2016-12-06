@@ -1,6 +1,5 @@
 interface IGamePiece {
-    x: number;
-    y: number;
+    position: IBoardPosition;
 
     whereCanIGo?: IPositionsWhereCanIGo;
     movimentsToWin?: number[];

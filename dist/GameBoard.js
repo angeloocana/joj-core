@@ -10,10 +10,6 @@ var _BoardHelper = require("./helpers/BoardHelper");
 
 var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
 
-var _GamePieceType = require("./GamePieceType");
-
-var _GamePieceType2 = _interopRequireDefault(_GamePieceType);
-
 var _BoardPosition = require("./BoardPosition");
 
 var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
@@ -35,18 +31,19 @@ var GameBoard = function () {
 
     _createClass(GameBoard, [{
         key: "fillPiecesOnBoard",
-        value: function fillPiecesOnBoard(pieces, pieceType) {
+        value: function fillPiecesOnBoard(pieces) {
+            var _this = this;
+
             if (!pieces) return;
-            for (var i = 0; i < pieces.length; i++) {
-                var piece = pieces[i];
-                this.board[piece.x][piece.y].piece = pieceType;
-            }
+            pieces.forEach(function (piece) {
+                return _this.getPosition(piece.position).setPiece(piece.position.isBlackPiece());
+            });
         }
     }, {
         key: "fillAllPiecesOnBoard",
         value: function fillAllPiecesOnBoard(whitePieces, blackPieces) {
-            this.fillPiecesOnBoard(whitePieces, _GamePieceType2.default.white);
-            this.fillPiecesOnBoard(blackPieces, _GamePieceType2.default.black);
+            this.fillPiecesOnBoard(whitePieces);
+            this.fillPiecesOnBoard(blackPieces);
         }
     }, {
         key: "generateBoard",
@@ -80,34 +77,29 @@ var GameBoard = function () {
             }
         }
     }, {
-        key: "isPositionEmpty",
-        value: function isPositionEmpty(position) {
-            return !this.getPosition(position).piece;
-        }
-    }, {
         key: "getNearPositions",
         value: function getNearPositions(position, onlyEmpty) {
             var positions = [];
             var board = this;
-            var add = function add(plusX, plusY, board) {
+            function add(plusX, plusY) {
                 var newPosition = new _BoardPosition2.default({
                     x: position.x + plusX,
                     y: position.y + plusY
                 });
                 if (!board.boardHasThisPosition(newPosition)) return;
+                newPosition = board.getPosition(newPosition);
                 if (typeof onlyEmpty != "undefined") {
-                    var positionEmpty = board.isPositionEmpty(newPosition);
-                    if (onlyEmpty === positionEmpty) positions.push(newPosition);
+                    if (onlyEmpty === newPosition.isEmpty()) positions.push(newPosition);
                 } else positions.push(newPosition);
-            };
-            add(-1, -1, this);
-            add(0, -1, this);
-            add(+1, -1, this);
-            add(-1, 0, this);
-            add(+1, 0, this);
-            add(-1, +1, this);
-            add(0, +1, this);
-            add(+1, +1, this);
+            }
+            add(-1, -1);
+            add(0, -1);
+            add(+1, -1);
+            add(-1, 0);
+            add(+1, 0);
+            add(-1, +1);
+            add(0, +1);
+            add(+1, +1);
             return positions;
         }
     }, {
@@ -116,16 +108,23 @@ var GameBoard = function () {
             var jumpPosition = new _BoardPosition2.default({ x: 0, y: 0 });
             if (startPosition.x < toJumpPosition.x) jumpPosition.x = toJumpPosition.x + 1;else if (startPosition.x > toJumpPosition.x) jumpPosition.x = toJumpPosition.x - 1;else jumpPosition.x = toJumpPosition.x;
             if (startPosition.y < toJumpPosition.y) jumpPosition.y = toJumpPosition.y + 1;else if (startPosition.y > toJumpPosition.y) jumpPosition.y = toJumpPosition.y - 1;else jumpPosition.y = toJumpPosition.y;
-            if (this.boardHasThisPosition(jumpPosition) && this.isPositionEmpty(jumpPosition)) return jumpPosition;
+            if (!this.boardHasThisPosition(jumpPosition)) {
+                return;
+            }
+            jumpPosition = this.getPosition(jumpPosition);
+            if (!jumpPosition.isEmpty()) {
+                return;
+            }
+            return jumpPosition;
         }
     }, {
         key: "whereCanIJump",
         value: function whereCanIJump(jumpStartPosition, positions, orderedPositions, isBlack) {
-            var _this = this;
+            var _this2 = this;
 
             var nearFilledPositions = this.getNearPositions(jumpStartPosition, false);
             nearFilledPositions.forEach(function (nearFilledPosition) {
-                var jumpPosition = _this.getJumpPosition(jumpStartPosition, nearFilledPosition);
+                var jumpPosition = _this2.getJumpPosition(jumpStartPosition, nearFilledPosition);
                 if (jumpPosition) {
                     if (_BoardHelper2.default.isPositionNotAdded(jumpPosition, positions)) {
                         jumpPosition.lastPosition = jumpStartPosition;
@@ -135,7 +134,7 @@ var GameBoard = function () {
                         var y = _BoardHelper2.default.getY0Start7End(jumpPosition.y, isBlack);
                         if (!orderedPositions[y]) orderedPositions[y] = [];
                         orderedPositions[y][_BoardHelper2.default.getIndexToSearchOrder(jumpPosition.x)] = jumpPosition;
-                        _this.whereCanIJump(jumpPosition, positions, orderedPositions, isBlack);
+                        _this2.whereCanIJump(jumpPosition, positions, orderedPositions, isBlack);
                     }
                 }
             });
@@ -149,7 +148,7 @@ var GameBoard = function () {
             var orderedPositions = [];
             for (var i = 0; i < allNearPositions.length; i++) {
                 var nearPosition = allNearPositions[i];
-                if (this.isPositionEmpty(nearPosition)) {
+                if (nearPosition.isEmpty()) {
                     positions.push(nearPosition);
                     var y = _BoardHelper2.default.getY0Start7End(nearPosition.y, isBlack);
                     if (!orderedPositions[y]) orderedPositions[y] = [];
@@ -174,11 +173,11 @@ var GameBoard = function () {
     }, {
         key: "setWhereCanIGo",
         value: function setWhereCanIGo(startPosition, blackPiece) {
-            var _this2 = this;
+            var _this3 = this;
 
             var positions = this.getPositionsWhereCanIGo(startPosition, blackPiece).positions;
             positions.forEach(function (position) {
-                _this2.board[position.x][position.y].iCanGoHere = true;
+                _this3.getPosition(position).iCanGoHere = true;
             });
         }
     }, {
@@ -200,9 +199,9 @@ var GameBoard = function () {
                 for (var x = 0; x < this.board[y].length; x++) {
                     var position = this.board[x][y];
                     if (_BoardHelper2.default.isBackGroundBlack(x, y)) {
-                        if (position.piece == _GamePieceType2.default.white) board += "\u25CF";else if (position.piece == _GamePieceType2.default.black) board += "\u25CB";else board += " ";
+                        if (position.isWhitePiece()) board += "\u25CF";else if (position.isBlackPiece()) board += "\u25CB";else board += " ";
                     } else {
-                        if (position.piece == _GamePieceType2.default.white) board += "\u25D9";else if (position.piece == _GamePieceType2.default.black) board += "\u25D8";else board += "\u2588";
+                        if (position.isWhitePiece()) board += "\u25D9";else if (position.isBlackPiece()) board += "\u25D8";else board += "\u2588";
                     }
                 }
                 board += "\n";
@@ -213,19 +212,16 @@ var GameBoard = function () {
         key: "move",
         value: function move(startPosition, nextPosition, backMove, whiteTurn) {
             if (backMove) {
-                this.board[nextPosition.x][nextPosition.y].piece = whiteTurn ? _GamePieceType2.default.black : _GamePieceType2.default.white;
-                this.board[startPosition.x][startPosition.y].piece = null;
-            } else {
-                this.board[nextPosition.x][nextPosition.y].piece = this.board[startPosition.x][startPosition.y].piece;
-                this.board[startPosition.x][startPosition.y].piece = null;
-            }
+                this.getPosition(nextPosition).setPiece(!whiteTurn);
+                this.getPosition(startPosition).removePiece();
+            } else this.getPosition(startPosition).move(this.getPosition(nextPosition));
             var jumpPosition = nextPosition.lastPosition;
             while (jumpPosition) {
-                this.board[jumpPosition.x][jumpPosition.y].lastMoveJump = true;
+                this.getPosition(jumpPosition).lastMoveJump = true;
                 jumpPosition = jumpPosition.lastPosition;
             }
-            this.board[nextPosition.x][nextPosition.y].lastMove = true;
-            this.board[startPosition.x][startPosition.y].lastMove = true;
+            this.getPosition(nextPosition).lastMove = true;
+            this.getPosition(startPosition).lastMove = true;
             if (this.logMove) console.log(this.printUnicode());
         }
     }]);

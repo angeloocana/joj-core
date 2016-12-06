@@ -21,23 +21,21 @@ export default class GameBoard implements IGameBoard {
         this.fillAllPiecesOnBoard(args.whitePieces, args.blackPieces);
     }
 
-    fillPiecesOnBoard(pieces: IGamePiece[], pieceType: string)
+    fillPiecesOnBoard(pieces: IGamePiece[])
         : void {
 
         if (!pieces)
             return;
 
-        for (let i = 0; i < pieces.length; i++) {
-            let piece = pieces[i];
-            this.board[piece.x][piece.y].piece = pieceType;
-        }
+        pieces.forEach(piece =>
+            this.getPosition(piece.position).setPiece(piece.position.isBlackPiece()));
     }
 
     fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[])
         : void {
 
-        this.fillPiecesOnBoard(whitePieces, GamePieceType.white);
-        this.fillPiecesOnBoard(blackPieces, GamePieceType.black);
+        this.fillPiecesOnBoard(whitePieces);
+        this.fillPiecesOnBoard(blackPieces);
     }
 
     generateBoard()
@@ -82,15 +80,12 @@ export default class GameBoard implements IGameBoard {
         }
     }
 
-    isPositionEmpty(position: IBoardPosition): boolean {
-        return !(this.getPosition(position).piece);
-    }
-
     getNearPositions(position, onlyEmpty): IBoardPosition[] {
-        let positions: IBoardPosition[] = [];
-        let board = this;
-        let add = function (plusX: number, plusY: number, board: IGameBoard) {
-            let newPosition: IBoardPosition = new BoardPosition({
+        var positions: IBoardPosition[] = [];
+        var board = this;
+
+        function add(plusX: number, plusY: number) {
+            var newPosition: IBoardPosition = new BoardPosition({
                 x: position.x + plusX,
                 y: position.y + plusY
             });
@@ -98,32 +93,33 @@ export default class GameBoard implements IGameBoard {
             if (!board.boardHasThisPosition(newPosition))
                 return;
 
-            if (typeof onlyEmpty != "undefined") {
-                let positionEmpty = board.isPositionEmpty(newPosition);
+            newPosition = board.getPosition(newPosition);
 
-                if (onlyEmpty === positionEmpty)
+            if (typeof onlyEmpty != "undefined") {
+                if (onlyEmpty === newPosition.isEmpty())
                     positions.push(newPosition);
             } else
                 positions.push(newPosition);
         }
 
-        add(-1, -1, this);
-        add(0, -1, this);
-        add(+1, -1, this);
+        add(-1, -1);
+        add(0, -1);
+        add(+1, -1);
 
-        add(-1, 0, this);
-        add(+1, 0, this);
+        add(-1, 0);
+        add(+1, 0);
 
-        add(-1, +1, this);
-        add(0, +1, this);
-        add(+1, +1, this);
+        add(-1, +1);
+        add(0, +1);
+        add(+1, +1);
 
         return positions;
     }
 
     getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition)
         : IBoardPosition {
-        let jumpPosition: IBoardPosition = new BoardPosition({ x: 0, y: 0 });
+
+        var jumpPosition: IBoardPosition = new BoardPosition({ x: 0, y: 0 });
 
         if (startPosition.x < toJumpPosition.x)
             jumpPosition.x = toJumpPosition.x + 1;
@@ -137,9 +133,36 @@ export default class GameBoard implements IGameBoard {
             jumpPosition.y = toJumpPosition.y - 1;
         else jumpPosition.y = toJumpPosition.y;
 
-        if (this.boardHasThisPosition(jumpPosition)
-            && this.isPositionEmpty(jumpPosition))
-            return jumpPosition;
+        if (!this.boardHasThisPosition(jumpPosition)) {
+            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            // console.log("getJumpPosition boardHasThisPosition = false");
+            // console.log("startPosition");
+            // console.log(startPosition);
+            // console.log("toJumpPosition");
+            // console.log(toJumpPosition);
+            // console.log("jumpPosition");
+            // console.log(jumpPosition);
+            // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+            return;
+        }
+
+        jumpPosition = this.getPosition(jumpPosition);
+
+        if (!jumpPosition.isEmpty()) {
+            // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            // console.log("getJumpPosition isEmpty = false");
+            // console.log("startPosition");
+            // console.log(startPosition);
+            // console.log("toJumpPosition");
+            // console.log(toJumpPosition);
+            // console.log("jumpPosition");
+            // console.log(jumpPosition);
+            // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            return;
+        }
+
+        return jumpPosition;
     }
 
 
@@ -186,7 +209,7 @@ export default class GameBoard implements IGameBoard {
 
         for (let i = 0; i < allNearPositions.length; i++) {
             let nearPosition = allNearPositions[i];
-            if (this.isPositionEmpty(nearPosition)) {
+            if (nearPosition.isEmpty()) {
                 positions.push(nearPosition);
 
                 let y = BoardHelper.getY0Start7End(nearPosition.y,
@@ -222,7 +245,7 @@ export default class GameBoard implements IGameBoard {
         let positions = this.getPositionsWhereCanIGo(startPosition, blackPiece).positions;
 
         positions.forEach(position => {
-            this.board[position.x][position.y].iCanGoHere = true;
+            this.getPosition(position).iCanGoHere = true;
         });
     }
 
@@ -243,17 +266,17 @@ export default class GameBoard implements IGameBoard {
                 var position = this.board[x][y];
 
                 if (BoardHelper.isBackGroundBlack(x, y)) {
-                    if (position.piece == GamePieceType.white)
+                    if (position.isWhitePiece())
                         board += "\u{25CF}";
-                    else if (position.piece == GamePieceType.black)
+                    else if (position.isBlackPiece())
                         board += "\u{25CB}";
                     else
                         board += " ";
                 }
                 else {
-                    if (position.piece == GamePieceType.white)
+                    if (position.isWhitePiece())
                         board += "\u{25D9}";
-                    else if (position.piece == GamePieceType.black)
+                    else if (position.isBlackPiece())
                         board += "\u{25D8}";
                     else
                         board += "\u{2588}";
@@ -268,25 +291,21 @@ export default class GameBoard implements IGameBoard {
 
     move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
         backMove?: boolean, whiteTurn?: boolean): void {
+
         if (backMove) {
-            this.board[nextPosition.x][nextPosition.y].piece
-                = whiteTurn
-                    ? GamePieceType.black
-                    : GamePieceType.white;
-            this.board[startPosition.x][startPosition.y].piece = null;
-        } else {
-            this.board[nextPosition.x][nextPosition.y].piece = this.board[startPosition.x][startPosition.y].piece;
-            this.board[startPosition.x][startPosition.y].piece = null;
-        }
+            this.getPosition(nextPosition).setPiece(!whiteTurn);
+            this.getPosition(startPosition).removePiece();
+        } else
+            this.getPosition(startPosition).move(this.getPosition(nextPosition));
 
         let jumpPosition = nextPosition.lastPosition;
         while (jumpPosition) {
-            this.board[jumpPosition.x][jumpPosition.y].lastMoveJump = true;
+            this.getPosition(jumpPosition).lastMoveJump = true;
             jumpPosition = jumpPosition.lastPosition;
         }
 
-        this.board[nextPosition.x][nextPosition.y].lastMove = true;
-        this.board[startPosition.x][startPosition.y].lastMove = true;
+        this.getPosition(nextPosition).lastMove = true;
+        this.getPosition(startPosition).lastMove = true;
 
         if (this.logMove)
             console.log(this.printUnicode());

@@ -1,23 +1,24 @@
 import BoardHelper from "./BoardHelper";
 import GamePieceType from "../GamePieceType";
-import BoardPosition from "../BoardPosition";
+//import BoardPosition from "../BoardPosition";BoardPosition
+import GamePiece from "../GamePiece";
 
-let getStartPieces = function (boardOptions: IBoardOptions, startRow: number): IBoardPosition[] {
-    let pieces: IBoardPosition[] = [];
+function getStartPieces(boardOptions: IBoardOptions, startRow: number, isBlack: boolean): IGamePiece[] {
+    var pieces: IGamePiece[] = [];
     for (let x = 0; x < boardOptions.size.x; x++) {
-        let piece: IBoardPosition = new BoardPosition({ x: x, y: startRow });
+        let piece: IGamePiece = new GamePiece(x, startRow, isBlack);
         pieces.push(piece);
     }
     return pieces;
 };
 
-let getOtherPieces = function (pieces: IBoardPosition[], remove: IBoardPosition)
+function getOtherPieces(pieces: IBoardPosition[], remove: IBoardPosition)
     : IBoardPosition[] {
     return pieces.filter(piece =>
         piece && (piece.x !== remove.x || piece.y !== remove.y));
 };
 
-let getPiecesOrdered = function (pieces: IBoardPosition[], isBlack: boolean)
+function getPiecesOrdered(pieces: IBoardPosition[], isBlack: boolean)
     : IBoardPosition[][] {
     let ordered: IBoardPosition[][] = [];
 
@@ -32,7 +33,7 @@ let getPiecesOrdered = function (pieces: IBoardPosition[], isBlack: boolean)
     return ordered;
 };
 
-let pieceHelper: IPieceHelper = {
+var pieceHelper: IPieceHelper = {
     getOtherPieces,
     getPiecesOrdered,
     getStartPieces

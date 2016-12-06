@@ -8,7 +8,7 @@ export default class GameColor implements IGameColor {
     nMoves: number = 0;
     startRow: number;
     endRow: number;
-    pieces: IBoardPosition[];
+    pieces: IGamePiece[];
 
     /**
      * Get a clean game color
@@ -18,7 +18,7 @@ export default class GameColor implements IGameColor {
         this.startRow = isBlack ? 0 : y;
         this.endRow = isBlack ? y : 0;
 
-        this.pieces = PieceHelper.getStartPieces(boardOptions, this.startRow);
+        this.pieces = PieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
     }
 
     setColorWinners(): void {
@@ -27,12 +27,12 @@ export default class GameColor implements IGameColor {
 
         for (var i = 0; i < this.pieces.length; i++) {
             var piece = this.pieces[i];
-            if (piece.y === this.endRow)
+            if (piece.position.y === this.endRow)
                 this.winners++;
             else
                 this.preWinnersPoints += this.endRow === 0
-                    ? this.startRow - piece.y
-                    : piece.y;
+                    ? this.startRow - piece.position.y
+                    : piece.position.y;
         }
     }
 
@@ -44,10 +44,10 @@ export default class GameColor implements IGameColor {
         : void {
 
         this.pieces.forEach(piece => {
-            if (piece.x === startPosition.x
-                && piece.y === startPosition.y) {
-                piece.x = nextPosition.x;
-                piece.y = nextPosition.y;
+            if (piece.position.x === startPosition.x
+                && piece.position.y === startPosition.y) {
+                piece.position.x = nextPosition.x;
+                piece.position.y = nextPosition.y;
             }
         });
     }

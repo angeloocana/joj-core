@@ -13,6 +13,6 @@ describe("PieceHelper", function () {
         var boardOptions = { size: { x: 3, y: 3 } };
         var row = 0;
         var pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
-        (0, _ptzAssert.deepEqual)(_PieceHelper2.default.getStartPieces(boardOptions, row), pieces);
+        (0, _ptzAssert.deepEqual)(_PieceHelper2.default.getStartPieces(boardOptions, row, true), pieces);
     });
 });

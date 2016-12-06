@@ -2,7 +2,7 @@ interface IBoardPosition {
     x: number;
     y: number;
 
-    piece?: string;//GamePieceType;
+    setPiece(isBlack: boolean): void;
 
     lastMoviment?: IMove;
 
@@ -14,14 +14,19 @@ interface IBoardPosition {
     lastMove?: boolean;
     lastMoveJump?: boolean;
 
-    isWhiteHome?:boolean;
-    isBlackHome?:boolean;
+    isWhiteHome?: boolean;
+    isBlackHome?: boolean;
 
+    move(nextPosition: IBoardPosition): void;
+    removePiece(): void;
+    isEmpty(): boolean;
     isBlackPiece(): boolean;
-    isSamePositionAs(comparePosition:IBoardPosition):boolean;
+    isWhitePiece(): boolean;
+    isSamePositionAs(comparePosition: IBoardPosition): boolean;
 }
 
-interface IBoardPositionArgs{
+interface IBoardPositionArgs {
     x: number;
     y: number;
+    isBlackPiece?: boolean;
 }

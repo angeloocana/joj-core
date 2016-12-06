@@ -23,8 +23,23 @@ export default class BoardPosition implements IBoardPosition {
         this.x = args.x;
         this.y = args.y;
 
+        this.setPiece(args.isBlackPiece)
+
         //this.isWhiteHome = false;
         //this.isBlackHome = ;
+    }
+
+    setPiece(isBlack: boolean): void {
+        if (isBlack === true)
+            this.piece = GamePieceType.black;
+        else if (isBlack === false)
+            this.piece = GamePieceType.white;
+        else
+            this.removePiece();
+    }
+
+    removePiece(): void {
+        this.piece = null;
     }
 
     isBlackPiece(): boolean {
@@ -34,7 +49,23 @@ export default class BoardPosition implements IBoardPosition {
         return this.piece === GamePieceType.black;
     }
 
-    isSamePositionAs(comparePosition:IBoardPosition):boolean{
+    isWhitePiece(): boolean {
+        if (!this.piece)
+            return null;
+
+        return this.piece === GamePieceType.white;
+    }
+
+    isEmpty(): boolean {
+        return this.piece ? false : true;
+    }
+
+    isSamePositionAs(comparePosition: IBoardPosition): boolean {
         return this.x === comparePosition.x && this.y === comparePosition.y;
+    }
+
+    move(nextPosition: IBoardPosition): void {
+        nextPosition.setPiece(this.isBlackPiece());
+        this.removePiece();
     }
 }

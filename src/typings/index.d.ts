@@ -57,12 +57,7 @@ declare module jojCore {
         board: IBoardPosition[][];
         boardOptions: IBoardOptions;
 
-        /**
-         * 
-         * @piece GamePieceType
-         */
-        fillPiecesOnBoard(pieces: IBoardPosition[], piece: string)
-            : void;
+        fillPiecesOnBoard(pieces: IGamePiece[]): void;
 
         generateBoard();
         fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[]);
@@ -83,7 +78,7 @@ declare module jojCore {
         move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
             backMove?: boolean, whiteTurn?: boolean): void;
         printUnicode(): string;
-        logMove:boolean;
+        logMove: boolean;
     }
 
     class GameColor implements IGameColor {

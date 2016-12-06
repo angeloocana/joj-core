@@ -8,6 +8,6 @@ describe("PieceHelper", function () {
         let row = 0;
         let pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
 
-        deepEqual(PieceHelper.getStartPieces(boardOptions, row), pieces);
+        deepEqual(PieceHelper.getStartPieces(boardOptions, row, true), pieces);
     });    
 });

@@ -1,5 +1,5 @@
 interface IPieceHelper {
-    getStartPieces(boardOptions: IBoardOptions, startRow: number): IBoardPosition[];
+    getStartPieces(boardOptions: IBoardOptions, startRow: number, isBlack: boolean): IGamePiece[];
 
     getOtherPieces(pieces: IBoardPosition[], remove: IBoardPosition)
         : IBoardPosition[];

@@ -4,10 +4,6 @@ var _BoardPosition = require("../BoardPosition");
 
 var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
 
-var _GamePieceType = require("../GamePieceType");
-
-var _GamePieceType2 = _interopRequireDefault(_GamePieceType);
-
 var _ptzAssert = require("ptz-assert");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -26,17 +22,17 @@ describe("BoardPosition", function () {
             position = new _BoardPosition2.default({ x: 0, y: 0 });
         });
         it("true", function () {
-            position.piece = _GamePieceType2.default.black;
+            position.setPiece(true);
             var actual = position.isBlackPiece();
             (0, _ptzAssert.equal)(actual, true);
         });
         it("false", function () {
-            position.piece = _GamePieceType2.default.white;
+            position.setPiece(false);
             var actual = position.isBlackPiece();
             (0, _ptzAssert.equal)(actual, false);
         });
         it("null", function () {
-            position.piece = null;
+            position.removePiece();
             var actual = position.isBlackPiece();
             (0, _ptzAssert.equal)(actual, null);
         });
@@ -51,6 +47,44 @@ describe("BoardPosition", function () {
             var position1 = new _BoardPosition2.default({ x: 3, y: 2 });
             var position2 = new _BoardPosition2.default({ x: 2, y: 3 });
             (0, _ptzAssert.equal)(position1.isSamePositionAs(position2), false);
+        });
+    });
+    describe("setPiece", function () {
+        var position;
+        beforeEach(function () {
+            position = new _BoardPosition2.default({ x: 0, y: 0 });
+        });
+        it("black", function () {
+            position.setPiece(true);
+            (0, _ptzAssert.equal)(position.isBlackPiece(), true);
+            (0, _ptzAssert.equal)(position.isEmpty(), false);
+        });
+        it("white", function () {
+            position.setPiece(false);
+            (0, _ptzAssert.equal)(position.isBlackPiece(), false);
+            (0, _ptzAssert.equal)(position.isEmpty(), false);
+        });
+        it("empty", function () {
+            position.setPiece(null);
+            (0, _ptzAssert.equal)(position.isEmpty(), true);
+        });
+    });
+    describe("isEmpty", function () {
+        var position;
+        beforeEach(function () {
+            position = new _BoardPosition2.default({ x: 2, y: 3 });
+        });
+        it("true", function () {
+            position.removePiece();
+            (0, _ptzAssert.equal)(position.isEmpty(), true);
+        });
+        it("false, black piece", function () {
+            position.setPiece(true);
+            (0, _ptzAssert.equal)(position.isEmpty(), false);
+        });
+        it("false, white piece", function () {
+            position.setPiece(false);
+            (0, _ptzAssert.equal)(position.isEmpty(), false);
         });
     });
 });

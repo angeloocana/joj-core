@@ -20,18 +20,46 @@ var BoardPosition = function () {
 
         this.x = args.x;
         this.y = args.y;
+        this.setPiece(args.isBlackPiece);
     }
 
     _createClass(BoardPosition, [{
+        key: "setPiece",
+        value: function setPiece(isBlack) {
+            if (isBlack === true) this.piece = _GamePieceType2.default.black;else if (isBlack === false) this.piece = _GamePieceType2.default.white;else this.removePiece();
+        }
+    }, {
+        key: "removePiece",
+        value: function removePiece() {
+            this.piece = null;
+        }
+    }, {
         key: "isBlackPiece",
         value: function isBlackPiece() {
             if (!this.piece) return null;
             return this.piece === _GamePieceType2.default.black;
         }
     }, {
+        key: "isWhitePiece",
+        value: function isWhitePiece() {
+            if (!this.piece) return null;
+            return this.piece === _GamePieceType2.default.white;
+        }
+    }, {
+        key: "isEmpty",
+        value: function isEmpty() {
+            return this.piece ? false : true;
+        }
+    }, {
         key: "isSamePositionAs",
         value: function isSamePositionAs(comparePosition) {
             return this.x === comparePosition.x && this.y === comparePosition.y;
+        }
+    }, {
+        key: "move",
+        value: function move(nextPosition) {
+            nextPosition.setPiece(this.isBlackPiece());
+            this.removePiece();
         }
     }]);
 
