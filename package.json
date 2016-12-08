@@ -1,6 +1,6 @@
 {
   "name": "joj-core",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "JumpOverJump.com core library",
   "main": "dist/index.js",
   "scripts": {

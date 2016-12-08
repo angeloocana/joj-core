@@ -112,6 +112,40 @@ declare module jojCore {
         white: IPlayer;
         black: IPlayer;
     }
+
+    class BoardPosition implements IBoardPosition {
+        x: number;
+        y: number;
+
+        setPiece(isBlack: boolean): void;
+
+        lastMoviment?: IMove;
+
+        lastPosition?: IBoardPosition;
+        jumpingBlackPiece?: boolean;
+        jumps?: number;
+
+        iCanGoHere?: boolean;
+        lastMove?: boolean;
+        lastMoveJump?: boolean;
+
+        isWhiteHome?: boolean;
+        isBlackHome?: boolean;
+
+        move(nextPosition: IBoardPosition): void;
+        removePiece(): void;
+        isEmpty(): boolean;
+        isBlackPiece(): boolean;
+        isWhitePiece(): boolean;
+        isSamePositionAs(comparePosition: IBoardPosition): boolean;
+    }
+
+    class GamePiece implements IGamePiece {
+        position: IBoardPosition;
+
+        whereCanIGo?: IPositionsWhereCanIGo;
+        movimentsToWin?: number[];
+    }
 }
 
 declare module "joj-core"
