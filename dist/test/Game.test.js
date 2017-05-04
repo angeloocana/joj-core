@@ -80,6 +80,15 @@ describe('Game', function () {
             });
         });
     });
+    describe('getCleanGameToSaveOnServer', function () {
+        it('map', function () {
+            var game = new _index.Game({});
+            var cleanGame = (0, _index.getCleanGameToSaveOnServer)(game);
+            (0, _ptzAssert.equal)(game.ended, cleanGame.ended);
+            (0, _ptzAssert.deepEqual)(game.movements, cleanGame.movements);
+            (0, _ptzAssert.equal)(game.blackWin, cleanGame.blackWin);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map
 //# sourceMappingURL=Game.test.js.map

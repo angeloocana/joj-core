@@ -29,20 +29,6 @@ export class Game {
     isWhiteTurn() {
         return this.movements.length % 2 === 0;
     }
-    getCleanGameToSaveOnServer() {
-        const cleanGame = {
-            ended: this.ended,
-            movements: [],
-            blackWin: this.blackWin
-        };
-        for (let i = 0; i < this.movements.length; i++) {
-            const move = this.movements[i];
-            const startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
-            const nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
-            cleanGame.movements.push({ startPosition, nextPosition });
-        }
-        return cleanGame;
-    }
     setWhereCanIGo(startPosition) {
         this.board.cleanBoardWhereCanIGo();
         const blackPiece = startPosition.isBlackPiece();
@@ -108,5 +94,18 @@ export class Game {
     getCopy() {
         return copy(this);
     }
+}
+export function getCleanGameToSaveOnServer(game) {
+    const cleanGame = {
+        ended: game.ended,
+        movements: [],
+        blackWin: game.blackWin
+    };
+    cleanGame.movements = game.movements.map(move => {
+        const startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
+        const nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
+        return { startPosition, nextPosition };
+    });
+    return cleanGame;
 }
 //# sourceMappingURL=Game.js.map

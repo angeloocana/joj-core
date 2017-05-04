@@ -12,6 +12,12 @@ Object.defineProperty(exports, 'Game', {
     return _Game.Game;
   }
 });
+Object.defineProperty(exports, 'getCleanGameToSaveOnServer', {
+  enumerable: true,
+  get: function get() {
+    return _Game.getCleanGameToSaveOnServer;
+  }
+});
 
 var _GameBoard = require('./GameBoard');
 

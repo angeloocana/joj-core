@@ -1,4 +1,4 @@
-export { Game } from './Game';
+export { Game, getCleanGameToSaveOnServer } from './Game';
 export { GameBoard } from './GameBoard';
 export { GameColor } from './GameColor';
 export { GamePiece } from './GamePiece';

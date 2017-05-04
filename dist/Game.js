@@ -7,6 +7,8 @@ exports.Game = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;
+
 var _ptzCopy = require('ptz-copy');
 
 var _ptzCopy2 = _interopRequireDefault(_ptzCopy);
@@ -60,22 +62,6 @@ var Game = exports.Game = function () {
         key: 'isWhiteTurn',
         value: function isWhiteTurn() {
             return this.movements.length % 2 === 0;
-        }
-    }, {
-        key: 'getCleanGameToSaveOnServer',
-        value: function getCleanGameToSaveOnServer() {
-            var cleanGame = {
-                ended: this.ended,
-                movements: [],
-                blackWin: this.blackWin
-            };
-            for (var i = 0; i < this.movements.length; i++) {
-                var move = this.movements[i];
-                var startPosition = new _BoardPosition.BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
-                var nextPosition = new _BoardPosition.BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
-                cleanGame.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
-            }
-            return cleanGame;
         }
     }, {
         key: 'setWhereCanIGo',
@@ -157,5 +143,19 @@ var Game = exports.Game = function () {
 
     return Game;
 }();
+
+function getCleanGameToSaveOnServer(game) {
+    var cleanGame = {
+        ended: game.ended,
+        movements: [],
+        blackWin: game.blackWin
+    };
+    cleanGame.movements = game.movements.map(function (move) {
+        var startPosition = new _BoardPosition.BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
+        var nextPosition = new _BoardPosition.BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
+        return { startPosition: startPosition, nextPosition: nextPosition };
+    });
+    return cleanGame;
+}
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map

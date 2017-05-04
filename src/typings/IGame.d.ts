@@ -14,9 +14,6 @@ export interface IGame extends ICleanGame {
     board: IGameBoard;
 
     isWhiteTurn(): boolean;
-
-    getCleanGameToSaveOnServer(): ICleanGame;
-
     setWhereCanIGo(startPosition): void;
     verifyWinner(): void;
     canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean;

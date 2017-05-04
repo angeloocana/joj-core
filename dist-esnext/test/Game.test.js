@@ -1,5 +1,5 @@
 import { deepEqual, equal, notEqual, throws } from 'ptz-assert';
-import { BoardPosition, Game, Player, Players } from '../index';
+import { BoardPosition, Game, getCleanGameToSaveOnServer, Player, Players } from '../index';
 describe('Game', () => {
     describe('needToValidateMovements', () => {
         it('when null should validate');
@@ -74,6 +74,15 @@ describe('Game', () => {
             throws(() => {
                 game.move(startPosition, nextPosition);
             });
+        });
+    });
+    describe('getCleanGameToSaveOnServer', () => {
+        it('map', () => {
+            const game = new Game({});
+            const cleanGame = getCleanGameToSaveOnServer(game);
+            equal(game.ended, cleanGame.ended);
+            deepEqual(game.movements, cleanGame.movements);
+            equal(game.blackWin, cleanGame.blackWin);
         });
     });
 });

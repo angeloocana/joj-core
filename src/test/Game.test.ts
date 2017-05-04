@@ -2,6 +2,7 @@
 import {
     BoardPosition,
     Game,
+    getCleanGameToSaveOnServer,
     IGame,
     Player,
     Players
@@ -97,6 +98,17 @@ describe('Game', () => {
             throws(() => {
                 game.move(startPosition, nextPosition);
             });
+        });
+    });
+
+    describe('getCleanGameToSaveOnServer', () => {
+        it('map', () => {
+            const game = new Game({});
+            const cleanGame = getCleanGameToSaveOnServer(game);
+
+            equal(game.ended, cleanGame.ended);
+            deepEqual(game.movements, cleanGame.movements);
+            equal(game.blackWin, cleanGame.blackWin);
         });
     });
 });
