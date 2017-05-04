@@ -1,11 +1,18 @@
-﻿{
-  "extends": "tslint:latest",
-  "rules": {
-    "max-line-length": [true, 140],
-    "member-ordering": [true,
-      "public-before-private",
-      "static-before-instance",
-      "variables-before-functions"
-    ]
-  }
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ],
+        "member-access": false,
+        "curly": false,
+        "no-var-keyword": false,
+        "arrow-parens": false,
+        "one-variable-per-declaration": [false],
+        "object-literal-sort-keys": false,
+        "trailing-comma": [false],
+        "no-console": [false]
+    }
 }

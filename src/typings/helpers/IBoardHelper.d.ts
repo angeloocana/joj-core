@@ -1,4 +1,6 @@
-interface IBoardHelper {
+import { IBoardPosition } from '../IBoardPosition';
+
+export interface IBoardHelper {
     isBackGroundBlack(x: number, y: number): boolean;
 
     isPositionNotAdded(position: IBoardPosition, positions: IBoardPosition[]): boolean;

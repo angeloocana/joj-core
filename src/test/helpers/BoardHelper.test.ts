@@ -1,68 +1,70 @@
-﻿import BoardHelper from "../../helpers/BoardHelper";
-import { ok, notOk, equal } from "ptz-assert";
-import BoardPosition from "../../BoardPosition";
+﻿import { equal, notOk, ok } from 'ptz-assert';
+import {
+    boardHelper,
+    BoardPosition
+} from '../../index';
 
-describe("GameBoard", function () {
+describe('GameBoard', () => {
 
-    describe("isBackGroundBlack", () => {
-        it("0,0 => true", function () {
-            ok(BoardHelper.isBackGroundBlack(0, 0));
+    describe('isBackGroundBlack', () => {
+        it('0,0 => true', () => {
+            ok(boardHelper.isBackGroundBlack(0, 0));
         });
 
-        it("0,1 => false", function () {
-            ok(!BoardHelper.isBackGroundBlack(0, 1));
-        });
-    });
-
-    describe("isPositionNotAdded", () => {
-        it("added", function () {
-            let position = new BoardPosition({ "x": 5, "y": 2 });
-
-            let positions = [new BoardPosition({ "x": 4, "y": 0 }),
-                             new BoardPosition({ "x": 3, "y": 0 })];
-
-            ok(BoardHelper.isPositionNotAdded(position, positions));
-        });
-
-        it("not added", function () {
-            let position = new BoardPosition({ "x": 3, "y": 0 });
-
-            let positions = [new BoardPosition({ "x": 4, "y": 0 }),
-            new BoardPosition({ "x": 3, "y": 0 })];
-
-            notOk(BoardHelper.isPositionNotAdded(position, positions));
+        it('0,1 => false', () => {
+            ok(!boardHelper.isBackGroundBlack(0, 1));
         });
     });
 
-    describe("getY0Start7End", () => {
-        it("for white y2 should return 5", function () {
-            let y = 2;
-            let isBlack = false;
+    describe('isPositionNotAdded', () => {
+        it('added', () => {
+            const position = new BoardPosition({ x: 5, y: 2 });
 
-            equal(BoardHelper.getY0Start7End(y, isBlack), 5);
+            const positions = [new BoardPosition({ x: 4, y: 0 }),
+            new BoardPosition({ x: 3, y: 0 })];
+
+            ok(boardHelper.isPositionNotAdded(position, positions));
         });
 
-        it("for black y2 should return 2", function () {
-            let y = 2;
-            let isBlack = true;
+        it('not added', () => {
+            const position = new BoardPosition({ x: 3, y: 0 });
 
-            equal(BoardHelper.getY0Start7End(y, isBlack), 2);
+            const positions = [new BoardPosition({ x: 4, y: 0 }),
+            new BoardPosition({ x: 3, y: 0 })];
+
+            notOk(boardHelper.isPositionNotAdded(position, positions));
         });
     });
 
-    describe("getY7Start0End", () => {
-        it("for white y2 should return 2", function () {
-            let y = 2;
-            let isBlack = false;
+    describe('getY0Start7End', () => {
+        it('for white y2 should return 5', () => {
+            const y = 2;
+            const isBlack = false;
 
-            equal(BoardHelper.getY7Start0End(y, isBlack), 2);
+            equal(boardHelper.getY0Start7End(y, isBlack), 5);
         });
 
-        it("for black y2 should return 5", function () {
-            let y = 2;
-            let isBlack = true;
+        it('for black y2 should return 2', () => {
+            const y = 2;
+            const isBlack = true;
 
-            equal(BoardHelper.getY7Start0End(y, isBlack), 5);
+            equal(boardHelper.getY0Start7End(y, isBlack), 2);
+        });
+    });
+
+    describe('getY7Start0End', () => {
+        it('for white y2 should return 2', () => {
+            const y = 2;
+            const isBlack = false;
+
+            equal(boardHelper.getY7Start0End(y, isBlack), 2);
+        });
+
+        it('for black y2 should return 5', () => {
+            const y = 2;
+            const isBlack = true;
+
+            equal(boardHelper.getY7Start0End(y, isBlack), 5);
         });
     });
 });

@@ -1,22 +1,19 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.GamePiece = undefined;
 
-var _BoardPosition = require("./BoardPosition");
-
-var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _BoardPosition = require('./BoardPosition');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var GamePiece = function GamePiece(x, y, isBlack) {
+var GamePiece = exports.GamePiece = function GamePiece(x, y, isBlack) {
     _classCallCheck(this, GamePiece);
 
-    this.position = new _BoardPosition2.default({ x: x, y: y });
+    this.position = new _BoardPosition.BoardPosition({ x: x, y: y });
     this.position.setPiece(isBlack);
 };
-
-exports.default = GamePiece;
+//# sourceMappingURL=GamePiece.js.map
+//# sourceMappingURL=GamePiece.js.map

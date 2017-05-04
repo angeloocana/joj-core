@@ -1,4 +1,4 @@
-interface IGamePieceType {
+export interface IGamePieceType {
     white: string;
     black: string;
 }

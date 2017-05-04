@@ -1,13 +1,13 @@
-﻿import { equal, deepEqual, ok } from "ptz-assert";
-import PieceHelper from "../../helpers/PieceHelper";
+﻿import { deepEqual } from 'ptz-assert';
+import { IBoardOptions, pieceHelper } from '../../index';
 
-describe("PieceHelper", function () {
+describe('PieceHelper', () => {
 
-    it("getStartPieces should return pieces in start positions", function () {
-        let boardOptions: IBoardOptions = { size: { x: 3, y: 3 } };
-        let row = 0;
-        let pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
+    it('getStartPieces should return pieces in start positions', () => {
+        const boardOptions: IBoardOptions = { size: { x: 3, y: 3 } };
+        const row = 0;
+        const pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }];
 
-        deepEqual(PieceHelper.getStartPieces(boardOptions, row, true), pieces);
-    });    
+        deepEqual(pieceHelper.getStartPieces(boardOptions, row, true), pieces);
+    });
 });

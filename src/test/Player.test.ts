@@ -1,18 +1,21 @@
-import Player from "../Player";
-import { ok } from "ptz-assert";
+import { ok } from 'ptz-assert';
+import {
+    IPlayer,
+    Player
+} from '../index';
 
-describe("Player", () => {
+describe('Player', () => {
 
-    let player:IPlayer;
+    let player: IPlayer;
 
-    describe("new", () => {
-        let name = "John";
+    describe('new', () => {
+        const name = 'John';
         beforeEach(() => {
-            player = new Player({name});
+            player = new Player({ name });
         });
 
-        it("Setting name", ()=>{
-             ok(name == player.name);
+        it('Setting name', () => {
+            ok(name === player.name);
         });
     });
 });

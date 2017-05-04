@@ -1,49 +1,96 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.PieceHelper = exports.BoardHelper = exports.Players = exports.Player = exports.GamePieceType = exports.GameColor = exports.GameBoard = exports.Game = undefined;
 
-var _Game = require("./Game");
+var _Game = require('./Game');
 
-var _Game2 = _interopRequireDefault(_Game);
+Object.defineProperty(exports, 'Game', {
+  enumerable: true,
+  get: function get() {
+    return _Game.Game;
+  }
+});
 
-var _GameBoard = require("./GameBoard");
+var _GameBoard = require('./GameBoard');
 
-var _GameBoard2 = _interopRequireDefault(_GameBoard);
+Object.defineProperty(exports, 'GameBoard', {
+  enumerable: true,
+  get: function get() {
+    return _GameBoard.GameBoard;
+  }
+});
 
-var _GameColor = require("./GameColor");
+var _GameColor = require('./GameColor');
 
-var _GameColor2 = _interopRequireDefault(_GameColor);
+Object.defineProperty(exports, 'GameColor', {
+  enumerable: true,
+  get: function get() {
+    return _GameColor.GameColor;
+  }
+});
 
-var _GamePieceType = require("./GamePieceType");
+var _GamePiece = require('./GamePiece');
 
-var _GamePieceType2 = _interopRequireDefault(_GamePieceType);
+Object.defineProperty(exports, 'GamePiece', {
+  enumerable: true,
+  get: function get() {
+    return _GamePiece.GamePiece;
+  }
+});
 
-var _Player = require("./Player");
+var _GamePieceType = require('./GamePieceType');
 
-var _Player2 = _interopRequireDefault(_Player);
+Object.defineProperty(exports, 'gamePieceType', {
+  enumerable: true,
+  get: function get() {
+    return _GamePieceType.gamePieceType;
+  }
+});
 
-var _Players = require("./Players");
+var _Player = require('./Player');
 
-var _Players2 = _interopRequireDefault(_Players);
+Object.defineProperty(exports, 'Player', {
+  enumerable: true,
+  get: function get() {
+    return _Player.Player;
+  }
+});
 
-var _BoardHelper = require("./helpers/BoardHelper");
+var _Players = require('./Players');
 
-var _BoardHelper2 = _interopRequireDefault(_BoardHelper);
+Object.defineProperty(exports, 'Players', {
+  enumerable: true,
+  get: function get() {
+    return _Players.Players;
+  }
+});
 
-var _PieceHelper = require("./helpers/PieceHelper");
+var _BoardHelper = require('./helpers/BoardHelper');
 
-var _PieceHelper2 = _interopRequireDefault(_PieceHelper);
+Object.defineProperty(exports, 'boardHelper', {
+  enumerable: true,
+  get: function get() {
+    return _BoardHelper.boardHelper;
+  }
+});
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _PieceHelper = require('./helpers/PieceHelper');
 
-exports.Game = _Game2.default;
-exports.GameBoard = _GameBoard2.default;
-exports.GameColor = _GameColor2.default;
-exports.GamePieceType = _GamePieceType2.default;
-exports.Player = _Player2.default;
-exports.Players = _Players2.default;
-exports.BoardHelper = _BoardHelper2.default;
-exports.PieceHelper = _PieceHelper2.default;
+Object.defineProperty(exports, 'pieceHelper', {
+  enumerable: true,
+  get: function get() {
+    return _PieceHelper.pieceHelper;
+  }
+});
+
+var _BoardPosition = require('./BoardPosition');
+
+Object.defineProperty(exports, 'BoardPosition', {
+  enumerable: true,
+  get: function get() {
+    return _BoardPosition.BoardPosition;
+  }
+});
+//# sourceMappingURL=index.js.map

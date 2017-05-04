@@ -1,4 +1,7 @@
-export default class Player implements IPlayer {
+import { IAi } from './typings/IAi';
+import { IPlayer, IPlayerArgs } from './typings/IPlayer';
+
+export class Player implements IPlayer {
     name: string;
     /**
      * Fill color whith GamePieceType .white or .black

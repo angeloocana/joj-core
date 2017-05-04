@@ -1,11 +1,19 @@
-import PieceHelper from "./helpers/PieceHelper";
-import GameBoard from "./GameBoard";
-import GameColor from "./GameColor";
-import Players from "./Players";
-import copy from "ptz-copy";
-import BoardPosition from "./BoardPosition";
+import copy from 'ptz-copy';
+import { BoardPosition } from './BoardPosition';
+import { GameBoard } from './GameBoard';
+import { GameColor } from './GameColor';
 
-export default class Game implements IGame {
+import { IBoardPosition } from './typings/IBoardPosition';
+import { ICleanGame } from './typings/ICleanGame';
+import { IGame } from './typings/IGame';
+import { IGameArgs } from './typings/IGameArgs';
+import { IGameBoard } from './typings/IGameBoard';
+import { IGameColor } from './typings/IGameColor';
+import { IMove } from './typings/IMove';
+import { IPlayer } from './typings/IPlayer';
+import { IPlayers } from './typings/IPlayers';
+
+export class Game implements IGame {
     ended: boolean = false;
     players: IPlayers;
     movements: IMove[];
@@ -31,33 +39,33 @@ export default class Game implements IGame {
     }
 
     setPlayers(players: IPlayers) {
-        //Validate Players
+        // Validate Players
         this.players = players;
     }
 
     setMovements(movements: IMove[] = [], needToValidateMovements: boolean = true) {
-        //Validate Movements
-        //if(needToValidateMovements)
+        // Validate Movements
+        // if(needToValidateMovements)
 
         this.movements = movements;
         this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
     }
 
     isWhiteTurn(): boolean {
-        return this.movements.length % 2 == 0;
+        return this.movements.length % 2 === 0;
     }
 
     getCleanGameToSaveOnServer(): ICleanGame {
-        let cleanGame: ICleanGame = {
+        const cleanGame: ICleanGame = {
             ended: this.ended,
             movements: [],
             blackWin: this.blackWin
         };
 
         for (let i = 0; i < this.movements.length; i++) {
-            let move = this.movements[i];
-            let startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
-            let nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
+            const move = this.movements[i];
+            const startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
+            const nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
             cleanGame.movements.push({ startPosition, nextPosition });
         }
 
@@ -67,8 +75,8 @@ export default class Game implements IGame {
     setWhereCanIGo(startPosition: IBoardPosition): void {
         this.board.cleanBoardWhereCanIGo();
 
-        let blackPiece = startPosition.isBlackPiece();
-        let whiteTurn = this.isWhiteTurn();
+        const blackPiece = startPosition.isBlackPiece();
+        const whiteTurn = this.isWhiteTurn();
 
         if (this.ended || blackPiece === null
             || (!blackPiece && !whiteTurn)
@@ -88,10 +96,9 @@ export default class Game implements IGame {
             this.blackWin = true;
     }
 
-    canMove(startPosition: IBoardPosition,
-        nextPosition: IBoardPosition): boolean {
+    canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean {
 
-        var positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
+        const positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
         var nextPositionFound = false;
 
         nextPositionFound = positionsWhereCanIGo.findIndex(position =>
@@ -104,15 +111,14 @@ export default class Game implements IGame {
         return nextPositionFound;
     }
 
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition
-        , backMove: boolean = false): void {
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove: boolean = false): void {
 
         if (startPosition.isSamePositionAs(nextPosition))
-            throw "ERROR_CANT_MOVE_TO_SAME_POSITION";
+            throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
 
         if (!backMove)
             if (!this.canMove(startPosition, nextPosition))
-                throw "ERROR_CANT_MOVE_TO_POSITION";
+                throw new Error('ERROR_CANT_MOVE_TO_POSITION');
 
         this.board.move(startPosition, nextPosition
             , backMove, this.isWhiteTurn());
@@ -121,7 +127,7 @@ export default class Game implements IGame {
         this.white.move(startPosition, nextPosition);
 
         if (!backMove) {
-            this.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
+            this.movements.push({ startPosition, nextPosition });
             this.verifyWinner();
         }
     }

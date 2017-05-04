@@ -1,10 +1,11 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var gamePieceType = {
-    white: "W",
-    black: "B"
+var gamePieceType = exports.gamePieceType = {
+    white: 'W',
+    black: 'B'
 };
-exports.default = gamePieceType;
+//# sourceMappingURL=GamePieceType.js.map
+//# sourceMappingURL=GamePieceType.js.map

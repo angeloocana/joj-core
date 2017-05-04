@@ -1,107 +1,85 @@
-"use strict";
+'use strict';
 
-var _Game = require("../Game");
+var _ptzAssert = require('ptz-assert');
 
-var _Game2 = _interopRequireDefault(_Game);
+var _index = require('../index');
 
-var _ptzAssert = require("ptz-assert");
-
-var _Players = require("../Players");
-
-var _Players2 = _interopRequireDefault(_Players);
-
-var _Player = require("../Player");
-
-var _Player2 = _interopRequireDefault(_Player);
-
-var _BoardPosition = require("../BoardPosition");
-
-var _BoardPosition2 = _interopRequireDefault(_BoardPosition);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-describe("Game", function () {
-    var game;
-    describe("needToValidateMovements", function () {
-        it("when null should validate");
-        it("when undefined should validate");
-        it("when true should validate");
-        it("when false should NOT validate");
+describe('Game', function () {
+    describe('needToValidateMovements', function () {
+        it('when null should validate');
+        it('when undefined should validate');
+        it('when true should validate');
+        it('when false should NOT validate');
     });
-    describe("Game ended", function () {
-        beforeEach(function () {
-            game = new _Game2.default({
-                boardArgs: {
-                    logMove: true
-                }
-            });
-        });
-    });
-    describe("getCopy", function () {
+    describe('getCopy', function () {
         var gameCopy = void 0;
+        var game;
         beforeEach(function () {
-            game = new _Game2.default({
+            game = new _index.Game({
                 boardArgs: {
                     logMove: true
                 }
             });
             gameCopy = game.getCopy();
         });
-        it("notEqual = not using same reference", function () {
+        it('notEqual = not using same reference', function () {
             (0, _ptzAssert.notEqual)(gameCopy, game);
         });
-        it("movements", function () {
+        it('movements', function () {
             (0, _ptzAssert.deepEqual)(gameCopy.movements, game.movements);
         });
-        it("players", function () {
+        it('players', function () {
             (0, _ptzAssert.deepEqual)(gameCopy.players, game.players);
         });
-        it("ended", function () {
+        it('ended', function () {
             (0, _ptzAssert.deepEqual)(gameCopy.ended, game.ended);
         });
-        it("board", function () {
+        it('board', function () {
             (0, _ptzAssert.deepEqual)(gameCopy.board, game.board);
         });
     });
-    describe("backMove", function () {
-        it("backMove offline game", function () {
-            var players = new _Players2.default({
-                white: new _Player2.default({ name: "Angelo", foto: "img/black_user.png" }),
-                black: new _Player2.default({ name: "Gabi", foto: "img/white_user.png" })
+    describe('backMove', function () {
+        it('backMove offline game', function () {
+            var players = new _index.Players({
+                white: new _index.Player({ name: 'Angelo', foto: 'img/black_user.png' }),
+                black: new _index.Player({ name: 'Gabi', foto: 'img/white_user.png' })
             });
-            var game = new _Game2.default({
+            var game = new _index.Game({
                 players: players,
                 boardArgs: {
                     logMove: true
                 }
             });
-            game.move(new _BoardPosition2.default({ x: 2, y: 7 }), new _BoardPosition2.default({ x: 2, y: 6 }));
+            game.move(new _index.BoardPosition({ x: 2, y: 7 }), new _index.BoardPosition({ x: 2, y: 6 }));
             var gameBeforeLastMove = game.getCopy();
-            game.move(new _BoardPosition2.default({ x: 2, y: 0 }), new _BoardPosition2.default({ x: 2, y: 1 }));
+            game.move(new _index.BoardPosition({ x: 2, y: 0 }), new _index.BoardPosition({ x: 2, y: 1 }));
             game.backMove();
             (0, _ptzAssert.equal)(gameBeforeLastMove.movements.length, game.movements.length);
             (0, _ptzAssert.deepEqual)(gameBeforeLastMove.movements, game.movements);
         });
     });
-    describe("Move", function () {
+    describe('Move', function () {
+        var game;
         beforeEach(function () {
-            var players = new _Players2.default({
-                white: new _Player2.default({ name: "Angelo", foto: "img/black_user.png" }),
-                black: new _Player2.default({ name: "Gabi", foto: "img/white_user.png" })
+            var players = new _index.Players({
+                white: new _index.Player({ name: 'Angelo', foto: 'img/black_user.png' }),
+                black: new _index.Player({ name: 'Gabi', foto: 'img/white_user.png' })
             });
-            game = new _Game2.default({
+            game = new _index.Game({
                 players: players,
                 boardArgs: {
                     logMove: true
                 }
             });
         });
-        it("Block moving to same position", function () {
-            var startPosition = new _BoardPosition2.default({ x: 0, y: 0 });
-            var nextPosition = new _BoardPosition2.default({ x: 0, y: 0 });
+        it('Block moving to same position', function () {
+            var startPosition = new _index.BoardPosition({ x: 0, y: 0 });
+            var nextPosition = new _index.BoardPosition({ x: 0, y: 0 });
             (0, _ptzAssert.throws)(function () {
                 game.move(startPosition, nextPosition);
             });
         });
     });
 });
+//# sourceMappingURL=Game.test.js.map
+//# sourceMappingURL=Game.test.js.map

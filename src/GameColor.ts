@@ -1,6 +1,11 @@
-import PieceHelper from "./helpers/PieceHelper";
+import { pieceHelper } from './helpers/PieceHelper';
 
-export default class GameColor implements IGameColor {
+import { IBoardOptions } from './typings/IBoardOptions';
+import { IBoardPosition } from './typings/IBoardPosition';
+import { IGameColor } from './typings/IGameColor';
+import { IGamePiece } from './typings/IGamePiece';
+
+export class GameColor implements IGameColor {
     winners: number = 0;
     jumps: number = 0;
     points: number = 0;
@@ -14,11 +19,11 @@ export default class GameColor implements IGameColor {
      * Get a clean game color
      */
     constructor(boardOptions: IBoardOptions, isBlack: boolean) {
-        let y = (boardOptions.size.y - 1);
+        const y = (boardOptions.size.y - 1);
         this.startRow = isBlack ? 0 : y;
         this.endRow = isBlack ? y : 0;
 
-        this.pieces = PieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
+        this.pieces = pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
     }
 
     setColorWinners(): void {
@@ -26,7 +31,7 @@ export default class GameColor implements IGameColor {
         this.preWinnersPoints = 0;
 
         for (var i = 0; i < this.pieces.length; i++) {
-            var piece = this.pieces[i];
+            const piece = this.pieces[i];
             if (piece.position.y === this.endRow)
                 this.winners++;
             else
@@ -40,8 +45,7 @@ export default class GameColor implements IGameColor {
         return this.winners === this.pieces.length;
     }
 
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition)
-        : void {
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition): void {
 
         this.pieces.forEach(piece => {
             if (piece.position.x === startPosition.x

@@ -1,4 +1,12 @@
-interface IGame extends ICleanGame {
+import { IBoardPosition } from './IBoardPosition';
+import { ICleanGame } from './ICleanGame';
+import { IGameBoard } from './IGameBoard';
+
+import { IGameColor } from './IGameColor';
+import { IPlayer } from './IPlayer';
+import { IPlayers } from './IPlayers';
+
+export interface IGame extends ICleanGame {
 
     players: IPlayers;
     white: IGameColor;

@@ -1,14 +1,15 @@
-interface IPlayer {
+import { IAi } from './IAi';
+
+export interface IPlayer {
     name: string;
     color: string;
-    foto?:string;
-    ai?:IAi;
-    isComputer:()=>boolean;
+    foto?: string;
+    ai?: IAi;
+    isComputer: () => boolean;
 }
 
-interface IPlayerArgs {
+export interface IPlayerArgs {
     name: string;
-    foto?:string;
-    ai?:IAi;    
+    foto?: string;
+    ai?: IAi;
 }
-

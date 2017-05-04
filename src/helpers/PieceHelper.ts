@@ -1,29 +1,29 @@
-import BoardHelper from "./BoardHelper";
-import GamePieceType from "../GamePieceType";
-//import BoardPosition from "../BoardPosition";BoardPosition
-import GamePiece from "../GamePiece";
+import { GamePiece } from '../GamePiece';
+import { boardHelper } from './BoardHelper';
+
+import { IPieceHelper } from '../typings/helpers/IPieceHelper';
+import { IBoardOptions } from '../typings/IBoardOptions';
+import { IGamePiece } from '../typings/IGamePiece';
 
 function getStartPieces(boardOptions: IBoardOptions, startRow: number, isBlack: boolean): IGamePiece[] {
-    var pieces: IGamePiece[] = [];
+    const pieces: IGamePiece[] = [];
     for (let x = 0; x < boardOptions.size.x; x++) {
-        let piece: IGamePiece = new GamePiece(x, startRow, isBlack);
+        const piece: IGamePiece = new GamePiece(x, startRow, isBlack);
         pieces.push(piece);
     }
     return pieces;
-};
+}
 
-function getOtherPieces(pieces: IGamePiece[], remove: IGamePiece)
-    : IGamePiece[] {
+function getOtherPieces(pieces: IGamePiece[], remove: IGamePiece): IGamePiece[] {
     return pieces.filter(piece =>
         piece && !piece.position.isSamePositionAs(remove.position));
-};
+}
 
-function getPiecesOrdered(pieces: IGamePiece[], isBlack: boolean)
-    : IGamePiece[][] {
-    let ordered: IGamePiece[][] = [];
+function getPiecesOrdered(pieces: IGamePiece[], isBlack: boolean): IGamePiece[][] {
+    const ordered: IGamePiece[][] = [];
 
     pieces.forEach(piece => {
-        let y = BoardHelper.getY0Start7End(piece.position.y, isBlack);
+        const y = boardHelper.getY0Start7End(piece.position.y, isBlack);
         if (!ordered[y])
             ordered[y] = [piece];
         else
@@ -31,12 +31,10 @@ function getPiecesOrdered(pieces: IGamePiece[], isBlack: boolean)
     });
 
     return ordered;
-};
+}
 
-var pieceHelper: IPieceHelper = {
+export const pieceHelper: IPieceHelper = {
     getOtherPieces,
     getPiecesOrdered,
     getStartPieces
 };
-
-export default pieceHelper;

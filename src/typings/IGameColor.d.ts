@@ -1,4 +1,7 @@
-interface IGameColor {
+import { IBoardPosition } from './IBoardPosition';
+import { IGamePiece } from './IGamePiece';
+
+export interface IGameColor {
     winners: number;
     jumps: number;
     points: number;
@@ -10,6 +13,5 @@ interface IGameColor {
 
     setColorWinners(): void;
     win(): boolean;
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition)
-        : void;
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition): void;
 }

@@ -1,0 +1,9 @@
+{
+  "generator-ptz": {
+    "promptValues": {
+      "appname": "joj-core",
+      "githubAuthor": "polutz",
+      "codecovToken": "ceb536c1-556e-43dc-99b7-8d41c7b52413"
+    }
+  }
+}

@@ -1,8 +1,8 @@
-interface IBoardPosition {
+import { IMove } from './IMove';
+
+export interface IBoardPosition {
     x: number;
     y: number;
-
-    setPiece(isBlack: boolean): void;
 
     lastMoviment?: IMove;
 
@@ -17,6 +17,8 @@ interface IBoardPosition {
     isWhiteHome?: boolean;
     isBlackHome?: boolean;
 
+    setPiece(isBlack: boolean): void;
+
     move(nextPosition: IBoardPosition): void;
     removePiece(): void;
     isEmpty(): boolean;
@@ -25,7 +27,7 @@ interface IBoardPosition {
     isSamePositionAs(comparePosition: IBoardPosition): boolean;
 }
 
-interface IBoardPositionArgs {
+export interface IBoardPositionArgs {
     x: number;
     y: number;
     isBlackPiece?: boolean;

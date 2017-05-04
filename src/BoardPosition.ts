@@ -1,10 +1,13 @@
-import GamePieceType from "./GamePieceType";
+import { gamePieceType } from './GamePieceType';
 
-export default class BoardPosition implements IBoardPosition {
+import { IBoardPosition, IBoardPositionArgs } from './typings/IBoardPosition';
+import { IMove } from './typings/IMove';
+
+export class BoardPosition implements IBoardPosition {
     x: number;
     y: number;
 
-    piece?: string;//GamePieceType;
+    piece?: string; // GamePieceType;
 
     lastMoviment?: IMove;
 
@@ -23,17 +26,17 @@ export default class BoardPosition implements IBoardPosition {
         this.x = args.x;
         this.y = args.y;
 
-        this.setPiece(args.isBlackPiece)
+        this.setPiece(args.isBlackPiece);
 
-        //this.isWhiteHome = false;
-        //this.isBlackHome = ;
+        // this.isWhiteHome = false;
+        // this.isBlackHome = ;
     }
 
     setPiece(isBlack: boolean): void {
         if (isBlack === true)
-            this.piece = GamePieceType.black;
+            this.piece = gamePieceType.black;
         else if (isBlack === false)
-            this.piece = GamePieceType.white;
+            this.piece = gamePieceType.white;
         else
             this.removePiece();
     }
@@ -46,14 +49,14 @@ export default class BoardPosition implements IBoardPosition {
         if (!this.piece)
             return null;
 
-        return this.piece === GamePieceType.black;
+        return this.piece === gamePieceType.black;
     }
 
     isWhitePiece(): boolean {
         if (!this.piece)
             return null;
 
-        return this.piece === GamePieceType.white;
+        return this.piece === gamePieceType.white;
     }
 
     isEmpty(): boolean {

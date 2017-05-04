@@ -1,16 +1,22 @@
-﻿{
+{
   "compilerOptions": {
+    "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
-    "target": "ES6",
+    "target": "esnext",
     "sourceMap": true,
     "listFiles": false,
-    "outDir": "dist/"
+    "outDir": "dist-esnext/",
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true
   },
   "include": [
-    "typings/**/*.d.ts",
-    "src/**/*.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.test.ts"
   ],
   "exclude": [
     "node_modules"

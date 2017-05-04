@@ -1,4 +1,7 @@
-let isBackGroundBlack = function (x: number, y: number): boolean {
+import { IBoardHelper } from '../typings/helpers/IBoardHelper';
+import { IBoardPosition } from '../typings/IBoardPosition';
+
+function isBackGroundBlack(x: number, y: number): boolean {
     if (x % 2 === 0) {
         if (y % 2 === 0)
             return true;
@@ -10,17 +13,15 @@ let isBackGroundBlack = function (x: number, y: number): boolean {
         else
             return true;
     }
-};
+}
 
-let isPositionNotAdded = function (position: IBoardPosition, positions: IBoardPosition[])
-    : boolean {
-
+function isPositionNotAdded(position: IBoardPosition, positions: IBoardPosition[]): boolean {
     return positions.find(p =>
-        p.x == position.x && p.y == position.y)
+        p.x === position.x && p.y === position.y)
         ? true : false;
-};
+}
 
-let getIndexToSearchOrder = function (x: number): number {
+function getIndexToSearchOrder(x: number): number {
     switch (x) {
         case 0:
             return 0;
@@ -41,10 +42,9 @@ let getIndexToSearchOrder = function (x: number): number {
         default:
             return null;
     }
-};
+}
 
-let getY0Start7End = function (y: number, isBlack: boolean)
-    : number {
+function getY0Start7End(y: number, isBlack: boolean): number {
     if (isBlack)
         return y;
 
@@ -70,7 +70,7 @@ let getY0Start7End = function (y: number, isBlack: boolean)
     }
 }
 
-let getY7Start0End = function (y: number, isBlack: boolean): number {
+function getY7Start0End(y: number, isBlack: boolean): number {
     if (!isBlack)
         return y;
 
@@ -94,14 +94,12 @@ let getY7Start0End = function (y: number, isBlack: boolean): number {
         default:
             return null;
     }
-};
+}
 
-let boardHelper: IBoardHelper = {
+export const boardHelper: IBoardHelper = {
     isBackGroundBlack,
     isPositionNotAdded,
     getIndexToSearchOrder,
     getY0Start7End,
     getY7Start0End
 };
-
-export default boardHelper;

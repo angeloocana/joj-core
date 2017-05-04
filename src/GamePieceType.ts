@@ -1,6 +1,6 @@
-let gamePieceType: IGamePieceType = {
-    white: "W",
-    black: "B"
-}
+import { IGamePieceType } from './typings/IGamePieceType';
 
-export default gamePieceType;
+export const gamePieceType: IGamePieceType = {
+    white: 'W',
+    black: 'B'
+};

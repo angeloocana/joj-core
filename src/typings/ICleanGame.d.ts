@@ -1,7 +1,9 @@
+import { IMove } from './IMove';
+
 /**
  * Clean Game To Save on Server
  */
-interface ICleanGame {
+export interface ICleanGame {
     ended: boolean;
     movements: IMove[];
     blackWin: boolean;

@@ -3,19 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var isBackGroundBlack = function isBackGroundBlack(x, y) {
+function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0) return true;else return false;
     } else {
         if (y % 2 === 0) return false;else return true;
     }
-};
-var isPositionNotAdded = function isPositionNotAdded(position, positions) {
+}
+function isPositionNotAdded(position, positions) {
     return positions.find(function (p) {
-        return p.x == position.x && p.y == position.y;
+        return p.x === position.x && p.y === position.y;
     }) ? true : false;
-};
-var getIndexToSearchOrder = function getIndexToSearchOrder(x) {
+}
+function getIndexToSearchOrder(x) {
     switch (x) {
         case 0:
             return 0;
@@ -36,8 +36,8 @@ var getIndexToSearchOrder = function getIndexToSearchOrder(x) {
         default:
             return null;
     }
-};
-var getY0Start7End = function getY0Start7End(y, isBlack) {
+}
+function getY0Start7End(y, isBlack) {
     if (isBlack) return y;
     switch (y) {
         case 0:
@@ -59,8 +59,8 @@ var getY0Start7End = function getY0Start7End(y, isBlack) {
         default:
             return null;
     }
-};
-var getY7Start0End = function getY7Start0End(y, isBlack) {
+}
+function getY7Start0End(y, isBlack) {
     if (!isBlack) return y;
     switch (y) {
         case 0:
@@ -82,12 +82,13 @@ var getY7Start0End = function getY7Start0End(y, isBlack) {
         default:
             return null;
     }
-};
-var boardHelper = {
+}
+var boardHelper = exports.boardHelper = {
     isBackGroundBlack: isBackGroundBlack,
     isPositionNotAdded: isPositionNotAdded,
     getIndexToSearchOrder: getIndexToSearchOrder,
     getY0Start7End: getY0Start7End,
     getY7Start0End: getY7Start0End
 };
-exports.default = boardHelper;
+//# sourceMappingURL=BoardHelper.js.map
+//# sourceMappingURL=BoardHelper.js.map

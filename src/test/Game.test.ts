@@ -1,31 +1,23 @@
-﻿import Game from "../Game";
-import { ok, deepEqual, equal, notEqual, throws } from "ptz-assert";
-import Players from "../Players";
-import Player from "../Player";
-import BoardPosition from "../BoardPosition";
+﻿import { deepEqual, equal, notEqual, throws } from 'ptz-assert';
+import {
+    BoardPosition,
+    Game,
+    IGame,
+    Player,
+    Players
+} from '../index';
 
-describe("Game", function () {
-    var game: IGame;
-
-    describe("needToValidateMovements", () => {
-        it("when null should validate");
-        it("when undefined should validate");
-        it("when true should validate");
-        it("when false should NOT validate");
+describe('Game', () => {
+    describe('needToValidateMovements', () => {
+        it('when null should validate');
+        it('when undefined should validate');
+        it('when true should validate');
+        it('when false should NOT validate');
     });
 
-    describe("Game ended", () => {
-        beforeEach(() => {
-            game = new Game({
-                boardArgs: {
-                    logMove: true
-                }
-            });
-        });
-    });
-
-    describe("getCopy", () => {
+    describe('getCopy', () => {
         let gameCopy;
+        var game: IGame;
 
         beforeEach(() => {
             game = new Game({
@@ -36,32 +28,32 @@ describe("Game", function () {
             gameCopy = game.getCopy();
         });
 
-        it("notEqual = not using same reference", () => {
+        it('notEqual = not using same reference', () => {
             notEqual(gameCopy, game);
         });
-        it("movements", () => {
+        it('movements', () => {
             deepEqual(gameCopy.movements, game.movements);
         });
-        it("players", () => {
+        it('players', () => {
             deepEqual(gameCopy.players, game.players);
         });
-        it("ended", () => {
+        it('ended', () => {
             deepEqual(gameCopy.ended, game.ended);
         });
-        it("board", () => {
+        it('board', () => {
             deepEqual(gameCopy.board, game.board);
         });
     });
 
-    describe("backMove", () => {
-        it("backMove offline game", function () {
+    describe('backMove', () => {
+        it('backMove offline game', () => {
 
-            let players = new Players({
-                white: new Player({ name: "Angelo", foto: "img/black_user.png" }),
-                black: new Player({ name: "Gabi", foto: "img/white_user.png" })
+            const players = new Players({
+                white: new Player({ name: 'Angelo', foto: 'img/black_user.png' }),
+                black: new Player({ name: 'Gabi', foto: 'img/white_user.png' })
             });
 
-            let game = new Game({
+            const game = new Game({
                 players,
                 boardArgs: {
                     logMove: true
@@ -70,7 +62,7 @@ describe("Game", function () {
 
             game.move(new BoardPosition({ x: 2, y: 7 }), new BoardPosition({ x: 2, y: 6 }));
 
-            let gameBeforeLastMove = game.getCopy();
+            const gameBeforeLastMove = game.getCopy();
 
             game.move(new BoardPosition({ x: 2, y: 0 }), new BoardPosition({ x: 2, y: 1 }));
 
@@ -81,11 +73,13 @@ describe("Game", function () {
         });
     });
 
-    describe("Move", () => {
+    describe('Move', () => {
+        var game: IGame;
+
         beforeEach(() => {
-            var players = new Players({
-                white: new Player({ name: "Angelo", foto: "img/black_user.png" }),
-                black: new Player({ name: "Gabi", foto: "img/white_user.png" })
+            const players = new Players({
+                white: new Player({ name: 'Angelo', foto: 'img/black_user.png' }),
+                black: new Player({ name: 'Gabi', foto: 'img/white_user.png' })
             });
 
             game = new Game({
@@ -96,9 +90,9 @@ describe("Game", function () {
             });
         });
 
-        it("Block moving to same position", () => {
-            var startPosition = new BoardPosition({ x: 0, y: 0 });
-            var nextPosition = new BoardPosition({ x: 0, y: 0 });
+        it('Block moving to same position', () => {
+            const startPosition = new BoardPosition({ x: 0, y: 0 });
+            const nextPosition = new BoardPosition({ x: 0, y: 0 });
 
             throws(() => {
                 game.move(startPosition, nextPosition);

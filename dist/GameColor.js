@@ -1,20 +1,20 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.GameColor = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _PieceHelper = require("./helpers/PieceHelper");
-
-var _PieceHelper2 = _interopRequireDefault(_PieceHelper);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _PieceHelper = require('./helpers/PieceHelper');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var GameColor = function () {
+var GameColor = exports.GameColor = function () {
+    /**
+     * Get a clean game color
+     */
     function GameColor(boardOptions, isBlack) {
         _classCallCheck(this, GameColor);
 
@@ -26,11 +26,11 @@ var GameColor = function () {
         var y = boardOptions.size.y - 1;
         this.startRow = isBlack ? 0 : y;
         this.endRow = isBlack ? y : 0;
-        this.pieces = _PieceHelper2.default.getStartPieces(boardOptions, this.startRow, isBlack);
+        this.pieces = _PieceHelper.pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
     }
 
     _createClass(GameColor, [{
-        key: "setColorWinners",
+        key: 'setColorWinners',
         value: function setColorWinners() {
             this.winners = 0;
             this.preWinnersPoints = 0;
@@ -40,12 +40,12 @@ var GameColor = function () {
             }
         }
     }, {
-        key: "win",
+        key: 'win',
         value: function win() {
             return this.winners === this.pieces.length;
         }
     }, {
-        key: "move",
+        key: 'move',
         value: function move(startPosition, nextPosition) {
             this.pieces.forEach(function (piece) {
                 if (piece.position.x === startPosition.x && piece.position.y === startPosition.y) {
@@ -58,5 +58,5 @@ var GameColor = function () {
 
     return GameColor;
 }();
-
-exports.default = GameColor;
+//# sourceMappingURL=GameColor.js.map
+//# sourceMappingURL=GameColor.js.map

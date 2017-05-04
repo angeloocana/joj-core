@@ -1,9 +1,13 @@
-import BoardHelper from "./helpers/BoardHelper";
-import PieceHelper from "./helpers/PieceHelper";
-import GamePieceType from "./GamePieceType";
-import BoardPosition from "./BoardPosition";
+import { BoardPosition } from './BoardPosition';
+import { boardHelper } from './helpers/BoardHelper';
 
-export default class GameBoard implements IGameBoard {
+import { IBoardOptions } from './typings/IBoardOptions';
+import { IBoardPosition } from './typings/IBoardPosition';
+import { IGameBoard, IGameBoardArgs } from './typings/IGameBoard';
+import { IGamePiece } from './typings/IGamePiece';
+import { IPositionsWhereCanIGo } from './typings/IPositionsWhereCanIGo';
+
+export class GameBoard implements IGameBoard {
 
     board: IBoardPosition[][];
     boardOptions: IBoardOptions;
@@ -21,8 +25,7 @@ export default class GameBoard implements IGameBoard {
         this.fillAllPiecesOnBoard(args.whitePieces, args.blackPieces);
     }
 
-    fillPiecesOnBoard(pieces: IGamePiece[])
-        : void {
+    fillPiecesOnBoard(pieces: IGamePiece[]): void {
 
         if (!pieces)
             return;
@@ -31,15 +34,13 @@ export default class GameBoard implements IGameBoard {
             this.getPosition(piece.position).setPiece(piece.position.isBlackPiece()));
     }
 
-    fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[])
-        : void {
+    fillAllPiecesOnBoard(whitePieces: IGamePiece[], blackPieces: IGamePiece[]): void {
 
         this.fillPiecesOnBoard(whitePieces);
         this.fillPiecesOnBoard(blackPieces);
     }
 
-    generateBoard()
-        : void {
+    generateBoard(): void {
 
         this.board = [];
         for (let x = 0; x < this.boardOptions.size.x; x++) {
@@ -47,7 +48,7 @@ export default class GameBoard implements IGameBoard {
                 if (!this.board[x])
                     this.board[x] = [];
 
-                let position: IBoardPosition = new BoardPosition({ x, y });
+                const position: IBoardPosition = new BoardPosition({ x, y });
 
                 if (y === this.boardOptions.size.y - 1)
                     position.isWhiteHome = true;
@@ -71,18 +72,17 @@ export default class GameBoard implements IGameBoard {
     getPosition(position: IBoardPosition): IBoardPosition {
         try {
             return this.board[position.x][position.y];
-        }
-        catch (e) {
-            console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+        } catch (e) {
+            console.log('Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.');
             console.log(position);
-            console.log("Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
-            throw "Error getting position";
+            console.log('Error getting position: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.');
+            throw new Error('Error getting position');
         }
     }
 
     getNearPositions(position, onlyEmpty): IBoardPosition[] {
-        var positions: IBoardPosition[] = [];
-        var board = this;
+        const positions: IBoardPosition[] = [];
+        const board = this;
 
         function add(plusX: number, plusY: number) {
             var newPosition: IBoardPosition = new BoardPosition({
@@ -95,7 +95,7 @@ export default class GameBoard implements IGameBoard {
 
             newPosition = board.getPosition(newPosition);
 
-            if (typeof onlyEmpty != "undefined") {
+            if (typeof onlyEmpty !== 'undefined') {
                 if (onlyEmpty === newPosition.isEmpty())
                     positions.push(newPosition);
             } else
@@ -116,8 +116,7 @@ export default class GameBoard implements IGameBoard {
         return positions;
     }
 
-    getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition)
-        : IBoardPosition {
+    getJumpPosition(startPosition: IBoardPosition, toJumpPosition: IBoardPosition): IBoardPosition {
 
         var jumpPosition: IBoardPosition = new BoardPosition({ x: 0, y: 0 });
 
@@ -165,21 +164,19 @@ export default class GameBoard implements IGameBoard {
         return jumpPosition;
     }
 
+    // tslint:disable-next-line:max-line-length
+    whereCanIJump(jumpStartPosition: IBoardPosition, positions, orderedPositions: IBoardPosition[][], isBlack: boolean): void {
 
-    whereCanIJump(jumpStartPosition: IBoardPosition, positions,
-        orderedPositions: IBoardPosition[][], isBlack: boolean)
-        : void {
-
-        let nearFilledPositions: IBoardPosition[]
+        const nearFilledPositions: IBoardPosition[]
             = this.getNearPositions(jumpStartPosition, false);
 
         nearFilledPositions.forEach(nearFilledPosition => {
-            let jumpPosition: IBoardPosition
+            const jumpPosition: IBoardPosition
                 = this.getJumpPosition(jumpStartPosition,
                     nearFilledPosition);
 
             if (jumpPosition) {
-                if (BoardHelper.isPositionNotAdded(jumpPosition,
+                if (boardHelper.isPositionNotAdded(jumpPosition,
                     positions)) {
 
                     jumpPosition.lastPosition = jumpStartPosition;
@@ -187,10 +184,10 @@ export default class GameBoard implements IGameBoard {
                     jumpPosition.jumps = jumpStartPosition.jumps ? jumpStartPosition.jumps++ : 2;
 
                     positions.push(jumpPosition);
-                    let y = BoardHelper.getY0Start7End(jumpPosition.y, isBlack);
+                    const y = boardHelper.getY0Start7End(jumpPosition.y, isBlack);
                     if (!orderedPositions[y])
                         orderedPositions[y] = [];
-                    orderedPositions[y][BoardHelper.getIndexToSearchOrder(jumpPosition.x)] = jumpPosition;
+                    orderedPositions[y][boardHelper.getIndexToSearchOrder(jumpPosition.x)] = jumpPosition;
 
                     this.whereCanIJump(jumpPosition, positions, orderedPositions, isBlack);
                 }
@@ -198,37 +195,36 @@ export default class GameBoard implements IGameBoard {
         });
     }
 
-    getPositionsWhereCanIGo(startPosition: IBoardPosition,
-        isBlack: boolean): IPositionsWhereCanIGo {
+    getPositionsWhereCanIGo(startPosition: IBoardPosition, isBlack: boolean): IPositionsWhereCanIGo {
         if (!startPosition)
             return null;
 
-        let allNearPositions = this.getNearPositions(startPosition, undefined);
-        let positions = [];
-        let orderedPositions = [];
+        const allNearPositions = this.getNearPositions(startPosition, undefined);
+        const positions = [];
+        const orderedPositions = [];
 
         for (let i = 0; i < allNearPositions.length; i++) {
-            let nearPosition = allNearPositions[i];
+            const nearPosition = allNearPositions[i];
             if (nearPosition.isEmpty()) {
                 positions.push(nearPosition);
 
-                let y = BoardHelper.getY0Start7End(nearPosition.y,
+                const y = boardHelper.getY0Start7End(nearPosition.y,
                     isBlack);
                 if (!orderedPositions[y])
                     orderedPositions[y] = [];
 
                 orderedPositions[y][
-                    BoardHelper.getIndexToSearchOrder(nearPosition.x)] = nearPosition;
+                    boardHelper.getIndexToSearchOrder(nearPosition.x)] = nearPosition;
             } else {
-                let jumpPosition = this.getJumpPosition(startPosition, nearPosition);
+                const jumpPosition = this.getJumpPosition(startPosition, nearPosition);
                 if (jumpPosition) {
                     jumpPosition.jumps = 1;
                     positions.push(jumpPosition);
 
-                    let y = BoardHelper.getY0Start7End(jumpPosition.y, isBlack);
+                    const y = boardHelper.getY0Start7End(jumpPosition.y, isBlack);
                     if (!orderedPositions[y])
                         orderedPositions[y] = [];
-                    orderedPositions[y][BoardHelper.getIndexToSearchOrder(jumpPosition.x)] = jumpPosition;
+                    orderedPositions[y][boardHelper.getIndexToSearchOrder(jumpPosition.x)] = jumpPosition;
 
                     this.whereCanIJump(jumpPosition, positions, orderedPositions, isBlack);
                 }
@@ -236,13 +232,13 @@ export default class GameBoard implements IGameBoard {
         }
 
         return {
-            positions: positions,
-            orderedPositions: orderedPositions
-        }
+            positions,
+            orderedPositions
+        };
     }
 
     setWhereCanIGo(startPosition: IBoardPosition, blackPiece: boolean): void {
-        let positions = this.getPositionsWhereCanIGo(startPosition, blackPiece).positions;
+        const positions = this.getPositionsWhereCanIGo(startPosition, blackPiece).positions;
 
         positions.forEach(position => {
             this.getPosition(position).iCanGoHere = true;
@@ -260,37 +256,35 @@ export default class GameBoard implements IGameBoard {
     }
 
     printUnicode(): string {
-        var board = "";
+        var board = '';
         for (var y = 0; y < this.board.length; y++) {
             for (var x = 0; x < this.board[y].length; x++) {
-                var position = this.board[x][y];
+                const position = this.board[x][y];
 
-                if (BoardHelper.isBackGroundBlack(x, y)) {
+                if (boardHelper.isBackGroundBlack(x, y)) {
                     if (position.isWhitePiece())
-                        board += "\u{25CF}";
+                        board += '\u{25CF}';
                     else if (position.isBlackPiece())
-                        board += "\u{25CB}";
+                        board += '\u{25CB}';
                     else
-                        board += " ";
-                }
-                else {
+                        board += ' ';
+                } else {
                     if (position.isWhitePiece())
-                        board += "\u{25D9}";
+                        board += '\u{25D9}';
                     else if (position.isBlackPiece())
-                        board += "\u{25D8}";
+                        board += '\u{25D8}';
                     else
-                        board += "\u{2588}";
+                        board += '\u{2588}';
                 }
             }
 
-            board += "\n";
+            board += '\n';
         }
 
         return board;
     }
 
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition,
-        backMove?: boolean, whiteTurn?: boolean): void {
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove?: boolean, whiteTurn?: boolean): void {
 
         if (backMove) {
             this.getPosition(nextPosition).setPiece(!whiteTurn);
@@ -311,4 +305,3 @@ export default class GameBoard implements IGameBoard {
             console.log(this.printUnicode());
     }
 }
-
