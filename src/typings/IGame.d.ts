@@ -15,7 +15,6 @@ export interface IGame extends ICleanGame {
 
     isWhiteTurn(): boolean;
     setWhereCanIGo(startPosition): void;
-    verifyWinner(): void;
     canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean;
     move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove?: boolean): void;
     backMove(): void;

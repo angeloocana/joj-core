@@ -8,6 +8,7 @@ exports.Game = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;
+exports.getWinner = getWinner;
 
 var _ptzCopy = require('ptz-copy');
 
@@ -73,13 +74,6 @@ var Game = exports.Game = function () {
             this.board.setWhereCanIGo(startPosition, blackPiece);
         }
     }, {
-        key: 'verifyWinner',
-        value: function verifyWinner() {
-            this.white.setColorWinners();
-            this.black.setColorWinners();
-            if (this.white.win()) this.blackWin = false;else if (this.black.win()) this.blackWin = true;
-        }
-    }, {
         key: 'canMove',
         value: function canMove(startPosition, nextPosition) {
             var positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
@@ -95,15 +89,17 @@ var Game = exports.Game = function () {
         value: function move(startPosition, nextPosition) {
             var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
+            var game = this;
             if (startPosition.isSamePositionAs(nextPosition)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-            if (!backMove) if (!this.canMove(startPosition, nextPosition)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-            this.board.move(startPosition, nextPosition, backMove, this.isWhiteTurn());
-            this.black.move(startPosition, nextPosition);
-            this.white.move(startPosition, nextPosition);
+            if (!backMove) if (!game.canMove(startPosition, nextPosition)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+            game.board.move(startPosition, nextPosition, backMove, game.isWhiteTurn());
+            game.black.move(startPosition, nextPosition);
+            game.white.move(startPosition, nextPosition);
             if (!backMove) {
-                this.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
-                this.verifyWinner();
+                game.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
+                game = getWinner(game);
             }
+            return game;
         }
     }, {
         key: 'backMove',
@@ -156,6 +152,12 @@ function getCleanGameToSaveOnServer(game) {
         return { startPosition: startPosition, nextPosition: nextPosition };
     });
     return cleanGame;
+}
+function getWinner(game) {
+    game.white = (0, _GameColor.setColorWinners)(game.white);
+    game.black = (0, _GameColor.setColorWinners)(game.black);
+    if ((0, _GameColor.colorWin)(game.white)) game.blackWin = false;else if ((0, _GameColor.colorWin)(game.black)) game.blackWin = true;
+    return game;
 }
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map

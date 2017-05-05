@@ -1,7 +1,7 @@
 import copy from 'ptz-copy';
 import { BoardPosition } from './BoardPosition';
 import { GameBoard } from './GameBoard';
-import { GameColor } from './GameColor';
+import { colorWin, GameColor, setColorWinners } from './GameColor';
 export class Game {
     /**
      * Create new Game
@@ -39,14 +39,6 @@ export class Game {
             return;
         this.board.setWhereCanIGo(startPosition, blackPiece);
     }
-    verifyWinner() {
-        this.white.setColorWinners();
-        this.black.setColorWinners();
-        if (this.white.win())
-            this.blackWin = false;
-        else if (this.black.win())
-            this.blackWin = true;
-    }
     canMove(startPosition, nextPosition) {
         const positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
         var nextPositionFound = false;
@@ -56,18 +48,20 @@ export class Game {
         return nextPositionFound;
     }
     move(startPosition, nextPosition, backMove = false) {
+        let game = this;
         if (startPosition.isSamePositionAs(nextPosition))
             throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
         if (!backMove)
-            if (!this.canMove(startPosition, nextPosition))
+            if (!game.canMove(startPosition, nextPosition))
                 throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-        this.board.move(startPosition, nextPosition, backMove, this.isWhiteTurn());
-        this.black.move(startPosition, nextPosition);
-        this.white.move(startPosition, nextPosition);
+        game.board.move(startPosition, nextPosition, backMove, game.isWhiteTurn());
+        game.black.move(startPosition, nextPosition);
+        game.white.move(startPosition, nextPosition);
         if (!backMove) {
-            this.movements.push({ startPosition, nextPosition });
-            this.verifyWinner();
+            game.movements.push({ startPosition, nextPosition });
+            game = getWinner(game);
         }
+        return game;
     }
     backMove() {
         this.board.cleanBoardWhereCanIGo();
@@ -107,5 +101,14 @@ export function getCleanGameToSaveOnServer(game) {
         return { startPosition, nextPosition };
     });
     return cleanGame;
+}
+export function getWinner(game) {
+    game.white = setColorWinners(game.white);
+    game.black = setColorWinners(game.black);
+    if (colorWin(game.white))
+        game.blackWin = false;
+    else if (colorWin(game.black))
+        game.blackWin = true;
+    return game;
 }
 //# sourceMappingURL=Game.js.map

@@ -1,5 +1,5 @@
-import { equal, ok } from 'ptz-assert';
-import { GameColor, GamePiece } from '../index';
+import { equal, notOk, ok } from 'ptz-assert';
+import { colorWin, defaultBoardOptions, GameColor, GamePiece, getColorWinners } from '../index';
 function assertPieces(actual, expected) {
     for (let i = 0; i < actual.length; i++) {
         const actualPiece = actual[i];
@@ -22,17 +22,11 @@ function assertColor(actual, expected) {
     equal(actual.endRow, expected.endRow, 'endRow');
     equal(actual.jumps, expected.jumps, 'jumps');
     equal(actual.nMoves, expected.nMoves, 'nMoves');
-    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    // console.log("pieces actual");
-    // console.log(actual.pieces);
-    // console.log("pieces expected");
-    // console.log(expected.pieces);
-    // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     assertPieces(actual.pieces, expected.pieces);
     equal(actual.points, expected.points, 'points');
-    equal(actual.preWinnersPoints, expected.preWinnersPoints, 'preWinnersPoints actual:' + actual.preWinnersPoints + ' expected:' + expected.preWinnersPoints);
+    equal(actual.winners.preWinnersPoints, expected.winners.preWinnersPoints, `preWinnersPoints actual: ${actual.winners.preWinnersPoints} expected: ${expected.winners.preWinnersPoints}`);
     equal(actual.startRow, expected.startRow, 'startRow');
-    equal(actual.winners, expected.winners, 'winners');
+    equal(actual.winners.winners, expected.winners.winners, 'winners');
 }
 describe('GameColor', () => {
     const boardOptions = { size: { x: 3, y: 3 } };
@@ -40,12 +34,14 @@ describe('GameColor', () => {
         const isBlack = false;
         const pieces = [new GamePiece(0, 2, isBlack), new GamePiece(1, 2, isBlack), new GamePiece(2, 2, isBlack)];
         const expectedColor = {
-            winners: 0,
+            winners: {
+                preWinnersPoints: 0,
+                winners: 0
+            },
             jumps: 0,
             points: 0,
             nMoves: 0,
             startRow: 2,
-            preWinnersPoints: 0,
             endRow: 0,
             pieces
         };
@@ -56,8 +52,10 @@ describe('GameColor', () => {
         const isBlack = true;
         const pieces = [new GamePiece(0, 0, isBlack), new GamePiece(1, 0, isBlack), new GamePiece(2, 0, isBlack)];
         const expectedColor = {
-            winners: 0,
-            preWinnersPoints: 0,
+            winners: {
+                preWinnersPoints: 0,
+                winners: 0
+            },
             jumps: 0,
             points: 0,
             nMoves: 0,
@@ -67,6 +65,35 @@ describe('GameColor', () => {
         };
         const actualColor = new GameColor(boardOptions, isBlack);
         assertColor(actualColor, expectedColor);
+    });
+    describe('getColorWinners', () => {
+        it('return 0 when new game', () => {
+            const color = new GameColor(defaultBoardOptions, false);
+            const winners = getColorWinners(color);
+            equal(winners.preWinnersPoints, 0);
+            equal(winners.winners, 0);
+        });
+        it('return 1');
+        it('return 2');
+        it('return 3');
+        it('return 4');
+        it('return 5');
+        it('return 6');
+        it('return 7');
+        it('return 8');
+    });
+    describe('colorWin', () => {
+        it('return false when new game', () => {
+            const color = new GameColor(defaultBoardOptions, false);
+            const win = colorWin(color);
+            notOk(win);
+        });
+        it('return true', () => {
+            const color = new GameColor(defaultBoardOptions, false);
+            color.winners.winners = 8;
+            const win = colorWin(color);
+            ok(win);
+        });
     });
 });
 //# sourceMappingURL=GameColor.test.js.map

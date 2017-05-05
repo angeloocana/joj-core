@@ -1,6 +1,6 @@
 export { Game, getCleanGameToSaveOnServer } from './Game';
-export { GameBoard } from './GameBoard';
-export { GameColor } from './GameColor';
+export { defaultBoardOptions, GameBoard } from './GameBoard';
+export { colorWin, GameColor, getColorWinners } from './GameColor';
 export { GamePiece } from './GamePiece';
 export { gamePieceType } from './GamePieceType';
 export { Player } from './Player';

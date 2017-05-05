@@ -7,6 +7,13 @@ import { IGameBoard, IGameBoardArgs } from './typings/IGameBoard';
 import { IGamePiece } from './typings/IGamePiece';
 import { IPositionsWhereCanIGo } from './typings/IPositionsWhereCanIGo';
 
+export const defaultBoardOptions: IBoardOptions = {
+    size: {
+        x: 8,
+        y: 8
+    }
+};
+
 export class GameBoard implements IGameBoard {
 
     board: IBoardPosition[][];

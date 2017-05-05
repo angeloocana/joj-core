@@ -21,6 +21,12 @@ Object.defineProperty(exports, 'getCleanGameToSaveOnServer', {
 
 var _GameBoard = require('./GameBoard');
 
+Object.defineProperty(exports, 'defaultBoardOptions', {
+  enumerable: true,
+  get: function get() {
+    return _GameBoard.defaultBoardOptions;
+  }
+});
 Object.defineProperty(exports, 'GameBoard', {
   enumerable: true,
   get: function get() {
@@ -30,10 +36,22 @@ Object.defineProperty(exports, 'GameBoard', {
 
 var _GameColor = require('./GameColor');
 
+Object.defineProperty(exports, 'colorWin', {
+  enumerable: true,
+  get: function get() {
+    return _GameColor.colorWin;
+  }
+});
 Object.defineProperty(exports, 'GameColor', {
   enumerable: true,
   get: function get() {
     return _GameColor.GameColor;
+  }
+});
+Object.defineProperty(exports, 'getColorWinners', {
+  enumerable: true,
+  get: function get() {
+    return _GameColor.getColorWinners;
   }
 });
 

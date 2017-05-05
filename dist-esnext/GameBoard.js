@@ -1,5 +1,11 @@
 import { BoardPosition } from './BoardPosition';
 import { boardHelper } from './helpers/BoardHelper';
+export const defaultBoardOptions = {
+    size: {
+        x: 8,
+        y: 8
+    }
+};
 export class GameBoard {
     /**
      * Game Board

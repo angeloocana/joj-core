@@ -2,14 +2,17 @@ import { pieceHelper } from './helpers/PieceHelper';
 
 import { IBoardOptions } from './typings/IBoardOptions';
 import { IBoardPosition } from './typings/IBoardPosition';
-import { IGameColor } from './typings/IGameColor';
+import { IGameColor, IWinners } from './typings/IGameColor';
 import { IGamePiece } from './typings/IGamePiece';
 
 export class GameColor implements IGameColor {
-    winners: number = 0;
+    winners: IWinners = {
+        winners: 0,
+        preWinnersPoints: 0
+    };
+
     jumps: number = 0;
     points: number = 0;
-    preWinnersPoints: number = 0;
     nMoves: number = 0;
     startRow: number;
     endRow: number;
@@ -26,25 +29,6 @@ export class GameColor implements IGameColor {
         this.pieces = pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
     }
 
-    setColorWinners(): void {
-        this.winners = 0;
-        this.preWinnersPoints = 0;
-
-        for (var i = 0; i < this.pieces.length; i++) {
-            const piece = this.pieces[i];
-            if (piece.position.y === this.endRow)
-                this.winners++;
-            else
-                this.preWinnersPoints += this.endRow === 0
-                    ? this.startRow - piece.position.y
-                    : piece.position.y;
-        }
-    }
-
-    win(): boolean {
-        return this.winners === this.pieces.length;
-    }
-
     move(startPosition: IBoardPosition, nextPosition: IBoardPosition): void {
 
         this.pieces.forEach(piece => {
@@ -55,4 +39,31 @@ export class GameColor implements IGameColor {
             }
         });
     }
+}
+
+export function getColorWinners(color: IGameColor): IWinners {
+    const initialWinners: IWinners = {
+        winners: 0,
+        preWinnersPoints: 0
+    };
+
+    return color.pieces.reduce((winners, piece) => {
+        if (piece.position.y === color.endRow)
+            winners.winners += 1;
+        else
+            winners.preWinnersPoints += color.endRow === 0
+                ? color.startRow - piece.position.y
+                : piece.position.y;
+
+        return winners;
+    }, initialWinners);
+}
+
+export function setColorWinners(color: IGameColor): IGameColor {
+    color.winners = getColorWinners(color);
+    return color;
+}
+
+export function colorWin(color: IGameColor): boolean {
+    return color.winners.winners === color.pieces.length;
 }

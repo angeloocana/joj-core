@@ -26,17 +26,11 @@ function assertColor(actual, expected) {
     (0, _ptzAssert.equal)(actual.endRow, expected.endRow, 'endRow');
     (0, _ptzAssert.equal)(actual.jumps, expected.jumps, 'jumps');
     (0, _ptzAssert.equal)(actual.nMoves, expected.nMoves, 'nMoves');
-    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    // console.log("pieces actual");
-    // console.log(actual.pieces);
-    // console.log("pieces expected");
-    // console.log(expected.pieces);
-    // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     assertPieces(actual.pieces, expected.pieces);
     (0, _ptzAssert.equal)(actual.points, expected.points, 'points');
-    (0, _ptzAssert.equal)(actual.preWinnersPoints, expected.preWinnersPoints, 'preWinnersPoints actual:' + actual.preWinnersPoints + ' expected:' + expected.preWinnersPoints);
+    (0, _ptzAssert.equal)(actual.winners.preWinnersPoints, expected.winners.preWinnersPoints, 'preWinnersPoints actual: ' + actual.winners.preWinnersPoints + ' expected: ' + expected.winners.preWinnersPoints);
     (0, _ptzAssert.equal)(actual.startRow, expected.startRow, 'startRow');
-    (0, _ptzAssert.equal)(actual.winners, expected.winners, 'winners');
+    (0, _ptzAssert.equal)(actual.winners.winners, expected.winners.winners, 'winners');
 }
 describe('GameColor', function () {
     var boardOptions = { size: { x: 3, y: 3 } };
@@ -44,12 +38,14 @@ describe('GameColor', function () {
         var isBlack = false;
         var pieces = [new _index.GamePiece(0, 2, isBlack), new _index.GamePiece(1, 2, isBlack), new _index.GamePiece(2, 2, isBlack)];
         var expectedColor = {
-            winners: 0,
+            winners: {
+                preWinnersPoints: 0,
+                winners: 0
+            },
             jumps: 0,
             points: 0,
             nMoves: 0,
             startRow: 2,
-            preWinnersPoints: 0,
             endRow: 0,
             pieces: pieces
         };
@@ -60,8 +56,10 @@ describe('GameColor', function () {
         var isBlack = true;
         var pieces = [new _index.GamePiece(0, 0, isBlack), new _index.GamePiece(1, 0, isBlack), new _index.GamePiece(2, 0, isBlack)];
         var expectedColor = {
-            winners: 0,
-            preWinnersPoints: 0,
+            winners: {
+                preWinnersPoints: 0,
+                winners: 0
+            },
             jumps: 0,
             points: 0,
             nMoves: 0,
@@ -71,6 +69,35 @@ describe('GameColor', function () {
         };
         var actualColor = new _index.GameColor(boardOptions, isBlack);
         assertColor(actualColor, expectedColor);
+    });
+    describe('getColorWinners', function () {
+        it('return 0 when new game', function () {
+            var color = new _index.GameColor(_index.defaultBoardOptions, false);
+            var winners = (0, _index.getColorWinners)(color);
+            (0, _ptzAssert.equal)(winners.preWinnersPoints, 0);
+            (0, _ptzAssert.equal)(winners.winners, 0);
+        });
+        it('return 1');
+        it('return 2');
+        it('return 3');
+        it('return 4');
+        it('return 5');
+        it('return 6');
+        it('return 7');
+        it('return 8');
+    });
+    describe('colorWin', function () {
+        it('return false when new game', function () {
+            var color = new _index.GameColor(_index.defaultBoardOptions, false);
+            var win = (0, _index.colorWin)(color);
+            (0, _ptzAssert.notOk)(win);
+        });
+        it('return true', function () {
+            var color = new _index.GameColor(_index.defaultBoardOptions, false);
+            color.winners.winners = 8;
+            var win = (0, _index.colorWin)(color);
+            (0, _ptzAssert.ok)(win);
+        });
     });
 });
 //# sourceMappingURL=GameColor.test.js.map

@@ -1,7 +1,7 @@
 import copy from 'ptz-copy';
 import { BoardPosition } from './BoardPosition';
 import { GameBoard } from './GameBoard';
-import { GameColor } from './GameColor';
+import { colorWin, GameColor, setColorWinners } from './GameColor';
 
 import { IBoardPosition } from './typings/IBoardPosition';
 import { ICleanGame } from './typings/ICleanGame';
@@ -69,16 +69,6 @@ export class Game implements IGame {
         this.board.setWhereCanIGo(startPosition, blackPiece);
     }
 
-    verifyWinner(): void {
-        this.white.setColorWinners();
-        this.black.setColorWinners();
-
-        if (this.white.win())
-            this.blackWin = false;
-        else if (this.black.win())
-            this.blackWin = true;
-    }
-
     canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean {
 
         const positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
@@ -94,25 +84,29 @@ export class Game implements IGame {
         return nextPositionFound;
     }
 
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove: boolean = false): void {
+    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove: boolean = false): IGame {
+
+        let game: IGame = this;
 
         if (startPosition.isSamePositionAs(nextPosition))
             throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
 
         if (!backMove)
-            if (!this.canMove(startPosition, nextPosition))
+            if (!game.canMove(startPosition, nextPosition))
                 throw new Error('ERROR_CANT_MOVE_TO_POSITION');
 
-        this.board.move(startPosition, nextPosition
-            , backMove, this.isWhiteTurn());
+        game.board.move(startPosition, nextPosition
+            , backMove, game.isWhiteTurn());
 
-        this.black.move(startPosition, nextPosition);
-        this.white.move(startPosition, nextPosition);
+        game.black.move(startPosition, nextPosition);
+        game.white.move(startPosition, nextPosition);
 
         if (!backMove) {
-            this.movements.push({ startPosition, nextPosition });
-            this.verifyWinner();
+            game.movements.push({ startPosition, nextPosition });
+            game = getWinner(game);
         }
+
+        return game;
     }
 
     backMove(): void {
@@ -163,4 +157,16 @@ export function getCleanGameToSaveOnServer(game: IGame): ICleanGame {
     });
 
     return cleanGame;
+}
+
+export function getWinner(game: IGame): IGame {
+    game.white = setColorWinners(game.white);
+    game.black = setColorWinners(game.black);
+
+    if (colorWin(game.white))
+        game.blackWin = false;
+    else if (colorWin(game.black))
+        game.blackWin = true;
+
+    return game;
 }
