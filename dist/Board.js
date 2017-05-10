@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isWhiteHome = exports.isBlackHome = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getStartRow = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isWhiteHome = exports.isBlackHome = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -52,10 +52,6 @@ function getBoardConf(boardSize) {
     };
 }
 var defaultBoardConf = getBoardConf(defaultBoardSize);
-function getStartRow(boardConf, isBlack) {
-    var color = isBlack ? boardConf.black : boardConf.white;
-    return color.startRow;
-}
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0) return true;else return false;
@@ -332,7 +328,6 @@ exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
-exports.getStartRow = getStartRow;
 exports.getY0Start7End = getY0Start7End;
 exports.getY7Start0End = getY7Start0End;
 exports.isBackGroundBlack = isBackGroundBlack;

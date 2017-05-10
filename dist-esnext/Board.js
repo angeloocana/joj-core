@@ -25,10 +25,6 @@ function getBoardConf(boardSize) {
     };
 }
 const defaultBoardConf = getBoardConf(defaultBoardSize);
-function getStartRow(boardConf, isBlack) {
-    const color = isBlack ? boardConf.black : boardConf.white;
-    return color.startRow;
-}
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -336,5 +332,5 @@ function isBlackHome(position) {
     if (position.y === 0)
         return true;
 }
-export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getStartRow, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
 //# sourceMappingURL=Board.js.map

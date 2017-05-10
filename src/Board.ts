@@ -40,11 +40,6 @@ function getBoardConf(boardSize: IBoardSize): IBoardConf {
 
 const defaultBoardConf = getBoardConf(defaultBoardSize);
 
-function getStartRow(boardConf: IBoardConf, isBlack: boolean): number {
-    const color = isBlack ? boardConf.black : boardConf.white;
-    return color.startRow;
-}
-
 function isBackGroundBlack(x: number, y: number): boolean {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -435,7 +430,6 @@ export {
     getNearPositions,
     getPosition,
     getPositionsWhereCanIGo,
-    getStartRow,
     getY0Start7End,
     getY7Start0End,
     isBackGroundBlack,
