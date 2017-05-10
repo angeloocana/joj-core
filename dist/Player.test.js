@@ -2,32 +2,36 @@
 
 var _ptzAssert = require('ptz-assert');
 
+var assert = _interopRequireWildcard(_ptzAssert);
+
 var _index = require('./index');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 describe('Player', function () {
     var player = void 0;
-    describe('createBlackPlayer', function () {
+    describe('createBlack', function () {
         var name = 'John';
         beforeEach(function () {
-            player = (0, _index.createBlackPlayer)({ name: name });
+            player = _index.Player.createBlack({ name: name });
         });
         it('set name', function () {
-            (0, _ptzAssert.equal)(player.name, name);
+            assert.equal(player.name, name);
         });
         it('set isBlack = true', function () {
-            (0, _ptzAssert.ok)(player.isBlack);
+            assert.ok(player.isBlack);
         });
     });
-    describe('createWhitePlayer', function () {
+    describe('createWhite', function () {
         var name = 'John';
         beforeEach(function () {
-            player = (0, _index.createWhitePlayer)({ name: name });
+            player = _index.Player.createWhite({ name: name });
         });
         it('set name', function () {
-            (0, _ptzAssert.equal)(player.name, name);
+            assert.equal(player.name, name);
         });
         it('set isBlack = true', function () {
-            (0, _ptzAssert.notOk)(player.isBlack);
+            assert.notOk(player.isBlack);
         });
     });
 });

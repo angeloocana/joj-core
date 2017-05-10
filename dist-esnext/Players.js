@@ -1,9 +1,9 @@
-import { createBlackPlayer, createWhitePlayer } from './Player';
-function createPlayers(args) {
+import * as Player from './Player';
+function create(args) {
     return {
-        white: createWhitePlayer(args.white),
-        black: createBlackPlayer(args.black)
+        white: Player.createWhite(args.white),
+        black: Player.createBlack(args.black)
     };
 }
-export { createPlayers };
+export { create };
 //# sourceMappingURL=Players.js.map

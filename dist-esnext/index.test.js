@@ -1,8 +1,8 @@
-import { ok } from 'ptz-assert';
-import { createGame } from './index';
+import * as assert from 'ptz-assert';
+import * as core from './index';
 describe('joj-core', () => {
-    describe('exports', () => {
-        it('createGame', () => ok(createGame));
+    it('exports', () => {
+        assert.ok(core);
     });
 });
 //# sourceMappingURL=index.test.js.map

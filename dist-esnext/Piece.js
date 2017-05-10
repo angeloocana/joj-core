@@ -1,25 +1,17 @@
-import { getY0Start7End } from './Board';
-import { isSamePositionAs } from './Position';
-function createPiece(x, y, isBlack) {
+import * as Position from './Position';
+function create(x, y, isBlack) {
     return {
         position: { x, y, isBlack }
+        // Other props:
         // whereCanIGo?: IPositionsWhereCanIGo;
         // movimentsToWin?: number[];
     };
 }
-function getOtherPieces(pieces, remove) {
-    return pieces.filter(piece => piece && !isSamePositionAs(piece.position, remove.position));
+function hasSamePosition(a, b) {
+    return Position.hasSamePosition(a.position, b.position);
 }
-function getPiecesOrdered(pieces, isBlack) {
-    const ordered = [];
-    pieces.forEach(piece => {
-        const y = getY0Start7End(piece.position.y, isBlack);
-        if (!ordered[y])
-            ordered[y] = [piece];
-        else
-            ordered[y].push(piece);
-    });
-    return ordered;
+function hasSamePieceAndPosition(a, b) {
+    return Position.hasSamePieceAndPosition(a.position, b.position);
 }
-export { createPiece, getOtherPieces, getPiecesOrdered };
+export { create, hasSamePosition, hasSamePieceAndPosition };
 //# sourceMappingURL=Piece.js.map

@@ -1,8 +1,6 @@
-import { compose, memoize, not } from 'ramda';
-import {
-    hasBlackPiece, hasNoPiece, hasPiece, hasWhitePiece,
-    removePiece, setPiece
-} from './Position';
+import R from 'ramda';
+import * as Position from './Position';
+import * as Positions from './Positions';
 
 import log from 'ptz-log';
 
@@ -60,12 +58,6 @@ function isBackGroundBlack(x: number, y: number): boolean {
             return true;
     }
 }
-
-function positionsContains(positions: IPosition[], position: IPosition): boolean {
-    return positions.some(p => p.x === position.x && p.y === position.y);
-}
-
-const positionsNotContains = compose(not, positionsContains);
 
 function getToSearchOrder(x: number): number {
     switch (x) {
@@ -149,7 +141,7 @@ interface IGetInitialBoardResult {
 }
 
 // tslint:disable-next-line:variable-name
-const _getInitialBoard = memoize((boardConf: IBoardConf) => {
+const _getInitialBoard = R.memoize((boardConf: IBoardConf) => {
     log('_getInitialBoard for', boardConf);
     const board = [],
         blackPieces: IPiece[] = [],
@@ -207,27 +199,14 @@ function setPosition(board: IBoard, position: IPosition): IBoard {
 }
 
 function setPieceOnBoard(board: IBoard, position: IPosition, isBlack: boolean): IBoard {
-    return setPosition(board, setPiece(position, isBlack));
+    return setPosition(board, Position.setPiece(position, isBlack));
 }
 
 function removePieceOnBoard(board: IBoard, position: IPosition): IBoard {
-    return setPosition(board, removePiece(position));
+    return setPosition(board, Position.removePiece(position));
 }
 
-function fillPieceOnBoard(board: IBoard, piece: IPiece): IBoard {
-    board = setPosition(board, piece.position);
-    return board;
-}
-
-function fillPiecesOnBoard(board: IBoard, pieces: IPiece[]): IBoard {
-    pieces.forEach(piece =>
-        board = fillPieceOnBoard(board, piece)
-    );
-
-    return board;
-}
-
-function getCleanBoardWhereCanIGo(board: IBoard): IBoard {
+function clean(board: IBoard): IBoard {
     return mapBoard(board, position => {
         position.iCanGoHere = false;
         position.lastMove = false;
@@ -246,7 +225,7 @@ function getPositionsWhereCanIGo(board: IBoard, from: IPosition, isBlack: boolea
 
     for (let i = 0; i < allNearPositions.length; i++) {
         const nearPosition = allNearPositions[i];
-        if (hasNoPiece(nearPosition)) {
+        if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
 
             const y = getY0Start7End(nearPosition.y,
@@ -287,13 +266,13 @@ function getNearPositions(board: IBoard, position, onlyEmpty): IPosition[] {
             y: position.y + plusY
         };
 
-        if (!boardHasThisPosition(board, newPosition))
+        if (!hasPosition(board, newPosition))
             return;
 
         newPosition = getPosition(board, newPosition);
 
         if (typeof onlyEmpty !== 'undefined') {
-            if (onlyEmpty === hasNoPiece(newPosition))
+            if (onlyEmpty === Position.hasNoPiece(newPosition))
                 positions.push(newPosition);
         } else
             positions.push(newPosition);
@@ -329,13 +308,13 @@ function getJumpPosition(board: IBoard, from: IPosition, toJumpPosition: IPositi
         jumpPosition.y = toJumpPosition.y - 1;
     else jumpPosition.y = toJumpPosition.y;
 
-    if (!boardHasThisPosition(board, jumpPosition)) {
+    if (!hasPosition(board, jumpPosition)) {
         return;
     }
 
     jumpPosition = getPosition(board, jumpPosition);
 
-    if (hasPiece(jumpPosition)) {
+    if (Position.hasPiece(jumpPosition)) {
         return;
     }
 
@@ -354,7 +333,7 @@ function whereCanIJump(board: IBoard, jumpfrom: IPosition, positions, orderedPos
                 nearFilledPosition);
 
         if (jumpPosition) {
-            if (positionsNotContains(positions, jumpPosition)) {
+            if (Positions.notContains(positions, jumpPosition)) {
 
                 jumpPosition.lastPosition = jumpfrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
@@ -376,7 +355,7 @@ function setWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean): IB
     const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
 
     return mapBoard(board, position => {
-        position.iCanGoHere = positionsContains(positions, position);
+        position.iCanGoHere = Positions.contains(positions, position);
         return position;
     });
 }
@@ -388,16 +367,16 @@ function printUnicode(board: IBoard): string {
             const position = board[x][y];
 
             if (isBackGroundBlack(x, y)) {
-                if (hasWhitePiece(position))
+                if (Position.hasWhitePiece(position))
                     txt += '\u{25CF}';
-                else if (hasBlackPiece(position))
+                else if (Position.hasBlackPiece(position))
                     txt += '\u{25CB}';
                 else
                     txt += ' ';
             } else {
-                if (hasWhitePiece(position))
+                if (Position.hasWhitePiece(position))
                     txt += '\u{25D9}';
-                else if (hasBlackPiece(position))
+                else if (Position.hasBlackPiece(position))
                     txt += '\u{25D8}';
                 else
                     txt += '\u{2588}';
@@ -415,7 +394,7 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
     move.to.lastMove = true;
     move.from.lastMove = true;
 
-    board = setPieceOnBoard(board, move.to, hasBlackPiece(move.from));
+    board = setPieceOnBoard(board, move.to, Position.hasBlackPiece(move.from));
     board = removePieceOnBoard(board, move.from);
 
     let jumpPosition = move.to.lastPosition;
@@ -427,7 +406,7 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
     return board;
 }
 
-function boardHasThisPosition(board: IBoard, position: IPosition): boolean {
+function hasPosition(board: IBoard, position: IPosition): boolean {
     if (!position || position.x < 0 || position.y < 0)
         return false;
     return board.length > position.x && board[position.x].length > position.y;
@@ -446,10 +425,8 @@ function isBlackHome(position: IPosition): boolean {
 export {
     defaultBoardSize,
     defaultBoardConf,
-    fillPieceOnBoard,
-    fillPiecesOnBoard,
     getBoardAfterMove,
-    getCleanBoardWhereCanIGo,
+    clean,
     getInitialBoard,
     getToSearchOrder,
     getBoardConf,
@@ -463,12 +440,10 @@ export {
     getY7Start0End,
     isBackGroundBlack,
     isBlackHome,
-    positionsContains,
-    positionsNotContains,
     isWhiteHome,
     printUnicode,
     whereCanIJump,
     setPosition,
     setWhereCanIGo,
-    boardHasThisPosition
+    hasPosition
 };

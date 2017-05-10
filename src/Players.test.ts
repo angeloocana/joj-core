@@ -1,8 +1,8 @@
-import { ok } from 'ptz-assert';
+import * as assert from 'ptz-assert';
 import {
-    createPlayers,
     IPlayerArgs,
-    IPlayers
+    IPlayers,
+    Players
 } from './index';
 
 describe('Players', () => {
@@ -12,7 +12,7 @@ describe('Players', () => {
     const black: IPlayerArgs = { name: 'P Black' };
 
     beforeEach(() => {
-        players = createPlayers({
+        players = Players.create({
             black,
             white
         });
@@ -21,19 +21,19 @@ describe('Players', () => {
     describe('New setting players', () => {
 
         it('Set white player name', () => {
-            ok(players.white.name === white.name);
+            assert.ok(players.white.name === white.name);
         });
 
         it('Set black player name', () => {
-            ok(players.black.name === black.name);
+            assert.ok(players.black.name === black.name);
         });
 
         it('Set white player ai', () => {
-            ok(players.white.ai === white.ai);
+            assert.ok(players.white.ai === white.ai);
         });
 
         it('Set black player ai', () => {
-            ok(players.black.ai === black.ai);
+            assert.ok(players.black.ai === black.ai);
         });
     });
 });

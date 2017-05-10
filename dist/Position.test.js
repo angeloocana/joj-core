@@ -2,118 +2,122 @@
 
 var _ptzAssert = require('ptz-assert');
 
+var assert = _interopRequireWildcard(_ptzAssert);
+
 var _index = require('./index');
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 describe('Position', function () {
-    describe('isSamePositionAs', function () {
+    describe('hasSamePosition', function () {
         it('true', function () {
             var position1 = { x: 2, y: 3 };
             var position2 = { x: 2, y: 3 };
-            (0, _ptzAssert.equal)((0, _index.isSamePositionAs)(position1, position2), true);
+            assert.equal(_index.Position.hasSamePosition(position1, position2), true);
         });
         it('false', function () {
             var position1 = { x: 3, y: 2 };
             var position2 = { x: 2, y: 3 };
-            (0, _ptzAssert.equal)((0, _index.isSamePositionAs)(position1, position2), false);
+            assert.equal(_index.Position.hasSamePosition(position1, position2), false);
         });
     });
     describe('hasBlackPiece', function () {
         it('return true for black piece', function () {
             var position = { x: 2, y: 3, isBlack: true };
-            (0, _ptzAssert.ok)((0, _index.hasBlackPiece)(position));
+            assert.ok(_index.Position.hasBlackPiece(position));
         });
         it('return false for white piece', function () {
             var position = { x: 2, y: 3, isBlack: false };
-            (0, _ptzAssert.notOk)((0, _index.hasBlackPiece)(position));
+            assert.notOk(_index.Position.hasBlackPiece(position));
         });
         describe('return false for no piece', function () {
             it('null', function () {
                 var position = { x: 2, y: 3, isBlack: null };
-                (0, _ptzAssert.notOk)((0, _index.hasBlackPiece)(position));
+                assert.notOk(_index.Position.hasBlackPiece(position));
             });
             it('undefined', function () {
                 var position = { x: 2, y: 3, isBlack: undefined };
-                (0, _ptzAssert.notOk)((0, _index.hasBlackPiece)(position));
+                assert.notOk(_index.Position.hasBlackPiece(position));
             });
             it('no prop', function () {
                 var position = { x: 2, y: 3 };
                 delete position.isBlack;
-                (0, _ptzAssert.notOk)((0, _index.hasBlackPiece)(position));
+                assert.notOk(_index.Position.hasBlackPiece(position));
             });
         });
     });
     describe('hasNoPiece', function () {
         it('return false for black piece', function () {
             var position = { x: 2, y: 3, isBlack: true };
-            (0, _ptzAssert.notOk)((0, _index.hasNoPiece)(position));
+            assert.notOk(_index.Position.hasNoPiece(position));
         });
         it('return false for white piece', function () {
             var position = { x: 2, y: 3, isBlack: false };
-            (0, _ptzAssert.notOk)((0, _index.hasNoPiece)(position));
+            assert.notOk(_index.Position.hasNoPiece(position));
         });
         describe('return true for no piece', function () {
             it('null', function () {
                 var position = { x: 2, y: 3, isBlack: null };
-                (0, _ptzAssert.ok)((0, _index.hasNoPiece)(position));
+                assert.ok(_index.Position.hasNoPiece(position));
             });
             it('undefined', function () {
                 var position = { x: 2, y: 3, isBlack: undefined };
-                (0, _ptzAssert.ok)((0, _index.hasNoPiece)(position));
+                assert.ok(_index.Position.hasNoPiece(position));
             });
             it('no prop', function () {
                 var position = { x: 2, y: 3 };
                 delete position.isBlack;
-                (0, _ptzAssert.ok)((0, _index.hasNoPiece)(position));
+                assert.ok(_index.Position.hasNoPiece(position));
             });
         });
     });
     describe('hasWhitePiece', function () {
         it('return false for black piece', function () {
             var position = { x: 2, y: 3, isBlack: true };
-            (0, _ptzAssert.notOk)((0, _index.hasWhitePiece)(position));
+            assert.notOk(_index.Position.hasWhitePiece(position));
         });
         it('return true for white piece', function () {
             var position = { x: 2, y: 3, isBlack: false };
-            (0, _ptzAssert.ok)((0, _index.hasWhitePiece)(position));
+            assert.ok(_index.Position.hasWhitePiece(position));
         });
         describe('return false for no piece', function () {
             it('null', function () {
                 var position = { x: 2, y: 3, isBlack: null };
-                (0, _ptzAssert.notOk)((0, _index.hasWhitePiece)(position));
+                assert.notOk(_index.Position.hasWhitePiece(position));
             });
             it('undefined', function () {
                 var position = { x: 2, y: 3, isBlack: undefined };
-                (0, _ptzAssert.notOk)((0, _index.hasWhitePiece)(position));
+                assert.notOk(_index.Position.hasWhitePiece(position));
             });
             it('no prop', function () {
                 var position = { x: 2, y: 3 };
                 delete position.isBlack;
-                (0, _ptzAssert.notOk)((0, _index.hasWhitePiece)(position));
+                assert.notOk(_index.Position.hasWhitePiece(position));
             });
         });
     });
     describe('hasPiece', function () {
         it('return true for black piece', function () {
             var position = { x: 2, y: 3, isBlack: true };
-            (0, _ptzAssert.ok)((0, _index.hasPiece)(position));
+            assert.ok(_index.Position.hasPiece(position));
         });
         it('return true for white piece', function () {
             var position = { x: 2, y: 3, isBlack: false };
-            (0, _ptzAssert.ok)((0, _index.hasPiece)(position));
+            assert.ok(_index.Position.hasPiece(position));
         });
         describe('return false for no piece', function () {
             it('null', function () {
                 var position = { x: 2, y: 3, isBlack: null };
-                (0, _ptzAssert.notOk)((0, _index.hasPiece)(position));
+                assert.notOk(_index.Position.hasPiece(position));
             });
             it('undefined', function () {
                 var position = { x: 2, y: 3, isBlack: undefined };
-                (0, _ptzAssert.notOk)((0, _index.hasPiece)(position));
+                assert.notOk(_index.Position.hasPiece(position));
             });
             it('no prop', function () {
                 var position = { x: 2, y: 3 };
                 delete position.isBlack;
-                (0, _ptzAssert.notOk)((0, _index.hasPiece)(position));
+                assert.notOk(_index.Position.hasPiece(position));
             });
         });
     });

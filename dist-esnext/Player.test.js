@@ -1,29 +1,29 @@
-import { equal, notOk, ok } from 'ptz-assert';
-import { createBlackPlayer, createWhitePlayer } from './index';
+import * as assert from 'ptz-assert';
+import { Player } from './index';
 describe('Player', () => {
     let player;
-    describe('createBlackPlayer', () => {
+    describe('createBlack', () => {
         const name = 'John';
         beforeEach(() => {
-            player = createBlackPlayer({ name });
+            player = Player.createBlack({ name });
         });
         it('set name', () => {
-            equal(player.name, name);
+            assert.equal(player.name, name);
         });
         it('set isBlack = true', () => {
-            ok(player.isBlack);
+            assert.ok(player.isBlack);
         });
     });
-    describe('createWhitePlayer', () => {
+    describe('createWhite', () => {
         const name = 'John';
         beforeEach(() => {
-            player = createWhitePlayer({ name });
+            player = Player.createWhite({ name });
         });
         it('set name', () => {
-            equal(player.name, name);
+            assert.equal(player.name, name);
         });
         it('set isBlack = true', () => {
-            notOk(player.isBlack);
+            assert.notOk(player.isBlack);
         });
     });
 });

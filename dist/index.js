@@ -3,88 +3,54 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _Game = require('./Game');
-
-Object.keys(_Game).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Game[key];
-    }
-  });
-});
+exports.Positions = exports.Position = exports.Players = exports.Player = exports.Pieces = exports.Piece = exports.GameColor = exports.Game = exports.Board = undefined;
 
 var _Board = require('./Board');
 
-Object.keys(_Board).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Board[key];
-    }
-  });
-});
+var Board = _interopRequireWildcard(_Board);
+
+var _Game = require('./Game');
+
+var Game = _interopRequireWildcard(_Game);
 
 var _GameColor = require('./GameColor');
 
-Object.keys(_GameColor).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _GameColor[key];
-    }
-  });
-});
+var GameColor = _interopRequireWildcard(_GameColor);
 
 var _Piece = require('./Piece');
 
-Object.keys(_Piece).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Piece[key];
-    }
-  });
-});
+var Piece = _interopRequireWildcard(_Piece);
+
+var _Pieces = require('./Pieces');
+
+var Pieces = _interopRequireWildcard(_Pieces);
 
 var _Player = require('./Player');
 
-Object.keys(_Player).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Player[key];
-    }
-  });
-});
+var Player = _interopRequireWildcard(_Player);
 
 var _Players = require('./Players');
 
-Object.keys(_Players).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Players[key];
-    }
-  });
-});
+var Players = _interopRequireWildcard(_Players);
 
 var _Position = require('./Position');
 
-Object.keys(_Position).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _Position[key];
-    }
-  });
-});
+var Position = _interopRequireWildcard(_Position);
+
+var _Positions = require('./Positions');
+
+var Positions = _interopRequireWildcard(_Positions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+exports.Board = Board;
+exports.Game = Game;
+exports.GameColor = GameColor;
+exports.Piece = Piece;
+exports.Pieces = Pieces;
+exports.Player = Player;
+exports.Players = Players;
+exports.Position = Position;
+exports.Positions = Positions;
+//# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

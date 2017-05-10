@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.colorWin = exports.setColorScore = exports.getColorScore = exports.getColorAfterMove = exports.createGameColor = undefined;
+exports.hasWon = exports.setColorScore = exports.getScore = exports.getColorAfterMove = exports.create = undefined;
 
 var _ptzLog = require('ptz-log');
 
@@ -11,7 +11,7 @@ var _ptzLog2 = _interopRequireDefault(_ptzLog);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createGameColor(boardConf, isBlack, pieces) {
+function create(boardConf, isBlack, pieces) {
     var _ref = isBlack ? boardConf.black : boardConf.white,
         startRow = _ref.startRow,
         endRow = _ref.endRow;
@@ -46,7 +46,7 @@ function getColorAfterMove(color, move) {
     }
     return color;
 }
-function getColorScore(color) {
+function getScore(color) {
     var initialWinners = {
         winners: 0,
         preWinnersPoints: 0
@@ -57,16 +57,16 @@ function getColorScore(color) {
     }, initialWinners);
 }
 function setColorScore(color) {
-    color.score = getColorScore(color);
+    color.score = getScore(color);
     return color;
 }
-function colorWin(color) {
+function hasWon(color) {
     return color.score.winners === color.pieces.length;
 }
-exports.createGameColor = createGameColor;
+exports.create = create;
 exports.getColorAfterMove = getColorAfterMove;
-exports.getColorScore = getColorScore;
+exports.getScore = getScore;
 exports.setColorScore = setColorScore;
-exports.colorWin = colorWin;
+exports.hasWon = hasWon;
 //# sourceMappingURL=GameColor.js.map
 //# sourceMappingURL=GameColor.js.map

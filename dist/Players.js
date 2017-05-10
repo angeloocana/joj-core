@@ -3,16 +3,20 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.createPlayers = undefined;
+exports.create = undefined;
 
 var _Player = require('./Player');
 
-function createPlayers(args) {
+var Player = _interopRequireWildcard(_Player);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function create(args) {
     return {
-        white: (0, _Player.createWhitePlayer)(args.white),
-        black: (0, _Player.createBlackPlayer)(args.black)
+        white: Player.createWhite(args.white),
+        black: Player.createBlack(args.black)
     };
 }
-exports.createPlayers = createPlayers;
+exports.create = create;
 //# sourceMappingURL=Players.js.map
 //# sourceMappingURL=Players.js.map

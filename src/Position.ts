@@ -1,36 +1,6 @@
-import { anyPass, compose, not, propEq } from 'ramda';
+import R from 'ramda';
 
 import { IPosition } from './IPosition';
-
-// export class Position implements IPosition {
-//     x: number;
-//     y: number;
-
-//     piece?: string; // PieceType;
-
-//     lastMoviment?: IMove;
-
-//     lastPosition?: IPosition;
-//     jumpingBlackPiece?: boolean;
-//     jumps?: number;
-
-//     iCanGoHere?: boolean;
-//     lastMove?: boolean;
-//     lastMoveJump?: boolean;
-
-//     isWhiteHome?: boolean;
-//     isBlackHome?: boolean;
-
-//     constructor(args: IPositionArgs) {
-//         this.x = args.x;
-//         this.y = args.y;
-
-//         this.setPiece(args.isBlackPiece);
-
-//         // this.isWhiteHome = false;
-//         // this.isBlackHome = ;
-//     }
-// }
 
 function setPiece(position: IPosition, isBlack: boolean): IPosition {
     position.isBlack = isBlack;
@@ -42,17 +12,25 @@ function removePiece(position: IPosition): IPosition {
     return position;
 }
 
-const hasBlackPiece = propEq('isBlack', true);
-const hasWhitePiece = propEq('isBlack', false);
-const hasPiece = anyPass([hasBlackPiece, hasWhitePiece]);
-const hasNoPiece = compose(not, hasPiece);
+const hasBlackPiece = R.propEq('isBlack', true);
+const hasWhitePiece = R.propEq('isBlack', false);
+const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
+const hasNoPiece = R.compose(R.not, hasPiece);
 
-function isSamePositionAs(p1: IPosition, p2: IPosition): boolean {
+function hasSamePiece(p1: IPosition, p2: IPosition): boolean {
+    return p1.isBlack === p2.isBlack;
+}
+
+function hasSamePosition(p1: IPosition, p2: IPosition): boolean {
     return p1.x === p2.x && p1.y === p2.y;
 }
 
+const hasSamePieceAndPosition = R.allPass([hasSamePiece, hasSamePosition]);
+
 export {
-    isSamePositionAs,
+    hasSamePiece,
+    hasSamePosition,
+    hasSamePieceAndPosition,
     hasBlackPiece,
     hasPiece,
     hasNoPiece,

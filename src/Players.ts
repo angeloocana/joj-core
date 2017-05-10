@@ -1,14 +1,14 @@
-import { createBlackPlayer, createWhitePlayer } from './Player';
+import * as Player from './Player';
 
 import { IPlayers, IPlayersArgs } from './IPlayers';
 
-function createPlayers(args: IPlayersArgs): IPlayers {
+function create(args: IPlayersArgs): IPlayers {
     return {
-        white: createWhitePlayer(args.white),
-        black: createBlackPlayer(args.black)
+        white: Player.createWhite(args.white),
+        black: Player.createBlack(args.black)
     };
 }
 
 export {
-    createPlayers
+    create
 };

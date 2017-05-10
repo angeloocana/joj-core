@@ -3,34 +3,30 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getPiecesOrdered = exports.getOtherPieces = exports.createPiece = undefined;
-
-var _Board = require('./Board');
+exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.create = undefined;
 
 var _Position = require('./Position');
 
-function createPiece(x, y, isBlack) {
+var Position = _interopRequireWildcard(_Position);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function create(x, y, isBlack) {
     return {
         position: { x: x, y: y, isBlack: isBlack }
+        // Other props:
         // whereCanIGo?: IPositionsWhereCanIGo;
         // movimentsToWin?: number[];
     };
 }
-function getOtherPieces(pieces, remove) {
-    return pieces.filter(function (piece) {
-        return piece && !(0, _Position.isSamePositionAs)(piece.position, remove.position);
-    });
+function hasSamePosition(a, b) {
+    return Position.hasSamePosition(a.position, b.position);
 }
-function getPiecesOrdered(pieces, isBlack) {
-    var ordered = [];
-    pieces.forEach(function (piece) {
-        var y = (0, _Board.getY0Start7End)(piece.position.y, isBlack);
-        if (!ordered[y]) ordered[y] = [piece];else ordered[y].push(piece);
-    });
-    return ordered;
+function hasSamePieceAndPosition(a, b) {
+    return Position.hasSamePieceAndPosition(a.position, b.position);
 }
-exports.createPiece = createPiece;
-exports.getOtherPieces = getOtherPieces;
-exports.getPiecesOrdered = getPiecesOrdered;
+exports.create = create;
+exports.hasSamePosition = hasSamePosition;
+exports.hasSamePieceAndPosition = hasSamePieceAndPosition;
 //# sourceMappingURL=Piece.js.map
 //# sourceMappingURL=Piece.js.map

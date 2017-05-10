@@ -1,5 +1,5 @@
 import log from 'ptz-log';
-function createGameColor(boardConf, isBlack, pieces) {
+function create(boardConf, isBlack, pieces) {
     const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
     return {
         score: {
@@ -33,7 +33,7 @@ function getColorAfterMove(color, move) {
     }
     return color;
 }
-function getColorScore(color) {
+function getScore(color) {
     const initialWinners = {
         winners: 0,
         preWinnersPoints: 0
@@ -49,11 +49,11 @@ function getColorScore(color) {
     }, initialWinners);
 }
 function setColorScore(color) {
-    color.score = getColorScore(color);
+    color.score = getScore(color);
     return color;
 }
-function colorWin(color) {
+function hasWon(color) {
     return color.score.winners === color.pieces.length;
 }
-export { createGameColor, getColorAfterMove, getColorScore, setColorScore, colorWin };
+export { create, getColorAfterMove, getScore, setColorScore, hasWon };
 //# sourceMappingURL=GameColor.js.map

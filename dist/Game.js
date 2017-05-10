@@ -3,35 +3,47 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.getBackMove = exports.createGame = exports.canMove = undefined;
+exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.getBackMove = exports.create = exports.canMove = undefined;
 
 var _ramda = require('ramda');
 
 var _Board = require('./Board');
 
+var Board = _interopRequireWildcard(_Board);
+
 var _GameColor = require('./GameColor');
+
+var GameColor = _interopRequireWildcard(_GameColor);
 
 var _Player = require('./Player');
 
+var Player = _interopRequireWildcard(_Player);
+
 var _Players = require('./Players');
+
+var Players = _interopRequireWildcard(_Players);
 
 var _Position = require('./Position');
 
-function createGame(args) {
-    var boardConf = args.boardConf || _Board.defaultBoardConf;
+var Position = _interopRequireWildcard(_Position);
 
-    var _getInitialBoard = (0, _Board.getInitialBoard)(boardConf),
-        board = _getInitialBoard.board,
-        blackPieces = _getInitialBoard.blackPieces,
-        whitePieces = _getInitialBoard.whitePieces;
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function create(args) {
+    var boardConf = args.boardConf || Board.defaultBoardConf;
+
+    var _Board$getInitialBoar = Board.getInitialBoard(boardConf),
+        board = _Board$getInitialBoar.board,
+        blackPieces = _Board$getInitialBoar.blackPieces,
+        whitePieces = _Board$getInitialBoar.whitePieces;
 
     var game = {
         ended: false,
         movements: args.movements || [],
-        players: (0, _Players.createPlayers)(args.players),
+        players: Players.create(args.players),
         boardConf: boardConf,
-        white: (0, _GameColor.createGameColor)(boardConf, false, whitePieces),
-        black: (0, _GameColor.createGameColor)(boardConf, true, blackPieces),
+        white: GameColor.create(boardConf, false, whitePieces),
+        black: GameColor.create(boardConf, true, blackPieces),
         board: board
     };
     return game;
@@ -50,19 +62,19 @@ function getCleanGameToSaveOnServer(game) {
     return cleanGame;
 }
 function getWinner(game) {
-    game.white.score = (0, _GameColor.getColorScore)(game.white);
-    game.black.score = (0, _GameColor.getColorScore)(game.black);
-    if ((0, _GameColor.colorWin)(game.white)) game.blackWin = false;else if ((0, _GameColor.colorWin)(game.black)) game.blackWin = true;
+    game.white.score = GameColor.getScore(game.white);
+    game.black.score = GameColor.getScore(game.black);
+    if (GameColor.hasWon(game.white)) game.blackWin = false;else if (GameColor.hasWon(game.black)) game.blackWin = true;
     return game;
 }
 function isMyTurn(game, from) {
     if (game.ended) return false;
-    return isWhiteTurn(game) ? (0, _Position.hasWhitePiece)(from) : (0, _Position.hasBlackPiece)(from);
+    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 function getGameWhereCanIGo(game, from) {
-    game.board = (0, _Board.getCleanBoardWhereCanIGo)(game.board);
+    game.board = Board.clean(game.board);
     if (!isMyTurn(game, from)) return game;
-    game.board = (0, _Board.setWhereCanIGo)(game.board, from, (0, _Position.hasBlackPiece)(from));
+    game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
 }
 function isWhiteTurn(game) {
     return game.movements.length % 2 === 0;
@@ -89,7 +101,7 @@ function setMovements() {
     // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
 }
 function canMove(game, move) {
-    var positionsWhereCanIGo = (0, _Board.getPositionsWhereCanIGo)(game.board, move.from, isBlackTurn(game)).positions;
+    var positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
     return positionsWhereCanIGo.findIndex(function (position) {
         return position.x === move.to.x && position.y === move.to.y;
     }) >= 0;
@@ -97,12 +109,12 @@ function canMove(game, move) {
 function getGameAfterMove(game, move) {
     var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-    if ((0, _Position.isSamePositionAs)(move.from, move.to)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-    game.board = (0, _Board.getCleanBoardWhereCanIGo)(game.board);
+    if (Position.hasSamePosition(move.from, move.to)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
+    game.board = Board.clean(game.board);
     if (!backMove) if (!canMove(game, move)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-    game.board = (0, _Board.getBoardAfterMove)(game.board, move);
-    game.black = (0, _GameColor.getColorAfterMove)(game.black, move);
-    game.white = (0, _GameColor.getColorAfterMove)(game.white, move);
+    game.board = Board.getBoardAfterMove(game.board, move);
+    game.black = GameColor.getColorAfterMove(game.black, move);
+    game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
         game.movements.push(move);
         game = getWinner(game);
@@ -118,7 +130,7 @@ function getBackMove(move) {
 function getGameBeforeLastMove(game) {
     var lastMove = game.movements.pop();
     if (lastMove) game = getGameAfterMove(game, getBackMove(lastMove), true);
-    if ((0, _Player.isComputer)(getPlayerTurn(game))) {
+    if (Player.isComputer(getPlayerTurn(game))) {
         lastMove = game.movements.pop();
         if (lastMove) {
             game = getGameAfterMove(game, getBackMove(lastMove), true);
@@ -127,7 +139,7 @@ function getGameBeforeLastMove(game) {
     return game;
 }
 exports.canMove = canMove;
-exports.createGame = createGame;
+exports.create = create;
 exports.getBackMove = getBackMove;
 exports.getColorTurn = getColorTurn;
 exports.getPlayerTurn = getPlayerTurn;

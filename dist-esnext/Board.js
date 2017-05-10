@@ -1,5 +1,6 @@
-import { compose, memoize, not } from 'ramda';
-import { hasBlackPiece, hasNoPiece, hasPiece, hasWhitePiece, removePiece, setPiece } from './Position';
+import R from 'ramda';
+import * as Position from './Position';
+import * as Positions from './Positions';
 import log from 'ptz-log';
 const defaultBoardSize = {
     x: 8,
@@ -42,10 +43,6 @@ function isBackGroundBlack(x, y) {
             return true;
     }
 }
-function positionsContains(positions, position) {
-    return positions.some(p => p.x === position.x && p.y === position.y);
-}
-const positionsNotContains = compose(not, positionsContains);
 function getToSearchOrder(x) {
     switch (x) {
         case 0:
@@ -117,7 +114,7 @@ function getY7Start0End(y, isBlack) {
     }
 }
 // tslint:disable-next-line:variable-name
-const _getInitialBoard = memoize((boardConf) => {
+const _getInitialBoard = R.memoize((boardConf) => {
     log('_getInitialBoard for', boardConf);
     const board = [], blackPieces = [], whitePieces = [];
     for (let x = 0; x < boardConf.size.x; x++) {
@@ -165,20 +162,12 @@ function setPosition(board, position) {
     }
 }
 function setPieceOnBoard(board, position, isBlack) {
-    return setPosition(board, setPiece(position, isBlack));
+    return setPosition(board, Position.setPiece(position, isBlack));
 }
 function removePieceOnBoard(board, position) {
-    return setPosition(board, removePiece(position));
+    return setPosition(board, Position.removePiece(position));
 }
-function fillPieceOnBoard(board, piece) {
-    board = setPosition(board, piece.position);
-    return board;
-}
-function fillPiecesOnBoard(board, pieces) {
-    pieces.forEach(piece => board = fillPieceOnBoard(board, piece));
-    return board;
-}
-function getCleanBoardWhereCanIGo(board) {
+function clean(board) {
     return mapBoard(board, position => {
         position.iCanGoHere = false;
         position.lastMove = false;
@@ -194,7 +183,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
     const orderedPositions = [];
     for (let i = 0; i < allNearPositions.length; i++) {
         const nearPosition = allNearPositions[i];
-        if (hasNoPiece(nearPosition)) {
+        if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
             const y = getY0Start7End(nearPosition.y, isBlack);
             if (!orderedPositions[y])
@@ -226,11 +215,11 @@ function getNearPositions(board, position, onlyEmpty) {
             x: position.x + plusX,
             y: position.y + plusY
         };
-        if (!boardHasThisPosition(board, newPosition))
+        if (!hasPosition(board, newPosition))
             return;
         newPosition = getPosition(board, newPosition);
         if (typeof onlyEmpty !== 'undefined') {
-            if (onlyEmpty === hasNoPiece(newPosition))
+            if (onlyEmpty === Position.hasNoPiece(newPosition))
                 positions.push(newPosition);
         }
         else
@@ -260,11 +249,11 @@ function getJumpPosition(board, from, toJumpPosition) {
         jumpPosition.y = toJumpPosition.y - 1;
     else
         jumpPosition.y = toJumpPosition.y;
-    if (!boardHasThisPosition(board, jumpPosition)) {
+    if (!hasPosition(board, jumpPosition)) {
         return;
     }
     jumpPosition = getPosition(board, jumpPosition);
-    if (hasPiece(jumpPosition)) {
+    if (Position.hasPiece(jumpPosition)) {
         return;
     }
     return jumpPosition;
@@ -275,7 +264,7 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
     nearFilledPositions.forEach(nearFilledPosition => {
         const jumpPosition = getJumpPosition(board, jumpfrom, nearFilledPosition);
         if (jumpPosition) {
-            if (positionsNotContains(positions, jumpPosition)) {
+            if (Positions.notContains(positions, jumpPosition)) {
                 jumpPosition.lastPosition = jumpfrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
                 jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
@@ -292,7 +281,7 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
 function setWhereCanIGo(board, from, blackPiece) {
     const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
     return mapBoard(board, position => {
-        position.iCanGoHere = positionsContains(positions, position);
+        position.iCanGoHere = Positions.contains(positions, position);
         return position;
     });
 }
@@ -302,17 +291,17 @@ function printUnicode(board) {
         for (var x = 0; x < board[y].length; x++) {
             const position = board[x][y];
             if (isBackGroundBlack(x, y)) {
-                if (hasWhitePiece(position))
+                if (Position.hasWhitePiece(position))
                     txt += '\u{25CF}';
-                else if (hasBlackPiece(position))
+                else if (Position.hasBlackPiece(position))
                     txt += '\u{25CB}';
                 else
                     txt += ' ';
             }
             else {
-                if (hasWhitePiece(position))
+                if (Position.hasWhitePiece(position))
                     txt += '\u{25D9}';
-                else if (hasBlackPiece(position))
+                else if (Position.hasBlackPiece(position))
                     txt += '\u{25D8}';
                 else
                     txt += '\u{2588}';
@@ -325,7 +314,7 @@ function printUnicode(board) {
 function getBoardAfterMove(board, move) {
     move.to.lastMove = true;
     move.from.lastMove = true;
-    board = setPieceOnBoard(board, move.to, hasBlackPiece(move.from));
+    board = setPieceOnBoard(board, move.to, Position.hasBlackPiece(move.from));
     board = removePieceOnBoard(board, move.from);
     let jumpPosition = move.to.lastPosition;
     while (jumpPosition) {
@@ -334,7 +323,7 @@ function getBoardAfterMove(board, move) {
     }
     return board;
 }
-function boardHasThisPosition(board, position) {
+function hasPosition(board, position) {
     if (!position || position.x < 0 || position.y < 0)
         return false;
     return board.length > position.x && board[position.x].length > position.y;
@@ -347,5 +336,5 @@ function isBlackHome(position) {
     if (position.y === 0)
         return true;
 }
-export { defaultBoardSize, defaultBoardConf, fillPieceOnBoard, fillPiecesOnBoard, getBoardAfterMove, getCleanBoardWhereCanIGo, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getStartRow, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, positionsContains, positionsNotContains, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, boardHasThisPosition };
+export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getStartRow, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
 //# sourceMappingURL=Board.js.map

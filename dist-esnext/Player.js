@@ -1,5 +1,5 @@
 import { curry } from 'ramda';
-function createPlayer(isBlack, args) {
+function create(isBlack, args) {
     return {
         ai: args.ai,
         name: args.name,
@@ -7,11 +7,11 @@ function createPlayer(isBlack, args) {
         isBlack
     };
 }
-const curriedCreatePlayer = curry(createPlayer);
-const createWhitePlayer = curriedCreatePlayer(false);
-const createBlackPlayer = curriedCreatePlayer(true);
+const curriedCreate = curry(create);
+const createWhite = curriedCreate(false);
+const createBlack = curriedCreate(true);
 function isComputer(player) {
     return player.ai ? true : false;
 }
-export { createBlackPlayer, createWhitePlayer, isComputer };
+export { createBlack, createWhite, isComputer };
 //# sourceMappingURL=Player.js.map

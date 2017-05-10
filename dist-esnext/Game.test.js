@@ -1,6 +1,9 @@
-import { deepEqual, equal, throws } from 'ptz-assert';
-import { createGame, getCleanGameToSaveOnServer, getGameAfterMove, getGameBeforeLastMove } from './index';
+import * as assert from 'ptz-assert';
+import { Game } from './index';
 describe('Game', () => {
+    describe('create', () => {
+        it('creates a new game');
+    });
     describe('needToValidateMovements', () => {
         it('when null should validate');
         it('when undefined should validate');
@@ -13,18 +16,18 @@ describe('Game', () => {
                 white: { name: 'Angelo', foto: 'img/black_user.png' },
                 black: { name: 'Gabi', foto: 'img/white_user.png' }
             };
-            let game = createGame({ players });
-            const gameBeforeLastMove = getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
-            game = getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
-            game = getGameBeforeLastMove(game);
-            equal(gameBeforeLastMove.movements.length, game.movements.length);
-            deepEqual(gameBeforeLastMove.movements, game.movements);
+            let game = Game.create({ players });
+            const gameBeforeLastMove = Game.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            game = Game.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            game = Game.getGameBeforeLastMove(game);
+            assert.equal(gameBeforeLastMove.movements.length, game.movements.length);
+            assert.deepEqual(gameBeforeLastMove.movements, game.movements);
         });
     });
     describe('Move', () => {
         var game;
         beforeEach(() => {
-            game = createGame({
+            game = Game.create({
                 players: {
                     white: { name: 'Angelo', foto: 'img/black_user.png' },
                     black: { name: 'Gabi', foto: 'img/white_user.png' }
@@ -36,23 +39,23 @@ describe('Game', () => {
                 from: { x: 0, y: 0 },
                 to: { x: 0, y: 0 }
             };
-            throws(() => {
-                game = getGameAfterMove(game, move);
+            assert.throws(() => {
+                game = Game.getGameAfterMove(game, move);
             });
         });
     });
     describe('getCleanGameToSaveOnServer', () => {
         it('map', () => {
-            const game = createGame({
+            const game = Game.create({
                 players: {
                     white: { name: 'Angelo', foto: 'img/black_user.png' },
                     black: { name: 'Gabi', foto: 'img/white_user.png' }
                 }
             });
-            const cleanGame = getCleanGameToSaveOnServer(game);
-            equal(game.ended, cleanGame.ended);
-            deepEqual(game.movements, cleanGame.movements);
-            equal(game.blackWin, cleanGame.blackWin);
+            const cleanGame = Game.getCleanGameToSaveOnServer(game);
+            assert.equal(game.ended, cleanGame.ended);
+            assert.deepEqual(game.movements, cleanGame.movements);
+            assert.equal(game.blackWin, cleanGame.blackWin);
         });
     });
 });

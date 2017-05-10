@@ -1,19 +1,19 @@
 import { compose, not } from 'ramda';
-import { defaultBoardConf, getBoardAfterMove, getCleanBoardWhereCanIGo, getInitialBoard, getPositionsWhereCanIGo, setWhereCanIGo } from './Board';
-import { colorWin, createGameColor, getColorAfterMove, getColorScore } from './GameColor';
-import { isComputer } from './Player';
-import { createPlayers } from './Players';
-import { hasBlackPiece, hasWhitePiece, isSamePositionAs } from './Position';
-function createGame(args) {
-    const boardConf = args.boardConf || defaultBoardConf;
-    const { board, blackPieces, whitePieces } = getInitialBoard(boardConf);
+import * as Board from './Board';
+import * as GameColor from './GameColor';
+import * as Player from './Player';
+import * as Players from './Players';
+import * as Position from './Position';
+function create(args) {
+    const boardConf = args.boardConf || Board.defaultBoardConf;
+    const { board, blackPieces, whitePieces } = Board.getInitialBoard(boardConf);
     const game = {
         ended: false,
         movements: args.movements || [],
-        players: createPlayers(args.players),
+        players: Players.create(args.players),
         boardConf,
-        white: createGameColor(boardConf, false, whitePieces),
-        black: createGameColor(boardConf, true, blackPieces),
+        white: GameColor.create(boardConf, false, whitePieces),
+        black: GameColor.create(boardConf, true, blackPieces),
         board
     };
     return game;
@@ -32,24 +32,24 @@ function getCleanGameToSaveOnServer(game) {
     return cleanGame;
 }
 function getWinner(game) {
-    game.white.score = getColorScore(game.white);
-    game.black.score = getColorScore(game.black);
-    if (colorWin(game.white))
+    game.white.score = GameColor.getScore(game.white);
+    game.black.score = GameColor.getScore(game.black);
+    if (GameColor.hasWon(game.white))
         game.blackWin = false;
-    else if (colorWin(game.black))
+    else if (GameColor.hasWon(game.black))
         game.blackWin = true;
     return game;
 }
 function isMyTurn(game, from) {
     if (game.ended)
         return false;
-    return isWhiteTurn(game) ? hasWhitePiece(from) : hasBlackPiece(from);
+    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 function getGameWhereCanIGo(game, from) {
-    game.board = getCleanBoardWhereCanIGo(game.board);
+    game.board = Board.clean(game.board);
     if (!isMyTurn(game, from))
         return game;
-    game.board = setWhereCanIGo(game.board, from, hasBlackPiece(from));
+    game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
 }
 function isWhiteTurn(game) {
     return game.movements.length % 2 === 0;
@@ -73,20 +73,20 @@ function setMovements(movements = [], needToValidateMovements = true) {
     // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
 }
 function canMove(game, move) {
-    const positionsWhereCanIGo = getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
+    const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
     return positionsWhereCanIGo.findIndex(position => position.x === move.to.x
         && position.y === move.to.y) >= 0;
 }
 function getGameAfterMove(game, move, backMove = false) {
-    if (isSamePositionAs(move.from, move.to))
+    if (Position.hasSamePosition(move.from, move.to))
         throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-    game.board = getCleanBoardWhereCanIGo(game.board);
+    game.board = Board.clean(game.board);
     if (!backMove)
         if (!canMove(game, move))
             throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-    game.board = getBoardAfterMove(game.board, move);
-    game.black = getColorAfterMove(game.black, move);
-    game.white = getColorAfterMove(game.white, move);
+    game.board = Board.getBoardAfterMove(game.board, move);
+    game.black = GameColor.getColorAfterMove(game.black, move);
+    game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
         game.movements.push(move);
         game = getWinner(game);
@@ -103,7 +103,7 @@ function getGameBeforeLastMove(game) {
     let lastMove = game.movements.pop();
     if (lastMove)
         game = getGameAfterMove(game, getBackMove(lastMove), true);
-    if (isComputer(getPlayerTurn(game))) {
+    if (Player.isComputer(getPlayerTurn(game))) {
         lastMove = game.movements.pop();
         if (lastMove) {
             game = getGameAfterMove(game, getBackMove(lastMove), true);
@@ -111,5 +111,5 @@ function getGameBeforeLastMove(game) {
     }
     return game;
 }
-export { canMove, createGame, getBackMove, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, getGameAfterMove, getGameBeforeLastMove, setPlayers, setMovements, getCleanGameToSaveOnServer };
+export { canMove, create, getBackMove, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, getGameAfterMove, getGameBeforeLastMove, setPlayers, setMovements, getCleanGameToSaveOnServer };
 //# sourceMappingURL=Game.js.map

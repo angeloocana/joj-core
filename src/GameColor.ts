@@ -5,7 +5,7 @@ import { IGameColor, IScore } from './IGameColor';
 import { IMove } from './IMove';
 import { IPiece } from './IPiece';
 
-function createGameColor(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGameColor {
+function create(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGameColor {
     const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
     return {
         score: {
@@ -41,7 +41,7 @@ function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
     return color;
 }
 
-function getColorScore(color: IGameColor): IScore {
+function getScore(color: IGameColor): IScore {
     const initialWinners: IScore = {
         winners: 0,
         preWinnersPoints: 0
@@ -60,18 +60,18 @@ function getColorScore(color: IGameColor): IScore {
 }
 
 function setColorScore(color: IGameColor): IGameColor {
-    color.score = getColorScore(color);
+    color.score = getScore(color);
     return color;
 }
 
-function colorWin(color: IGameColor): boolean {
+function hasWon(color: IGameColor): boolean {
     return color.score.winners === color.pieces.length;
 }
 
 export {
-    createGameColor,
+    create,
     getColorAfterMove,
-    getColorScore,
+    getScore,
     setColorScore,
-    colorWin
+    hasWon
 };
