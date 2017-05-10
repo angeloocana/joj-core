@@ -40,12 +40,8 @@ function getScore(color) {
         return winners;
     }, initialWinners);
 }
-function setColorScore(color) {
-    color.score = getScore(color);
-    return color;
-}
 function hasWon(color) {
     return color.score.winners === color.pieces.length;
 }
-export { create, getColorAfterMove, getScore, setColorScore, hasWon };
+export { create, getColorAfterMove, getScore, hasWon };
 //# sourceMappingURL=GameColor.js.map

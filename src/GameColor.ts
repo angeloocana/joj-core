@@ -51,11 +51,6 @@ function getScore(color: IGameColor): IScore {
     }, initialWinners);
 }
 
-function setColorScore(color: IGameColor): IGameColor {
-    color.score = getScore(color);
-    return color;
-}
-
 function hasWon(color: IGameColor): boolean {
     return color.score.winners === color.pieces.length;
 }
@@ -64,6 +59,5 @@ export {
     create,
     getColorAfterMove,
     getScore,
-    setColorScore,
     hasWon
 };

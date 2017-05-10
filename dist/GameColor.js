@@ -42,17 +42,12 @@ function getScore(color) {
         return winners;
     }, initialWinners);
 }
-function setColorScore(color) {
-    color.score = getScore(color);
-    return color;
-}
 function hasWon(color) {
     return color.score.winners === color.pieces.length;
 }
 exports.create = create;
 exports.getColorAfterMove = getColorAfterMove;
 exports.getScore = getScore;
-exports.setColorScore = setColorScore;
 exports.hasWon = hasWon;
 //# sourceMappingURL=GameColor.js.map
 //# sourceMappingURL=GameColor.js.map
