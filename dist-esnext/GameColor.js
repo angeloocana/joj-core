@@ -1,4 +1,3 @@
-import log from 'ptz-log';
 function create(boardConf, isBlack, pieces) {
     const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
     return {
@@ -16,21 +15,14 @@ function create(boardConf, isBlack, pieces) {
     };
 }
 function getColorAfterMove(color, move) {
-    try {
-        color.pieces = color.pieces.map(piece => {
-            if (piece.position.x === move.from.x
-                && piece.position.y === move.from.y) {
-                piece.position.x = move.to.x;
-                piece.position.y = move.to.y;
-            }
-            return piece;
-        });
-    }
-    catch (e) {
-        log('color', color);
-        log('move', move);
-        throw e;
-    }
+    color.pieces = color.pieces.map(piece => {
+        if (piece.position.x === move.from.x
+            && piece.position.y === move.from.y) {
+            piece.position.x = move.to.x;
+            piece.position.y = move.to.y;
+        }
+        return piece;
+    });
     return color;
 }
 function getScore(color) {

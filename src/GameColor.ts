@@ -1,5 +1,3 @@
-import log from 'ptz-log';
-
 import { IBoardConf } from './IBoard';
 import { IGameColor, IScore } from './IGameColor';
 import { IMove } from './IMove';
@@ -23,20 +21,14 @@ function create(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGam
 }
 
 function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
-    try {
-        color.pieces = color.pieces.map(piece => {
-            if (piece.position.x === move.from.x
-                && piece.position.y === move.from.y) {
-                piece.position.x = move.to.x;
-                piece.position.y = move.to.y;
-            }
-            return piece;
-        });
-    } catch (e) {
-        log('color', color);
-        log('move', move);
-        throw e;
-    }
+    color.pieces = color.pieces.map(piece => {
+        if (piece.position.x === move.from.x
+            && piece.position.y === move.from.y) {
+            piece.position.x = move.to.x;
+            piece.position.y = move.to.y;
+        }
+        return piece;
+    });
 
     return color;
 }

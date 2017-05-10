@@ -24,6 +24,29 @@ describe('Pieces', () => {
     });
 
     describe('haveSamePieceAndPosition', () => {
-        it('');
+
+        it('return true for same piece and same position', () => {
+            const a = [{ position: { x: 0, y: 0, isBlack: true } }];
+            const b = [{ position: { x: 0, y: 0, isBlack: true } }];
+            assert.ok(Pieces.haveSamePieceAndPosition(a, b));
+        });
+
+        it('return false for diferente piece and same position', () => {
+            const a = [{ position: { x: 0, y: 0, isBlack: true } }];
+            const b = [{ position: { x: 0, y: 0, isBlack: false } }];
+            assert.notOk(Pieces.haveSamePieceAndPosition(a, b));
+        });
+
+        it('return false for same piece and diferent position', () => {
+            const a = [{ position: { x: 0, y: 0, isBlack: true } }];
+            const b = [{ position: { x: 0, y: 1, isBlack: true } }];
+            assert.notOk(Pieces.haveSamePieceAndPosition(a, b));
+        });
+
+        it('return false for diferente piece and diferent position', () => {
+            const a = [{ position: { x: 0, y: 0, isBlack: true } }];
+            const b = [{ position: { x: 0, y: 1, isBlack: false } }];
+            assert.notOk(Pieces.haveSamePieceAndPosition(a, b));
+        });
     });
 });

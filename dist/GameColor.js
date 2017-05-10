@@ -1,16 +1,8 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasWon = exports.setColorScore = exports.getScore = exports.getColorAfterMove = exports.create = undefined;
-
-var _ptzLog = require('ptz-log');
-
-var _ptzLog2 = _interopRequireDefault(_ptzLog);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function create(boardConf, isBlack, pieces) {
     var _ref = isBlack ? boardConf.black : boardConf.white,
         startRow = _ref.startRow,
@@ -31,19 +23,13 @@ function create(boardConf, isBlack, pieces) {
     };
 }
 function getColorAfterMove(color, move) {
-    try {
-        color.pieces = color.pieces.map(function (piece) {
-            if (piece.position.x === move.from.x && piece.position.y === move.from.y) {
-                piece.position.x = move.to.x;
-                piece.position.y = move.to.y;
-            }
-            return piece;
-        });
-    } catch (e) {
-        (0, _ptzLog2.default)('color', color);
-        (0, _ptzLog2.default)('move', move);
-        throw e;
-    }
+    color.pieces = color.pieces.map(function (piece) {
+        if (piece.position.x === move.from.x && piece.position.y === move.from.y) {
+            piece.position.x = move.to.x;
+            piece.position.y = move.to.y;
+        }
+        return piece;
+    });
     return color;
 }
 function getScore(color) {
