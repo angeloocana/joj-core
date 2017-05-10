@@ -4,7 +4,7 @@ import * as Positions from './Positions';
 
 import log from 'ptz-log';
 
-import { IBoard, IBoardConf, IBoardSize, IStartEndRow } from './IBoard';
+import { IBoard, IBoardConf, IBoardSize, IGetInitialBoardResult, IStartEndRow } from './IBoard';
 import { IMove } from './IMove';
 import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
@@ -84,6 +84,9 @@ function getToSearchOrder(x: number): number {
     }
 }
 
+/**
+ * Get Y starting from 0 and ending on 7 for black and white pieces
+ */
 function getY0Start7End(y: number, isBlack: boolean): number {
     if (isBlack)
         return y;
@@ -110,6 +113,9 @@ function getY0Start7End(y: number, isBlack: boolean): number {
     }
 }
 
+/**
+ * Get Y starting from 7 and ending on 0 for black and white pieces
+ */
 function getY7Start0End(y: number, isBlack: boolean): number {
     if (!isBlack)
         return y;
@@ -134,12 +140,6 @@ function getY7Start0End(y: number, isBlack: boolean): number {
         default:
             return null;
     }
-}
-
-interface IGetInitialBoardResult {
-    board: IPosition[][];
-    whitePieces: IPiece[];
-    blackPieces: IPiece[];
 }
 
 // tslint:disable-next-line:variable-name

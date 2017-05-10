@@ -1,3 +1,4 @@
+import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
 
 export type IBoard = IPosition[][];
@@ -17,4 +18,10 @@ export interface IBoardConf {
     endRow: number;
     white: IStartEndRow;
     black: IStartEndRow;
+}
+
+export interface IGetInitialBoardResult {
+    board: IPosition[][];
+    whitePieces: IPiece[];
+    blackPieces: IPiece[];
 }

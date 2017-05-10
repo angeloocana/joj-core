@@ -269,6 +269,63 @@ describe('Board', function () {
             return assert.notOk(_index.Board.getToSearchOrder(-1));
         });
     });
+    describe('getY0Start7End', function () {
+        describe('for white', function () {
+            it('return 0 for 0', function () {
+                return assert.equal(_index.Board.getY0Start7End(0, false), 7);
+            });
+            it('return 1 for 7', function () {
+                return assert.equal(_index.Board.getY0Start7End(1, false), 6);
+            });
+            it('return 2 for 1', function () {
+                return assert.equal(_index.Board.getY0Start7End(2, false), 5);
+            });
+            it('return 3 for 6', function () {
+                return assert.equal(_index.Board.getY0Start7End(3, false), 4);
+            });
+            it('return 4 for 2', function () {
+                return assert.equal(_index.Board.getY0Start7End(4, false), 3);
+            });
+            it('return 5 for 5', function () {
+                return assert.equal(_index.Board.getY0Start7End(5, false), 2);
+            });
+            it('return 6 for 3', function () {
+                return assert.equal(_index.Board.getY0Start7End(6, false), 1);
+            });
+            it('return 7 for 4', function () {
+                return assert.equal(_index.Board.getY0Start7End(7, false), 0);
+            });
+            it('return null for invalid x', function () {
+                return assert.notOk(_index.Board.getY0Start7End(-1, false));
+            });
+        });
+        describe('for black', function () {
+            it('return 0 for 0', function () {
+                return assert.equal(_index.Board.getY0Start7End(0, true), 0);
+            });
+            it('return 1 for 7', function () {
+                return assert.equal(_index.Board.getY0Start7End(1, true), 1);
+            });
+            it('return 2 for 1', function () {
+                return assert.equal(_index.Board.getY0Start7End(2, true), 2);
+            });
+            it('return 3 for 6', function () {
+                return assert.equal(_index.Board.getY0Start7End(3, true), 3);
+            });
+            it('return 4 for 2', function () {
+                return assert.equal(_index.Board.getY0Start7End(4, true), 4);
+            });
+            it('return 5 for 5', function () {
+                return assert.equal(_index.Board.getY0Start7End(5, true), 5);
+            });
+            it('return 6 for 3', function () {
+                return assert.equal(_index.Board.getY0Start7End(6, true), 6);
+            });
+            it('return 7 for 4', function () {
+                return assert.equal(_index.Board.getY0Start7End(7, true), 7);
+            });
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map
 //# sourceMappingURL=Board.test.js.map

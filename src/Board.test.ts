@@ -276,4 +276,28 @@ describe('Board', () => {
         it('return 7 for 4', () => assert.equal(Board.getToSearchOrder(4), 7));
         it('return null for invalid x', () => assert.notOk(Board.getToSearchOrder(-1)));
     });
+
+    describe('getY0Start7End', () => {
+        describe('for white', () => {
+            it('return 0 for 0', () => assert.equal(Board.getY0Start7End(0, false), 7));
+            it('return 1 for 7', () => assert.equal(Board.getY0Start7End(1, false), 6));
+            it('return 2 for 1', () => assert.equal(Board.getY0Start7End(2, false), 5));
+            it('return 3 for 6', () => assert.equal(Board.getY0Start7End(3, false), 4));
+            it('return 4 for 2', () => assert.equal(Board.getY0Start7End(4, false), 3));
+            it('return 5 for 5', () => assert.equal(Board.getY0Start7End(5, false), 2));
+            it('return 6 for 3', () => assert.equal(Board.getY0Start7End(6, false), 1));
+            it('return 7 for 4', () => assert.equal(Board.getY0Start7End(7, false), 0));
+            it('return null for invalid x', () => assert.notOk(Board.getY0Start7End(-1, false)));
+        });
+        describe('for black', () => {
+            it('return 0 for 0', () => assert.equal(Board.getY0Start7End(0, true), 0));
+            it('return 1 for 7', () => assert.equal(Board.getY0Start7End(1, true), 1));
+            it('return 2 for 1', () => assert.equal(Board.getY0Start7End(2, true), 2));
+            it('return 3 for 6', () => assert.equal(Board.getY0Start7End(3, true), 3));
+            it('return 4 for 2', () => assert.equal(Board.getY0Start7End(4, true), 4));
+            it('return 5 for 5', () => assert.equal(Board.getY0Start7End(5, true), 5));
+            it('return 6 for 3', () => assert.equal(Board.getY0Start7End(6, true), 6));
+            it('return 7 for 4', () => assert.equal(Board.getY0Start7End(7, true), 7));
+        });
+    });
 });

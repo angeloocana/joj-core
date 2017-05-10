@@ -88,6 +88,9 @@ function getToSearchOrder(x) {
             return null;
     }
 }
+/**
+ * Get Y starting from 0 and ending on 7 for black and white pieces
+ */
 function getY0Start7End(y, isBlack) {
     if (isBlack) return y;
     switch (y) {
@@ -111,6 +114,9 @@ function getY0Start7End(y, isBlack) {
             return null;
     }
 }
+/**
+ * Get Y starting from 7 and ending on 0 for black and white pieces
+ */
 function getY7Start0End(y, isBlack) {
     if (!isBlack) return y;
     switch (y) {
