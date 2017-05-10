@@ -265,6 +265,9 @@ describe('Board', function () {
         it('return 7 for 4', function () {
             return assert.equal(_index.Board.getToSearchOrder(4), 7);
         });
+        it('return null for invalid x', function () {
+            return assert.notOk(_index.Board.getToSearchOrder(-1));
+        });
     });
 });
 //# sourceMappingURL=Board.test.js.map

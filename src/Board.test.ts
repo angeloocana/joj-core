@@ -274,5 +274,6 @@ describe('Board', () => {
         it('return 5 for 5', () => assert.equal(Board.getToSearchOrder(5), 5));
         it('return 6 for 3', () => assert.equal(Board.getToSearchOrder(3), 6));
         it('return 7 for 4', () => assert.equal(Board.getToSearchOrder(4), 7));
+        it('return null for invalid x', () => assert.notOk(Board.getToSearchOrder(-1)));
     });
 });
