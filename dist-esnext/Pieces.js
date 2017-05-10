@@ -2,7 +2,7 @@ import R from 'ramda';
 import * as Board from './Board';
 import * as Piece from './Piece';
 // Remove piece from a list
-function remove(pieces, pieceToRemove) {
+function removePiece(pieces, pieceToRemove) {
     return pieces.filter(piece => !Piece.hasSamePosition(piece, pieceToRemove));
 }
 function createPieces(isBlack, positions) {
@@ -32,5 +32,5 @@ function haveSamePieceAndPosition(a, b) {
     }
     return true;
 }
-export { createBlackPieces, createWhitePieces, remove, getPiecesOrdered, haveSamePieceAndPosition };
+export { createBlackPieces, createWhitePieces, removePiece, getPiecesOrdered, haveSamePieceAndPosition };
 //# sourceMappingURL=Pieces.js.map

@@ -597,7 +597,7 @@ BRH:0
 end_of_record
 TN:
 SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Pieces.js
-FN:5,remove
+FN:5,removePiece
 FN:6,(anonymous_3)
 FN:8,createPieces
 FN:9,(anonymous_5)
@@ -606,7 +606,7 @@ FN:19,(anonymous_7)
 FN:28,haveSamePieceAndPosition
 FNF:7
 FNH:5
-FNDA:2,remove
+FNDA:2,removePiece
 FNDA:6,(anonymous_3)
 FNDA:4,createPieces
 FNDA:12,(anonymous_5)

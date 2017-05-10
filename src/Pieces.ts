@@ -6,7 +6,7 @@ import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
 
 // Remove piece from a list
-function remove(pieces: IPiece[], pieceToRemove: IPiece): IPiece[] {
+function removePiece(pieces: IPiece[], pieceToRemove: IPiece): IPiece[] {
     return pieces.filter(piece => !Piece.hasSamePosition(piece, pieceToRemove));
 }
 
@@ -49,7 +49,7 @@ function haveSamePieceAndPosition(a: IPiece[], b: IPiece[]): boolean {
 export {
     createBlackPieces,
     createWhitePieces,
-    remove,
+    removePiece,
     getPiecesOrdered,
     haveSamePieceAndPosition
 };

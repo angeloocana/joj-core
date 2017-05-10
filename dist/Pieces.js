@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.haveSamePieceAndPosition = exports.getPiecesOrdered = exports.remove = exports.createWhitePieces = exports.createBlackPieces = undefined;
+exports.haveSamePieceAndPosition = exports.getPiecesOrdered = exports.removePiece = exports.createWhitePieces = exports.createBlackPieces = undefined;
 
 var _ramda = require('ramda');
 
@@ -22,7 +22,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Remove piece from a list
-function remove(pieces, pieceToRemove) {
+function removePiece(pieces, pieceToRemove) {
     return pieces.filter(function (piece) {
         return !Piece.hasSamePosition(piece, pieceToRemove);
     });
@@ -52,7 +52,7 @@ function haveSamePieceAndPosition(a, b) {
 }
 exports.createBlackPieces = createBlackPieces;
 exports.createWhitePieces = createWhitePieces;
-exports.remove = remove;
+exports.removePiece = removePiece;
 exports.getPiecesOrdered = getPiecesOrdered;
 exports.haveSamePieceAndPosition = haveSamePieceAndPosition;
 //# sourceMappingURL=Pieces.js.map
