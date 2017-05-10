@@ -54,6 +54,13 @@ function isBackGroundBlack(x: number, y: number): boolean {
     }
 }
 
+/**
+ * Returns the index to store the position in orderedPositions
+ *
+ * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
+ *
+ * The goal is to fill the corners first
+ */
 function getToSearchOrder(x: number): number {
     switch (x) {
         case 0:

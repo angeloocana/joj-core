@@ -240,6 +240,32 @@ describe('Board', function () {
             assert.equal(actual.endRow, 0);
         });
     });
+    describe('getToSearchOrder', function () {
+        it('return 0 for 0', function () {
+            return assert.equal(_index.Board.getToSearchOrder(0), 0);
+        });
+        it('return 1 for 7', function () {
+            return assert.equal(_index.Board.getToSearchOrder(7), 1);
+        });
+        it('return 2 for 1', function () {
+            return assert.equal(_index.Board.getToSearchOrder(1), 2);
+        });
+        it('return 3 for 6', function () {
+            return assert.equal(_index.Board.getToSearchOrder(6), 3);
+        });
+        it('return 4 for 2', function () {
+            return assert.equal(_index.Board.getToSearchOrder(2), 4);
+        });
+        it('return 5 for 5', function () {
+            return assert.equal(_index.Board.getToSearchOrder(5), 5);
+        });
+        it('return 6 for 3', function () {
+            return assert.equal(_index.Board.getToSearchOrder(3), 6);
+        });
+        it('return 7 for 4', function () {
+            return assert.equal(_index.Board.getToSearchOrder(4), 7);
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map
 //# sourceMappingURL=Board.test.js.map

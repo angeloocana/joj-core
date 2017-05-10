@@ -203,5 +203,15 @@ describe('Board', () => {
             assert.equal(actual.endRow, 0);
         });
     });
+    describe('getToSearchOrder', () => {
+        it('return 0 for 0', () => assert.equal(Board.getToSearchOrder(0), 0));
+        it('return 1 for 7', () => assert.equal(Board.getToSearchOrder(7), 1));
+        it('return 2 for 1', () => assert.equal(Board.getToSearchOrder(1), 2));
+        it('return 3 for 6', () => assert.equal(Board.getToSearchOrder(6), 3));
+        it('return 4 for 2', () => assert.equal(Board.getToSearchOrder(2), 4));
+        it('return 5 for 5', () => assert.equal(Board.getToSearchOrder(5), 5));
+        it('return 6 for 3', () => assert.equal(Board.getToSearchOrder(3), 6));
+        it('return 7 for 4', () => assert.equal(Board.getToSearchOrder(4), 7));
+    });
 });
 //# sourceMappingURL=Board.test.js.map
