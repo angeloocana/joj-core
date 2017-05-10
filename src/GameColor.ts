@@ -1,48 +1,48 @@
-import { pieceHelper } from './helpers/PieceHelper';
+import log from 'ptz-log';
 
-import { IBoardOptions } from './typings/IBoardOptions';
-import { IBoardPosition } from './typings/IBoardPosition';
-import { IGameColor, IWinners } from './typings/IGameColor';
-import { IGamePiece } from './typings/IGamePiece';
+import { IBoardConf } from './IBoard';
+import { IGameColor, IScore } from './IGameColor';
+import { IMove } from './IMove';
+import { IPiece } from './IPiece';
 
-export class GameColor implements IGameColor {
-    winners: IWinners = {
-        winners: 0,
-        preWinnersPoints: 0
+function createGameColor(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGameColor {
+    const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
+    return {
+        score: {
+            winners: 0,
+            preWinnersPoints: 0
+        },
+        jumps: 0,
+        points: 0,
+        nMoves: 0,
+        pieces,
+        isBlack,
+        startRow,
+        endRow
     };
-
-    jumps: number = 0;
-    points: number = 0;
-    nMoves: number = 0;
-    startRow: number;
-    endRow: number;
-    pieces: IGamePiece[];
-
-    /**
-     * Get a clean game color
-     */
-    constructor(boardOptions: IBoardOptions, isBlack: boolean) {
-        const y = (boardOptions.size.y - 1);
-        this.startRow = isBlack ? 0 : y;
-        this.endRow = isBlack ? y : 0;
-
-        this.pieces = pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
-    }
-
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition): void {
-
-        this.pieces.forEach(piece => {
-            if (piece.position.x === startPosition.x
-                && piece.position.y === startPosition.y) {
-                piece.position.x = nextPosition.x;
-                piece.position.y = nextPosition.y;
-            }
-        });
-    }
 }
 
-export function getColorWinners(color: IGameColor): IWinners {
-    const initialWinners: IWinners = {
+function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
+    try {
+        color.pieces = color.pieces.map(piece => {
+            if (piece.position.x === move.from.x
+                && piece.position.y === move.from.y) {
+                piece.position.x = move.to.x;
+                piece.position.y = move.to.y;
+            }
+            return piece;
+        });
+    } catch (e) {
+        log('color', color);
+        log('move', move);
+        throw e;
+    }
+
+    return color;
+}
+
+function getColorScore(color: IGameColor): IScore {
+    const initialWinners: IScore = {
         winners: 0,
         preWinnersPoints: 0
     };
@@ -59,11 +59,19 @@ export function getColorWinners(color: IGameColor): IWinners {
     }, initialWinners);
 }
 
-export function setColorWinners(color: IGameColor): IGameColor {
-    color.winners = getColorWinners(color);
+function setColorScore(color: IGameColor): IGameColor {
+    color.score = getColorScore(color);
     return color;
 }
 
-export function colorWin(color: IGameColor): boolean {
-    return color.winners.winners === color.pieces.length;
+function colorWin(color: IGameColor): boolean {
+    return color.score.winners === color.pieces.length;
 }
+
+export {
+    createGameColor,
+    getColorAfterMove,
+    getColorScore,
+    setColorScore,
+    colorWin
+};

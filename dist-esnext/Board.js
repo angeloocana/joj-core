@@ -1,0 +1,351 @@
+import { compose, memoize, not } from 'ramda';
+import { hasBlackPiece, hasNoPiece, hasPiece, hasWhitePiece, removePiece, setPiece } from './Position';
+import log from 'ptz-log';
+const defaultBoardSize = {
+    x: 8,
+    y: 8
+};
+function mapBoard(board, func) {
+    return board.map(col => col.map(position => func(position)));
+}
+function getColorStartEndRow(boardEndRow, isBlack) {
+    return {
+        startRow: isBlack ? 0 : boardEndRow,
+        endRow: isBlack ? boardEndRow : 0
+    };
+}
+function getBoardConf(boardSize) {
+    const endRow = boardSize.y - 1;
+    return {
+        size: boardSize,
+        endRow,
+        white: getColorStartEndRow(endRow, false),
+        black: getColorStartEndRow(endRow, true)
+    };
+}
+const defaultBoardConf = getBoardConf(defaultBoardSize);
+function getStartRow(boardConf, isBlack) {
+    const color = isBlack ? boardConf.black : boardConf.white;
+    return color.startRow;
+}
+function isBackGroundBlack(x, y) {
+    if (x % 2 === 0) {
+        if (y % 2 === 0)
+            return true;
+        else
+            return false;
+    }
+    else {
+        if (y % 2 === 0)
+            return false;
+        else
+            return true;
+    }
+}
+function positionsContains(positions, position) {
+    return positions.some(p => p.x === position.x && p.y === position.y);
+}
+const positionsNotContains = compose(not, positionsContains);
+function getToSearchOrder(x) {
+    switch (x) {
+        case 0:
+            return 0;
+        case 1:
+            return 2;
+        case 2:
+            return 4;
+        case 3:
+            return 6;
+        case 4:
+            return 7;
+        case 5:
+            return 5;
+        case 6:
+            return 3;
+        case 7:
+            return 1;
+        default:
+            return null;
+    }
+}
+function getY0Start7End(y, isBlack) {
+    if (isBlack)
+        return y;
+    switch (y) {
+        case 0:
+            return 7;
+        case 1:
+            return 6;
+        case 2:
+            return 5;
+        case 3:
+            return 4;
+        case 4:
+            return 3;
+        case 5:
+            return 2;
+        case 6:
+            return 1;
+        case 7:
+            return 0;
+        default:
+            return null;
+    }
+}
+function getY7Start0End(y, isBlack) {
+    if (!isBlack)
+        return y;
+    switch (y) {
+        case 0:
+            return 7;
+        case 1:
+            return 6;
+        case 2:
+            return 5;
+        case 3:
+            return 4;
+        case 4:
+            return 3;
+        case 5:
+            return 2;
+        case 6:
+            return 1;
+        case 7:
+            return 0;
+        default:
+            return null;
+    }
+}
+// tslint:disable-next-line:variable-name
+const _getInitialBoard = memoize((boardConf) => {
+    log('_getInitialBoard for', boardConf);
+    const board = [], blackPieces = [], whitePieces = [];
+    for (let x = 0; x < boardConf.size.x; x++) {
+        for (let y = 0; y < boardConf.size.y; y++) {
+            if (!board[x])
+                board[x] = [];
+            const position = { x, y };
+            if (y === 0) {
+                position.isBlack = true;
+                blackPieces.push({ position });
+            }
+            if (y === boardConf.endRow) {
+                position.isBlack = false;
+                whitePieces.push({ position });
+            }
+            board[x][y] = position;
+        }
+    }
+    return {
+        board,
+        blackPieces,
+        whitePieces
+    };
+});
+function getInitialBoard(boardConf) {
+    return _getInitialBoard(boardConf);
+}
+function getPosition(board, position) {
+    try {
+        return board[position.x][position.y];
+    }
+    catch (e) {
+        log('Error getting position:', position, ' \n board:', board);
+        throw new Error('Error getting position');
+    }
+}
+function setPosition(board, position) {
+    try {
+        board[position.x][position.y] = position;
+        return board;
+    }
+    catch (e) {
+        log('Error getting position: ', position);
+        throw new Error('Error getting position');
+    }
+}
+function setPieceOnBoard(board, position, isBlack) {
+    return setPosition(board, setPiece(position, isBlack));
+}
+function removePieceOnBoard(board, position) {
+    return setPosition(board, removePiece(position));
+}
+function fillPieceOnBoard(board, piece) {
+    board = setPosition(board, piece.position);
+    return board;
+}
+function fillPiecesOnBoard(board, pieces) {
+    pieces.forEach(piece => board = fillPieceOnBoard(board, piece));
+    return board;
+}
+function getCleanBoardWhereCanIGo(board) {
+    return mapBoard(board, position => {
+        position.iCanGoHere = false;
+        position.lastMove = false;
+        position.lastMoveJump = false;
+        return position;
+    });
+}
+function getPositionsWhereCanIGo(board, from, isBlack) {
+    if (!from)
+        return null;
+    const allNearPositions = getNearPositions(board, from, undefined);
+    const positions = [];
+    const orderedPositions = [];
+    for (let i = 0; i < allNearPositions.length; i++) {
+        const nearPosition = allNearPositions[i];
+        if (hasNoPiece(nearPosition)) {
+            positions.push(nearPosition);
+            const y = getY0Start7End(nearPosition.y, isBlack);
+            if (!orderedPositions[y])
+                orderedPositions[y] = [];
+            orderedPositions[y][getToSearchOrder(nearPosition.x)] = nearPosition;
+        }
+        else {
+            const jumpPosition = getJumpPosition(board, from, nearPosition);
+            if (jumpPosition) {
+                jumpPosition.jumps = 1;
+                positions.push(jumpPosition);
+                const y = getY0Start7End(jumpPosition.y, isBlack);
+                if (!orderedPositions[y])
+                    orderedPositions[y] = [];
+                orderedPositions[y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
+            }
+        }
+    }
+    return {
+        positions,
+        orderedPositions
+    };
+}
+function getNearPositions(board, position, onlyEmpty) {
+    const positions = [];
+    function add(plusX, plusY) {
+        var newPosition = {
+            x: position.x + plusX,
+            y: position.y + plusY
+        };
+        if (!boardHasThisPosition(board, newPosition))
+            return;
+        newPosition = getPosition(board, newPosition);
+        if (typeof onlyEmpty !== 'undefined') {
+            if (onlyEmpty === hasNoPiece(newPosition))
+                positions.push(newPosition);
+        }
+        else
+            positions.push(newPosition);
+    }
+    add(-1, -1);
+    add(0, -1);
+    add(+1, -1);
+    add(-1, 0);
+    add(+1, 0);
+    add(-1, +1);
+    add(0, +1);
+    add(+1, +1);
+    return positions;
+}
+function getJumpPosition(board, from, toJumpPosition) {
+    var jumpPosition = { x: 0, y: 0 };
+    if (from.x < toJumpPosition.x)
+        jumpPosition.x = toJumpPosition.x + 1;
+    else if (from.x > toJumpPosition.x)
+        jumpPosition.x = toJumpPosition.x - 1;
+    else
+        jumpPosition.x = toJumpPosition.x;
+    if (from.y < toJumpPosition.y)
+        jumpPosition.y = toJumpPosition.y + 1;
+    else if (from.y > toJumpPosition.y)
+        jumpPosition.y = toJumpPosition.y - 1;
+    else
+        jumpPosition.y = toJumpPosition.y;
+    if (!boardHasThisPosition(board, jumpPosition)) {
+        return;
+    }
+    jumpPosition = getPosition(board, jumpPosition);
+    if (hasPiece(jumpPosition)) {
+        return;
+    }
+    return jumpPosition;
+}
+// tslint:disable-next-line:max-line-length
+function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
+    const nearFilledPositions = getNearPositions(board, jumpfrom, false);
+    nearFilledPositions.forEach(nearFilledPosition => {
+        const jumpPosition = getJumpPosition(board, jumpfrom, nearFilledPosition);
+        if (jumpPosition) {
+            if (positionsNotContains(positions, jumpPosition)) {
+                jumpPosition.lastPosition = jumpfrom;
+                jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
+                jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
+                positions.push(jumpPosition);
+                const y = getY0Start7End(jumpPosition.y, isBlack);
+                if (!orderedPositions[y])
+                    orderedPositions[y] = [];
+                orderedPositions[y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
+            }
+        }
+    });
+}
+function setWhereCanIGo(board, from, blackPiece) {
+    const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
+    return mapBoard(board, position => {
+        position.iCanGoHere = positionsContains(positions, position);
+        return position;
+    });
+}
+function printUnicode(board) {
+    var txt = '';
+    for (var y = 0; y < board.length; y++) {
+        for (var x = 0; x < board[y].length; x++) {
+            const position = board[x][y];
+            if (isBackGroundBlack(x, y)) {
+                if (hasWhitePiece(position))
+                    txt += '\u{25CF}';
+                else if (hasBlackPiece(position))
+                    txt += '\u{25CB}';
+                else
+                    txt += ' ';
+            }
+            else {
+                if (hasWhitePiece(position))
+                    txt += '\u{25D9}';
+                else if (hasBlackPiece(position))
+                    txt += '\u{25D8}';
+                else
+                    txt += '\u{2588}';
+            }
+        }
+        txt += '\n';
+    }
+    return txt;
+}
+function getBoardAfterMove(board, move) {
+    move.to.lastMove = true;
+    move.from.lastMove = true;
+    board = setPieceOnBoard(board, move.to, hasBlackPiece(move.from));
+    board = removePieceOnBoard(board, move.from);
+    let jumpPosition = move.to.lastPosition;
+    while (jumpPosition) {
+        getPosition(board, jumpPosition).lastMoveJump = true;
+        jumpPosition = jumpPosition.lastPosition;
+    }
+    return board;
+}
+function boardHasThisPosition(board, position) {
+    if (!position || position.x < 0 || position.y < 0)
+        return false;
+    return board.length > position.x && board[position.x].length > position.y;
+}
+function isWhiteHome(position, boardConf) {
+    if (position.y === boardConf.size.y - 1)
+        return true;
+}
+function isBlackHome(position) {
+    if (position.y === 0)
+        return true;
+}
+export { defaultBoardSize, defaultBoardConf, fillPieceOnBoard, fillPiecesOnBoard, getBoardAfterMove, getCleanBoardWhereCanIGo, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getStartRow, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, positionsContains, positionsNotContains, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, boardHasThisPosition };
+//# sourceMappingURL=Board.js.map

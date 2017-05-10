@@ -1,1 +1,0 @@
-{"version":3,"sources":["../dist-esnext/GamePieceType.js"],"names":["gamePieceType","white","black"],"mappings":";;;;;AAAO,IAAMA,wCAAgB;AACzBC,WAAO,GADkB;AAEzBC,WAAO;AAFkB,CAAtB;AAIP","file":"GamePieceType.js","sourcesContent":["export const gamePieceType = {\n    white: 'W',\n    black: 'B'\n};\n//# sourceMappingURL=GamePieceType.js.map"]}

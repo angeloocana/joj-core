@@ -1,30 +1,28 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.isComputer = exports.createWhitePlayer = exports.createBlackPlayer = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _ramda = require('ramda');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Player = exports.Player = function () {
-    function Player(args) {
-        _classCallCheck(this, Player);
-
-        this.ai = args.ai;
-        this.name = args.name;
-        this.foto = args.foto;
-    }
-
-    _createClass(Player, [{
-        key: "isComputer",
-        value: function isComputer() {
-            return this.ai ? true : false;
-        }
-    }]);
-
-    return Player;
-}();
+function createPlayer(isBlack, args) {
+    return {
+        ai: args.ai,
+        name: args.name,
+        foto: args.foto,
+        isBlack: isBlack
+    };
+}
+var curriedCreatePlayer = (0, _ramda.curry)(createPlayer);
+var createWhitePlayer = curriedCreatePlayer(false);
+var createBlackPlayer = curriedCreatePlayer(true);
+function isComputer(player) {
+    return player.ai ? true : false;
+}
+exports.createBlackPlayer = createBlackPlayer;
+exports.createWhitePlayer = createWhitePlayer;
+exports.isComputer = isComputer;
 //# sourceMappingURL=Player.js.map
 //# sourceMappingURL=Player.js.map

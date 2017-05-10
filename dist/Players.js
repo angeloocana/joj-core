@@ -3,24 +3,16 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Players = undefined;
+exports.createPlayers = undefined;
 
-var _ptzAssert = require('ptz-assert');
+var _Player = require('./Player');
 
-var _GamePieceType = require('./GamePieceType');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Players = exports.Players = function Players() {
-    var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-    _classCallCheck(this, Players);
-
-    (0, _ptzAssert.ok)(args && args.black && args.white, 'ERROR_BLACK_AND_WHITE_PlAYERS_REQUIRED');
-    this.white = args.white;
-    this.black = args.black;
-    this.white.color = _GamePieceType.gamePieceType.white;
-    this.black.color = _GamePieceType.gamePieceType.black;
-};
+function createPlayers(args) {
+    return {
+        white: (0, _Player.createWhitePlayer)(args.white),
+        black: (0, _Player.createBlackPlayer)(args.black)
+    };
+}
+exports.createPlayers = createPlayers;
 //# sourceMappingURL=Players.js.map
 //# sourceMappingURL=Players.js.map

@@ -1,32 +1,39 @@
-import { pieceHelper } from './helpers/PieceHelper';
-export class GameColor {
-    /**
-     * Get a clean game color
-     */
-    constructor(boardOptions, isBlack) {
-        this.winners = {
+import log from 'ptz-log';
+function createGameColor(boardConf, isBlack, pieces) {
+    const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
+    return {
+        score: {
             winners: 0,
             preWinnersPoints: 0
-        };
-        this.jumps = 0;
-        this.points = 0;
-        this.nMoves = 0;
-        const y = (boardOptions.size.y - 1);
-        this.startRow = isBlack ? 0 : y;
-        this.endRow = isBlack ? y : 0;
-        this.pieces = pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
-    }
-    move(startPosition, nextPosition) {
-        this.pieces.forEach(piece => {
-            if (piece.position.x === startPosition.x
-                && piece.position.y === startPosition.y) {
-                piece.position.x = nextPosition.x;
-                piece.position.y = nextPosition.y;
+        },
+        jumps: 0,
+        points: 0,
+        nMoves: 0,
+        pieces,
+        isBlack,
+        startRow,
+        endRow
+    };
+}
+function getColorAfterMove(color, move) {
+    try {
+        color.pieces = color.pieces.map(piece => {
+            if (piece.position.x === move.from.x
+                && piece.position.y === move.from.y) {
+                piece.position.x = move.to.x;
+                piece.position.y = move.to.y;
             }
+            return piece;
         });
     }
+    catch (e) {
+        log('color', color);
+        log('move', move);
+        throw e;
+    }
+    return color;
 }
-export function getColorWinners(color) {
+function getColorScore(color) {
     const initialWinners = {
         winners: 0,
         preWinnersPoints: 0
@@ -41,11 +48,12 @@ export function getColorWinners(color) {
         return winners;
     }, initialWinners);
 }
-export function setColorWinners(color) {
-    color.winners = getColorWinners(color);
+function setColorScore(color) {
+    color.score = getColorScore(color);
     return color;
 }
-export function colorWin(color) {
-    return color.winners.winners === color.pieces.length;
+function colorWin(color) {
+    return color.score.winners === color.pieces.length;
 }
+export { createGameColor, getColorAfterMove, getColorScore, setColorScore, colorWin };
 //# sourceMappingURL=GameColor.js.map

@@ -6,8 +6,8 @@ var _index = require('./index');
 
 describe('joj-core', function () {
     describe('exports', function () {
-        it('Game', function () {
-            return (0, _ptzAssert.ok)(_index.Game);
+        it('createGame', function () {
+            return (0, _ptzAssert.ok)(_index.createGame);
         });
     });
 });

@@ -3,54 +3,50 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.GameColor = undefined;
+exports.colorWin = exports.setColorScore = exports.getColorScore = exports.getColorAfterMove = exports.createGameColor = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _ptzLog = require('ptz-log');
 
-exports.getColorWinners = getColorWinners;
-exports.setColorWinners = setColorWinners;
-exports.colorWin = colorWin;
+var _ptzLog2 = _interopRequireDefault(_ptzLog);
 
-var _PieceHelper = require('./helpers/PieceHelper');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function createGameColor(boardConf, isBlack, pieces) {
+    var _ref = isBlack ? boardConf.black : boardConf.white,
+        startRow = _ref.startRow,
+        endRow = _ref.endRow;
 
-var GameColor = exports.GameColor = function () {
-    /**
-     * Get a clean game color
-     */
-    function GameColor(boardOptions, isBlack) {
-        _classCallCheck(this, GameColor);
-
-        this.winners = {
+    return {
+        score: {
             winners: 0,
             preWinnersPoints: 0
-        };
-        this.jumps = 0;
-        this.points = 0;
-        this.nMoves = 0;
-        var y = boardOptions.size.y - 1;
-        this.startRow = isBlack ? 0 : y;
-        this.endRow = isBlack ? y : 0;
-        this.pieces = _PieceHelper.pieceHelper.getStartPieces(boardOptions, this.startRow, isBlack);
+        },
+        jumps: 0,
+        points: 0,
+        nMoves: 0,
+        pieces: pieces,
+        isBlack: isBlack,
+        startRow: startRow,
+        endRow: endRow
+    };
+}
+function getColorAfterMove(color, move) {
+    try {
+        color.pieces = color.pieces.map(function (piece) {
+            if (piece.position.x === move.from.x && piece.position.y === move.from.y) {
+                piece.position.x = move.to.x;
+                piece.position.y = move.to.y;
+            }
+            return piece;
+        });
+    } catch (e) {
+        (0, _ptzLog2.default)('color', color);
+        (0, _ptzLog2.default)('move', move);
+        throw e;
     }
-
-    _createClass(GameColor, [{
-        key: 'move',
-        value: function move(startPosition, nextPosition) {
-            this.pieces.forEach(function (piece) {
-                if (piece.position.x === startPosition.x && piece.position.y === startPosition.y) {
-                    piece.position.x = nextPosition.x;
-                    piece.position.y = nextPosition.y;
-                }
-            });
-        }
-    }]);
-
-    return GameColor;
-}();
-
-function getColorWinners(color) {
+    return color;
+}
+function getColorScore(color) {
     var initialWinners = {
         winners: 0,
         preWinnersPoints: 0
@@ -60,12 +56,17 @@ function getColorWinners(color) {
         return winners;
     }, initialWinners);
 }
-function setColorWinners(color) {
-    color.winners = getColorWinners(color);
+function setColorScore(color) {
+    color.score = getColorScore(color);
     return color;
 }
 function colorWin(color) {
-    return color.winners.winners === color.pieces.length;
+    return color.score.winners === color.pieces.length;
 }
+exports.createGameColor = createGameColor;
+exports.getColorAfterMove = getColorAfterMove;
+exports.getColorScore = getColorScore;
+exports.setColorScore = setColorScore;
+exports.colorWin = colorWin;
 //# sourceMappingURL=GameColor.js.map
 //# sourceMappingURL=GameColor.js.map

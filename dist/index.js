@@ -6,115 +6,85 @@ Object.defineProperty(exports, "__esModule", {
 
 var _Game = require('./Game');
 
-Object.defineProperty(exports, 'Game', {
-  enumerable: true,
-  get: function get() {
-    return _Game.Game;
-  }
-});
-Object.defineProperty(exports, 'getCleanGameToSaveOnServer', {
-  enumerable: true,
-  get: function get() {
-    return _Game.getCleanGameToSaveOnServer;
-  }
+Object.keys(_Game).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Game[key];
+    }
+  });
 });
 
-var _GameBoard = require('./GameBoard');
+var _Board = require('./Board');
 
-Object.defineProperty(exports, 'defaultBoardOptions', {
-  enumerable: true,
-  get: function get() {
-    return _GameBoard.defaultBoardOptions;
-  }
-});
-Object.defineProperty(exports, 'GameBoard', {
-  enumerable: true,
-  get: function get() {
-    return _GameBoard.GameBoard;
-  }
+Object.keys(_Board).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Board[key];
+    }
+  });
 });
 
 var _GameColor = require('./GameColor');
 
-Object.defineProperty(exports, 'colorWin', {
-  enumerable: true,
-  get: function get() {
-    return _GameColor.colorWin;
-  }
-});
-Object.defineProperty(exports, 'GameColor', {
-  enumerable: true,
-  get: function get() {
-    return _GameColor.GameColor;
-  }
-});
-Object.defineProperty(exports, 'getColorWinners', {
-  enumerable: true,
-  get: function get() {
-    return _GameColor.getColorWinners;
-  }
+Object.keys(_GameColor).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _GameColor[key];
+    }
+  });
 });
 
-var _GamePiece = require('./GamePiece');
+var _Piece = require('./Piece');
 
-Object.defineProperty(exports, 'GamePiece', {
-  enumerable: true,
-  get: function get() {
-    return _GamePiece.GamePiece;
-  }
-});
-
-var _GamePieceType = require('./GamePieceType');
-
-Object.defineProperty(exports, 'gamePieceType', {
-  enumerable: true,
-  get: function get() {
-    return _GamePieceType.gamePieceType;
-  }
+Object.keys(_Piece).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Piece[key];
+    }
+  });
 });
 
 var _Player = require('./Player');
 
-Object.defineProperty(exports, 'Player', {
-  enumerable: true,
-  get: function get() {
-    return _Player.Player;
-  }
+Object.keys(_Player).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Player[key];
+    }
+  });
 });
 
 var _Players = require('./Players');
 
-Object.defineProperty(exports, 'Players', {
-  enumerable: true,
-  get: function get() {
-    return _Players.Players;
-  }
+Object.keys(_Players).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Players[key];
+    }
+  });
 });
 
-var _BoardHelper = require('./helpers/BoardHelper');
+var _Position = require('./Position');
 
-Object.defineProperty(exports, 'boardHelper', {
-  enumerable: true,
-  get: function get() {
-    return _BoardHelper.boardHelper;
-  }
-});
-
-var _PieceHelper = require('./helpers/PieceHelper');
-
-Object.defineProperty(exports, 'pieceHelper', {
-  enumerable: true,
-  get: function get() {
-    return _PieceHelper.pieceHelper;
-  }
-});
-
-var _BoardPosition = require('./BoardPosition');
-
-Object.defineProperty(exports, 'BoardPosition', {
-  enumerable: true,
-  get: function get() {
-    return _BoardPosition.BoardPosition;
-  }
+Object.keys(_Position).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Position[key];
+    }
+  });
 });
 //# sourceMappingURL=index.js.map

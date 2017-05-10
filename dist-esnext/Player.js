@@ -1,11 +1,17 @@
-export class Player {
-    constructor(args) {
-        this.ai = args.ai;
-        this.name = args.name;
-        this.foto = args.foto;
-    }
-    isComputer() {
-        return this.ai ? true : false;
-    }
+import { curry } from 'ramda';
+function createPlayer(isBlack, args) {
+    return {
+        ai: args.ai,
+        name: args.name,
+        foto: args.foto,
+        isBlack
+    };
 }
+const curriedCreatePlayer = curry(createPlayer);
+const createWhitePlayer = curriedCreatePlayer(false);
+const createBlackPlayer = curriedCreatePlayer(true);
+function isComputer(player) {
+    return player.ai ? true : false;
+}
+export { createBlackPlayer, createWhitePlayer, isComputer };
 //# sourceMappingURL=Player.js.map

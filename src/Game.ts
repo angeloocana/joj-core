@@ -1,149 +1,42 @@
-import copy from 'ptz-copy';
-import { BoardPosition } from './BoardPosition';
-import { GameBoard } from './GameBoard';
-import { colorWin, GameColor, setColorWinners } from './GameColor';
+import { compose, not } from 'ramda';
+import {
+    defaultBoardConf,
+    getBoardAfterMove, getCleanBoardWhereCanIGo,
+    getInitialBoard,
+    getPositionsWhereCanIGo, setWhereCanIGo
+} from './Board';
+import { colorWin, createGameColor, getColorAfterMove, getColorScore } from './GameColor';
+import { isComputer } from './Player';
+import { createPlayers } from './Players';
+import { hasBlackPiece, hasWhitePiece, isSamePositionAs } from './Position';
 
-import { IBoardPosition } from './typings/IBoardPosition';
-import { ICleanGame } from './typings/ICleanGame';
-import { IGame } from './typings/IGame';
-import { IGameArgs } from './typings/IGameArgs';
-import { IGameBoard } from './typings/IGameBoard';
-import { IGameColor } from './typings/IGameColor';
-import { IMove } from './typings/IMove';
-import { IPlayer } from './typings/IPlayer';
-import { IPlayers } from './typings/IPlayers';
+import { ICleanGame } from './ICleanGame';
+import { IGame, IGameArgs } from './IGame';
+import { IGameColor } from './IGameColor';
+import { IMove } from './IMove';
+import { IPlayer } from './IPlayer';
+import { IPlayers } from './IPlayers';
+import { IPosition } from './IPosition';
 
-export class Game implements IGame {
-    ended: boolean = false;
-    players: IPlayers;
-    movements: IMove[];
-    board: IGameBoard;
-    white: IGameColor;
-    black: IGameColor;
-    blackWin: boolean;
+function createGame(args: IGameArgs): IGame {
+    const boardConf = args.boardConf || defaultBoardConf;
 
-    /**
-     * Create new Game
-     */
-    constructor(args: IGameArgs = {}) {
-        if (args.needToValidateMovements !== true && args.needToValidateMovements !== false)
-            args.needToValidateMovements = true;
+    const { board, blackPieces, whitePieces } = getInitialBoard(boardConf);
 
-        this.board = new GameBoard(args.boardArgs);
+    const game: IGame = {
+        ended: false,
+        movements: args.movements || [],
+        players: createPlayers(args.players),
+        boardConf,
+        white: createGameColor(boardConf, false, whitePieces),
+        black: createGameColor(boardConf, true, blackPieces),
+        board
+    };
 
-        this.white = new GameColor(this.board.boardOptions, false);
-        this.black = new GameColor(this.board.boardOptions, true);
-
-        this.setMovements(args.movements, args.needToValidateMovements);
-        this.setPlayers(args.players);
-    }
-
-    setPlayers(players: IPlayers) {
-        // Validate Players
-        this.players = players;
-    }
-
-    setMovements(movements: IMove[] = [], needToValidateMovements: boolean = true) {
-        // Validate Movements
-        // if(needToValidateMovements)
-
-        this.movements = movements;
-        this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
-    }
-
-    isWhiteTurn(): boolean {
-        return this.movements.length % 2 === 0;
-    }
-
-    setWhereCanIGo(startPosition: IBoardPosition): void {
-        this.board.cleanBoardWhereCanIGo();
-
-        const blackPiece = startPosition.isBlackPiece();
-        const whiteTurn = this.isWhiteTurn();
-
-        if (this.ended || blackPiece === null
-            || (!blackPiece && !whiteTurn)
-            || (blackPiece && whiteTurn))
-            return;
-
-        this.board.setWhereCanIGo(startPosition, blackPiece);
-    }
-
-    canMove(startPosition: IBoardPosition, nextPosition: IBoardPosition): boolean {
-
-        const positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
-        var nextPositionFound = false;
-
-        nextPositionFound = positionsWhereCanIGo.findIndex(position =>
-            position.x === nextPosition.x
-            && position.y === nextPosition.y
-        ) >= 0;
-
-        this.board.cleanBoardWhereCanIGo();
-
-        return nextPositionFound;
-    }
-
-    move(startPosition: IBoardPosition, nextPosition: IBoardPosition, backMove: boolean = false): IGame {
-
-        let game: IGame = this;
-
-        if (startPosition.isSamePositionAs(nextPosition))
-            throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-
-        if (!backMove)
-            if (!game.canMove(startPosition, nextPosition))
-                throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-
-        game.board.move(startPosition, nextPosition
-            , backMove, game.isWhiteTurn());
-
-        game.black.move(startPosition, nextPosition);
-        game.white.move(startPosition, nextPosition);
-
-        if (!backMove) {
-            game.movements.push({ startPosition, nextPosition });
-            game = getWinner(game);
-        }
-
-        return game;
-    }
-
-    backMove(): void {
-        this.board.cleanBoardWhereCanIGo();
-
-        let lastMove = this.movements.pop();
-
-        if (lastMove)
-            this.move(lastMove.nextPosition, lastMove.startPosition, true);
-
-        if (this.getPlayerTurn().isComputer()) {
-            lastMove = this.movements.pop();
-            if (lastMove) {
-                this.board.cleanBoardWhereCanIGo();
-                this.move(lastMove.nextPosition, lastMove.startPosition, true);
-            }
-        }
-    }
-
-    getColorTurn(): IGameColor {
-        return this.isWhiteTurn ? this.white : this.black;
-    }
-
-    getPlayerTurn(): IPlayer {
-        return this.isWhiteTurn ? this.players.white : this.players.black;
-    }
-
-    getNewCopy(): IGame {
-        return new Game(this);
-    }
-
-    getCopy(): IGame {
-        return copy(this);
-    }
+    return game;
 }
 
-export function getCleanGameToSaveOnServer(game: IGame): ICleanGame {
+function getCleanGameToSaveOnServer(game: IGame): ICleanGame {
     const cleanGame: ICleanGame = {
         ended: game.ended,
         movements: [],
@@ -151,17 +44,17 @@ export function getCleanGameToSaveOnServer(game: IGame): ICleanGame {
     };
 
     cleanGame.movements = game.movements.map(move => {
-        const startPosition = new BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
-        const nextPosition = new BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
-        return { startPosition, nextPosition };
+        const from = { x: move.from.x, y: move.from.y };
+        const to = { x: move.to.x, y: move.to.y };
+        return { from, to };
     });
 
     return cleanGame;
 }
 
-export function getWinner(game: IGame): IGame {
-    game.white = setColorWinners(game.white);
-    game.black = setColorWinners(game.black);
+function getWinner(game: IGame): IGame {
+    game.white.score = getColorScore(game.white);
+    game.black.score = getColorScore(game.black);
 
     if (colorWin(game.white))
         game.blackWin = false;
@@ -170,3 +63,116 @@ export function getWinner(game: IGame): IGame {
 
     return game;
 }
+
+function isMyTurn(game: IGame, from: IPosition): boolean {
+    if (game.ended)
+        return false;
+
+    return isWhiteTurn(game) ? hasWhitePiece(from) : hasBlackPiece(from);
+}
+
+function getGameWhereCanIGo(game: IGame, from: IPosition): IGame {
+    game.board = getCleanBoardWhereCanIGo(game.board);
+
+    if (!isMyTurn(game, from))
+        return game;
+
+    game.board = setWhereCanIGo(game.board, from, hasBlackPiece(from));
+}
+
+function isWhiteTurn(game: IGame): boolean {
+    return game.movements.length % 2 === 0;
+}
+
+const isBlackTurn = compose(not, isWhiteTurn);
+
+function getColorTurn(game: IGame): IGameColor {
+    return isWhiteTurn(game) ? game.white : game.black;
+}
+
+function getPlayerTurn(game: IGame): IPlayer {
+    return isWhiteTurn(game) ? game.players.white : game.players.black;
+}
+
+function setPlayers(players: IPlayers) {
+    // Validate Players
+    this.players = players;
+}
+
+function setMovements(movements: IMove[] = [], needToValidateMovements: boolean = true) {
+    // Validate Movements
+    // if(needToValidateMovements)
+
+    this.movements = movements;
+    // This must be called in another place
+    // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
+}
+
+function canMove(game: IGame, move: IMove): boolean {
+    const positionsWhereCanIGo = getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
+    return positionsWhereCanIGo.findIndex(position =>
+        position.x === move.to.x
+        && position.y === move.to.y
+    ) >= 0;
+}
+
+function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): IGame {
+    if (isSamePositionAs(move.from, move.to))
+        throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
+
+    game.board = getCleanBoardWhereCanIGo(game.board);
+
+    if (!backMove)
+        if (!canMove(game, move))
+            throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+
+    game.board = getBoardAfterMove(game.board, move);
+
+    game.black = getColorAfterMove(game.black, move);
+    game.white = getColorAfterMove(game.white, move);
+
+    if (!backMove) {
+        game.movements.push(move);
+        game = getWinner(game);
+    }
+
+    return game;
+}
+
+function getBackMove(move: IMove): IMove {
+    return {
+        from: move.to,
+        to: move.from
+    };
+}
+
+function getGameBeforeLastMove(game: IGame): IGame {
+    let lastMove = game.movements.pop();
+
+    if (lastMove)
+        game = getGameAfterMove(game, getBackMove(lastMove), true);
+
+    if (isComputer(getPlayerTurn(game))) {
+        lastMove = game.movements.pop();
+        if (lastMove) {
+            game = getGameAfterMove(game, getBackMove(lastMove), true);
+        }
+    }
+
+    return game;
+}
+
+export {
+    canMove,
+    createGame,
+    getBackMove,
+    getColorTurn,
+    getPlayerTurn,
+    getWinner,
+    getGameWhereCanIGo,
+    getGameAfterMove,
+    getGameBeforeLastMove,
+    setPlayers,
+    setMovements,
+    getCleanGameToSaveOnServer
+};

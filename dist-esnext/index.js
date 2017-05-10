@@ -1,11 +1,8 @@
-export { Game, getCleanGameToSaveOnServer } from './Game';
-export { defaultBoardOptions, GameBoard } from './GameBoard';
-export { colorWin, GameColor, getColorWinners } from './GameColor';
-export { GamePiece } from './GamePiece';
-export { gamePieceType } from './GamePieceType';
-export { Player } from './Player';
-export { Players } from './Players';
-export { boardHelper } from './helpers/BoardHelper';
-export { pieceHelper } from './helpers/PieceHelper';
-export { BoardPosition } from './BoardPosition';
+export * from './Game';
+export * from './Board';
+export * from './GameColor';
+export * from './Piece';
+export * from './Player';
+export * from './Players';
+export * from './Position';
 //# sourceMappingURL=index.js.map

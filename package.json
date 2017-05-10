@@ -8,7 +8,7 @@
     "lint": "tslint ./src/**/*.ts ./src/**/*.test.ts ./src/**/*.d.ts",
     "js": "rimraf dist-esnext && tsc && rimraf dist && babel dist-esnext -d dist --presets es2015 --source-maps",
     "pretest": "npm-run-all --parallel js lint",
-    "mocha": "mocha ./dist/**/*.js --require babel-polyfill",
+    "mocha": "mocha ./dist/*.js ./dist/**/*.js --require babel-polyfill",
     "test": "nyc npm run mocha && nyc report --reporter=html --reporter=text-lcov > coverage.lcov && f() { EXIT=0; codecov --token=ceb536c1-556e-43dc-99b7-8d41c7b52413 || exit $EXIT; }; f",
     "test:cover": "npm run test && opn ./coverage/lcov-report/index.html",
     "predebug": "npm run pretest",
@@ -25,7 +25,11 @@
   },
   "homepage": "https://github.com/angeloocana/joj-core#readme",
   "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/ramda": "0.0.8",
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.18.2",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-es2017": "^6.24.1",
     "codecov": "^1.0.1",
@@ -34,20 +38,17 @@
     "mocha-lcov-reporter": "^1.2.0",
     "npm-run-all": "^4.0.2",
     "nyc": "^8.4.0",
+    "opn-cli": "^3.1.0",
     "ptz-assert": "^1.0.7",
     "rimraf": "^2.6.1",
     "sinon": "^2.1.0",
     "tslint": "^5.0.0",
-    "typescript": "^2.0.8",
-    "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.12",
-    "opn-cli": "^3.1.0",
-    "babel-core": "^6.18.2"
+    "typescript": "^2.0.8"
   },
   "dependencies": {
     "ptz-log": "^1.0.0",
-    "ptz-copy": "^1.0.1",
-    "ptz-math": "^1.0.2"
+    "ptz-math": "^1.0.2",
+    "ramda": "^0.23.0"
   },
   "keywords": [
     "joj",

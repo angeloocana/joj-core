@@ -3,143 +3,39 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Game = undefined;
+exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.getBackMove = exports.createGame = exports.canMove = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _ramda = require('ramda');
 
-exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;
-exports.getWinner = getWinner;
-
-var _ptzCopy = require('ptz-copy');
-
-var _ptzCopy2 = _interopRequireDefault(_ptzCopy);
-
-var _BoardPosition = require('./BoardPosition');
-
-var _GameBoard = require('./GameBoard');
+var _Board = require('./Board');
 
 var _GameColor = require('./GameColor');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Player = require('./Player');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _Players = require('./Players');
 
-var Game = exports.Game = function () {
-    /**
-     * Create new Game
-     */
-    function Game() {
-        var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+var _Position = require('./Position');
 
-        _classCallCheck(this, Game);
+function createGame(args) {
+    var boardConf = args.boardConf || _Board.defaultBoardConf;
 
-        this.ended = false;
-        if (args.needToValidateMovements !== true && args.needToValidateMovements !== false) args.needToValidateMovements = true;
-        this.board = new _GameBoard.GameBoard(args.boardArgs);
-        this.white = new _GameColor.GameColor(this.board.boardOptions, false);
-        this.black = new _GameColor.GameColor(this.board.boardOptions, true);
-        this.setMovements(args.movements, args.needToValidateMovements);
-        this.setPlayers(args.players);
-    }
+    var _getInitialBoard = (0, _Board.getInitialBoard)(boardConf),
+        board = _getInitialBoard.board,
+        blackPieces = _getInitialBoard.blackPieces,
+        whitePieces = _getInitialBoard.whitePieces;
 
-    _createClass(Game, [{
-        key: 'setPlayers',
-        value: function setPlayers(players) {
-            // Validate Players
-            this.players = players;
-        }
-    }, {
-        key: 'setMovements',
-        value: function setMovements() {
-            var movements = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-            var needToValidateMovements = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-            // Validate Movements
-            // if(needToValidateMovements)
-            this.movements = movements;
-            this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
-        }
-    }, {
-        key: 'isWhiteTurn',
-        value: function isWhiteTurn() {
-            return this.movements.length % 2 === 0;
-        }
-    }, {
-        key: 'setWhereCanIGo',
-        value: function setWhereCanIGo(startPosition) {
-            this.board.cleanBoardWhereCanIGo();
-            var blackPiece = startPosition.isBlackPiece();
-            var whiteTurn = this.isWhiteTurn();
-            if (this.ended || blackPiece === null || !blackPiece && !whiteTurn || blackPiece && whiteTurn) return;
-            this.board.setWhereCanIGo(startPosition, blackPiece);
-        }
-    }, {
-        key: 'canMove',
-        value: function canMove(startPosition, nextPosition) {
-            var positionsWhereCanIGo = this.board.getPositionsWhereCanIGo(startPosition, !this.isWhiteTurn()).positions;
-            var nextPositionFound = false;
-            nextPositionFound = positionsWhereCanIGo.findIndex(function (position) {
-                return position.x === nextPosition.x && position.y === nextPosition.y;
-            }) >= 0;
-            this.board.cleanBoardWhereCanIGo();
-            return nextPositionFound;
-        }
-    }, {
-        key: 'move',
-        value: function move(startPosition, nextPosition) {
-            var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-            var game = this;
-            if (startPosition.isSamePositionAs(nextPosition)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-            if (!backMove) if (!game.canMove(startPosition, nextPosition)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-            game.board.move(startPosition, nextPosition, backMove, game.isWhiteTurn());
-            game.black.move(startPosition, nextPosition);
-            game.white.move(startPosition, nextPosition);
-            if (!backMove) {
-                game.movements.push({ startPosition: startPosition, nextPosition: nextPosition });
-                game = getWinner(game);
-            }
-            return game;
-        }
-    }, {
-        key: 'backMove',
-        value: function backMove() {
-            this.board.cleanBoardWhereCanIGo();
-            var lastMove = this.movements.pop();
-            if (lastMove) this.move(lastMove.nextPosition, lastMove.startPosition, true);
-            if (this.getPlayerTurn().isComputer()) {
-                lastMove = this.movements.pop();
-                if (lastMove) {
-                    this.board.cleanBoardWhereCanIGo();
-                    this.move(lastMove.nextPosition, lastMove.startPosition, true);
-                }
-            }
-        }
-    }, {
-        key: 'getColorTurn',
-        value: function getColorTurn() {
-            return this.isWhiteTurn ? this.white : this.black;
-        }
-    }, {
-        key: 'getPlayerTurn',
-        value: function getPlayerTurn() {
-            return this.isWhiteTurn ? this.players.white : this.players.black;
-        }
-    }, {
-        key: 'getNewCopy',
-        value: function getNewCopy() {
-            return new Game(this);
-        }
-    }, {
-        key: 'getCopy',
-        value: function getCopy() {
-            return (0, _ptzCopy2.default)(this);
-        }
-    }]);
-
-    return Game;
-}();
-
+    var game = {
+        ended: false,
+        movements: args.movements || [],
+        players: (0, _Players.createPlayers)(args.players),
+        boardConf: boardConf,
+        white: (0, _GameColor.createGameColor)(boardConf, false, whitePieces),
+        black: (0, _GameColor.createGameColor)(boardConf, true, blackPieces),
+        board: board
+    };
+    return game;
+}
 function getCleanGameToSaveOnServer(game) {
     var cleanGame = {
         ended: game.ended,
@@ -147,17 +43,100 @@ function getCleanGameToSaveOnServer(game) {
         blackWin: game.blackWin
     };
     cleanGame.movements = game.movements.map(function (move) {
-        var startPosition = new _BoardPosition.BoardPosition({ x: move.startPosition.x, y: move.startPosition.y });
-        var nextPosition = new _BoardPosition.BoardPosition({ x: move.nextPosition.x, y: move.nextPosition.y });
-        return { startPosition: startPosition, nextPosition: nextPosition };
+        var from = { x: move.from.x, y: move.from.y };
+        var to = { x: move.to.x, y: move.to.y };
+        return { from: from, to: to };
     });
     return cleanGame;
 }
 function getWinner(game) {
-    game.white = (0, _GameColor.setColorWinners)(game.white);
-    game.black = (0, _GameColor.setColorWinners)(game.black);
+    game.white.score = (0, _GameColor.getColorScore)(game.white);
+    game.black.score = (0, _GameColor.getColorScore)(game.black);
     if ((0, _GameColor.colorWin)(game.white)) game.blackWin = false;else if ((0, _GameColor.colorWin)(game.black)) game.blackWin = true;
     return game;
 }
+function isMyTurn(game, from) {
+    if (game.ended) return false;
+    return isWhiteTurn(game) ? (0, _Position.hasWhitePiece)(from) : (0, _Position.hasBlackPiece)(from);
+}
+function getGameWhereCanIGo(game, from) {
+    game.board = (0, _Board.getCleanBoardWhereCanIGo)(game.board);
+    if (!isMyTurn(game, from)) return game;
+    game.board = (0, _Board.setWhereCanIGo)(game.board, from, (0, _Position.hasBlackPiece)(from));
+}
+function isWhiteTurn(game) {
+    return game.movements.length % 2 === 0;
+}
+var isBlackTurn = (0, _ramda.compose)(_ramda.not, isWhiteTurn);
+function getColorTurn(game) {
+    return isWhiteTurn(game) ? game.white : game.black;
+}
+function getPlayerTurn(game) {
+    return isWhiteTurn(game) ? game.players.white : game.players.black;
+}
+function setPlayers(players) {
+    // Validate Players
+    this.players = players;
+}
+function setMovements() {
+    var movements = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var needToValidateMovements = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    // Validate Movements
+    // if(needToValidateMovements)
+    this.movements = movements;
+    // This must be called in another place
+    // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
+}
+function canMove(game, move) {
+    var positionsWhereCanIGo = (0, _Board.getPositionsWhereCanIGo)(game.board, move.from, isBlackTurn(game)).positions;
+    return positionsWhereCanIGo.findIndex(function (position) {
+        return position.x === move.to.x && position.y === move.to.y;
+    }) >= 0;
+}
+function getGameAfterMove(game, move) {
+    var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    if ((0, _Position.isSamePositionAs)(move.from, move.to)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
+    game.board = (0, _Board.getCleanBoardWhereCanIGo)(game.board);
+    if (!backMove) if (!canMove(game, move)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+    game.board = (0, _Board.getBoardAfterMove)(game.board, move);
+    game.black = (0, _GameColor.getColorAfterMove)(game.black, move);
+    game.white = (0, _GameColor.getColorAfterMove)(game.white, move);
+    if (!backMove) {
+        game.movements.push(move);
+        game = getWinner(game);
+    }
+    return game;
+}
+function getBackMove(move) {
+    return {
+        from: move.to,
+        to: move.from
+    };
+}
+function getGameBeforeLastMove(game) {
+    var lastMove = game.movements.pop();
+    if (lastMove) game = getGameAfterMove(game, getBackMove(lastMove), true);
+    if ((0, _Player.isComputer)(getPlayerTurn(game))) {
+        lastMove = game.movements.pop();
+        if (lastMove) {
+            game = getGameAfterMove(game, getBackMove(lastMove), true);
+        }
+    }
+    return game;
+}
+exports.canMove = canMove;
+exports.createGame = createGame;
+exports.getBackMove = getBackMove;
+exports.getColorTurn = getColorTurn;
+exports.getPlayerTurn = getPlayerTurn;
+exports.getWinner = getWinner;
+exports.getGameWhereCanIGo = getGameWhereCanIGo;
+exports.getGameAfterMove = getGameAfterMove;
+exports.getGameBeforeLastMove = getGameBeforeLastMove;
+exports.setPlayers = setPlayers;
+exports.setMovements = setMovements;
+exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map
