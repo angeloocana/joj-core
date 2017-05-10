@@ -72,22 +72,53 @@ describe('GameColor', () => {
     });
 
     describe('getColorScore', () => {
-        it('return 0 when new game', () => {
-            const color = GameColor.create(Board.defaultBoardConf, false, []);
-            const winners = GameColor.getScore(color);
+        it('return 0', () => {
+            const pieces = Pieces.createWhitePieces([
+                { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+                { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }
+            ]);
+            const color = GameColor.create(Board.defaultBoardConf, true, pieces);
+            const score = GameColor.getScore(color);
 
-            assert.equal(winners.preWinnersPoints, 0);
-            assert.equal(winners.winners, 0);
+            assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
+            assert.equal(score.winners, 0, 'winners');
         });
 
-        it('return 1');
-        it('return 2');
-        it('return 3');
-        it('return 4');
-        it('return 5');
-        it('return 6');
-        it('return 7');
-        it('return 8');
+        it('return 1', () => {
+            const pieces = Pieces.createBlackPieces([
+                { x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 },
+                { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 6 }, { x: 7, y: 7 }
+            ]);
+            const color = GameColor.create(Board.defaultBoardConf, true, pieces);
+            const score = GameColor.getScore(color);
+
+            assert.equal(score.preWinnersPoints, 21, 'preWinnersPoints');
+            assert.equal(score.winners, 1, 'winners');
+        });
+
+        it('return 2', () => {
+            const pieces = Pieces.createBlackPieces([
+                { x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 },
+                { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 7 }, { x: 7, y: 7 }
+            ]);
+            const color = GameColor.create(Board.defaultBoardConf, true, pieces);
+            const score = GameColor.getScore(color);
+
+            assert.equal(score.preWinnersPoints, 15, 'preWinnersPoints');
+            assert.equal(score.winners, 2, 'winners');
+        });
+
+        it('return 8', () => {
+            const pieces = Pieces.createBlackPieces([
+                { x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 },
+                { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }
+            ]);
+            const color = GameColor.create(Board.defaultBoardConf, true, pieces);
+            const score = GameColor.getScore(color);
+
+            assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
+            assert.equal(score.winners, 8, 'winners');
+        });
     });
 
     describe('colorWin', () => {
