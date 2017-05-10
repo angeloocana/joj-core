@@ -1,6 +1,6 @@
 import * as assert from 'ptz-assert';
 import log from 'ptz-log';
-import { Board, GameColor, Piece, Pieces } from './index';
+import { Board, GameColor, Pieces } from './index';
 function assertColor(actual, expected) {
     assert.equal(actual.endRow, expected.endRow, 'endRow');
     assert.equal(actual.jumps, expected.jumps, 'jumps');
@@ -17,7 +17,7 @@ describe('GameColor', () => {
         const miniBoardConf = Board.getBoardConf({ x: 3, y: 3 });
         it('New white color with default options', () => {
             const isBlack = false;
-            const pieces = [Piece.create(0, 2, isBlack), Piece.create(1, 2, isBlack), Piece.create(2, 2, isBlack)];
+            const pieces = Pieces.createBlackPieces([{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }]);
             const expectedColor = {
                 score: {
                     preWinnersPoints: 0,
@@ -36,7 +36,7 @@ describe('GameColor', () => {
         });
         it('New black color with default options', () => {
             const isBlack = true;
-            const pieces = [Piece.create(0, 0, isBlack), Piece.create(1, 0, isBlack), Piece.create(2, 0, isBlack)];
+            const pieces = Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }]);
             const expectedColor = {
                 score: {
                     preWinnersPoints: 0,

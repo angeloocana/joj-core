@@ -30,7 +30,7 @@ describe('GameColor', function () {
         var miniBoardConf = _index.Board.getBoardConf({ x: 3, y: 3 });
         it('New white color with default options', function () {
             var isBlack = false;
-            var pieces = [_index.Piece.create(0, 2, isBlack), _index.Piece.create(1, 2, isBlack), _index.Piece.create(2, 2, isBlack)];
+            var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }]);
             var expectedColor = {
                 score: {
                     preWinnersPoints: 0,
@@ -49,7 +49,7 @@ describe('GameColor', function () {
         });
         it('New black color with default options', function () {
             var isBlack = true;
-            var pieces = [_index.Piece.create(0, 0, isBlack), _index.Piece.create(1, 0, isBlack), _index.Piece.create(2, 0, isBlack)];
+            var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }]);
             var expectedColor = {
                 score: {
                     preWinnersPoints: 0,

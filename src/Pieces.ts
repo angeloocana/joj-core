@@ -1,12 +1,27 @@
+import R from 'ramda';
 import * as Board from './Board';
 import * as Piece from './Piece';
 
 import { IPiece } from './IPiece';
+import { IPosition } from './IPosition';
 
 // Remove piece from a list
-function remove(pieces: IPiece[], remove: IPiece): IPiece[] {
-    return pieces.filter(piece => !Piece.hasSamePosition(piece, remove));
+function remove(pieces: IPiece[], pieceToRemove: IPiece): IPiece[] {
+    return pieces.filter(piece => !Piece.hasSamePosition(piece, pieceToRemove));
 }
+
+function createPieces(isBlack: boolean, positions: IPosition[]): IPiece[] {
+    return positions.map(position => {
+        position.isBlack = isBlack;
+        return Piece.createPiece(position);
+    });
+}
+
+const createPiecesCurried = R.curry(createPieces);
+
+const createBlackPieces = createPiecesCurried(true);
+
+const createWhitePieces = createPiecesCurried(false);
 
 function getPiecesOrdered(pieces: IPiece[], isBlack: boolean): IPiece[][] {
     const ordered: IPiece[][] = [];
@@ -32,6 +47,8 @@ function haveSamePieceAndPosition(a: IPiece[], b: IPiece[]): boolean {
 }
 
 export {
+    createBlackPieces,
+    createWhitePieces,
     remove,
     getPiecesOrdered,
     haveSamePieceAndPosition

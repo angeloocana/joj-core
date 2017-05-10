@@ -4,7 +4,6 @@ import {
     Board,
     GameColor,
     IGameColor,
-    Piece,
     Pieces
 } from './index';
 
@@ -29,7 +28,7 @@ describe('GameColor', () => {
 
         it('New white color with default options', () => {
             const isBlack = false;
-            const pieces = [Piece.create(0, 2, isBlack), Piece.create(1, 2, isBlack), Piece.create(2, 2, isBlack)];
+            const pieces = Pieces.createBlackPieces([{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }]);
 
             const expectedColor = {
                 score: {
@@ -51,7 +50,7 @@ describe('GameColor', () => {
 
         it('New black color with default options', () => {
             const isBlack = true;
-            const pieces = [Piece.create(0, 0, isBlack), Piece.create(1, 0, isBlack), Piece.create(2, 0, isBlack)];
+            const pieces = Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }]);
 
             const expectedColor = {
                 score: {

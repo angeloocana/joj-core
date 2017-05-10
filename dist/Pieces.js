@@ -3,7 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.haveSamePieceAndPosition = exports.getPiecesOrdered = exports.remove = undefined;
+exports.haveSamePieceAndPosition = exports.getPiecesOrdered = exports.remove = exports.createWhitePieces = exports.createBlackPieces = undefined;
+
+var _ramda = require('ramda');
+
+var _ramda2 = _interopRequireDefault(_ramda);
 
 var _Board = require('./Board');
 
@@ -15,12 +19,23 @@ var Piece = _interopRequireWildcard(_Piece);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Remove piece from a list
-function remove(pieces, remove) {
+function remove(pieces, pieceToRemove) {
     return pieces.filter(function (piece) {
-        return !Piece.hasSamePosition(piece, remove);
+        return !Piece.hasSamePosition(piece, pieceToRemove);
     });
 }
+function createPieces(isBlack, positions) {
+    return positions.map(function (position) {
+        position.isBlack = isBlack;
+        return Piece.createPiece(position);
+    });
+}
+var createPiecesCurried = _ramda2.default.curry(createPieces);
+var createBlackPieces = createPiecesCurried(true);
+var createWhitePieces = createPiecesCurried(false);
 function getPiecesOrdered(pieces, isBlack) {
     var ordered = [];
     pieces.forEach(function (piece) {
@@ -35,6 +50,8 @@ function haveSamePieceAndPosition(a, b) {
     }
     return true;
 }
+exports.createBlackPieces = createBlackPieces;
+exports.createWhitePieces = createWhitePieces;
 exports.remove = remove;
 exports.getPiecesOrdered = getPiecesOrdered;
 exports.haveSamePieceAndPosition = haveSamePieceAndPosition;

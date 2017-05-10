@@ -19,8 +19,8 @@ export interface IPosition {
     lastMove?: boolean;
     lastMoveJump?: boolean;
 
+    // Old methods
     // setPiece(isBlack: boolean): void;
-
     // move(to: IPosition): void;
     // removePiece(): void;
     // isEmpty(): boolean;
