@@ -34,7 +34,7 @@ describe('Move', function () {
             assert.deepEqual(gameBeforeLastMove.movements, game.movements);
         });
     });
-    describe('Move', function () {
+    describe('getGameAfterMove', function () {
         var game;
         beforeEach(function () {
             game = _index.Game.create({

@@ -3,6 +3,12 @@ import { IMove } from './IMove';
 export interface IPosition {
     x: number;
     y: number;
+
+    /**
+     *  - true is black.
+     *  - false is white.
+     *  - undefined is empty position.
+     */
     isBlack?: boolean;
 
     // Moved to pure functions at Board

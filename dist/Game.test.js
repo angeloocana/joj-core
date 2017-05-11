@@ -29,7 +29,7 @@ describe('Game', function () {
             var cleanGame = _index.Game.getCleanGameToSaveOnServer(game);
             assert.equal(game.ended, cleanGame.ended);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWin, cleanGame.blackWin);
+            assert.equal(game.blackWon, cleanGame.blackWon);
         });
         it('map with movements', function () {
             var game = _index.Game.create({
@@ -47,7 +47,7 @@ describe('Game', function () {
             assert.equal(game.ended, cleanGame.ended);
             assert.equal(cleanGame.movements.length, 1);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWin, cleanGame.blackWin);
+            assert.equal(game.blackWon, cleanGame.blackWon);
         });
     });
 });

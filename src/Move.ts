@@ -53,15 +53,20 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
     return board;
 }
 
+/**
+ * Takes game and move and returns new game after move.
+ *
+ * Updates:
+ *  - .board (Cleans board, set positions and move breadcrumb)
+ *  - .black (Calculate score)
+ *  - .white (Calculate score)
+ *  - .movements (add new move)
+ */
 function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): IGame {
-    if (Position.hasSamePosition(move.from, move.to))
-        throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-
     game.board = Board.getCleanBoard(game.board);
 
-    if (!backMove)
-        if (!canMove(game, move))
-            throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+    if (!backMove && !canMove(game, move))
+        throw new Error('ERROR_CANT_MOVE_TO_POSITION');
 
     game.board = getBoardAfterMove(game.board, move);
 
@@ -70,7 +75,7 @@ function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): 
 
     if (!backMove) {
         game.movements.push(getMoveXandY(move));
-        game = Game.getWinner(game);
+        game.blackWon = Game.hasBlackWon(game);
     }
 
     return game;

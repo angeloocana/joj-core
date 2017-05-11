@@ -26,7 +26,7 @@ describe('Move', () => {
             assert.deepEqual(gameBeforeLastMove.movements, game.movements);
         });
     });
-    describe('Move', () => {
+    describe('getGameAfterMove', () => {
         var game;
         beforeEach(() => {
             game = Game.create({

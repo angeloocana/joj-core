@@ -17,27 +17,25 @@ function create(args) {
     };
     return game;
 }
-function getCleanGameToSaveOnServer(game) {
-    const cleanGame = {
-        ended: game.ended,
-        movements: [],
-        blackWin: game.blackWin
+function getCleanGameToSaveOnServer({ ended, blackWon, movements }) {
+    return {
+        ended,
+        movements,
+        blackWon
     };
-    cleanGame.movements = game.movements.map(move => {
-        const from = { x: move.from.x, y: move.from.y };
-        const to = { x: move.to.x, y: move.to.y };
-        return { from, to };
-    });
-    return cleanGame;
 }
-function getWinner(game) {
-    game.white.score = GameColor.getScore(game.white);
-    game.black.score = GameColor.getScore(game.black);
-    if (GameColor.hasWon(game.white))
-        game.blackWin = false;
-    else if (GameColor.hasWon(game.black))
-        game.blackWin = true;
-    return game;
+/**
+ * Takes a game and checks:
+ *  - black won return true.
+ *  - white won return false.
+ *  - nobody won return undefined.
+ */
+function hasBlackWon(game) {
+    if (GameColor.hasWon(game.black))
+        return true;
+    else if (GameColor.hasWon(game.white))
+        return false;
+    return;
 }
 function isMyTurn(game, from) {
     if (game.ended)
@@ -71,5 +69,5 @@ function setMovements(movements = [], needToValidateMovements = true) {
     // This must be called in another place
     // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
 }
-export { create, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, isBlackTurn, isWhiteTurn, isMyTurn, setPlayers, setMovements, getCleanGameToSaveOnServer };
+export { create, getColorTurn, getPlayerTurn, hasBlackWon, getGameWhereCanIGo, isBlackTurn, isWhiteTurn, isMyTurn, setPlayers, setMovements, getCleanGameToSaveOnServer };
 //# sourceMappingURL=Game.js.map

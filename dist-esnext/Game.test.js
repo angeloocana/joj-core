@@ -21,7 +21,7 @@ describe('Game', () => {
             const cleanGame = Game.getCleanGameToSaveOnServer(game);
             assert.equal(game.ended, cleanGame.ended);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWin, cleanGame.blackWin);
+            assert.equal(game.blackWon, cleanGame.blackWon);
         });
         it('map with movements', () => {
             let game = Game.create({
@@ -39,7 +39,7 @@ describe('Game', () => {
             assert.equal(game.ended, cleanGame.ended);
             assert.equal(cleanGame.movements.length, 1);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWin, cleanGame.blackWin);
+            assert.equal(game.blackWon, cleanGame.blackWon);
         });
     });
 });

@@ -20,8 +20,12 @@ function create(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGam
     };
 }
 
-function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
-    color.pieces = color.pieces.map(piece => {
+/**
+ * Takes a list of pieces and move.
+ * Returns the pieces changed with move positions.
+ */
+function getPiecesAfterMove(pieces: IPiece[], move: IMove): IPiece[] {
+    return pieces.map(piece => {
         if (piece.position.x === move.from.x
             && piece.position.y === move.from.y) {
             piece.position.x = move.to.x;
@@ -29,8 +33,6 @@ function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
         }
         return piece;
     });
-
-    return color;
 }
 
 function getScore(color: IGameColor): IScore {
@@ -51,6 +53,23 @@ function getScore(color: IGameColor): IScore {
     }, initialWinners);
 }
 
+/**
+ * Takes a GameColor and move.
+ * Sets:
+ *  - .pieces = getPiecesAfterMove.
+ *  - .score = getScore.
+ * Returns GameColor after move.
+ */
+function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
+    color.pieces = getPiecesAfterMove(color.pieces, move);
+    color.score = getScore(color);
+
+    return color;
+}
+
+/**
+ * Checks if all pieces are winners
+ */
 function hasWon(color: IGameColor): boolean {
     return color.score.winners === color.pieces.length;
 }

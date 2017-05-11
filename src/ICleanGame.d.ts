@@ -6,5 +6,11 @@ import { IMove } from './IMove';
 export interface ICleanGame {
     ended: boolean;
     movements: IMove[];
-    blackWin?: boolean;
+
+    /**
+     *  - true black won.
+     *  - false white won.
+     *  - undefined black and white are still playing.
+     */
+    blackWon?: boolean;
 }

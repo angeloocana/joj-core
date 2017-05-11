@@ -14,8 +14,12 @@ function create(boardConf, isBlack, pieces) {
         endRow
     };
 }
-function getColorAfterMove(color, move) {
-    color.pieces = color.pieces.map(piece => {
+/**
+ * Takes a list of pieces and move.
+ * Returns the pieces changed with move positions.
+ */
+function getPiecesAfterMove(pieces, move) {
+    return pieces.map(piece => {
         if (piece.position.x === move.from.x
             && piece.position.y === move.from.y) {
             piece.position.x = move.to.x;
@@ -23,7 +27,6 @@ function getColorAfterMove(color, move) {
         }
         return piece;
     });
-    return color;
 }
 function getScore(color) {
     const initialWinners = {
@@ -40,6 +43,21 @@ function getScore(color) {
         return winners;
     }, initialWinners);
 }
+/**
+ * Takes a GameColor and move.
+ * Sets:
+ *  - .pieces = getPiecesAfterMove.
+ *  - .score = getScore.
+ * Returns GameColor after move.
+ */
+function getColorAfterMove(color, move) {
+    color.pieces = getPiecesAfterMove(color.pieces, move);
+    color.score = getScore(color);
+    return color;
+}
+/**
+ * Checks if all pieces are winners
+ */
 function hasWon(color) {
     return color.score.winners === color.pieces.length;
 }

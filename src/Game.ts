@@ -30,32 +30,27 @@ function create(args: IGameArgs): IGame {
     return game;
 }
 
-function getCleanGameToSaveOnServer(game: IGame): ICleanGame {
-    const cleanGame: ICleanGame = {
-        ended: game.ended,
-        movements: [],
-        blackWin: game.blackWin
+function getCleanGameToSaveOnServer({ ended, blackWon, movements }: IGame): ICleanGame {
+    return {
+        ended,
+        movements,
+        blackWon
     };
-
-    cleanGame.movements = game.movements.map(move => {
-        const from = { x: move.from.x, y: move.from.y };
-        const to = { x: move.to.x, y: move.to.y };
-        return { from, to };
-    });
-
-    return cleanGame;
 }
 
-function getWinner(game: IGame): IGame {
-    game.white.score = GameColor.getScore(game.white);
-    game.black.score = GameColor.getScore(game.black);
+/**
+ * Takes a game and checks:
+ *  - black won return true.
+ *  - white won return false.
+ *  - nobody won return undefined.
+ */
+function hasBlackWon(game: IGame): boolean {
+    if (GameColor.hasWon(game.black))
+        return true;
+    else if (GameColor.hasWon(game.white))
+        return false;
 
-    if (GameColor.hasWon(game.white))
-        game.blackWin = false;
-    else if (GameColor.hasWon(game.black))
-        game.blackWin = true;
-
-    return game;
+    return;
 }
 
 function isMyTurn(game: IGame, from: IPosition): boolean {
@@ -106,7 +101,7 @@ export {
     create,
     getColorTurn,
     getPlayerTurn,
-    getWinner,
+    hasBlackWon,
     getGameWhereCanIGo,
     isBlackTurn,
     isWhiteTurn,

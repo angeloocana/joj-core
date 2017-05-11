@@ -40,7 +40,7 @@ describe('Move', () => {
         });
     });
 
-    describe('Move', () => {
+    describe('getGameAfterMove', () => {
         var game: IGame;
 
         beforeEach(() => {
