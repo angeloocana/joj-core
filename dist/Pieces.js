@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.haveSamePieceAndPosition = exports.getPiecesOrderedCurried = exports.getPiecesOrdered = exports.removePiece = exports.createWhitePieces = exports.createBlackPieces = undefined;
+exports.haveSamePieceAndPosition = exports.getOrderedPiecesCurried = exports.getOrderedPieces = exports.removePiece = exports.createWhitePieces = exports.createBlackPieces = undefined;
 
 var _ramda = require('ramda');
 
@@ -36,15 +36,14 @@ function createPieces(isBlack, positions) {
 var createPiecesCurried = _ramda2.default.curry(createPieces);
 var createBlackPieces = createPiecesCurried(true);
 var createWhitePieces = createPiecesCurried(false);
-function getPiecesOrdered(boardSizeY, pieces, isBlack) {
-    var ordered = [];
-    pieces.forEach(function (piece) {
+function getOrderedPieces(boardSizeY, isBlack, pieces) {
+    return pieces.reduce(function (ordered, piece) {
         var y = Position.getYAsBlack(boardSizeY, piece.position.y, isBlack);
-        if (!ordered[y]) ordered[y] = [piece];else ordered[y].push(piece);
-    });
-    return ordered;
+        ordered[y] = (ordered[y] || []).concat(piece);
+        return ordered;
+    }, []);
 }
-var getPiecesOrderedCurried = _ramda2.default.curry(getPiecesOrdered);
+var getOrderedPiecesCurried = _ramda2.default.curry(getOrderedPieces);
 function haveSamePieceAndPosition(a, b) {
     for (var i = 0; i < a.length; i++) {
         if (!Piece.hasSamePieceAndPosition(a[i], b[i])) return false;
@@ -54,8 +53,8 @@ function haveSamePieceAndPosition(a, b) {
 exports.createBlackPieces = createBlackPieces;
 exports.createWhitePieces = createWhitePieces;
 exports.removePiece = removePiece;
-exports.getPiecesOrdered = getPiecesOrdered;
-exports.getPiecesOrderedCurried = getPiecesOrderedCurried;
+exports.getOrderedPieces = getOrderedPieces;
+exports.getOrderedPiecesCurried = getOrderedPiecesCurried;
 exports.haveSamePieceAndPosition = haveSamePieceAndPosition;
 //# sourceMappingURL=Pieces.js.map
 //# sourceMappingURL=Pieces.js.map

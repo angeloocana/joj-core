@@ -4,7 +4,13 @@ var _ptzAssert = require('ptz-assert');
 
 var assert = _interopRequireWildcard(_ptzAssert);
 
+var _ramda = require('ramda');
+
+var _ramda2 = _interopRequireDefault(_ramda);
+
 var _index = require('./index');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -23,8 +29,37 @@ describe('Pieces', function () {
             assert.deepEqual(newPieces, pieces);
         });
     });
-    describe('getPiecesOrdered', function () {
-        it('');
+    describe('getOrderedPieces', function () {
+        describe('board=8x8', function () {
+            var getOrderedPieces8x8 = _ramda2.default.curry(_index.Pieces.getOrderedPiecesCurried(8));
+            describe('white pieces', function () {
+                var getOrderedPieces8x8ForWhite = getOrderedPieces8x8(false);
+                it('return all pieces in orderedPieces[0]', function () {
+                    var pieces = [{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }].map(function (p) {
+                        return _index.Piece.createPiece(p);
+                    });
+                    var orderedPieces = getOrderedPieces8x8ForWhite(pieces);
+                    assert.equal(orderedPieces[0].length, 8);
+                });
+            });
+            describe('black pieces', function () {
+                var getOrderedPieces8x8ForBlack = getOrderedPieces8x8(true);
+                it('return all pieces in orderedPieces[0]', function () {
+                    var pieces = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }].map(function (p) {
+                        return _index.Piece.createPiece(p);
+                    });
+                    var orderedPieces = getOrderedPieces8x8ForBlack(pieces);
+                    assert.equal(orderedPieces[0].length, 8);
+                });
+                it('return all pieces in orderedPieces[7]', function () {
+                    var pieces = [{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }].map(function (p) {
+                        return _index.Piece.createPiece(p);
+                    });
+                    var orderedPieces = getOrderedPieces8x8ForBlack(pieces);
+                    assert.equal(orderedPieces[7].length, 8);
+                });
+            });
+        });
     });
     describe('haveSamePieceAndPosition', function () {
         it('return true for same piece and same position', function () {

@@ -42,9 +42,9 @@ function getColorScore(color) {
         winners: 0,
         preWinnersPoints: 0
     };
-    score = color.pieces.reduce(function (winners, piece) {
-        if (piece.position.y === color.endRow) winners.winners += 1;else winners.preWinnersPoints += color.endRow === 0 ? color.startRow - piece.position.y : piece.position.y;
-        return winners;
+    score = color.pieces.reduce(function (newScore, piece) {
+        if (piece.position.y === color.endRow) newScore.winners += 1;else newScore.preWinnersPoints += color.endRow === 0 ? color.startRow - piece.position.y : piece.position.y;
+        return newScore;
     }, score);
     score.won = score.winners === color.pieces.length;
     return score;

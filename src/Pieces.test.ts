@@ -1,5 +1,6 @@
 import * as assert from 'ptz-assert';
-import { Pieces } from './index';
+import R from 'ramda';
+import { Piece, Pieces } from './index';
 
 describe('Pieces', () => {
 
@@ -19,8 +20,66 @@ describe('Pieces', () => {
         });
     });
 
-    describe('getPiecesOrdered', () => {
-        it('');
+    describe('getOrderedPieces', () => {
+        describe('board=8x8', () => {
+            const getOrderedPieces8x8 = R.curry(Pieces.getOrderedPiecesCurried(8));
+
+            describe('white pieces', () => {
+                const getOrderedPieces8x8ForWhite = getOrderedPieces8x8(false);
+
+                it('return all pieces in orderedPieces[0]', () => {
+                    const pieces = [
+                        { x: 0, y: 7 },
+                        { x: 1, y: 7 },
+                        { x: 2, y: 7 },
+                        { x: 3, y: 7 },
+                        { x: 4, y: 7 },
+                        { x: 5, y: 7 },
+                        { x: 6, y: 7 },
+                        { x: 7, y: 7 }
+                    ].map(p => Piece.createPiece(p));
+
+                    const orderedPieces = getOrderedPieces8x8ForWhite(pieces);
+                    assert.equal(orderedPieces[0].length, 8);
+                });
+            });
+
+            describe('black pieces', () => {
+                const getOrderedPieces8x8ForBlack = getOrderedPieces8x8(true);
+
+                it('return all pieces in orderedPieces[0]', () => {
+                    const pieces = [
+                        { x: 0, y: 0 },
+                        { x: 1, y: 0 },
+                        { x: 2, y: 0 },
+                        { x: 3, y: 0 },
+                        { x: 4, y: 0 },
+                        { x: 5, y: 0 },
+                        { x: 6, y: 0 },
+                        { x: 7, y: 0 }
+                    ].map(p => Piece.createPiece(p));
+
+                    const orderedPieces = getOrderedPieces8x8ForBlack(pieces);
+                    assert.equal(orderedPieces[0].length, 8);
+                });
+
+                it('return all pieces in orderedPieces[7]', () => {
+                    const pieces = [
+                        { x: 0, y: 7 },
+                        { x: 1, y: 7 },
+                        { x: 2, y: 7 },
+                        { x: 3, y: 7 },
+                        { x: 4, y: 7 },
+                        { x: 5, y: 7 },
+                        { x: 6, y: 7 },
+                        { x: 7, y: 7 }
+                    ].map(p => Piece.createPiece(p));
+
+                    const orderedPieces = getOrderedPieces8x8ForBlack(pieces);
+                    assert.equal(orderedPieces[7].length, 8);
+                });
+            });
+        });
     });
 
     describe('haveSamePieceAndPosition', () => {

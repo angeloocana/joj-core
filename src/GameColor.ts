@@ -43,15 +43,15 @@ function getColorScore(color: IGameColor): IScore {
         preWinnersPoints: 0
     };
 
-    score = color.pieces.reduce((winners, piece) => {
+    score = color.pieces.reduce((newScore, piece) => {
         if (piece.position.y === color.endRow)
-            winners.winners += 1;
+            newScore.winners += 1;
         else
-            winners.preWinnersPoints += color.endRow === 0
+            newScore.preWinnersPoints += color.endRow === 0
                 ? color.startRow - piece.position.y
                 : piece.position.y;
 
-        return winners;
+        return newScore;
     }, score);
 
     score.won = score.winners === color.pieces.length;

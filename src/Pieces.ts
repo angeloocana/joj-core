@@ -23,21 +23,15 @@ const createBlackPieces = createPiecesCurried(true);
 
 const createWhitePieces = createPiecesCurried(false);
 
-function getPiecesOrdered(boardSizeY: number, pieces: IPiece[], isBlack: boolean): IPiece[][] {
-    const ordered: IPiece[][] = [];
-
-    pieces.forEach(piece => {
+function getOrderedPieces(boardSizeY: number, isBlack: boolean, pieces: IPiece[]): IPiece[][] {
+    return pieces.reduce((ordered: IPiece[][], piece) => {
         const y = Position.getYAsBlack(boardSizeY, piece.position.y, isBlack);
-        if (!ordered[y])
-            ordered[y] = [piece];
-        else
-            ordered[y].push(piece);
-    });
-
-    return ordered;
+        ordered[y] = (ordered[y] || []).concat(piece);
+        return ordered;
+    }, []);
 }
 
-const getPiecesOrderedCurried = R.curry(getPiecesOrdered);
+const getOrderedPiecesCurried = R.curry(getOrderedPieces);
 
 function haveSamePieceAndPosition(a: IPiece[], b: IPiece[]): boolean {
     for (let i = 0; i < a.length; i++) {
@@ -52,7 +46,7 @@ export {
     createBlackPieces,
     createWhitePieces,
     removePiece,
-    getPiecesOrdered,
-    getPiecesOrderedCurried,
+    getOrderedPieces,
+    getOrderedPiecesCurried,
     haveSamePieceAndPosition
 };

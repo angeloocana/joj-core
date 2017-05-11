@@ -1,14 +1,12 @@
-﻿// import { createPiece, getOtherPieces, getPiecesOrdered } from './index';
-
-describe('Piece', () => {
+﻿describe('Piece', () => {
 
     describe('createPiece', () => {
         it('do something');
     });
-    describe('getOtherPieces', () => {
+    describe('hasSamePosition', () => {
         it('do something');
     });
-    describe('getPiecesOrdered', () => {
+    describe('hasSamePieceAndPosition', () => {
         it('do something');
     });
 });

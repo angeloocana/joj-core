@@ -1,14 +1,13 @@
 'use strict';
 
-// import { createPiece, getOtherPieces, getPiecesOrdered } from './index';
 describe('Piece', function () {
     describe('createPiece', function () {
         it('do something');
     });
-    describe('getOtherPieces', function () {
+    describe('hasSamePosition', function () {
         it('do something');
     });
-    describe('getPiecesOrdered', function () {
+    describe('hasSamePieceAndPosition', function () {
         it('do something');
     });
 });
