@@ -411,6 +411,12 @@ describe('Board', function () {
             });
         });
     });
+    describe('getPositionsWhereCanIGo', function () {
+        it('return null for invalid from', function () {
+            var positions = _index.Board.getPositionsWhereCanIGo(_index.Board.defaultInitialBoard, null, true);
+            assert.notOk(positions);
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map
 //# sourceMappingURL=Board.test.js.map

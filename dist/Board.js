@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isWhiteHome = exports.isBlackHome = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isWhiteHome = exports.isBlackHome = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultInitialBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -52,6 +52,43 @@ function getBoardConf(boardSize) {
     };
 }
 var defaultBoardConf = getBoardConf(defaultBoardSize);
+// tslint:disable-next-line:variable-name
+var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
+    (0, _ptzLog2.default)('_getInitialBoard for', boardConf);
+    var board = [],
+        blackPieces = [],
+        whitePieces = [];
+    for (var x = 0; x < boardConf.size.x; x++) {
+        for (var y = 0; y < boardConf.size.y; y++) {
+            if (!board[x]) board[x] = [];
+            var position = { x: x, y: y };
+            if (y === 0) {
+                position.isBlack = true;
+                blackPieces.push({ position: position });
+            }
+            if (y === boardConf.endRow) {
+                position.isBlack = false;
+                whitePieces.push({ position: position });
+            }
+            board[x][y] = position;
+        }
+    }
+    return {
+        board: board,
+        blackPieces: blackPieces,
+        whitePieces: whitePieces
+    };
+});
+function getInitialBoard(boardConf) {
+    return _getInitialBoard(boardConf);
+}
+/**
+ * [ATENTION] USE IT ONLY FOR TESTS!
+ * Code for any board size =D
+ *
+ * Default 8x8 board in start position
+ */
+var defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0) return true;else return false;
@@ -139,36 +176,6 @@ function getY7Start0End(y, isBlack) {
         default:
             return null;
     }
-}
-// tslint:disable-next-line:variable-name
-var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
-    (0, _ptzLog2.default)('_getInitialBoard for', boardConf);
-    var board = [],
-        blackPieces = [],
-        whitePieces = [];
-    for (var x = 0; x < boardConf.size.x; x++) {
-        for (var y = 0; y < boardConf.size.y; y++) {
-            if (!board[x]) board[x] = [];
-            var position = { x: x, y: y };
-            if (y === 0) {
-                position.isBlack = true;
-                blackPieces.push({ position: position });
-            }
-            if (y === boardConf.endRow) {
-                position.isBlack = false;
-                whitePieces.push({ position: position });
-            }
-            board[x][y] = position;
-        }
-    }
-    return {
-        board: board,
-        blackPieces: blackPieces,
-        whitePieces: whitePieces
-    };
-});
-function getInitialBoard(boardConf) {
-    return _getInitialBoard(boardConf);
 }
 function getPosition(board, position) {
     try {
@@ -331,6 +338,7 @@ function isBlackHome(position) {
 }
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;
+exports.defaultInitialBoard = defaultInitialBoard;
 exports.getBoardAfterMove = getBoardAfterMove;
 exports.clean = clean;
 exports.getInitialBoard = getInitialBoard;

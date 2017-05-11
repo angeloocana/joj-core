@@ -278,5 +278,11 @@ describe('Board', () => {
             it('return null for invalid x', () => assert.notOk(Board.getY7Start0End(-1, true)));
         });
     });
+    describe('getPositionsWhereCanIGo', () => {
+        it('return null for invalid from', () => {
+            const positions = Board.getPositionsWhereCanIGo(Board.defaultInitialBoard, null, true);
+            assert.notOk(positions);
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map

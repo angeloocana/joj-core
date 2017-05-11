@@ -25,6 +25,42 @@ function getBoardConf(boardSize) {
     };
 }
 const defaultBoardConf = getBoardConf(defaultBoardSize);
+// tslint:disable-next-line:variable-name
+const _getInitialBoard = R.memoize((boardConf) => {
+    log('_getInitialBoard for', boardConf);
+    const board = [], blackPieces = [], whitePieces = [];
+    for (let x = 0; x < boardConf.size.x; x++) {
+        for (let y = 0; y < boardConf.size.y; y++) {
+            if (!board[x])
+                board[x] = [];
+            const position = { x, y };
+            if (y === 0) {
+                position.isBlack = true;
+                blackPieces.push({ position });
+            }
+            if (y === boardConf.endRow) {
+                position.isBlack = false;
+                whitePieces.push({ position });
+            }
+            board[x][y] = position;
+        }
+    }
+    return {
+        board,
+        blackPieces,
+        whitePieces
+    };
+});
+function getInitialBoard(boardConf) {
+    return _getInitialBoard(boardConf);
+}
+/**
+ * [ATENTION] USE IT ONLY FOR TESTS!
+ * Code for any board size =D
+ *
+ * Default 8x8 board in start position
+ */
+const defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -121,35 +157,6 @@ function getY7Start0End(y, isBlack) {
         default:
             return null;
     }
-}
-// tslint:disable-next-line:variable-name
-const _getInitialBoard = R.memoize((boardConf) => {
-    log('_getInitialBoard for', boardConf);
-    const board = [], blackPieces = [], whitePieces = [];
-    for (let x = 0; x < boardConf.size.x; x++) {
-        for (let y = 0; y < boardConf.size.y; y++) {
-            if (!board[x])
-                board[x] = [];
-            const position = { x, y };
-            if (y === 0) {
-                position.isBlack = true;
-                blackPieces.push({ position });
-            }
-            if (y === boardConf.endRow) {
-                position.isBlack = false;
-                whitePieces.push({ position });
-            }
-            board[x][y] = position;
-        }
-    }
-    return {
-        board,
-        blackPieces,
-        whitePieces
-    };
-});
-function getInitialBoard(boardConf) {
-    return _getInitialBoard(boardConf);
 }
 function getPosition(board, position) {
     try {
@@ -345,5 +352,5 @@ function isBlackHome(position) {
     if (position.y === 0)
         return true;
 }
-export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
+export { defaultBoardSize, defaultBoardConf, defaultInitialBoard, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
 //# sourceMappingURL=Board.js.map

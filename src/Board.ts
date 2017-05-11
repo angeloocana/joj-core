@@ -40,6 +40,53 @@ function getBoardConf(boardSize: IBoardSize): IBoardConf {
 
 const defaultBoardConf = getBoardConf(defaultBoardSize);
 
+// tslint:disable-next-line:variable-name
+const _getInitialBoard = R.memoize((boardConf: IBoardConf) => {
+    log('_getInitialBoard for', boardConf);
+    const board = [],
+        blackPieces: IPiece[] = [],
+        whitePieces: IPiece[] = [];
+
+    for (let x = 0; x < boardConf.size.x; x++) {
+        for (let y = 0; y < boardConf.size.y; y++) {
+            if (!board[x])
+                board[x] = [];
+
+            const position: IPosition = { x, y };
+
+            if (y === 0) {
+                position.isBlack = true;
+                blackPieces.push({ position });
+            }
+
+            if (y === boardConf.endRow) {
+                position.isBlack = false;
+                whitePieces.push({ position });
+            }
+
+            board[x][y] = position;
+        }
+    }
+
+    return {
+        board,
+        blackPieces,
+        whitePieces
+    };
+});
+
+function getInitialBoard(boardConf: IBoardConf): IGetInitialBoardResult {
+    return _getInitialBoard(boardConf);
+}
+
+/**
+ * [ATENTION] USE IT ONLY FOR TESTS!
+ * Code for any board size =D
+ *
+ * Default 8x8 board in start position
+ */
+const defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
+
 function isBackGroundBlack(x: number, y: number): boolean {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -140,45 +187,6 @@ function getY7Start0End(y: number, isBlack: boolean): number {
         default:
             return null;
     }
-}
-
-// tslint:disable-next-line:variable-name
-const _getInitialBoard = R.memoize((boardConf: IBoardConf) => {
-    log('_getInitialBoard for', boardConf);
-    const board = [],
-        blackPieces: IPiece[] = [],
-        whitePieces: IPiece[] = [];
-
-    for (let x = 0; x < boardConf.size.x; x++) {
-        for (let y = 0; y < boardConf.size.y; y++) {
-            if (!board[x])
-                board[x] = [];
-
-            const position: IPosition = { x, y };
-
-            if (y === 0) {
-                position.isBlack = true;
-                blackPieces.push({ position });
-            }
-
-            if (y === boardConf.endRow) {
-                position.isBlack = false;
-                whitePieces.push({ position });
-            }
-
-            board[x][y] = position;
-        }
-    }
-
-    return {
-        board,
-        blackPieces,
-        whitePieces
-    };
-});
-
-function getInitialBoard(boardConf: IBoardConf): IGetInitialBoardResult {
-    return _getInitialBoard(boardConf);
 }
 
 function getPosition(board: IBoard, position: IPosition): IPosition {
@@ -427,6 +435,7 @@ function isBlackHome(position: IPosition): boolean {
 export {
     defaultBoardSize,
     defaultBoardConf,
+    defaultInitialBoard,
     getBoardAfterMove,
     clean,
     getInitialBoard,
