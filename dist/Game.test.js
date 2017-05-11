@@ -80,6 +80,16 @@ describe('Game', function () {
             assert.notOk(_index.Game.isMyTurn(game, from));
         });
     });
+    describe('getPlayerTurn', function () {
+        it('return white player when white turn', function () {
+            assert.equal(_index.Game.getPlayerTurn(_gameData.initialGame), _gameData.initialGame.players.white);
+        });
+        it('return black player when black turn', function () {
+            var firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
+            var game = _index.Move.getGameAfterMove(_gameData.initialGame, firstMove);
+            assert.equal(_index.Game.getPlayerTurn(game), game.players.black);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map
 //# sourceMappingURL=Game.test.js.map
