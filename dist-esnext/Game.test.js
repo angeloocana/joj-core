@@ -76,5 +76,15 @@ describe('Game', () => {
             assert.equal(Game.getPlayerTurn(game), game.players.black);
         });
     });
+    describe('getColorTurn', () => {
+        it('return white color when white turn', () => {
+            assert.equal(Game.getColorTurn(initialGame), initialGame.white);
+        });
+        it('return black color when black turn', () => {
+            const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
+            const game = Move.getGameAfterMove(initialGame, firstMove);
+            assert.equal(Game.getColorTurn(game), game.black);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map

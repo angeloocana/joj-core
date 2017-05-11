@@ -90,6 +90,16 @@ describe('Game', function () {
             assert.equal(_index.Game.getPlayerTurn(game), game.players.black);
         });
     });
+    describe('getColorTurn', function () {
+        it('return white color when white turn', function () {
+            assert.equal(_index.Game.getColorTurn(_gameData.initialGame), _gameData.initialGame.white);
+        });
+        it('return black color when black turn', function () {
+            var firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
+            var game = _index.Move.getGameAfterMove(_gameData.initialGame, firstMove);
+            assert.equal(_index.Game.getColorTurn(game), game.black);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map
 //# sourceMappingURL=Game.test.js.map
