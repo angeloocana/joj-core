@@ -75,7 +75,7 @@ function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): 
 
     if (!backMove) {
         game.movements.push(getMoveXandY(move));
-        game.blackWon = Game.hasBlackWon(game);
+        game.ended = game.black.score.won || game.white.score.won;
     }
 
     return game;

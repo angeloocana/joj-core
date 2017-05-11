@@ -56,7 +56,7 @@ function getGameAfterMove(game, move, backMove = false) {
     game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
         game.movements.push(getMoveXandY(move));
-        game.blackWon = Game.hasBlackWon(game);
+        game.ended = game.black.score.won || game.white.score.won;
     }
     return game;
 }

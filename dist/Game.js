@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getGameWhereCanIGo = exports.hasBlackWon = exports.getPlayerTurn = exports.getColorTurn = exports.create = undefined;
+exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getGameWhereCanIGo = exports.getPlayerTurn = exports.getColorTurn = exports.create = undefined;
 
 var _ramda = require('ramda');
 
@@ -46,24 +46,12 @@ function create(args) {
 }
 function getCleanGameToSaveOnServer(_ref) {
     var ended = _ref.ended,
-        blackWon = _ref.blackWon,
         movements = _ref.movements;
 
     return {
         ended: ended,
-        movements: movements,
-        blackWon: blackWon
+        movements: movements
     };
-}
-/**
- * Takes a game and checks:
- *  - black won return true.
- *  - white won return false.
- *  - nobody won return undefined.
- */
-function hasBlackWon(game) {
-    if (GameColor.hasWon(game.black)) return true;else if (GameColor.hasWon(game.white)) return false;
-    return;
 }
 function isMyTurn(game, from) {
     if (game.ended) return false;
@@ -101,7 +89,6 @@ function setMovements() {
 exports.create = create;
 exports.getColorTurn = getColorTurn;
 exports.getPlayerTurn = getPlayerTurn;
-exports.hasBlackWon = hasBlackWon;
 exports.getGameWhereCanIGo = getGameWhereCanIGo;
 exports.isBlackTurn = isBlackTurn;
 exports.isWhiteTurn = isWhiteTurn;

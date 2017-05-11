@@ -30,27 +30,11 @@ function create(args: IGameArgs): IGame {
     return game;
 }
 
-function getCleanGameToSaveOnServer({ ended, blackWon, movements }: IGame): ICleanGame {
+function getCleanGameToSaveOnServer({ ended, movements }: IGame): ICleanGame {
     return {
         ended,
-        movements,
-        blackWon
+        movements
     };
-}
-
-/**
- * Takes a game and checks:
- *  - black won return true.
- *  - white won return false.
- *  - nobody won return undefined.
- */
-function hasBlackWon(game: IGame): boolean {
-    if (GameColor.hasWon(game.black))
-        return true;
-    else if (GameColor.hasWon(game.white))
-        return false;
-
-    return;
 }
 
 function isMyTurn(game: IGame, from: IPosition): boolean {
@@ -101,7 +85,6 @@ export {
     create,
     getColorTurn,
     getPlayerTurn,
-    hasBlackWon,
     getGameWhereCanIGo,
     isBlackTurn,
     isWhiteTurn,

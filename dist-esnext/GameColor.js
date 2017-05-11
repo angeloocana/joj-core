@@ -2,6 +2,7 @@ function create(boardConf, isBlack, pieces) {
     const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
     return {
         score: {
+            won: false,
             winners: 0,
             preWinnersPoints: 0
         },
@@ -28,12 +29,13 @@ function getPiecesAfterMove(pieces, move) {
         return piece;
     });
 }
-function getScore(color) {
-    const initialWinners = {
+function getColorScore(color) {
+    let score = {
+        won: false,
         winners: 0,
         preWinnersPoints: 0
     };
-    return color.pieces.reduce((winners, piece) => {
+    score = color.pieces.reduce((winners, piece) => {
         if (piece.position.y === color.endRow)
             winners.winners += 1;
         else
@@ -41,7 +43,9 @@ function getScore(color) {
                 ? color.startRow - piece.position.y
                 : piece.position.y;
         return winners;
-    }, initialWinners);
+    }, score);
+    score.won = score.winners === color.pieces.length;
+    return score;
 }
 /**
  * Takes a GameColor and move.
@@ -52,14 +56,8 @@ function getScore(color) {
  */
 function getColorAfterMove(color, move) {
     color.pieces = getPiecesAfterMove(color.pieces, move);
-    color.score = getScore(color);
+    color.score = getColorScore(color);
     return color;
 }
-/**
- * Checks if all pieces are winners
- */
-function hasWon(color) {
-    return color.score.winners === color.pieces.length;
-}
-export { create, getColorAfterMove, getScore, hasWon };
+export { create, getColorAfterMove, getColorScore };
 //# sourceMappingURL=GameColor.js.map

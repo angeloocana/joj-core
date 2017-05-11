@@ -13,6 +13,7 @@ export interface IGameColor {
 }
 
 export interface IScore {
+    won: boolean;
     winners: number;
     preWinnersPoints: number;
 }

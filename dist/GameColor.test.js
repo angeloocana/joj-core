@@ -27,6 +27,7 @@ describe('GameColor', function () {
             var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }]);
             var expectedColor = {
                 score: {
+                    won: false,
                     preWinnersPoints: 0,
                     winners: 0
                 },
@@ -46,6 +47,7 @@ describe('GameColor', function () {
             var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }]);
             var expectedColor = {
                 score: {
+                    won: false,
                     preWinnersPoints: 0,
                     winners: 0
                 },
@@ -65,46 +67,34 @@ describe('GameColor', function () {
         it('return 0', function () {
             var pieces = _index.Pieces.createWhitePieces([{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }]);
             var color = _index.GameColor.create(_index.Board.defaultBoardConf, true, pieces);
-            var score = _index.GameColor.getScore(color);
+            var score = _index.GameColor.getColorScore(color);
             assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
             assert.equal(score.winners, 0, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
         it('return 1', function () {
             var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 6 }, { x: 7, y: 7 }]);
             var color = _index.GameColor.create(_index.Board.defaultBoardConf, true, pieces);
-            var score = _index.GameColor.getScore(color);
+            var score = _index.GameColor.getColorScore(color);
             assert.equal(score.preWinnersPoints, 21, 'preWinnersPoints');
             assert.equal(score.winners, 1, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
         it('return 2', function () {
             var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 7 }, { x: 7, y: 7 }]);
             var color = _index.GameColor.create(_index.Board.defaultBoardConf, true, pieces);
-            var score = _index.GameColor.getScore(color);
+            var score = _index.GameColor.getColorScore(color);
             assert.equal(score.preWinnersPoints, 15, 'preWinnersPoints');
             assert.equal(score.winners, 2, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
         it('return 8', function () {
             var pieces = _index.Pieces.createBlackPieces([{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }]);
             var color = _index.GameColor.create(_index.Board.defaultBoardConf, true, pieces);
-            var score = _index.GameColor.getScore(color);
+            var score = _index.GameColor.getColorScore(color);
             assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
             assert.equal(score.winners, 8, 'winners');
-        });
-    });
-    describe('colorWin', function () {
-        var _Board$getInitialBoar = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-            blackPieces = _Board$getInitialBoar.blackPieces;
-
-        it('return false when new game', function () {
-            var color = _index.GameColor.create(_index.Board.defaultBoardConf, false, blackPieces);
-            var won = _index.GameColor.hasWon(color);
-            assert.notOk(won);
-        });
-        it('return true', function () {
-            var color = _index.GameColor.create(_index.Board.defaultBoardConf, false, blackPieces);
-            color.score.winners = 8;
-            var won = _index.GameColor.hasWon(color);
-            assert.ok(won);
+            assert.ok(score.won, 'won');
         });
     });
 });

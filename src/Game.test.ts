@@ -28,7 +28,6 @@ describe('Game', () => {
 
             assert.equal(game.ended, cleanGame.ended);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWon, cleanGame.blackWon);
         });
 
         it('map with movements', () => {
@@ -51,7 +50,6 @@ describe('Game', () => {
             assert.equal(game.ended, cleanGame.ended);
             assert.equal(cleanGame.movements.length, 1);
             assert.deepEqual(game.movements, cleanGame.movements);
-            assert.equal(game.blackWon, cleanGame.blackWon);
         });
     });
 });

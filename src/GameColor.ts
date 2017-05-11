@@ -7,6 +7,7 @@ function create(boardConf: IBoardConf, isBlack: boolean, pieces: IPiece[]): IGam
     const { startRow, endRow } = isBlack ? boardConf.black : boardConf.white;
     return {
         score: {
+            won: false,
             winners: 0,
             preWinnersPoints: 0
         },
@@ -35,13 +36,14 @@ function getPiecesAfterMove(pieces: IPiece[], move: IMove): IPiece[] {
     });
 }
 
-function getScore(color: IGameColor): IScore {
-    const initialWinners: IScore = {
+function getColorScore(color: IGameColor): IScore {
+    let score: IScore = {
+        won: false,
         winners: 0,
         preWinnersPoints: 0
     };
 
-    return color.pieces.reduce((winners, piece) => {
+    score = color.pieces.reduce((winners, piece) => {
         if (piece.position.y === color.endRow)
             winners.winners += 1;
         else
@@ -50,7 +52,11 @@ function getScore(color: IGameColor): IScore {
                 : piece.position.y;
 
         return winners;
-    }, initialWinners);
+    }, score);
+
+    score.won = score.winners === color.pieces.length;
+
+    return score;
 }
 
 /**
@@ -62,21 +68,13 @@ function getScore(color: IGameColor): IScore {
  */
 function getColorAfterMove(color: IGameColor, move: IMove): IGameColor {
     color.pieces = getPiecesAfterMove(color.pieces, move);
-    color.score = getScore(color);
+    color.score = getColorScore(color);
 
     return color;
-}
-
-/**
- * Checks if all pieces are winners
- */
-function hasWon(color: IGameColor): boolean {
-    return color.score.winners === color.pieces.length;
 }
 
 export {
     create,
     getColorAfterMove,
-    getScore,
-    hasWon
+    getColorScore
 };

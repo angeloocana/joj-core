@@ -31,6 +31,7 @@ describe('GameColor', () => {
 
             const expectedColor = {
                 score: {
+                    won: false,
                     preWinnersPoints: 0,
                     winners: 0
                 },
@@ -53,6 +54,7 @@ describe('GameColor', () => {
 
             const expectedColor = {
                 score: {
+                    won: false,
                     preWinnersPoints: 0,
                     winners: 0
                 },
@@ -77,10 +79,11 @@ describe('GameColor', () => {
                 { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }
             ]);
             const color = GameColor.create(Board.defaultBoardConf, true, pieces);
-            const score = GameColor.getScore(color);
+            const score = GameColor.getColorScore(color);
 
             assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
             assert.equal(score.winners, 0, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
 
         it('return 1', () => {
@@ -89,10 +92,11 @@ describe('GameColor', () => {
                 { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 6 }, { x: 7, y: 7 }
             ]);
             const color = GameColor.create(Board.defaultBoardConf, true, pieces);
-            const score = GameColor.getScore(color);
+            const score = GameColor.getColorScore(color);
 
             assert.equal(score.preWinnersPoints, 21, 'preWinnersPoints');
             assert.equal(score.winners, 1, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
 
         it('return 2', () => {
@@ -101,10 +105,11 @@ describe('GameColor', () => {
                 { x: 4, y: 4 }, { x: 5, y: 5 }, { x: 6, y: 7 }, { x: 7, y: 7 }
             ]);
             const color = GameColor.create(Board.defaultBoardConf, true, pieces);
-            const score = GameColor.getScore(color);
+            const score = GameColor.getColorScore(color);
 
             assert.equal(score.preWinnersPoints, 15, 'preWinnersPoints');
             assert.equal(score.winners, 2, 'winners');
+            assert.notOk(score.won, 'did NOT won');
         });
 
         it('return 8', () => {
@@ -113,30 +118,11 @@ describe('GameColor', () => {
                 { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }
             ]);
             const color = GameColor.create(Board.defaultBoardConf, true, pieces);
-            const score = GameColor.getScore(color);
+            const score = GameColor.getColorScore(color);
 
             assert.equal(score.preWinnersPoints, 0, 'preWinnersPoints');
             assert.equal(score.winners, 8, 'winners');
-        });
-    });
-
-    describe('colorWin', () => {
-        const { blackPieces } = Board.getInitialBoard(Board.defaultBoardConf);
-
-        it('return false when new game', () => {
-            const color = GameColor.create(Board.defaultBoardConf, false, blackPieces);
-
-            const won = GameColor.hasWon(color);
-            assert.notOk(won);
-        });
-
-        it('return true', () => {
-            const color = GameColor.create(Board.defaultBoardConf, false, blackPieces);
-
-            color.score.winners = 8;
-
-            const won = GameColor.hasWon(color);
-            assert.ok(won);
+            assert.ok(score.won, 'won');
         });
     });
 });

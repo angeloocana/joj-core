@@ -10,6 +10,7 @@ function create(boardConf, isBlack, pieces) {
 
     return {
         score: {
+            won: false,
             winners: 0,
             preWinnersPoints: 0
         },
@@ -35,15 +36,18 @@ function getPiecesAfterMove(pieces, move) {
         return piece;
     });
 }
-function getScore(color) {
-    var initialWinners = {
+function getColorScore(color) {
+    var score = {
+        won: false,
         winners: 0,
         preWinnersPoints: 0
     };
-    return color.pieces.reduce(function (winners, piece) {
+    score = color.pieces.reduce(function (winners, piece) {
         if (piece.position.y === color.endRow) winners.winners += 1;else winners.preWinnersPoints += color.endRow === 0 ? color.startRow - piece.position.y : piece.position.y;
         return winners;
-    }, initialWinners);
+    }, score);
+    score.won = score.winners === color.pieces.length;
+    return score;
 }
 /**
  * Takes a GameColor and move.
@@ -54,18 +58,11 @@ function getScore(color) {
  */
 function getColorAfterMove(color, move) {
     color.pieces = getPiecesAfterMove(color.pieces, move);
-    color.score = getScore(color);
+    color.score = getColorScore(color);
     return color;
-}
-/**
- * Checks if all pieces are winners
- */
-function hasWon(color) {
-    return color.score.winners === color.pieces.length;
 }
 exports.create = create;
 exports.getColorAfterMove = getColorAfterMove;
-exports.getScore = getScore;
-exports.hasWon = hasWon;
+exports.getColorScore = getColorScore;
 //# sourceMappingURL=GameColor.js.map
 //# sourceMappingURL=GameColor.js.map
