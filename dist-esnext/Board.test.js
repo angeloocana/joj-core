@@ -91,12 +91,17 @@ describe('Board', () => {
         });
     });
     describe('getPosition', () => {
-        it('getPosition', () => {
+        it('valid position', () => {
             const { board } = Board.getInitialBoard(Board.defaultBoardConf);
             const position = { x: 2, y: 3 };
             const actual = Board.getPosition(board, position);
             const expected = { x: 2, y: 3 };
             assertPosition(actual, expected);
+        });
+        it('invalid position', () => {
+            const { board } = Board.getInitialBoard(Board.defaultBoardConf);
+            const position = { x: -2, y: -3 };
+            assert.throws(() => Board.getPosition(board, position));
         });
     });
     describe('getNearPositions', () => {

@@ -108,7 +108,7 @@ describe('Board', function () {
         });
     });
     describe('getPosition', function () {
-        it('getPosition', function () {
+        it('valid position', function () {
             var _Board$getInitialBoar3 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
                 board = _Board$getInitialBoar3.board;
 
@@ -117,11 +117,20 @@ describe('Board', function () {
             var expected = { x: 2, y: 3 };
             assertPosition(actual, expected);
         });
+        it('invalid position', function () {
+            var _Board$getInitialBoar4 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar4.board;
+
+            var position = { x: -2, y: -3 };
+            assert.throws(function () {
+                return _index.Board.getPosition(board, position);
+            });
+        });
     });
     describe('getNearPositions', function () {
         it('onlyEmpty=false should return only filled near positions', function () {
-            var _Board$getInitialBoar4 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar4.board;
+            var _Board$getInitialBoar5 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar5.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = false;
@@ -130,8 +139,8 @@ describe('Board', function () {
             assertPositions(actual, expected);
         });
         it('onlyEmpty=true should return all empty near positions', function () {
-            var _Board$getInitialBoar5 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar5.board;
+            var _Board$getInitialBoar6 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar6.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = true;
@@ -141,8 +150,8 @@ describe('Board', function () {
             assertPositions(actual, expected);
         });
         it('onlyEmpty=undefined should return all near positions', function () {
-            var _Board$getInitialBoar6 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar6.board;
+            var _Board$getInitialBoar7 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar7.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = undefined;
@@ -153,8 +162,8 @@ describe('Board', function () {
     });
     describe('getJumpPosition', function () {
         it('jumping up and rigth', function () {
-            var _Board$getInitialBoar7 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar7.board;
+            var _Board$getInitialBoar8 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar8.board;
 
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -163,8 +172,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping up and left', function () {
-            var _Board$getInitialBoar8 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar8.board;
+            var _Board$getInitialBoar9 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar9.board;
 
             var from = { x: 2, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -173,8 +182,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping up', function () {
-            var _Board$getInitialBoar9 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar9.board;
+            var _Board$getInitialBoar10 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar10.board;
 
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -183,8 +192,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down and rigth', function () {
-            var _Board$getInitialBoar10 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar10.board;
+            var _Board$getInitialBoar11 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar11.board;
 
             var from = { x: 0, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -193,8 +202,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down and left', function () {
-            var _Board$getInitialBoar11 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar11.board;
+            var _Board$getInitialBoar12 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar12.board;
 
             var from = { x: 2, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -203,8 +212,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down', function () {
-            var _Board$getInitialBoar12 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar12.board;
+            var _Board$getInitialBoar13 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar13.board;
 
             var from = { x: 1, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -213,8 +222,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('should return undefined because position is not empty', function () {
-            var _Board$getInitialBoar13 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar13.board;
+            var _Board$getInitialBoar14 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar14.board;
 
             var from = { x: 3, y: 0 };
             var toJumpPosition = { x: 4, y: 0 };
@@ -222,8 +231,8 @@ describe('Board', function () {
         });
     });
     it('printUnicode', function printUnicodeTest() {
-        var _Board$getInitialBoar14 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-            board = _Board$getInitialBoar14.board;
+        var _Board$getInitialBoar15 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+            board = _Board$getInitialBoar15.board;
 
         var actual = _index.Board.printUnicode(board);
         assert.equal(actual, _boardData.unicodeStartBoard);
