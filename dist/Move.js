@@ -46,6 +46,7 @@ function getMoveXandY(move) {
     };
 }
 function canMove(game, move) {
+    if (!Game.isMyTurn(game, move.from)) return false;
     var positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, Game.isBlackTurn(game)).positions;
     return positionsWhereCanIGo.findIndex(function (position) {
         return position.x === move.to.x && position.y === move.to.y;
@@ -75,13 +76,16 @@ function getBoardAfterMove(board, move) {
 function getGameAfterMove(game, move) {
     var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
+    // Fix to be immutable
+    // I dont know if it is the best way
+    game = Object.assign({}, game);
     game.board = Board.getCleanBoard(game.board);
     if (!backMove && !canMove(game, move)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
     game.board = getBoardAfterMove(game.board, move);
     game.black = GameColor.getColorAfterMove(game.black, move);
     game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
-        game.movements.push(getMoveXandY(move));
+        game.movements = game.movements.concat(getMoveXandY(move));
         game.ended = game.black.score.won || game.white.score.won;
     }
     return game;

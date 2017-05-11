@@ -18,7 +18,7 @@ describe('Move', () => {
                 white: { name: 'Angelo', foto: 'img/black_user.png' },
                 black: { name: 'Gabi', foto: 'img/white_user.png' }
             };
-            let game = Game.create({ players });
+            let game = Game.createGame({ players });
             const gameBeforeLastMove = Move.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
             game = Move.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
             game = Move.getGameBeforeLastMove(game);
@@ -29,7 +29,7 @@ describe('Move', () => {
     describe('getGameAfterMove', () => {
         var game;
         beforeEach(() => {
-            game = Game.create({
+            game = Game.createGame({
                 players: {
                     white: { name: 'Angelo', foto: 'img/black_user.png' },
                     black: { name: 'Gabi', foto: 'img/white_user.png' }

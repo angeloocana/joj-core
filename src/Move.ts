@@ -29,6 +29,9 @@ function getMoveXandY(move: IMove): IMove {
 }
 
 function canMove(game: IGame, move: IMove): boolean {
+    if (!Game.isMyTurn(game, move.from))
+        return false;
+
     const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, Game.isBlackTurn(game)).positions;
     return positionsWhereCanIGo.findIndex(position =>
         position.x === move.to.x
@@ -37,7 +40,6 @@ function canMove(game: IGame, move: IMove): boolean {
 }
 
 function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
-
     move.to.lastMove = true;
     move.from.lastMove = true;
 
@@ -63,6 +65,10 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
  *  - .movements (add new move)
  */
 function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): IGame {
+    // Fix to be immutable
+    // I dont know if it is the best way
+    game = Object.assign({}, game);
+
     game.board = Board.getCleanBoard(game.board);
 
     if (!backMove && !canMove(game, move))
@@ -74,7 +80,7 @@ function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): 
     game.white = GameColor.getColorAfterMove(game.white, move);
 
     if (!backMove) {
-        game.movements.push(getMoveXandY(move));
+        game.movements = game.movements.concat(getMoveXandY(move));
         game.ended = game.black.score.won || game.white.score.won;
     }
 

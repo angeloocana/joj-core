@@ -3,7 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getGameWhereCanIGo = exports.getPlayerTurn = exports.getColorTurn = exports.create = undefined;
+exports.getCleanGameToSaveOnServer = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.getColorTurn = exports.createGame = undefined;
+
+var _ptzLog = require('ptz-log');
+
+var _ptzLog2 = _interopRequireDefault(_ptzLog);
 
 var _ramda = require('ramda');
 
@@ -25,7 +29,9 @@ var Position = _interopRequireWildcard(_Position);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function create(args) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function createGame(args) {
     var boardConf = args.boardConf || Board.defaultBoardConf;
 
     var _Board$getInitialBoar = Board.getInitialBoard(boardConf),
@@ -53,48 +59,32 @@ function getCleanGameToSaveOnServer(_ref) {
         movements: movements
     };
 }
+var isWhiteTurn = function isWhiteTurn(game) {
+    return game.movements.length % 2 === 0;
+};
+var isBlackTurn = (0, _ramda.compose)(_ramda.not, isWhiteTurn);
+/**
+ * Returns true if from piece can be played.
+ */
 function isMyTurn(game, from) {
     if (game.ended) return false;
-    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
+    from = Board.getPosition(game.board, from);
+    var isMyTurn = isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
+    if (isMyTurn === false) (0, _ptzLog2.default)('from: ', from, 'isWhiteTurn', isWhiteTurn(game), ' movements: ', game.movements);
+    return isMyTurn;
 }
-function getGameWhereCanIGo(game, from) {
-    game.board = Board.getCleanBoard(game.board);
-    if (!isMyTurn(game, from)) return game;
-    game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
-}
-function isWhiteTurn(game) {
-    return game.movements.length % 2 === 0;
-}
-var isBlackTurn = (0, _ramda.compose)(_ramda.not, isWhiteTurn);
-function getColorTurn(game) {
+var getColorTurn = function getColorTurn(game) {
     return isWhiteTurn(game) ? game.white : game.black;
-}
-function getPlayerTurn(game) {
+};
+var getPlayerTurn = function getPlayerTurn(game) {
     return isWhiteTurn(game) ? game.players.white : game.players.black;
-}
-function setPlayers(players) {
-    // Validate Players
-    this.players = players;
-}
-function setMovements() {
-    var movements = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var needToValidateMovements = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-    // Validate Movements
-    // if(needToValidateMovements)
-    this.movements = movements;
-    // This must be called in another place
-    // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
-}
-exports.create = create;
+};
+exports.createGame = createGame;
 exports.getColorTurn = getColorTurn;
 exports.getPlayerTurn = getPlayerTurn;
-exports.getGameWhereCanIGo = getGameWhereCanIGo;
 exports.isBlackTurn = isBlackTurn;
 exports.isWhiteTurn = isWhiteTurn;
 exports.isMyTurn = isMyTurn;
-exports.setPlayers = setPlayers;
-exports.setMovements = setMovements;
 exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map

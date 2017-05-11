@@ -225,7 +225,7 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
         }
     });
 }
-function setWhereCanIGo(board, from, blackPiece) {
+function getBoardWhereCanIGo(board, from, blackPiece) {
     const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
     return mapBoard(board, position => {
         position.iCanGoHere = Positions.contains(positions, position);
@@ -258,5 +258,5 @@ function printUnicode(board) {
     }
     return txt;
 }
-export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printUnicode, whereCanIJump, setPieceOnBoard, setPosition, setWhereCanIGo, removePieceOnBoard, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printUnicode, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition };
 //# sourceMappingURL=Board.js.map

@@ -1,9 +1,10 @@
+import log from 'ptz-log';
 import { compose, not } from 'ramda';
 import * as Board from './Board';
 import * as GameColor from './GameColor';
 import * as Players from './Players';
 import * as Position from './Position';
-function create(args) {
+function createGame(args) {
     const boardConf = args.boardConf || Board.defaultBoardConf;
     const { board, blackPieces, whitePieces } = Board.getInitialBoard(boardConf);
     const game = {
@@ -23,37 +24,21 @@ function getCleanGameToSaveOnServer({ ended, movements }) {
         movements
     };
 }
+const isWhiteTurn = (game) => game.movements.length % 2 === 0;
+const isBlackTurn = compose(not, isWhiteTurn);
+/**
+ * Returns true if from piece can be played.
+ */
 function isMyTurn(game, from) {
     if (game.ended)
         return false;
-    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
+    from = Board.getPosition(game.board, from);
+    const isMyTurn = isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
+    if (isMyTurn === false)
+        log('from: ', from, 'isWhiteTurn', isWhiteTurn(game), ' movements: ', game.movements);
+    return isMyTurn;
 }
-function getGameWhereCanIGo(game, from) {
-    game.board = Board.getCleanBoard(game.board);
-    if (!isMyTurn(game, from))
-        return game;
-    game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
-}
-function isWhiteTurn(game) {
-    return game.movements.length % 2 === 0;
-}
-const isBlackTurn = compose(not, isWhiteTurn);
-function getColorTurn(game) {
-    return isWhiteTurn(game) ? game.white : game.black;
-}
-function getPlayerTurn(game) {
-    return isWhiteTurn(game) ? game.players.white : game.players.black;
-}
-function setPlayers(players) {
-    // Validate Players
-    this.players = players;
-}
-function setMovements(movements = [], needToValidateMovements = true) {
-    // Validate Movements
-    // if(needToValidateMovements)
-    this.movements = movements;
-    // This must be called in another place
-    // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
-}
-export { create, getColorTurn, getPlayerTurn, getGameWhereCanIGo, isBlackTurn, isWhiteTurn, isMyTurn, setPlayers, setMovements, getCleanGameToSaveOnServer };
+const getColorTurn = (game) => isWhiteTurn(game) ? game.white : game.black;
+const getPlayerTurn = (game) => isWhiteTurn(game) ? game.players.white : game.players.black;
+export { createGame, getColorTurn, getPlayerTurn, isBlackTurn, isWhiteTurn, isMyTurn, getCleanGameToSaveOnServer };
 //# sourceMappingURL=Game.js.map

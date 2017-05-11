@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.removePieceOnBoard = exports.setWhereCanIGo = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printUnicode = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printUnicode = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -229,7 +229,7 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
         }
     });
 }
-function setWhereCanIGo(board, from, blackPiece) {
+function getBoardWhereCanIGo(board, from, blackPiece) {
     var positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
     return mapBoard(board, function (position) {
         position.iCanGoHere = Positions.contains(positions, position);
@@ -256,6 +256,7 @@ exports.defaultBoardConf = defaultBoardConf;
 exports.getCleanBoard = getCleanBoard;
 exports.getInitialBoard = getInitialBoard;
 exports.getBoardConf = getBoardConf;
+exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
 exports.getColorStartEndRow = getColorStartEndRow;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
@@ -265,7 +266,6 @@ exports.printUnicode = printUnicode;
 exports.whereCanIJump = whereCanIJump;
 exports.setPieceOnBoard = setPieceOnBoard;
 exports.setPosition = setPosition;
-exports.setWhereCanIGo = setWhereCanIGo;
 exports.removePieceOnBoard = removePieceOnBoard;
 exports.hasPosition = hasPosition;
 //# sourceMappingURL=Board.js.map

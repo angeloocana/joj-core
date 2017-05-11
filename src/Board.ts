@@ -296,7 +296,7 @@ function whereCanIJump(board: IBoard, jumpfrom: IPosition, positions, orderedPos
     });
 }
 
-function setWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean): IBoard {
+function getBoardWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean): IBoard {
     const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
 
     return mapBoard(board, position => {
@@ -340,6 +340,7 @@ export {
     getCleanBoard,
     getInitialBoard,
     getBoardConf,
+    getBoardWhereCanIGo,
     getColorStartEndRow,
     getJumpPosition,
     getNearPositions,
@@ -349,7 +350,6 @@ export {
     whereCanIJump,
     setPieceOnBoard,
     setPosition,
-    setWhereCanIGo,
     removePieceOnBoard,
     hasPosition
 };
