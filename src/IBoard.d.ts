@@ -25,3 +25,5 @@ export interface IGetInitialBoardResult {
     whitePieces: IPiece[];
     blackPieces: IPiece[];
 }
+
+export type IMapBoardFunc = (position: IPosition) => IPosition;

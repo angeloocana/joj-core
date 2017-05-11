@@ -2,10 +2,28 @@ import R from 'ramda';
 import * as Position from './Position';
 import * as Positions from './Positions';
 import log from 'ptz-log';
+/**
+ * Default 8x8 board size
+ */
 const defaultBoardSize = {
     x: 8,
     y: 8
 };
+/**
+ * Check if position exists on board
+ */
+function hasPosition(board, position) {
+    if (!position)
+        return false;
+    if (position.x < 0 || board.length <= position.x)
+        return false;
+    if (position.y < 0 || board[position.x].length <= position.y)
+        return false;
+    return true;
+}
+/**
+ * Map some function in all board positions and return a new board
+ */
 function mapBoard(board, func) {
     return board.map(col => col.map(position => func(position)));
 }
@@ -339,22 +357,5 @@ function getBoardAfterMove(board, move) {
     }
     return board;
 }
-function hasPosition(board, position) {
-    if (!position)
-        return false;
-    if (position.x < 0 || board.length <= position.x)
-        return false;
-    if (position.y < 0 || board[position.x].length <= position.y)
-        return false;
-    return true;
-}
-function isWhiteHome(position, boardConf) {
-    if (position.y === boardConf.size.y - 1)
-        return true;
-}
-function isBlackHome(position) {
-    if (position.y === 0)
-        return true;
-}
-export { defaultBoardSize, defaultBoardConf, defaultInitialBoard, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, isBlackHome, isWhiteHome, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
+export { defaultBoardSize, defaultBoardConf, defaultInitialBoard, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
 //# sourceMappingURL=Board.js.map

@@ -4,18 +4,43 @@ import * as Positions from './Positions';
 
 import log from 'ptz-log';
 
-import { IBoard, IBoardConf, IBoardSize, IGetInitialBoardResult, IStartEndRow } from './IBoard';
+import {
+    IBoard, IBoardConf,
+    IBoardSize, IGetInitialBoardResult,
+    IMapBoardFunc, IStartEndRow
+} from './IBoard';
 import { IMove } from './IMove';
 import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
 import { IPositionsWhereCanIGo } from './IPositionsWhereCanIGo';
 
+/**
+ * Default 8x8 board size
+ */
 const defaultBoardSize: IBoardSize = {
     x: 8,
     y: 8
 };
 
-type IMapBoardFunc = (position: IPosition) => IPosition;
+/**
+ * Check if position exists on board
+ */
+function hasPosition(board: IBoard, position: IPosition): boolean {
+    if (!position)
+        return false;
+
+    if (position.x < 0 || board.length <= position.x)
+        return false;
+
+    if (position.y < 0 || board[position.x].length <= position.y)
+        return false;
+
+    return true;
+}
+
+/**
+ * Map some function in all board positions and return a new board
+ */
 function mapBoard(board: IBoard, func: IMapBoardFunc): IBoard {
     return board.map(col => col.map(position => func(position)));
 }
@@ -416,29 +441,6 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
     return board;
 }
 
-function hasPosition(board: IBoard, position: IPosition): boolean {
-    if (!position)
-        return false;
-
-    if (position.x < 0 || board.length <= position.x)
-        return false;
-
-    if (position.y < 0 || board[position.x].length <= position.y)
-        return false;
-
-    return true;
-}
-
-function isWhiteHome(position: IPosition, boardConf: IBoardConf): boolean {
-    if (position.y === boardConf.size.y - 1)
-        return true;
-}
-
-function isBlackHome(position: IPosition): boolean {
-    if (position.y === 0)
-        return true;
-}
-
 export {
     defaultBoardSize,
     defaultBoardConf,
@@ -456,8 +458,6 @@ export {
     getY0Start7End,
     getY7Start0End,
     isBackGroundBlack,
-    isBlackHome,
-    isWhiteHome,
     printUnicode,
     whereCanIJump,
     setPosition,

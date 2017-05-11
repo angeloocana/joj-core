@@ -10,7 +10,7 @@
     "pretest": "npm-run-all --parallel js lint",
     "mocha": "mocha ./dist/*.js ./dist/**/*.js --require babel-polyfill",
     "test": "nyc npm run mocha && nyc report --reporter=html --reporter=text-lcov > coverage.lcov && f() { EXIT=0; codecov --token=ceb536c1-556e-43dc-99b7-8d41c7b52413 || exit $EXIT; }; f",
-    "test:cover": "npm run test && opn ./coverage/lcov-report/index.html",
+    "test:cover": "npm run test && opn ./coverage/index.html",
     "predebug": "npm run pretest",
     "debug": "node --nolazy --debug-brk=5858 dist/index.js"
   },

@@ -2,16 +2,6 @@ import R from 'ramda';
 
 import { IPosition } from './IPosition';
 
-function setPiece(position: IPosition, isBlack: boolean): IPosition {
-    position.isBlack = isBlack;
-    return position;
-}
-
-function removePiece(position: IPosition): IPosition {
-    delete position.isBlack;
-    return position;
-}
-
 const hasBlackPiece = R.propEq('isBlack', true);
 const hasWhitePiece = R.propEq('isBlack', false);
 const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
@@ -26,6 +16,19 @@ function hasSamePosition(p1: IPosition, p2: IPosition): boolean {
 }
 
 const hasSamePieceAndPosition = R.allPass([hasSamePiece, hasSamePosition]);
+
+function setPiece(position: IPosition, isBlack: boolean): IPosition {
+    position.isBlack = isBlack;
+    return position;
+}
+
+/**
+ * Deletes .isBlack prop from position
+ */
+function removePiece(position: IPosition): IPosition {
+    delete position.isBlack;
+    return position;
+}
 
 export {
     hasSamePiece,

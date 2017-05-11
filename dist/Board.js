@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isWhiteHome = exports.isBlackHome = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultInitialBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultInitialBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -25,10 +25,25 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Default 8x8 board size
+ */
 var defaultBoardSize = {
     x: 8,
     y: 8
 };
+/**
+ * Check if position exists on board
+ */
+function hasPosition(board, position) {
+    if (!position) return false;
+    if (position.x < 0 || board.length <= position.x) return false;
+    if (position.y < 0 || board[position.x].length <= position.y) return false;
+    return true;
+}
+/**
+ * Map some function in all board positions and return a new board
+ */
 function mapBoard(board, func) {
     return board.map(function (col) {
         return col.map(function (position) {
@@ -326,18 +341,6 @@ function getBoardAfterMove(board, move) {
     }
     return board;
 }
-function hasPosition(board, position) {
-    if (!position) return false;
-    if (position.x < 0 || board.length <= position.x) return false;
-    if (position.y < 0 || board[position.x].length <= position.y) return false;
-    return true;
-}
-function isWhiteHome(position, boardConf) {
-    if (position.y === boardConf.size.y - 1) return true;
-}
-function isBlackHome(position) {
-    if (position.y === 0) return true;
-}
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;
 exports.defaultInitialBoard = defaultInitialBoard;
@@ -354,8 +357,6 @@ exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
 exports.getY0Start7End = getY0Start7End;
 exports.getY7Start0End = getY7Start0End;
 exports.isBackGroundBlack = isBackGroundBlack;
-exports.isBlackHome = isBlackHome;
-exports.isWhiteHome = isWhiteHome;
 exports.printUnicode = printUnicode;
 exports.whereCanIJump = whereCanIJump;
 exports.setPosition = setPosition;
