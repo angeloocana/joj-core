@@ -56,6 +56,15 @@ describe('Game', () => {
             const from = { x: 5, y: 0 };
             assert.notOk(Game.isMyTurn(initialGame, from));
         });
+        it('returns false for ended game', () => {
+            const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
+            const game = Move.getGameAfterMove(initialGame, firstMove);
+            const from = { x: 5, y: 0 };
+            // I dont know if it is the best way
+            // Are getGameAfterMove supposed to calculate if game is ended???
+            game.ended = true;
+            assert.notOk(Game.isMyTurn(game, from));
+        });
     });
 });
 //# sourceMappingURL=Game.test.js.map
