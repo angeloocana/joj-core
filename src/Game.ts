@@ -1,6 +1,7 @@
 import { compose, not } from 'ramda';
 import * as Board from './Board';
 import * as GameColor from './GameColor';
+import * as Move from './Move';
 import * as Player from './Player';
 import * as Players from './Players';
 import * as Position from './Position';
@@ -134,23 +135,16 @@ function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): 
     return game;
 }
 
-function getBackMove(move: IMove): IMove {
-    return {
-        from: move.to,
-        to: move.from
-    };
-}
-
 function getGameBeforeLastMove(game: IGame): IGame {
     let lastMove = game.movements.pop();
 
     if (lastMove)
-        game = getGameAfterMove(game, getBackMove(lastMove), true);
+        game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
 
     if (Player.isComputer(getPlayerTurn(game))) {
         lastMove = game.movements.pop();
         if (lastMove) {
-            game = getGameAfterMove(game, getBackMove(lastMove), true);
+            game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
         }
     }
 
@@ -160,7 +154,6 @@ function getGameBeforeLastMove(game: IGame): IGame {
 export {
     canMove,
     create,
-    getBackMove,
     getColorTurn,
     getPlayerTurn,
     getWinner,

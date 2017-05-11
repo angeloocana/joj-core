@@ -1,6 +1,7 @@
 import { compose, not } from 'ramda';
 import * as Board from './Board';
 import * as GameColor from './GameColor';
+import * as Move from './Move';
 import * as Player from './Player';
 import * as Players from './Players';
 import * as Position from './Position';
@@ -93,23 +94,17 @@ function getGameAfterMove(game, move, backMove = false) {
     }
     return game;
 }
-function getBackMove(move) {
-    return {
-        from: move.to,
-        to: move.from
-    };
-}
 function getGameBeforeLastMove(game) {
     let lastMove = game.movements.pop();
     if (lastMove)
-        game = getGameAfterMove(game, getBackMove(lastMove), true);
+        game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
     if (Player.isComputer(getPlayerTurn(game))) {
         lastMove = game.movements.pop();
         if (lastMove) {
-            game = getGameAfterMove(game, getBackMove(lastMove), true);
+            game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
         }
     }
     return game;
 }
-export { canMove, create, getBackMove, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, getGameAfterMove, getGameBeforeLastMove, setPlayers, setMovements, getCleanGameToSaveOnServer };
+export { canMove, create, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, getGameAfterMove, getGameBeforeLastMove, setPlayers, setMovements, getCleanGameToSaveOnServer };
 //# sourceMappingURL=Game.js.map

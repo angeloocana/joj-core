@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.getBackMove = exports.create = exports.canMove = undefined;
+exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.create = exports.canMove = undefined;
 
 var _ramda = require('ramda');
 
@@ -14,6 +14,10 @@ var Board = _interopRequireWildcard(_Board);
 var _GameColor = require('./GameColor');
 
 var GameColor = _interopRequireWildcard(_GameColor);
+
+var _Move = require('./Move');
+
+var Move = _interopRequireWildcard(_Move);
 
 var _Player = require('./Player');
 
@@ -121,26 +125,19 @@ function getGameAfterMove(game, move) {
     }
     return game;
 }
-function getBackMove(move) {
-    return {
-        from: move.to,
-        to: move.from
-    };
-}
 function getGameBeforeLastMove(game) {
     var lastMove = game.movements.pop();
-    if (lastMove) game = getGameAfterMove(game, getBackMove(lastMove), true);
+    if (lastMove) game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
     if (Player.isComputer(getPlayerTurn(game))) {
         lastMove = game.movements.pop();
         if (lastMove) {
-            game = getGameAfterMove(game, getBackMove(lastMove), true);
+            game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
         }
     }
     return game;
 }
 exports.canMove = canMove;
 exports.create = create;
-exports.getBackMove = getBackMove;
 exports.getColorTurn = getColorTurn;
 exports.getPlayerTurn = getPlayerTurn;
 exports.getWinner = getWinner;

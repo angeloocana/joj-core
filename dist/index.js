@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Positions = exports.Position = exports.Players = exports.Player = exports.Pieces = exports.Piece = exports.GameColor = exports.Game = exports.Board = undefined;
+exports.Positions = exports.Position = exports.Players = exports.Player = exports.Pieces = exports.Piece = exports.Move = exports.GameColor = exports.Game = exports.Board = undefined;
 
 var _Board = require('./Board');
 
@@ -16,6 +16,10 @@ var Game = _interopRequireWildcard(_Game);
 var _GameColor = require('./GameColor');
 
 var GameColor = _interopRequireWildcard(_GameColor);
+
+var _Move = require('./Move');
+
+var Move = _interopRequireWildcard(_Move);
 
 var _Piece = require('./Piece');
 
@@ -46,6 +50,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 exports.Board = Board;
 exports.Game = Game;
 exports.GameColor = GameColor;
+exports.Move = Move;
 exports.Piece = Piece;
 exports.Pieces = Pieces;
 exports.Player = Player;
