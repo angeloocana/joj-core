@@ -1,5 +1,4 @@
 ﻿import * as assert from 'ptz-assert';
-import log from 'ptz-log';
 import {
     Board,
     GameColor,
@@ -123,7 +122,6 @@ describe('GameColor', () => {
 
     describe('colorWin', () => {
         const { blackPieces } = Board.getInitialBoard(Board.defaultBoardConf);
-        log('blackPieces', blackPieces);
 
         it('return false when new game', () => {
             const color = GameColor.create(Board.defaultBoardConf, false, blackPieces);

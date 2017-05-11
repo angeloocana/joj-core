@@ -45,6 +45,7 @@ function getBoardConf(boardSize) {
 const defaultBoardConf = getBoardConf(defaultBoardSize);
 // tslint:disable-next-line:variable-name
 const _getInitialBoard = R.memoize((boardConf) => {
+    // Do NOT remove the log below. We use it to check if cache works and this code run once.
     log('_getInitialBoard for', boardConf);
     const board = [], blackPieces = [], whitePieces = [];
     for (let x = 0; x < boardConf.size.x; x++) {
@@ -72,103 +73,6 @@ const _getInitialBoard = R.memoize((boardConf) => {
 function getInitialBoard(boardConf) {
     return _getInitialBoard(boardConf);
 }
-function isBackGroundBlack(x, y) {
-    if (x % 2 === 0) {
-        if (y % 2 === 0)
-            return true;
-        else
-            return false;
-    }
-    else {
-        if (y % 2 === 0)
-            return false;
-        else
-            return true;
-    }
-}
-/**
- * Returns the index to store the position in orderedPositions
- *
- * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
- *
- * The goal is to fill the corners first
- */
-function getToSearchOrder(x) {
-    switch (x) {
-        case 0:
-            return 0;
-        case 1:
-            return 2;
-        case 2:
-            return 4;
-        case 3:
-            return 6;
-        case 4:
-            return 7;
-        case 5:
-            return 5;
-        case 6:
-            return 3;
-        case 7:
-            return 1;
-        default:
-            return null;
-    }
-}
-/**
- * Get Y starting from 0 and ending on 7 for black and white pieces
- */
-function getY0Start7End(y, isBlack) {
-    if (isBlack)
-        return y;
-    switch (y) {
-        case 0:
-            return 7;
-        case 1:
-            return 6;
-        case 2:
-            return 5;
-        case 3:
-            return 4;
-        case 4:
-            return 3;
-        case 5:
-            return 2;
-        case 6:
-            return 1;
-        case 7:
-            return 0;
-        default:
-            return null;
-    }
-}
-/**
- * Get Y starting from 7 and ending on 0 for black and white pieces
- */
-function getY7Start0End(y, isBlack) {
-    if (!isBlack)
-        return y;
-    switch (y) {
-        case 0:
-            return 7;
-        case 1:
-            return 6;
-        case 2:
-            return 5;
-        case 3:
-            return 4;
-        case 4:
-            return 3;
-        case 5:
-            return 2;
-        case 6:
-            return 1;
-        case 7:
-            return 0;
-        default:
-            return null;
-    }
-}
 function getPosition(board, position) {
     try {
         return board[position.x][position.y];
@@ -194,13 +98,29 @@ function setPieceOnBoard(board, position, isBlack) {
 function removePieceOnBoard(board, position) {
     return setPosition(board, Position.removePiece(position));
 }
-function clean(board) {
-    return mapBoard(board, position => {
-        position.iCanGoHere = false;
-        position.lastMove = false;
-        position.lastMoveJump = false;
-        return position;
-    });
+function getCleanBoard(board) {
+    return mapBoard(board, Position.getCleanPosition);
+}
+/**
+ * Take a board: IPosition[][] an return the number of rows(X)
+ */
+function getBoardSizeX(board) {
+    return board.length;
+}
+/**
+ * Take a board: IPosition[][] an return the number of rows(Y)
+ */
+function getBoardSizeY(board) {
+    return board[0].length;
+}
+/**
+ * Take a board: IPosition[][] an return the number of columns and rows {x, y}
+ */
+function getBoardSize(board) {
+    return {
+        x: getBoardSizeX(board),
+        y: getBoardSizeY(board)
+    };
 }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from)
@@ -212,20 +132,20 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         const nearPosition = allNearPositions[i];
         if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
-            const y = getY0Start7End(nearPosition.y, isBlack);
+            const y = Position.getYAsBlack(getBoardSizeY(board), nearPosition.y, isBlack);
             if (!orderedPositions[y])
                 orderedPositions[y] = [];
-            orderedPositions[y][getToSearchOrder(nearPosition.x)] = nearPosition;
+            orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
         }
         else {
             const jumpPosition = getJumpPosition(board, from, nearPosition);
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
-                const y = getY0Start7End(jumpPosition.y, isBlack);
+                const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y])
                     orderedPositions[y] = [];
-                orderedPositions[y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
             }
         }
@@ -296,10 +216,10 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
                 jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
                 positions.push(jumpPosition);
-                const y = getY0Start7End(jumpPosition.y, isBlack);
+                const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y])
                     orderedPositions[y] = [];
-                orderedPositions[y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
             }
         }
@@ -317,7 +237,7 @@ function printUnicode(board) {
     for (var y = 0; y < board.length; y++) {
         for (var x = 0; x < board[y].length; x++) {
             const position = board[x][y];
-            if (isBackGroundBlack(x, y)) {
+            if (Position.isBackGroundBlack(x, y)) {
                 if (Position.hasWhitePiece(position))
                     txt += '\u{25CF}';
                 else if (Position.hasBlackPiece(position))
@@ -338,17 +258,5 @@ function printUnicode(board) {
     }
     return txt;
 }
-function getBoardAfterMove(board, move) {
-    move.to.lastMove = true;
-    move.from.lastMove = true;
-    board = setPieceOnBoard(board, move.to, Position.hasBlackPiece(move.from));
-    board = removePieceOnBoard(board, move.from);
-    let jumpPosition = move.to.lastPosition;
-    while (jumpPosition) {
-        getPosition(board, jumpPosition).lastMoveJump = true;
-        jumpPosition = jumpPosition.lastPosition;
-    }
-    return board;
-}
-export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printUnicode, whereCanIJump, setPieceOnBoard, setPosition, setWhereCanIGo, removePieceOnBoard, hasPosition };
 //# sourceMappingURL=Board.js.map

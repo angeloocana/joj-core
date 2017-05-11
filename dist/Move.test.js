@@ -20,6 +20,40 @@ describe('Move', function () {
             assert.equal(backMove.to, move.from);
         });
     });
+    describe('backMove', function () {
+        it('backMove offline game', function () {
+            var players = {
+                white: { name: 'Angelo', foto: 'img/black_user.png' },
+                black: { name: 'Gabi', foto: 'img/white_user.png' }
+            };
+            var game = _index.Game.create({ players: players });
+            var gameBeforeLastMove = _index.Move.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            game = _index.Move.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            game = _index.Move.getGameBeforeLastMove(game);
+            assert.equal(gameBeforeLastMove.movements.length, game.movements.length);
+            assert.deepEqual(gameBeforeLastMove.movements, game.movements);
+        });
+    });
+    describe('Move', function () {
+        var game;
+        beforeEach(function () {
+            game = _index.Game.create({
+                players: {
+                    white: { name: 'Angelo', foto: 'img/black_user.png' },
+                    black: { name: 'Gabi', foto: 'img/white_user.png' }
+                }
+            });
+        });
+        it('Block moving to same position', function () {
+            var move = {
+                from: { x: 0, y: 0 },
+                to: { x: 0, y: 0 }
+            };
+            assert.throws(function () {
+                game = _index.Move.getGameAfterMove(game, move);
+            });
+        });
+    });
 });
 //# sourceMappingURL=Move.test.js.map
 //# sourceMappingURL=Move.test.js.map

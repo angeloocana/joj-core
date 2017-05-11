@@ -4,13 +4,7 @@ var _ptzAssert = require('ptz-assert');
 
 var assert = _interopRequireWildcard(_ptzAssert);
 
-var _ptzLog = require('ptz-log');
-
-var _ptzLog2 = _interopRequireDefault(_ptzLog);
-
 var _index = require('./index');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -101,7 +95,6 @@ describe('GameColor', function () {
         var _Board$getInitialBoar = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
             blackPieces = _Board$getInitialBoar.blackPieces;
 
-        (0, _ptzLog2.default)('blackPieces', blackPieces);
         it('return false when new game', function () {
             var color = _index.GameColor.create(_index.Board.defaultBoardConf, false, blackPieces);
             var won = _index.GameColor.hasWon(color);

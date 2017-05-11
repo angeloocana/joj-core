@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.removePieceOnBoard = exports.setWhereCanIGo = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printUnicode = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -69,6 +69,7 @@ function getBoardConf(boardSize) {
 var defaultBoardConf = getBoardConf(defaultBoardSize);
 // tslint:disable-next-line:variable-name
 var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
+    // Do NOT remove the log below. We use it to check if cache works and this code run once.
     (0, _ptzLog2.default)('_getInitialBoard for', boardConf);
     var board = [],
         blackPieces = [],
@@ -97,94 +98,6 @@ var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
 function getInitialBoard(boardConf) {
     return _getInitialBoard(boardConf);
 }
-function isBackGroundBlack(x, y) {
-    if (x % 2 === 0) {
-        if (y % 2 === 0) return true;else return false;
-    } else {
-        if (y % 2 === 0) return false;else return true;
-    }
-}
-/**
- * Returns the index to store the position in orderedPositions
- *
- * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
- *
- * The goal is to fill the corners first
- */
-function getToSearchOrder(x) {
-    switch (x) {
-        case 0:
-            return 0;
-        case 1:
-            return 2;
-        case 2:
-            return 4;
-        case 3:
-            return 6;
-        case 4:
-            return 7;
-        case 5:
-            return 5;
-        case 6:
-            return 3;
-        case 7:
-            return 1;
-        default:
-            return null;
-    }
-}
-/**
- * Get Y starting from 0 and ending on 7 for black and white pieces
- */
-function getY0Start7End(y, isBlack) {
-    if (isBlack) return y;
-    switch (y) {
-        case 0:
-            return 7;
-        case 1:
-            return 6;
-        case 2:
-            return 5;
-        case 3:
-            return 4;
-        case 4:
-            return 3;
-        case 5:
-            return 2;
-        case 6:
-            return 1;
-        case 7:
-            return 0;
-        default:
-            return null;
-    }
-}
-/**
- * Get Y starting from 7 and ending on 0 for black and white pieces
- */
-function getY7Start0End(y, isBlack) {
-    if (!isBlack) return y;
-    switch (y) {
-        case 0:
-            return 7;
-        case 1:
-            return 6;
-        case 2:
-            return 5;
-        case 3:
-            return 4;
-        case 4:
-            return 3;
-        case 5:
-            return 2;
-        case 6:
-            return 1;
-        case 7:
-            return 0;
-        default:
-            return null;
-    }
-}
 function getPosition(board, position) {
     try {
         return board[position.x][position.y];
@@ -208,13 +121,29 @@ function setPieceOnBoard(board, position, isBlack) {
 function removePieceOnBoard(board, position) {
     return setPosition(board, Position.removePiece(position));
 }
-function clean(board) {
-    return mapBoard(board, function (position) {
-        position.iCanGoHere = false;
-        position.lastMove = false;
-        position.lastMoveJump = false;
-        return position;
-    });
+function getCleanBoard(board) {
+    return mapBoard(board, Position.getCleanPosition);
+}
+/**
+ * Take a board: IPosition[][] an return the number of rows(X)
+ */
+function getBoardSizeX(board) {
+    return board.length;
+}
+/**
+ * Take a board: IPosition[][] an return the number of rows(Y)
+ */
+function getBoardSizeY(board) {
+    return board[0].length;
+}
+/**
+ * Take a board: IPosition[][] an return the number of columns and rows {x, y}
+ */
+function getBoardSize(board) {
+    return {
+        x: getBoardSizeX(board),
+        y: getBoardSizeY(board)
+    };
 }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
@@ -225,17 +154,17 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         var nearPosition = allNearPositions[i];
         if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
-            var y = getY0Start7End(nearPosition.y, isBlack);
+            var y = Position.getYAsBlack(getBoardSizeY(board), nearPosition.y, isBlack);
             if (!orderedPositions[y]) orderedPositions[y] = [];
-            orderedPositions[y][getToSearchOrder(nearPosition.x)] = nearPosition;
+            orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
         } else {
             var jumpPosition = getJumpPosition(board, from, nearPosition);
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
-                var _y = getY0Start7End(jumpPosition.y, isBlack);
+                var _y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[_y]) orderedPositions[_y] = [];
-                orderedPositions[_y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                orderedPositions[_y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
             }
         }
@@ -292,9 +221,9 @@ function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
                 jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
                 positions.push(jumpPosition);
-                var y = getY0Start7End(jumpPosition.y, isBlack);
+                var y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y]) orderedPositions[y] = [];
-                orderedPositions[y][getToSearchOrder(jumpPosition.x)] = jumpPosition;
+                orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
             }
         }
@@ -312,7 +241,7 @@ function printUnicode(board) {
     for (var y = 0; y < board.length; y++) {
         for (var x = 0; x < board[y].length; x++) {
             var position = board[x][y];
-            if (isBackGroundBlack(x, y)) {
+            if (Position.isBackGroundBlack(x, y)) {
                 if (Position.hasWhitePiece(position)) txt += '\u25CF';else if (Position.hasBlackPiece(position)) txt += '\u25CB';else txt += ' ';
             } else {
                 if (Position.hasWhitePiece(position)) txt += '\u25D9';else if (Position.hasBlackPiece(position)) txt += '\u25D8';else txt += '\u2588';
@@ -322,37 +251,22 @@ function printUnicode(board) {
     }
     return txt;
 }
-function getBoardAfterMove(board, move) {
-    move.to.lastMove = true;
-    move.from.lastMove = true;
-    board = setPieceOnBoard(board, move.to, Position.hasBlackPiece(move.from));
-    board = removePieceOnBoard(board, move.from);
-    var jumpPosition = move.to.lastPosition;
-    while (jumpPosition) {
-        getPosition(board, jumpPosition).lastMoveJump = true;
-        jumpPosition = jumpPosition.lastPosition;
-    }
-    return board;
-}
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;
-exports.getBoardAfterMove = getBoardAfterMove;
-exports.clean = clean;
+exports.getCleanBoard = getCleanBoard;
 exports.getInitialBoard = getInitialBoard;
-exports.getToSearchOrder = getToSearchOrder;
 exports.getBoardConf = getBoardConf;
 exports.getColorStartEndRow = getColorStartEndRow;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
-exports.getY0Start7End = getY0Start7End;
-exports.getY7Start0End = getY7Start0End;
-exports.isBackGroundBlack = isBackGroundBlack;
 exports.printUnicode = printUnicode;
 exports.whereCanIJump = whereCanIJump;
+exports.setPieceOnBoard = setPieceOnBoard;
 exports.setPosition = setPosition;
 exports.setWhereCanIGo = setWhereCanIGo;
+exports.removePieceOnBoard = removePieceOnBoard;
 exports.hasPosition = hasPosition;
 //# sourceMappingURL=Board.js.map
 //# sourceMappingURL=Board.js.map

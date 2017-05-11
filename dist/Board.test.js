@@ -31,38 +31,6 @@ function assertPositions(actual, expected) {
     }
 }
 describe('Board', function () {
-    describe('isBackGroundBlack', function () {
-        it('0,0 => true', function () {
-            assert.ok(_index.Board.isBackGroundBlack(0, 0));
-        });
-        it('0,1 => false', function () {
-            assert.ok(!_index.Board.isBackGroundBlack(0, 1));
-        });
-    });
-    describe('getY0Start7End', function () {
-        it('for white y2 should return 5', function () {
-            var y = 2;
-            var isBlack = false;
-            assert.equal(_index.Board.getY0Start7End(y, isBlack), 5);
-        });
-        it('for black y2 should return 2', function () {
-            var y = 2;
-            var isBlack = true;
-            assert.equal(_index.Board.getY0Start7End(y, isBlack), 2);
-        });
-    });
-    describe('getY7Start0End', function () {
-        it('for white y2 should return 2', function () {
-            var y = 2;
-            var isBlack = false;
-            assert.equal(_index.Board.getY7Start0End(y, isBlack), 2);
-        });
-        it('for black y2 should return 5', function () {
-            var y = 2;
-            var isBlack = true;
-            assert.equal(_index.Board.getY7Start0End(y, isBlack), 5);
-        });
-    });
     describe('getInitialBoard', function () {
         it('8x8', function () {
             var _Board$getInitialBoar = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
@@ -174,7 +142,6 @@ describe('Board', function () {
             var onlyEmpty = true;
             var expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }];
             var actual = _index.Board.getNearPositions(board, position, onlyEmpty);
-            (0, _ptzLog2.default)('actual', actual);
             assertPositions(actual, expected);
         });
         it('onlyEmpty=undefined should return all near positions', function () {
@@ -275,149 +242,6 @@ describe('Board', function () {
             var actual = _index.Board.getColorStartEndRow(_index.Board.defaultBoardConf.endRow, false);
             assert.equal(actual.startRow, 7);
             assert.equal(actual.endRow, 0);
-        });
-    });
-    describe('getToSearchOrder', function () {
-        it('return 0 for 0', function () {
-            return assert.equal(_index.Board.getToSearchOrder(0), 0);
-        });
-        it('return 1 for 7', function () {
-            return assert.equal(_index.Board.getToSearchOrder(7), 1);
-        });
-        it('return 2 for 1', function () {
-            return assert.equal(_index.Board.getToSearchOrder(1), 2);
-        });
-        it('return 3 for 6', function () {
-            return assert.equal(_index.Board.getToSearchOrder(6), 3);
-        });
-        it('return 4 for 2', function () {
-            return assert.equal(_index.Board.getToSearchOrder(2), 4);
-        });
-        it('return 5 for 5', function () {
-            return assert.equal(_index.Board.getToSearchOrder(5), 5);
-        });
-        it('return 6 for 3', function () {
-            return assert.equal(_index.Board.getToSearchOrder(3), 6);
-        });
-        it('return 7 for 4', function () {
-            return assert.equal(_index.Board.getToSearchOrder(4), 7);
-        });
-        it('return null for invalid x', function () {
-            return assert.notOk(_index.Board.getToSearchOrder(-1));
-        });
-    });
-    describe('getY0Start7End', function () {
-        describe('for white', function () {
-            it('return 7 for 0', function () {
-                return assert.equal(_index.Board.getY0Start7End(0, false), 7);
-            });
-            it('return 6 for 1', function () {
-                return assert.equal(_index.Board.getY0Start7End(1, false), 6);
-            });
-            it('return 5 for 2', function () {
-                return assert.equal(_index.Board.getY0Start7End(2, false), 5);
-            });
-            it('return 4 for 3', function () {
-                return assert.equal(_index.Board.getY0Start7End(3, false), 4);
-            });
-            it('return 3 for 4', function () {
-                return assert.equal(_index.Board.getY0Start7End(4, false), 3);
-            });
-            it('return 2 for 5', function () {
-                return assert.equal(_index.Board.getY0Start7End(5, false), 2);
-            });
-            it('return 1 for 6', function () {
-                return assert.equal(_index.Board.getY0Start7End(6, false), 1);
-            });
-            it('return 0 for 7', function () {
-                return assert.equal(_index.Board.getY0Start7End(7, false), 0);
-            });
-            it('return null for invalid x', function () {
-                return assert.notOk(_index.Board.getY0Start7End(-1, false));
-            });
-        });
-        describe('for black', function () {
-            it('return 0 for 0', function () {
-                return assert.equal(_index.Board.getY0Start7End(0, true), 0);
-            });
-            it('return 1 for 1', function () {
-                return assert.equal(_index.Board.getY0Start7End(1, true), 1);
-            });
-            it('return 2 for 2', function () {
-                return assert.equal(_index.Board.getY0Start7End(2, true), 2);
-            });
-            it('return 3 for 3', function () {
-                return assert.equal(_index.Board.getY0Start7End(3, true), 3);
-            });
-            it('return 4 for 4', function () {
-                return assert.equal(_index.Board.getY0Start7End(4, true), 4);
-            });
-            it('return 5 for 5', function () {
-                return assert.equal(_index.Board.getY0Start7End(5, true), 5);
-            });
-            it('return 6 for 6', function () {
-                return assert.equal(_index.Board.getY0Start7End(6, true), 6);
-            });
-            it('return 7 for 7', function () {
-                return assert.equal(_index.Board.getY0Start7End(7, true), 7);
-            });
-        });
-    });
-    describe('getY7Start0End', function () {
-        describe('for white', function () {
-            it('return 0 for 0', function () {
-                return assert.equal(_index.Board.getY7Start0End(0, false), 0);
-            });
-            it('return 1 for 1', function () {
-                return assert.equal(_index.Board.getY7Start0End(1, false), 1);
-            });
-            it('return 2 for 2', function () {
-                return assert.equal(_index.Board.getY7Start0End(2, false), 2);
-            });
-            it('return 3 for 3', function () {
-                return assert.equal(_index.Board.getY7Start0End(3, false), 3);
-            });
-            it('return 4 for 4', function () {
-                return assert.equal(_index.Board.getY7Start0End(4, false), 4);
-            });
-            it('return 5 for 5', function () {
-                return assert.equal(_index.Board.getY7Start0End(5, false), 5);
-            });
-            it('return 6 for 6', function () {
-                return assert.equal(_index.Board.getY7Start0End(6, false), 6);
-            });
-            it('return 7 for 7', function () {
-                return assert.equal(_index.Board.getY7Start0End(7, false), 7);
-            });
-        });
-        describe('for black', function () {
-            it('return 7 for 0', function () {
-                return assert.equal(_index.Board.getY7Start0End(0, true), 7);
-            });
-            it('return 6 for 1', function () {
-                return assert.equal(_index.Board.getY7Start0End(1, true), 6);
-            });
-            it('return 5 for 2', function () {
-                return assert.equal(_index.Board.getY7Start0End(2, true), 5);
-            });
-            it('return 4 for 3', function () {
-                return assert.equal(_index.Board.getY7Start0End(3, true), 4);
-            });
-            it('return 3 for 4', function () {
-                return assert.equal(_index.Board.getY7Start0End(4, true), 3);
-            });
-            it('return 2 for 5', function () {
-                return assert.equal(_index.Board.getY7Start0End(5, true), 2);
-            });
-            it('return 1 for 6', function () {
-                return assert.equal(_index.Board.getY7Start0End(6, true), 1);
-            });
-            it('return 0 for 7', function () {
-                return assert.equal(_index.Board.getY7Start0End(7, true), 0);
-            });
-            it('return null for invalid x', function () {
-                return assert.notOk(_index.Board.getY7Start0End(-1, true));
-            });
         });
     });
     describe('getPositionsWhereCanIGo', function () {

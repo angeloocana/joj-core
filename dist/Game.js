@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.create = exports.canMove = undefined;
+exports.getCleanGameToSaveOnServer = exports.setMovements = exports.setPlayers = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getGameWhereCanIGo = exports.getWinner = exports.getPlayerTurn = exports.getColorTurn = exports.create = undefined;
 
 var _ramda = require('ramda');
 
@@ -14,14 +14,6 @@ var Board = _interopRequireWildcard(_Board);
 var _GameColor = require('./GameColor');
 
 var GameColor = _interopRequireWildcard(_GameColor);
-
-var _Move = require('./Move');
-
-var Move = _interopRequireWildcard(_Move);
-
-var _Player = require('./Player');
-
-var Player = _interopRequireWildcard(_Player);
 
 var _Players = require('./Players');
 
@@ -76,7 +68,7 @@ function isMyTurn(game, from) {
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 function getGameWhereCanIGo(game, from) {
-    game.board = Board.clean(game.board);
+    game.board = Board.getCleanBoard(game.board);
     if (!isMyTurn(game, from)) return game;
     game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
 }
@@ -104,46 +96,14 @@ function setMovements() {
     // This must be called in another place
     // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
 }
-function canMove(game, move) {
-    var positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
-    return positionsWhereCanIGo.findIndex(function (position) {
-        return position.x === move.to.x && position.y === move.to.y;
-    }) >= 0;
-}
-function getGameAfterMove(game, move) {
-    var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-    if (Position.hasSamePosition(move.from, move.to)) throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-    game.board = Board.clean(game.board);
-    if (!backMove) if (!canMove(game, move)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-    game.board = Board.getBoardAfterMove(game.board, move);
-    game.black = GameColor.getColorAfterMove(game.black, move);
-    game.white = GameColor.getColorAfterMove(game.white, move);
-    if (!backMove) {
-        game.movements.push(move);
-        game = getWinner(game);
-    }
-    return game;
-}
-function getGameBeforeLastMove(game) {
-    var lastMove = game.movements.pop();
-    if (lastMove) game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
-    if (Player.isComputer(getPlayerTurn(game))) {
-        lastMove = game.movements.pop();
-        if (lastMove) {
-            game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
-        }
-    }
-    return game;
-}
-exports.canMove = canMove;
 exports.create = create;
 exports.getColorTurn = getColorTurn;
 exports.getPlayerTurn = getPlayerTurn;
 exports.getWinner = getWinner;
 exports.getGameWhereCanIGo = getGameWhereCanIGo;
-exports.getGameAfterMove = getGameAfterMove;
-exports.getGameBeforeLastMove = getGameBeforeLastMove;
+exports.isBlackTurn = isBlackTurn;
+exports.isWhiteTurn = isWhiteTurn;
+exports.isMyTurn = isMyTurn;
 exports.setPlayers = setPlayers;
 exports.setMovements = setMovements;
 exports.getCleanGameToSaveOnServer = getCleanGameToSaveOnServer;

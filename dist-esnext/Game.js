@@ -1,8 +1,6 @@
 import { compose, not } from 'ramda';
 import * as Board from './Board';
 import * as GameColor from './GameColor';
-import * as Move from './Move';
-import * as Player from './Player';
 import * as Players from './Players';
 import * as Position from './Position';
 function create(args) {
@@ -47,7 +45,7 @@ function isMyTurn(game, from) {
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 function getGameWhereCanIGo(game, from) {
-    game.board = Board.clean(game.board);
+    game.board = Board.getCleanBoard(game.board);
     if (!isMyTurn(game, from))
         return game;
     game.board = Board.setWhereCanIGo(game.board, from, Position.hasBlackPiece(from));
@@ -73,38 +71,5 @@ function setMovements(movements = [], needToValidateMovements = true) {
     // This must be called in another place
     // this.board.fillAllPiecesOnBoard(this.white.pieces, this.black.pieces);
 }
-function canMove(game, move) {
-    const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, isBlackTurn(game)).positions;
-    return positionsWhereCanIGo.findIndex(position => position.x === move.to.x
-        && position.y === move.to.y) >= 0;
-}
-function getGameAfterMove(game, move, backMove = false) {
-    if (Position.hasSamePosition(move.from, move.to))
-        throw new Error('ERROR_CANT_MOVE_TO_SAME_POSITION');
-    game.board = Board.clean(game.board);
-    if (!backMove)
-        if (!canMove(game, move))
-            throw new Error('ERROR_CANT_MOVE_TO_POSITION');
-    game.board = Board.getBoardAfterMove(game.board, move);
-    game.black = GameColor.getColorAfterMove(game.black, move);
-    game.white = GameColor.getColorAfterMove(game.white, move);
-    if (!backMove) {
-        game.movements.push(move);
-        game = getWinner(game);
-    }
-    return game;
-}
-function getGameBeforeLastMove(game) {
-    let lastMove = game.movements.pop();
-    if (lastMove)
-        game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
-    if (Player.isComputer(getPlayerTurn(game))) {
-        lastMove = game.movements.pop();
-        if (lastMove) {
-            game = getGameAfterMove(game, Move.getBackMove(lastMove), true);
-        }
-    }
-    return game;
-}
-export { canMove, create, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, getGameAfterMove, getGameBeforeLastMove, setPlayers, setMovements, getCleanGameToSaveOnServer };
+export { create, getColorTurn, getPlayerTurn, getWinner, getGameWhereCanIGo, isBlackTurn, isWhiteTurn, isMyTurn, setPlayers, setMovements, getCleanGameToSaveOnServer };
 //# sourceMappingURL=Game.js.map

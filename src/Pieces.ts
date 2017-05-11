@@ -1,6 +1,6 @@
 import R from 'ramda';
-import * as Board from './Board';
 import * as Piece from './Piece';
+import * as Position from './Position';
 
 import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
@@ -23,11 +23,11 @@ const createBlackPieces = createPiecesCurried(true);
 
 const createWhitePieces = createPiecesCurried(false);
 
-function getPiecesOrdered(pieces: IPiece[], isBlack: boolean): IPiece[][] {
+function getPiecesOrdered(boardSizeY: number, pieces: IPiece[], isBlack: boolean): IPiece[][] {
     const ordered: IPiece[][] = [];
 
     pieces.forEach(piece => {
-        const y = Board.getY0Start7End(piece.position.y, isBlack);
+        const y = Position.getYAsBlack(boardSizeY, piece.position.y, isBlack);
         if (!ordered[y])
             ordered[y] = [piece];
         else
@@ -36,6 +36,8 @@ function getPiecesOrdered(pieces: IPiece[], isBlack: boolean): IPiece[][] {
 
     return ordered;
 }
+
+const getPiecesOrderedCurried = R.curry(getPiecesOrdered);
 
 function haveSamePieceAndPosition(a: IPiece[], b: IPiece[]): boolean {
     for (let i = 0; i < a.length; i++) {
@@ -51,5 +53,6 @@ export {
     createWhitePieces,
     removePiece,
     getPiecesOrdered,
+    getPiecesOrderedCurried,
     haveSamePieceAndPosition
 };
