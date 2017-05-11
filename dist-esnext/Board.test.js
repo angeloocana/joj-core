@@ -104,6 +104,19 @@ describe('Board', () => {
             assert.throws(() => Board.getPosition(board, position));
         });
     });
+    describe('setPosition', () => {
+        it('valid position', () => {
+            let { board } = Board.getInitialBoard(Board.defaultBoardConf);
+            const position = { x: 2, y: 3 };
+            board = Board.setPosition(board, position);
+            assert.equal(board[position.x][position.y], position);
+        });
+        it('invalid position', () => {
+            const { board } = Board.getInitialBoard(Board.defaultBoardConf);
+            const position = { x: -2, y: -3 };
+            assert.throws(() => Board.setPosition(board, position));
+        });
+    });
     describe('getNearPositions', () => {
         it('onlyEmpty=false should return only filled near positions', () => {
             const { board } = Board.getInitialBoard(Board.defaultBoardConf);
