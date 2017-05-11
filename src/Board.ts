@@ -417,9 +417,16 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
 }
 
 function hasPosition(board: IBoard, position: IPosition): boolean {
-    if (!position || position.x < 0 || position.y < 0)
+    if (!position)
         return false;
-    return board.length > position.x && board[position.x].length > position.y;
+
+    if (position.x < 0 || board.length <= position.x)
+        return false;
+
+    if (position.y < 0 || board[position.x].length <= position.y)
+        return false;
+
+    return true;
 }
 
 function isWhiteHome(position: IPosition, boardConf: IBoardConf): boolean {

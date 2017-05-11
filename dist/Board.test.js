@@ -75,42 +75,49 @@ describe('Board', function () {
         });
     });
     describe('hasPosition', function () {
-        var _Board$getInitialBoar2 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-            board = _Board$getInitialBoar2.board;
-
-        it('x1 y1 should return true', function () {
-            var position = { x: 1, y: 1 };
-            assert.ok(_index.Board.hasPosition(board, position));
+        it('return false for null position', function () {
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, null));
         });
-        it('x-1 y0 should return false', function () {
+        it('return false for undefined position', function () {
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, undefined));
+        });
+        it('return false for negative x', function () {
             var position = { x: -1, y: 0 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
-        it('x0 y-1 should return false', function () {
-            var position = { x: 0, y: -1 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+        it('return false for negative y', function () {
+            var position = { x: 1, y: -1 };
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
-        it('x-1 y-1 should return false', function () {
+        it('return false for negative x and y', function () {
             var position = { x: -1, y: -1 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
-        it('x8 y1 should return false', function () {
+        it('return false for x > 7', function () {
             var position = { x: 8, y: 1 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
-        it('x1 y-8 should return false', function () {
-            var position = { x: 1, y: 8 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+        it('return false for y > 7', function () {
+            var position = { x: 7, y: 8 };
+            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
-        it('x8 y8 should return false', function () {
-            var position = { x: 8, y: 8 };
-            assert.notOk(_index.Board.hasPosition(board, position));
+        it('return true for x: 0, y: 0', function () {
+            var position = { x: 0, y: 0 };
+            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+        });
+        it('return true for x: 1, y: 1', function () {
+            var position = { x: 0, y: 0 };
+            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+        });
+        it('return true for x: 7, y: 7', function () {
+            var position = { x: 7, y: 7 };
+            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
         });
     });
     describe('getPosition', function () {
         it('valid position', function () {
-            var _Board$getInitialBoar3 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar3.board;
+            var _Board$getInitialBoar2 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar2.board;
 
             var position = { x: 2, y: 3 };
             var actual = _index.Board.getPosition(board, position);
@@ -118,8 +125,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('invalid position', function () {
-            var _Board$getInitialBoar4 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar4.board;
+            var _Board$getInitialBoar3 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar3.board;
 
             var position = { x: -2, y: -3 };
             assert.throws(function () {
@@ -129,16 +136,16 @@ describe('Board', function () {
     });
     describe('setPosition', function () {
         it('valid position', function () {
-            var _Board$getInitialBoar5 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar5.board;
+            var _Board$getInitialBoar4 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar4.board;
 
             var position = { x: 2, y: 3 };
             board = _index.Board.setPosition(board, position);
             assert.equal(board[position.x][position.y], position);
         });
         it('invalid position', function () {
-            var _Board$getInitialBoar6 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar6.board;
+            var _Board$getInitialBoar5 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar5.board;
 
             var position = { x: -2, y: -3 };
             assert.throws(function () {
@@ -148,8 +155,8 @@ describe('Board', function () {
     });
     describe('getNearPositions', function () {
         it('onlyEmpty=false should return only filled near positions', function () {
-            var _Board$getInitialBoar7 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar7.board;
+            var _Board$getInitialBoar6 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar6.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = false;
@@ -158,8 +165,8 @@ describe('Board', function () {
             assertPositions(actual, expected);
         });
         it('onlyEmpty=true should return all empty near positions', function () {
-            var _Board$getInitialBoar8 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar8.board;
+            var _Board$getInitialBoar7 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar7.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = true;
@@ -169,8 +176,8 @@ describe('Board', function () {
             assertPositions(actual, expected);
         });
         it('onlyEmpty=undefined should return all near positions', function () {
-            var _Board$getInitialBoar9 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar9.board;
+            var _Board$getInitialBoar8 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar8.board;
 
             var position = { x: 7, y: 7 };
             var onlyEmpty = undefined;
@@ -181,8 +188,8 @@ describe('Board', function () {
     });
     describe('getJumpPosition', function () {
         it('jumping up and rigth', function () {
-            var _Board$getInitialBoar10 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar10.board;
+            var _Board$getInitialBoar9 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar9.board;
 
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -191,8 +198,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping up and left', function () {
-            var _Board$getInitialBoar11 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar11.board;
+            var _Board$getInitialBoar10 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar10.board;
 
             var from = { x: 2, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -201,8 +208,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping up', function () {
-            var _Board$getInitialBoar12 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar12.board;
+            var _Board$getInitialBoar11 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar11.board;
 
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
@@ -211,8 +218,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down and rigth', function () {
-            var _Board$getInitialBoar13 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar13.board;
+            var _Board$getInitialBoar12 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar12.board;
 
             var from = { x: 0, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -221,8 +228,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down and left', function () {
-            var _Board$getInitialBoar14 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar14.board;
+            var _Board$getInitialBoar13 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar13.board;
 
             var from = { x: 2, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -231,8 +238,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('jumping down', function () {
-            var _Board$getInitialBoar15 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar15.board;
+            var _Board$getInitialBoar14 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar14.board;
 
             var from = { x: 1, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
@@ -241,8 +248,8 @@ describe('Board', function () {
             assertPosition(actual, expected);
         });
         it('should return undefined because position is not empty', function () {
-            var _Board$getInitialBoar16 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-                board = _Board$getInitialBoar16.board;
+            var _Board$getInitialBoar15 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+                board = _Board$getInitialBoar15.board;
 
             var from = { x: 3, y: 0 };
             var toJumpPosition = { x: 4, y: 0 };
@@ -250,8 +257,8 @@ describe('Board', function () {
         });
     });
     it('printUnicode', function printUnicodeTest() {
-        var _Board$getInitialBoar17 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-            board = _Board$getInitialBoar17.board;
+        var _Board$getInitialBoar16 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
+            board = _Board$getInitialBoar16.board;
 
         var actual = _index.Board.printUnicode(board);
         assert.equal(actual, _boardData.unicodeStartBoard);

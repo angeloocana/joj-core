@@ -340,9 +340,13 @@ function getBoardAfterMove(board, move) {
     return board;
 }
 function hasPosition(board, position) {
-    if (!position || position.x < 0 || position.y < 0)
+    if (!position)
         return false;
-    return board.length > position.x && board[position.x].length > position.y;
+    if (position.x < 0 || board.length <= position.x)
+        return false;
+    if (position.y < 0 || board[position.x].length <= position.y)
+        return false;
+    return true;
 }
 function isWhiteHome(position, boardConf) {
     if (position.y === boardConf.size.y - 1)

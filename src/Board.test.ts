@@ -86,41 +86,52 @@ describe('Board', () => {
     });
 
     describe('hasPosition', () => {
-        const { board } = Board.getInitialBoard(Board.defaultBoardConf);
-
-        it('x1 y1 should return true', () => {
-            const position = { x: 1, y: 1 };
-            assert.ok(Board.hasPosition(board, position));
+        it('return false for null position', () => {
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, null));
         });
 
-        it('x-1 y0 should return false', () => {
+        it('return false for undefined position', () => {
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, undefined));
+        });
+
+        it('return false for negative x', () => {
             const position = { x: -1, y: 0 };
-            assert.notOk(Board.hasPosition(board, position));
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
         });
 
-        it('x0 y-1 should return false', () => {
-            const position = { x: 0, y: -1 };
-            assert.notOk(Board.hasPosition(board, position));
+        it('return false for negative y', () => {
+            const position = { x: 1, y: -1 };
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
         });
 
-        it('x-1 y-1 should return false', () => {
+        it('return false for negative x and y', () => {
             const position = { x: -1, y: -1 };
-            assert.notOk(Board.hasPosition(board, position));
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
         });
 
-        it('x8 y1 should return false', () => {
+        it('return false for x > 7', () => {
             const position = { x: 8, y: 1 };
-            assert.notOk(Board.hasPosition(board, position));
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
         });
 
-        it('x1 y-8 should return false', () => {
-            const position = { x: 1, y: 8 };
-            assert.notOk(Board.hasPosition(board, position));
+        it('return false for y > 7', () => {
+            const position = { x: 7, y: 8 };
+            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
         });
 
-        it('x8 y8 should return false', () => {
-            const position = { x: 8, y: 8 };
-            assert.notOk(Board.hasPosition(board, position));
+        it('return true for x: 0, y: 0', () => {
+            const position = { x: 0, y: 0 };
+            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
+        });
+
+        it('return true for x: 1, y: 1', () => {
+            const position = { x: 0, y: 0 };
+            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
+        });
+
+        it('return true for x: 7, y: 7', () => {
+            const position = { x: 7, y: 7 };
+            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
         });
     });
 
