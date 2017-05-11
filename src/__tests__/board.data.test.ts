@@ -1,5 +1,15 @@
+import { Board } from '../index';
+
+/**
+ * [ATENTION] USE IT ONLY FOR TESTS!
+ * Code for any board size =D
+ *
+ * Default 8x8 board in start position
+ */
+const defaultInitialBoard = Board.getInitialBoard(Board.defaultBoardConf).board;
+
 // tslint:disable:max-line-length
-const initialBoard = [
+const initialBoardExpected = [
   [{ x: 0, y: 0, isBlack: true }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4 }, { x: 0, y: 5 }, { x: 0, y: 6 }, { x: 0, y: 7, isBlack: false }],
   [{ x: 1, y: 0, isBlack: true }, { x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 4 }, { x: 1, y: 5 }, { x: 1, y: 6 }, { x: 1, y: 7, isBlack: false }],
   [{ x: 2, y: 0, isBlack: true }, { x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 5 }, { x: 2, y: 6 }, { x: 2, y: 7, isBlack: false }],
@@ -25,5 +35,7 @@ const unicodeStartBoard = blackRow
   + whiteRow;
 
 export {
-  initialBoard, unicodeStartBoard
+  defaultInitialBoard,
+  initialBoardExpected,
+  unicodeStartBoard
 };

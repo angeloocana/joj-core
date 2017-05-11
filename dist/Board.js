@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultInitialBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.setWhereCanIGo = exports.setPosition = exports.whereCanIJump = exports.printUnicode = exports.isBackGroundBlack = exports.getY7Start0End = exports.getY0Start7End = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardConf = exports.getToSearchOrder = exports.getInitialBoard = exports.clean = exports.getBoardAfterMove = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -97,13 +97,6 @@ var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
 function getInitialBoard(boardConf) {
     return _getInitialBoard(boardConf);
 }
-/**
- * [ATENTION] USE IT ONLY FOR TESTS!
- * Code for any board size =D
- *
- * Default 8x8 board in start position
- */
-var defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0) return true;else return false;
@@ -343,7 +336,6 @@ function getBoardAfterMove(board, move) {
 }
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;
-exports.defaultInitialBoard = defaultInitialBoard;
 exports.getBoardAfterMove = getBoardAfterMove;
 exports.clean = clean;
 exports.getInitialBoard = getInitialBoard;

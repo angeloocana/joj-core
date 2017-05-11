@@ -72,13 +72,6 @@ const _getInitialBoard = R.memoize((boardConf) => {
 function getInitialBoard(boardConf) {
     return _getInitialBoard(boardConf);
 }
-/**
- * [ATENTION] USE IT ONLY FOR TESTS!
- * Code for any board size =D
- *
- * Default 8x8 board in start position
- */
-const defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
 function isBackGroundBlack(x, y) {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -357,5 +350,5 @@ function getBoardAfterMove(board, move) {
     }
     return board;
 }
-export { defaultBoardSize, defaultBoardConf, defaultInitialBoard, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getBoardAfterMove, clean, getInitialBoard, getToSearchOrder, getBoardConf, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, getY0Start7End, getY7Start0End, isBackGroundBlack, printUnicode, whereCanIJump, setPosition, setWhereCanIGo, hasPosition };
 //# sourceMappingURL=Board.js.map

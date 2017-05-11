@@ -104,14 +104,6 @@ function getInitialBoard(boardConf: IBoardConf): IGetInitialBoardResult {
     return _getInitialBoard(boardConf);
 }
 
-/**
- * [ATENTION] USE IT ONLY FOR TESTS!
- * Code for any board size =D
- *
- * Default 8x8 board in start position
- */
-const defaultInitialBoard = getInitialBoard(defaultBoardConf).board;
-
 function isBackGroundBlack(x: number, y: number): boolean {
     if (x % 2 === 0) {
         if (y % 2 === 0)
@@ -444,7 +436,6 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
 export {
     defaultBoardSize,
     defaultBoardConf,
-    defaultInitialBoard,
     getBoardAfterMove,
     clean,
     getInitialBoard,

@@ -7,7 +7,7 @@ import {
 
 import log from 'ptz-log';
 
-import { initialBoard, unicodeStartBoard } from './testData/board.data.test';
+import * as TestData from './__tests__/board.data.test';
 
 function assertPosition(actualPosition: IPosition, expectedPosition: IPosition): void {
     const samePositionAs = Position.hasSamePosition(actualPosition, expectedPosition);
@@ -74,7 +74,7 @@ describe('Board', () => {
     describe('getInitialBoard', () => {
         it('8x8', () => {
             const { board } = Board.getInitialBoard(Board.defaultBoardConf);
-            assert.deepEqual(board, initialBoard);
+            assert.deepEqual(board, TestData.initialBoardExpected);
         });
 
         it('memoize', () => {
@@ -87,51 +87,51 @@ describe('Board', () => {
 
     describe('hasPosition', () => {
         it('return false for null position', () => {
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, null));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, null));
         });
 
         it('return false for undefined position', () => {
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, undefined));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, undefined));
         });
 
         it('return false for negative x', () => {
             const position = { x: -1, y: 0 };
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return false for negative y', () => {
             const position = { x: 1, y: -1 };
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return false for negative x and y', () => {
             const position = { x: -1, y: -1 };
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return false for x > 7', () => {
             const position = { x: 8, y: 1 };
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return false for y > 7', () => {
             const position = { x: 7, y: 8 };
-            assert.notOk(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return true for x: 0, y: 0', () => {
             const position = { x: 0, y: 0 };
-            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return true for x: 1, y: 1', () => {
             const position = { x: 0, y: 0 };
-            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
 
         it('return true for x: 7, y: 7', () => {
             const position = { x: 7, y: 7 };
-            assert.ok(Board.hasPosition(Board.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
         });
     });
 
@@ -281,7 +281,7 @@ describe('Board', () => {
     it('printUnicode', function printUnicodeTest() {
         const { board } = Board.getInitialBoard(Board.defaultBoardConf);
         const actual = Board.printUnicode(board);
-        assert.equal(actual, unicodeStartBoard);
+        assert.equal(actual, TestData.unicodeStartBoard);
     });
 
     describe('getColorStartEndRow', () => {
@@ -359,7 +359,7 @@ describe('Board', () => {
 
     describe('getPositionsWhereCanIGo', () => {
         it('return null for invalid from', () => {
-            const positions = Board.getPositionsWhereCanIGo(Board.defaultInitialBoard, null, true);
+            const positions = Board.getPositionsWhereCanIGo(TestData.defaultInitialBoard, null, true);
             assert.notOk(positions);
         });
     });

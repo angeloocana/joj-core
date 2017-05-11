@@ -10,7 +10,9 @@ var _ptzLog = require('ptz-log');
 
 var _ptzLog2 = _interopRequireDefault(_ptzLog);
 
-var _boardData = require('./testData/board.data.test');
+var _boardData = require('./__tests__/board.data.test');
+
+var TestData = _interopRequireWildcard(_boardData);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,7 +68,7 @@ describe('Board', function () {
             var _Board$getInitialBoar = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
                 board = _Board$getInitialBoar.board;
 
-            assert.deepEqual(board, _boardData.initialBoard);
+            assert.deepEqual(board, TestData.initialBoardExpected);
         });
         it('memoize', function () {
             var board1 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf);
@@ -76,42 +78,42 @@ describe('Board', function () {
     });
     describe('hasPosition', function () {
         it('return false for null position', function () {
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, null));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, null));
         });
         it('return false for undefined position', function () {
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, undefined));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, undefined));
         });
         it('return false for negative x', function () {
             var position = { x: -1, y: 0 };
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return false for negative y', function () {
             var position = { x: 1, y: -1 };
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return false for negative x and y', function () {
             var position = { x: -1, y: -1 };
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return false for x > 7', function () {
             var position = { x: 8, y: 1 };
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return false for y > 7', function () {
             var position = { x: 7, y: 8 };
-            assert.notOk(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return true for x: 0, y: 0', function () {
             var position = { x: 0, y: 0 };
-            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return true for x: 1, y: 1', function () {
             var position = { x: 0, y: 0 };
-            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
         it('return true for x: 7, y: 7', function () {
             var position = { x: 7, y: 7 };
-            assert.ok(_index.Board.hasPosition(_index.Board.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
         });
     });
     describe('getPosition', function () {
@@ -261,7 +263,7 @@ describe('Board', function () {
             board = _Board$getInitialBoar16.board;
 
         var actual = _index.Board.printUnicode(board);
-        assert.equal(actual, _boardData.unicodeStartBoard);
+        assert.equal(actual, TestData.unicodeStartBoard);
     });
     describe('getColorStartEndRow', function () {
         it('return {startRow: 0, endRow } for black', function () {
@@ -420,7 +422,7 @@ describe('Board', function () {
     });
     describe('getPositionsWhereCanIGo', function () {
         it('return null for invalid from', function () {
-            var positions = _index.Board.getPositionsWhereCanIGo(_index.Board.defaultInitialBoard, null, true);
+            var positions = _index.Board.getPositionsWhereCanIGo(TestData.defaultInitialBoard, null, true);
             assert.notOk(positions);
         });
     });
