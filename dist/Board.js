@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -218,7 +218,6 @@ function getAllNearPositions(position) {
 /**
  * Caches near positions by each boardSize
  */
-// tslint:disable-next-line:variable-name
 var _getNearPositions = _ramda2.default.memoize(function (boardSize, position) {
     return getAllNearPositions(position).filter(function (p) {
         return hasPositionByBoardSize(boardSize, p);
@@ -279,6 +278,8 @@ function getBoardWhereCanIGo(board, from, blackPiece) {
         return Position.setICanGoHere(positions, position);
     });
 }
+exports._getInitialBoard = _getInitialBoard;
+exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;
 exports.getCleanBoard = getCleanBoard;

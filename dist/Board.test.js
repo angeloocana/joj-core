@@ -117,6 +117,14 @@ describe('Board', function () {
             });
         });
     });
+    describe('_getNearPositions', function () {
+        it('caches nearPositions', function () {
+            var position = { x: 0, y: 0 };
+            var firstCall = _index.Board._getNearPositions(_index.Board.defaultBoardSize, position);
+            var secondCall = _index.Board._getNearPositions(_index.Board.defaultBoardSize, position);
+            assert.equal(firstCall, secondCall, 'Not same instance');
+        });
+    });
     describe('getNotEmptyNearPositions', function () {
         it('return only filled near positions', function () {
             var position = { x: 7, y: 7 };

@@ -248,8 +248,7 @@ function getAllNearPositions(position): IPosition[] {
 /**
  * Caches near positions by each boardSize
  */
-// tslint:disable-next-line:variable-name
-const _getNearPositions = R.memoize((boardSize: IBoardSize, position: IPosition) =>
+const _getNearPositions = R.memoize((boardSize: IBoardSize, position: IPosition) => // tslint:disable-line:variable-name
     getAllNearPositions(position)
         .filter(p => hasPositionByBoardSize(boardSize, p)));
 
@@ -330,6 +329,8 @@ function getBoardWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean
 }
 
 export {
+    _getInitialBoard,
+    _getNearPositions,
     defaultBoardSize,
     defaultBoardConf,
     getCleanBoard,

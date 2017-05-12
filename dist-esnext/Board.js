@@ -191,7 +191,6 @@ function getAllNearPositions(position) {
 /**
  * Caches near positions by each boardSize
  */
-// tslint:disable-next-line:variable-name
 const _getNearPositions = R.memoize((boardSize, position) => getAllNearPositions(position)
     .filter(p => hasPositionByBoardSize(boardSize, p)));
 function getNearPositions(board, position) {
@@ -249,5 +248,5 @@ function getBoardWhereCanIGo(board, from, blackPiece) {
     const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
-export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
+export { _getInitialBoard, _getNearPositions, defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

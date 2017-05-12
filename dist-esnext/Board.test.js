@@ -88,6 +88,14 @@ describe('Board', () => {
             assert.throws(() => Board.setPosition(board, position));
         });
     });
+    describe('_getNearPositions', () => {
+        it('caches nearPositions', () => {
+            const position = { x: 0, y: 0 };
+            const firstCall = Board._getNearPositions(Board.defaultBoardSize, position);
+            const secondCall = Board._getNearPositions(Board.defaultBoardSize, position);
+            assert.equal(firstCall, secondCall, 'Not same instance');
+        });
+    });
     describe('getNotEmptyNearPositions', () => {
         it('return only filled near positions', () => {
             const position = { x: 7, y: 7 };
