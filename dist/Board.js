@@ -28,19 +28,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Default 8x8 board size
  */
-var defaultBoardSize = {
-    x: 8,
-    y: 8
-};
+var defaultBoardSize = { x: 8, y: 8 };
 /**
  * Check if position exists on board
  */
-function hasPosition(board, position) {
-    if (!position) return false;
-    if (position.x < 0 || board.length <= position.x) return false;
-    if (position.y < 0 || board[position.x].length <= position.y) return false;
-    return true;
-}
+var hasPosition = function hasPosition(board, position) {
+    return position && position.x >= 0 && position.y >= 0 && board.length > position.x && board[position.x].length > position.y;
+};
 /**
  * Map some function in all board positions and return a new board
  */
@@ -145,6 +139,24 @@ function getBoardSize(board) {
         y: getBoardSizeY(board)
     };
 }
+/**
+ * Get board in a nice format to print it on console
+ */
+function printUnicode(board) {
+    var txt = '';
+    for (var y = 0; y < board.length; y++) {
+        for (var x = 0; x < board[y].length; x++) {
+            var position = board[x][y];
+            if (Position.isBackGroundBlack(x, y)) {
+                if (Position.hasWhitePiece(position)) txt += '\u25CF';else if (Position.hasBlackPiece(position)) txt += '\u25CB';else txt += ' ';
+            } else {
+                if (Position.hasWhitePiece(position)) txt += '\u25D9';else if (Position.hasBlackPiece(position)) txt += '\u25D8';else txt += '\u2588';
+            }
+        }
+        txt += '\n';
+    }
+    return txt;
+}
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
     var allNearPositions = getNearPositions(board, from, undefined);
@@ -235,21 +247,6 @@ function getBoardWhereCanIGo(board, from, blackPiece) {
         position.iCanGoHere = Positions.contains(positions, position);
         return position;
     });
-}
-function printUnicode(board) {
-    var txt = '';
-    for (var y = 0; y < board.length; y++) {
-        for (var x = 0; x < board[y].length; x++) {
-            var position = board[x][y];
-            if (Position.isBackGroundBlack(x, y)) {
-                if (Position.hasWhitePiece(position)) txt += '\u25CF';else if (Position.hasBlackPiece(position)) txt += '\u25CB';else txt += ' ';
-            } else {
-                if (Position.hasWhitePiece(position)) txt += '\u25D9';else if (Position.hasBlackPiece(position)) txt += '\u25D8';else txt += '\u2588';
-            }
-        }
-        txt += '\n';
-    }
-    return txt;
 }
 exports.defaultBoardSize = defaultBoardSize;
 exports.defaultBoardConf = defaultBoardConf;

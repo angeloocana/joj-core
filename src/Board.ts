@@ -16,26 +16,14 @@ import { IPositionsWhereCanIGo } from './IPositionsWhereCanIGo';
 /**
  * Default 8x8 board size
  */
-const defaultBoardSize: IBoardSize = {
-    x: 8,
-    y: 8
-};
+const defaultBoardSize: IBoardSize = { x: 8, y: 8 };
 
 /**
  * Check if position exists on board
  */
-function hasPosition(board: IBoard, position: IPosition): boolean {
-    if (!position)
-        return false;
-
-    if (position.x < 0 || board.length <= position.x)
-        return false;
-
-    if (position.y < 0 || board[position.x].length <= position.y)
-        return false;
-
-    return true;
-}
+const hasPosition = (board: IBoard, position: IPosition) => position
+    && position.x >= 0 && position.y >= 0
+    && board.length > position.x && board[position.x].length > position.y;
 
 /**
  * Map some function in all board positions and return a new board
@@ -159,6 +147,38 @@ function getBoardSize(board: IBoard): IBoardSize {
         x: getBoardSizeX(board),
         y: getBoardSizeY(board)
     };
+}
+
+/**
+ * Get board in a nice format to print it on console
+ */
+function printUnicode(board: IBoard): string {
+    var txt = '';
+    for (var y = 0; y < board.length; y++) {
+        for (var x = 0; x < board[y].length; x++) {
+            const position = board[x][y];
+
+            if (Position.isBackGroundBlack(x, y)) {
+                if (Position.hasWhitePiece(position))
+                    txt += '\u{25CF}';
+                else if (Position.hasBlackPiece(position))
+                    txt += '\u{25CB}';
+                else
+                    txt += ' ';
+            } else {
+                if (Position.hasWhitePiece(position))
+                    txt += '\u{25D9}';
+                else if (Position.hasBlackPiece(position))
+                    txt += '\u{25D8}';
+                else
+                    txt += '\u{2588}';
+            }
+        }
+
+        txt += '\n';
+    }
+
+    return txt;
 }
 
 function getPositionsWhereCanIGo(board: IBoard, from: IPosition, isBlack: boolean): IPositionsWhereCanIGo {
@@ -303,35 +323,6 @@ function getBoardWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean
         position.iCanGoHere = Positions.contains(positions, position);
         return position;
     });
-}
-
-function printUnicode(board: IBoard): string {
-    var txt = '';
-    for (var y = 0; y < board.length; y++) {
-        for (var x = 0; x < board[y].length; x++) {
-            const position = board[x][y];
-
-            if (Position.isBackGroundBlack(x, y)) {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25CF}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25CB}';
-                else
-                    txt += ' ';
-            } else {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25D9}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25D8}';
-                else
-                    txt += '\u{2588}';
-            }
-        }
-
-        txt += '\n';
-    }
-
-    return txt;
 }
 
 export {
