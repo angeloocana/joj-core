@@ -1,4 +1,5 @@
 import R from 'ramda';
+import * as Positions from './Positions';
 /**
  * Takes a position and return only {x, y, isBlack}.
  *
@@ -37,6 +38,10 @@ const setPieceToWhite = setPieceCurried(false);
  */
 function removePiece(position) {
     delete position.isBlack;
+    return position;
+}
+function setICanGoHere(positionsWhereCanIGo, position) {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
     return position;
 }
 function isBackGroundBlack(x, y) {
@@ -122,5 +127,5 @@ function printUnicodePosition(position) {
             return '\u{2588}';
     }
 }
-export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setPiece, setPieceToBlack, setPieceToWhite };
+export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

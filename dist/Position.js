@@ -3,11 +3,17 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXAndY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXAndY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
 
 var _ramda = require('ramda');
 
 var _ramda2 = _interopRequireDefault(_ramda);
+
+var _Positions = require('./Positions');
+
+var Positions = _interopRequireWildcard(_Positions);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56,6 +62,10 @@ var setPieceToWhite = setPieceCurried(false);
  */
 function removePiece(position) {
     delete position.isBlack;
+    return position;
+}
+function setICanGoHere(positionsWhereCanIGo, position) {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
     return position;
 }
 function isBackGroundBlack(x, y) {
@@ -142,6 +152,7 @@ exports.hasWhitePiece = hasWhitePiece;
 exports.printXAndYPosition = printXAndYPosition;
 exports.printUnicodePosition = printUnicodePosition;
 exports.removePiece = removePiece;
+exports.setICanGoHere = setICanGoHere;
 exports.setPiece = setPiece;
 exports.setPieceToBlack = setPieceToBlack;
 exports.setPieceToWhite = setPieceToWhite;

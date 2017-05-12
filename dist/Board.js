@@ -169,31 +169,6 @@ var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
  * Prints only X and Y positions of a board.
  */
 var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
-// function printUnicodeBK(board: IBoard): string {
-//     var txt = '';
-//     for (var y = 0; y < board.length; y++) {
-//         for (var x = 0; x < board[y].length; x++) {
-//             const position = board[x][y];
-//             if (Position.isBackGroundBlack(x, y)) {
-//                 if (Position.hasWhitePiece(position))
-//                     txt += '\u{25CF}';
-//                 else if (Position.hasBlackPiece(position))
-//                     txt += '\u{25CB}';
-//                 else
-//                     txt += ' ';
-//             } else {
-//                 if (Position.hasWhitePiece(position))
-//                     txt += '\u{25D9}';
-//                 else if (Position.hasBlackPiece(position))
-//                     txt += '\u{25D8}';
-//                 else
-//                     txt += '\u{2588}';
-//             }
-//         }
-//         txt += '\n';
-//     }
-//     return txt;
-// }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
     var allNearPositions = getNearPositions(board, from, undefined);
@@ -279,10 +254,11 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     });
 }
 function getBoardWhereCanIGo(board, from, blackPiece) {
-    var positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
+    var _getPositionsWhereCan = getPositionsWhereCanIGo(board, from, blackPiece),
+        positions = _getPositionsWhereCan.positions;
+
     return mapBoard(board, function (position) {
-        position.iCanGoHere = Positions.contains(positions, position);
-        return position;
+        return Position.setICanGoHere(positions, position);
     });
 }
 exports.defaultBoardSize = defaultBoardSize;

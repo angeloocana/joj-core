@@ -1,4 +1,5 @@
 import R from 'ramda';
+import * as Positions from './Positions';
 
 import { IBoardSize } from './IBoard';
 import { IPosition } from './IPosition';
@@ -51,6 +52,11 @@ const setPieceToWhite = setPieceCurried(false);
  */
 function removePiece(position: IPosition): IPosition {
     delete position.isBlack;
+    return position;
+}
+
+function setICanGoHere(positionsWhereCanIGo: IPosition[], position: IPosition): IPosition {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
     return position;
 }
 
@@ -164,6 +170,7 @@ export {
     printXAndYPosition,
     printUnicodePosition,
     removePiece,
+    setICanGoHere,
     setPiece,
     setPieceToBlack,
     setPieceToWhite

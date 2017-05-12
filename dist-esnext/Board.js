@@ -131,31 +131,6 @@ const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
  * Prints only X and Y positions of a board.
  */
 const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
-// function printUnicodeBK(board: IBoard): string {
-//     var txt = '';
-//     for (var y = 0; y < board.length; y++) {
-//         for (var x = 0; x < board[y].length; x++) {
-//             const position = board[x][y];
-//             if (Position.isBackGroundBlack(x, y)) {
-//                 if (Position.hasWhitePiece(position))
-//                     txt += '\u{25CF}';
-//                 else if (Position.hasBlackPiece(position))
-//                     txt += '\u{25CB}';
-//                 else
-//                     txt += ' ';
-//             } else {
-//                 if (Position.hasWhitePiece(position))
-//                     txt += '\u{25D9}';
-//                 else if (Position.hasBlackPiece(position))
-//                     txt += '\u{25D8}';
-//                 else
-//                     txt += '\u{2588}';
-//             }
-//         }
-//         txt += '\n';
-//     }
-//     return txt;
-// }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from)
         return null;
@@ -260,11 +235,8 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     });
 }
 function getBoardWhereCanIGo(board, from, blackPiece) {
-    const positions = getPositionsWhereCanIGo(board, from, blackPiece).positions;
-    return mapBoard(board, position => {
-        position.iCanGoHere = Positions.contains(positions, position);
-        return position;
-    });
+    const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
+    return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
 export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition };
 //# sourceMappingURL=Board.js.map
