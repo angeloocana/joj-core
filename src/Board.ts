@@ -49,8 +49,18 @@ function getBoardConf(boardSize: IBoardSize): IBoardConf {
     };
 }
 
+/**
+ * Default configuration for 8x8 board
+ */
 const defaultBoardConf = getBoardConf(defaultBoardSize);
 
+/**
+ * Get cached initial board, using memoize from ramda
+ *
+ * The _getInitialBoard returns :Function Type,
+ * that's why we created getInitialBoard wich returns :IGetInitialBoardResult
+ * in order to reduce type errors.
+ */
 // tslint:disable-next-line:variable-name
 const _getInitialBoard = R.memoize((boardConf: IBoardConf) => {
 
@@ -89,6 +99,9 @@ const _getInitialBoard = R.memoize((boardConf: IBoardConf) => {
     };
 });
 
+/**
+ * Get cached initial board, using memoize from ramda
+ */
 function getInitialBoard(boardConf: IBoardConf): IGetInitialBoardResult {
     return _getInitialBoard(boardConf);
 }
@@ -112,31 +125,23 @@ function setPosition(board: IBoard, position: IPosition): IBoard {
     }
 }
 
-function setPieceOnBoard(board: IBoard, position: IPosition, isBlack: boolean): IBoard {
-    return setPosition(board, Position.setPiece(position, isBlack));
-}
+const setPieceOnBoard = (board: IBoard, position: IPosition, isBlack: boolean) =>
+    setPosition(board, Position.setPiece(position, isBlack));
 
-function removePieceOnBoard(board: IBoard, position: IPosition): IBoard {
-    return setPosition(board, Position.removePiece(position));
-}
+const removePieceOnBoard = (board: IBoard, position: IPosition) =>
+    setPosition(board, Position.removePiece(position));
 
-function getCleanBoard(board: IBoard): IBoard {
-    return mapBoard(board, Position.getCleanPosition);
-}
+const getCleanBoard = (board: IBoard) => mapBoard(board, Position.getCleanPosition);
 
 /**
  * Take a board: IPosition[][] an return the number of rows(X)
  */
-function getBoardSizeX(board: IBoard): number {
-    return board.length;
-}
+const getBoardSizeX = (board: IBoard) => board.length;
 
 /**
  * Take a board: IPosition[][] an return the number of rows(Y)
  */
-function getBoardSizeY(board: IBoard): number {
-    return board[0].length;
-}
+const getBoardSizeY = (board: IBoard) => board[0].length;
 
 /**
  * Take a board: IPosition[][] an return the number of columns and rows {x, y}

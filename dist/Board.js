@@ -60,7 +60,17 @@ function getBoardConf(boardSize) {
         black: getColorStartEndRow(endRow, true)
     };
 }
+/**
+ * Default configuration for 8x8 board
+ */
 var defaultBoardConf = getBoardConf(defaultBoardSize);
+/**
+ * Get cached initial board, using memoize from ramda
+ *
+ * The _getInitialBoard returns :Function Type,
+ * that's why we created getInitialBoard wich returns :IGetInitialBoardResult
+ * in order to reduce type errors.
+ */
 // tslint:disable-next-line:variable-name
 var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
     // Do NOT remove the log below. We use it to check if cache works and this code run once.
@@ -89,6 +99,9 @@ var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
         whitePieces: whitePieces
     };
 });
+/**
+ * Get cached initial board, using memoize from ramda
+ */
 function getInitialBoard(boardConf) {
     return _getInitialBoard(boardConf);
 }
@@ -109,27 +122,27 @@ function setPosition(board, position) {
         throw new Error('Error getting position');
     }
 }
-function setPieceOnBoard(board, position, isBlack) {
+var setPieceOnBoard = function setPieceOnBoard(board, position, isBlack) {
     return setPosition(board, Position.setPiece(position, isBlack));
-}
-function removePieceOnBoard(board, position) {
+};
+var removePieceOnBoard = function removePieceOnBoard(board, position) {
     return setPosition(board, Position.removePiece(position));
-}
-function getCleanBoard(board) {
+};
+var getCleanBoard = function getCleanBoard(board) {
     return mapBoard(board, Position.getCleanPosition);
-}
+};
 /**
  * Take a board: IPosition[][] an return the number of rows(X)
  */
-function getBoardSizeX(board) {
+var getBoardSizeX = function getBoardSizeX(board) {
     return board.length;
-}
+};
 /**
  * Take a board: IPosition[][] an return the number of rows(Y)
  */
-function getBoardSizeY(board) {
+var getBoardSizeY = function getBoardSizeY(board) {
     return board[0].length;
-}
+};
 /**
  * Take a board: IPosition[][] an return the number of columns and rows {x, y}
  */
