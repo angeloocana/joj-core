@@ -78,6 +78,7 @@
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#_getinitialboard" class="tsd-kind-icon">_get<wbr>Initial<wbr>Board</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#_getnearpositions" class="tsd-kind-icon">_get<wbr>Near<wbr>Positions</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#defaultboardconf" class="tsd-kind-icon">default<wbr>Board<wbr>Conf</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#printboardcurried" class="tsd-kind-icon">print<wbr>Board<wbr>Curried</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#printunicodeboard" class="tsd-kind-icon">print<wbr>Unicode<wbr>Board</a></li>
@@ -87,6 +88,7 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getallnearpositions" class="tsd-kind-icon">get<wbr>All<wbr>Near<wbr>Positions</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getboardconf" class="tsd-kind-icon">get<wbr>Board<wbr>Conf</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getboardsize" class="tsd-kind-icon">get<wbr>Board<wbr>Size</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getboardsizex" class="tsd-kind-icon">get<wbr>Board<wbr>SizeX</a></li>
@@ -94,12 +96,15 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getboardwherecanigo" class="tsd-kind-icon">get<wbr>Board<wbr>Where<wbr>CanIGo</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getcleanboard" class="tsd-kind-icon">get<wbr>Clean<wbr>Board</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getcolorstartendrow" class="tsd-kind-icon">get<wbr>Color<wbr>Start<wbr>End<wbr>Row</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getemptynearpositions" class="tsd-kind-icon">get<wbr>Empty<wbr>Near<wbr>Positions</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getinitialboard" class="tsd-kind-icon">get<wbr>Initial<wbr>Board</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getjumpposition" class="tsd-kind-icon">get<wbr>Jump<wbr>Position</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getnearpositions" class="tsd-kind-icon">get<wbr>Near<wbr>Positions</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getnotemptynearpositions" class="tsd-kind-icon">get<wbr>Not<wbr>Empty<wbr>Near<wbr>Positions</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getposition" class="tsd-kind-icon">get<wbr>Position</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#getpositionswherecanigo" class="tsd-kind-icon">get<wbr>Positions<wbr>Where<wbr>CanIGo</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#hasposition" class="tsd-kind-icon">has<wbr>Position</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#haspositionbyboardsize" class="tsd-kind-icon">has<wbr>Position<wbr>ByBoard<wbr>Size</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#mapboard" class="tsd-kind-icon">map<wbr>Board</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#printboard" class="tsd-kind-icon">print<wbr>Board</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_board_.html#removepieceonboard" class="tsd-kind-icon">remove<wbr>Piece<wbr>OnBoard</a></li>
@@ -125,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">IPrint<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L156">Board.ts:156</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L159">Board.ts:159</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -156,10 +161,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="_getinitialboard" class="tsd-anchor"></a>
 					<h3>_get<wbr>Initial<wbr>Board</h3>
-					<div class="tsd-signature tsd-kind-icon">_get<wbr>Initial<wbr>Board<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> =&nbsp;R.memoize((boardConf: IBoardConf) &#x3D;&gt; {// Do NOT remove the log below. We use it to check if cache works and this code run once.log(&#x27;_getInitialBoard for&#x27;, boardConf);const board &#x3D; [],blackPieces: IPiece[] &#x3D; [],whitePieces: IPiece[] &#x3D; [];for (let x &#x3D; 0; x &lt; boardConf.size.x; x++) {for (let y &#x3D; 0; y &lt; boardConf.size.y; y++) {if (!board[x])board[x] &#x3D; [];const position: IPosition &#x3D; { x, y };if (y &#x3D;&#x3D;&#x3D; 0) {position.isBlack &#x3D; true;blackPieces.push({ position });}if (y &#x3D;&#x3D;&#x3D; boardConf.endRow) {position.isBlack &#x3D; false;whitePieces.push({ position });}board[x][y] &#x3D; position;}}return {board,blackPieces,whitePieces};})</span></div>
+					<div class="tsd-signature tsd-kind-icon">_get<wbr>Initial<wbr>Board<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> =&nbsp;R.memoize((boardConf: IBoardConf) &#x3D;&gt; {// Do NOT remove the log below. We use it to check if cache works and this code run once.log(&#x27;--&gt; You MUST see this msg only once, otherwise memoize is not working &lt;-- \n _getInitialBoard for&#x27;, boardConf);const board &#x3D; [],blackPieces: IPiece[] &#x3D; [],whitePieces: IPiece[] &#x3D; [];for (let x &#x3D; 0; x &lt; boardConf.size.x; x++) {for (let y &#x3D; 0; y &lt; boardConf.size.y; y++) {if (!board[y])board[y] &#x3D; [];const position: IPosition &#x3D; { x, y };if (y &#x3D;&#x3D;&#x3D; 0) {position.isBlack &#x3D; true;blackPieces.push({ position });}if (y &#x3D;&#x3D;&#x3D; boardConf.endRow) {position.isBlack &#x3D; false;whitePieces.push({ position });}board[y][x] &#x3D; position;}}return {board,blackPieces,whitePieces};})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L65">Board.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L70">Board.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,12 +177,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="_getnearpositions" class="tsd-anchor"></a>
+					<h3>_get<wbr>Near<wbr>Positions</h3>
+					<div class="tsd-signature tsd-kind-icon">_get<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> =&nbsp;R.memoize((boardSize: IBoardSize, position: IPosition) &#x3D;&gt; // tslint:disable-line:variable-namegetAllNearPositions(position).filter(p &#x3D;&gt; hasPositionByBoardSize(boardSize, p)))</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L251">Board.ts:251</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Caches near positions by each boardSize</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="defaultboardconf" class="tsd-anchor"></a>
 					<h3>default<wbr>Board<wbr>Conf</h3>
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Board<wbr>Conf<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_iboard_d_.iboardconf.html" class="tsd-signature-type">IBoardConf</a><span class="tsd-signature-symbol"> =&nbsp;getBoardConf(defaultBoardSize)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L55">Board.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L60">Board.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -192,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">print<wbr>Board<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(printBoard)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L169">Board.ts:169</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L172">Board.ts:172</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">print<wbr>Unicode<wbr>Board<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;printBoardCurried(Position.printUnicodePosition)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L174">Board.ts:174</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L177">Board.ts:177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -238,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">printXAndYBoard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;printBoardCurried(Position.printXAndYPosition)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L179">Board.ts:179</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L182">Board.ts:182</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -272,6 +292,34 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getallnearpositions" class="tsd-anchor"></a>
+					<h3>get<wbr>All<wbr>Near<wbr>Positions</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>All<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L228">Board.ts:228</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get all valid and invalid near positions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>position: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="getboardconf" class="tsd-anchor"></a>
 					<h3>get<wbr>Board<wbr>Conf</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -281,7 +329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L41">Board.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L46">Board.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -304,7 +352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L149">Board.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L152">Board.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -332,7 +380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L139">Board.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L142">Board.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -360,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L144">Board.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L147">Board.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -388,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L345">Board.ts:345</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L326">Board.ts:326</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -417,7 +465,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L134">Board.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L137">Board.ts:137</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -440,7 +488,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L34">Board.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L39">Board.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -457,6 +505,32 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getemptynearpositions" class="tsd-anchor"></a>
+					<h3>get<wbr>Empty<wbr>Near<wbr>Positions</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Empty<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L260">Board.ts:260</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>board: <a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></h5>
+								</li>
+								<li>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="getinitialboard" class="tsd-anchor"></a>
 					<h3>get<wbr>Initial<wbr>Board</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -466,7 +540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L105">Board.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L110">Board.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -494,7 +568,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L286">Board.ts:286</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L268">Board.ts:268</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -517,13 +591,13 @@
 					<a name="getnearpositions" class="tsd-anchor"></a>
 					<h3>get<wbr>Near<wbr>Positions</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a>, position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, onlyEmpty<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L251">Board.ts:251</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L255">Board.ts:255</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -532,13 +606,36 @@
 									<h5>board: <a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></h5>
 								</li>
 								<li>
-									<h5>position: <span class="tsd-signature-type">any</span></h5>
-								</li>
-								<li>
-									<h5>onlyEmpty: <span class="tsd-signature-type">any</span></h5>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getnotemptynearpositions" class="tsd-anchor"></a>
+					<h3>get<wbr>Not<wbr>Empty<wbr>Near<wbr>Positions</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Not<wbr>Empty<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L264">Board.ts:264</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>board: <a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></h5>
+								</li>
+								<li>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -552,7 +649,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L109">Board.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L114">Board.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -578,7 +675,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L210">Board.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L184">Board.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -607,7 +704,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L24">Board.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L31">Board.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -629,6 +726,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="haspositionbyboardsize" class="tsd-anchor"></a>
+					<h3>has<wbr>Position<wbr>ByBoard<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">has<wbr>Position<wbr>ByBoard<wbr>Size<span class="tsd-signature-symbol">(</span>boardSize<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iboard_d_.iboardsize.html" class="tsd-signature-type">IBoardSize</a>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L24">Board.ts:24</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if position exists in this board size</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>boardSize: <a href="../interfaces/_iboard_d_.iboardsize.html" class="tsd-signature-type">IBoardSize</a></h5>
+								</li>
+								<li>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="mapboard" class="tsd-anchor"></a>
 					<h3>map<wbr>Board</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -638,7 +766,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L31">Board.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L36">Board.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -669,7 +797,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L161">Board.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L164">Board.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,7 +828,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L131">Board.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L134">Board.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -726,7 +854,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L128">Board.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L131">Board.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -755,7 +883,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L118">Board.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L122">Board.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -781,7 +909,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L316">Board.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L298">Board.ts:298</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -815,7 +943,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Board<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L19">Board.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L19">Board.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -829,7 +957,7 @@
 						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L19">Board.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L19">Board.ts:19</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -839,7 +967,7 @@
 						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Board.ts#L19">Board.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Board.ts#L19">Board.ts:19</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -929,6 +1057,9 @@
 						<a href="_board_.html#_getinitialboard" class="tsd-kind-icon">_get<wbr>Initial<wbr>Board</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_board_.html#_getnearpositions" class="tsd-kind-icon">_get<wbr>Near<wbr>Positions</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#defaultboardconf" class="tsd-kind-icon">default<wbr>Board<wbr>Conf</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
@@ -939,6 +1070,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#printxandyboard" class="tsd-kind-icon">printXAndYBoard</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_board_.html#getallnearpositions" class="tsd-kind-icon">get<wbr>All<wbr>Near<wbr>Positions</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#getboardconf" class="tsd-kind-icon">get<wbr>Board<wbr>Conf</a>
@@ -962,6 +1096,9 @@
 						<a href="_board_.html#getcolorstartendrow" class="tsd-kind-icon">get<wbr>Color<wbr>Start<wbr>End<wbr>Row</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_board_.html#getemptynearpositions" class="tsd-kind-icon">get<wbr>Empty<wbr>Near<wbr>Positions</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#getinitialboard" class="tsd-kind-icon">get<wbr>Initial<wbr>Board</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -971,6 +1108,9 @@
 						<a href="_board_.html#getnearpositions" class="tsd-kind-icon">get<wbr>Near<wbr>Positions</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_board_.html#getnotemptynearpositions" class="tsd-kind-icon">get<wbr>Not<wbr>Empty<wbr>Near<wbr>Positions</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#getposition" class="tsd-kind-icon">get<wbr>Position</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -978,6 +1118,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#hasposition" class="tsd-kind-icon">has<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_board_.html#haspositionbyboardsize" class="tsd-kind-icon">has<wbr>Position<wbr>ByBoard<wbr>Size</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_board_.html#mapboard" class="tsd-kind-icon">map<wbr>Board</a>

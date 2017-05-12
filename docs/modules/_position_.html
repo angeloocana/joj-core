@@ -79,6 +79,9 @@
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#haspiece" class="tsd-kind-icon">has<wbr>Piece</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#hassamepieceandposition" class="tsd-kind-icon">has<wbr>Same<wbr>Piece<wbr>And<wbr>Position</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#haswhitepiece" class="tsd-kind-icon">has<wbr>White<wbr>Piece</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#setpiececurried" class="tsd-kind-icon">set<wbr>Piece<wbr>Curried</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#setpiecetoblack" class="tsd-kind-icon">set<wbr>Piece<wbr>ToBlack</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#setpiecetowhite" class="tsd-kind-icon">set<wbr>Piece<wbr>ToWhite</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
@@ -95,6 +98,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#printunicodeposition" class="tsd-kind-icon">print<wbr>Unicode<wbr>Position</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#printxandyposition" class="tsd-kind-icon">printXAndYPosition</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#removepiece" class="tsd-kind-icon">remove<wbr>Piece</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#seticangohere" class="tsd-kind-icon">setICan<wbr>GoHere</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_position_.html#setpiece" class="tsd-kind-icon">set<wbr>Piece</a></li>
 							</ul>
 						</section>
@@ -109,7 +113,7 @@
 					<div class="tsd-signature tsd-kind-icon">get<wbr>ToSearch<wbr>Order<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction2</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iboard_d_.iboardsize.html" class="tsd-signature-type">IBoardSize</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(getToSearchOrder)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L95">Position.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L107">Position.ts:107</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -119,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">getYAs<wbr>Black<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction3</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(getYAsBlack)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L106">Position.ts:106</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L118">Position.ts:118</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,7 +133,7 @@
 					<div class="tsd-signature tsd-kind-icon">getYAs<wbr>White<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction3</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(getYAsWhite)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L117">Position.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L129">Position.ts:129</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -139,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<wbr>Black<wbr>Piece<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.propEq(&#x27;isBlack&#x27;, true)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L23">Position.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L24">Position.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -170,7 +174,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<wbr>NoPiece<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.compose(R.not, hasPiece)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L26">Position.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L27">Position.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -201,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<wbr>Piece<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pred</span><span class="tsd-signature-symbol"> =&nbsp;R.anyPass([hasBlackPiece, hasWhitePiece])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L25">Position.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L26">Position.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<wbr>Same<wbr>Piece<wbr>And<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pred</span><span class="tsd-signature-symbol"> =&nbsp;R.allPass([hasSamePiece, hasSamePosition])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L36">Position.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L37">Position.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +225,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<wbr>White<wbr>Piece<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.propEq(&#x27;isBlack&#x27;, false)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L24">Position.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L25">Position.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -246,6 +250,78 @@
 						</ul>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="setpiececurried" class="tsd-anchor"></a>
+					<h3>set<wbr>Piece<wbr>Curried</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>Piece<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(setPiece)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L44">Position.ts:44</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="setpiecetoblack" class="tsd-anchor"></a>
+					<h3>set<wbr>Piece<wbr>ToBlack</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>Piece<wbr>ToBlack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;setPieceCurried(true)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L46">Position.ts:46</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>t2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>t2: <span class="tsd-signature-type">T2</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="setpiecetowhite" class="tsd-anchor"></a>
+					<h3>set<wbr>Piece<wbr>ToWhite</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>Piece<wbr>ToWhite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;setPieceCurried(false)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L48">Position.ts:48</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>t2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>t2: <span class="tsd-signature-type">T2</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">R</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Functions</h2>
@@ -259,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L12">Position.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L13">Position.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L72">Position.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L84">Position.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,7 +409,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L19">Position.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L20">Position.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -369,7 +445,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L102">Position.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L114">Position.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,7 +480,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L113">Position.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L125">Position.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,7 +515,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L28">Position.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L29">Position.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -465,7 +541,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L32">Position.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L33">Position.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -491,7 +567,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L51">Position.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L63">Position.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -517,7 +593,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L123">Position.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L135">Position.ts:135</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -540,7 +616,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L119">Position.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L131">Position.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -563,7 +639,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L46">Position.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L53">Position.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -582,25 +658,51 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="setpiece" class="tsd-anchor"></a>
-					<h3>set<wbr>Piece</h3>
+					<a name="seticangohere" class="tsd-anchor"></a>
+					<h3>setICan<wbr>GoHere</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Piece<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a>, isBlack<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></li>
+						<li class="tsd-signature tsd-kind-icon">setICan<wbr>GoHere<span class="tsd-signature-symbol">(</span>positionsWhereCanIGo<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4f1999a/src/Position.ts#L38">Position.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L58">Position.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+									<h5>positionsWhereCanIGo: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="setpiece" class="tsd-anchor"></a>
+					<h3>set<wbr>Piece</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Piece<span class="tsd-signature-symbol">(</span>isBlack<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/80e190b/src/Position.ts#L39">Position.ts:39</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
 									<h5>isBlack: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+								<li>
+									<h5>position: <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h4>
@@ -709,6 +811,15 @@
 					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_position_.html#haswhitepiece" class="tsd-kind-icon">has<wbr>White<wbr>Piece</a>
 					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_position_.html#setpiececurried" class="tsd-kind-icon">set<wbr>Piece<wbr>Curried</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_position_.html#setpiecetoblack" class="tsd-kind-icon">set<wbr>Piece<wbr>ToBlack</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_position_.html#setpiecetowhite" class="tsd-kind-icon">set<wbr>Piece<wbr>ToWhite</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_position_.html#getcleanposition" class="tsd-kind-icon">get<wbr>Clean<wbr>Position</a>
 					</li>
@@ -741,6 +852,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_position_.html#removepiece" class="tsd-kind-icon">remove<wbr>Piece</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_position_.html#seticangohere" class="tsd-kind-icon">setICan<wbr>GoHere</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_position_.html#setpiece" class="tsd-kind-icon">set<wbr>Piece</a>
