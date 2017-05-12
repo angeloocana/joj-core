@@ -11,7 +11,7 @@ const defaultBoardSize = { x: 8, y: 8 };
  */
 const hasPosition = (board, position) => position
     && position.x >= 0 && position.y >= 0
-    && board.length > position.x && board[position.x].length > position.y;
+    && board.length > position.y && board[position.y].length > position.x;
 /**
  * Map some function in all board positions and return a new board
  */
@@ -45,12 +45,12 @@ const defaultBoardConf = getBoardConf(defaultBoardSize);
 // tslint:disable-next-line:variable-name
 const _getInitialBoard = R.memoize((boardConf) => {
     // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    log('_getInitialBoard for', boardConf);
+    log('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardConf);
     const board = [], blackPieces = [], whitePieces = [];
     for (let x = 0; x < boardConf.size.x; x++) {
         for (let y = 0; y < boardConf.size.y; y++) {
-            if (!board[x])
-                board[x] = [];
+            if (!board[y])
+                board[y] = [];
             const position = { x, y };
             if (y === 0) {
                 position.isBlack = true;
@@ -60,7 +60,7 @@ const _getInitialBoard = R.memoize((boardConf) => {
                 position.isBlack = false;
                 whitePieces.push({ position });
             }
-            board[x][y] = position;
+            board[y][x] = position;
         }
     }
     return {
@@ -77,34 +77,32 @@ function getInitialBoard(boardConf) {
 }
 function getPosition(board, position) {
     try {
-        return board[position.x][position.y];
+        return board[position.y][position.x];
     }
     catch (e) {
-        log('Error getting position:', position, ' \n board:', board);
         throw new Error('Error getting position');
     }
 }
 function setPosition(board, position) {
     try {
-        board[position.x][position.y] = position;
+        board[position.y][position.x] = position;
         return board;
     }
     catch (e) {
-        log('Error getting position: ', position);
         throw new Error('Error getting position');
     }
 }
-const setPieceOnBoard = (board, position, isBlack) => setPosition(board, Position.setPiece(position, isBlack));
+const setPieceOnBoard = (board, position, isBlack) => setPosition(board, Position.setPiece(isBlack, position));
 const removePieceOnBoard = (board, position) => setPosition(board, Position.removePiece(position));
 const getCleanBoard = (board) => mapBoard(board, Position.getCleanPosition);
 /**
  * Take a board: IPosition[][] an return the number of rows(X)
  */
-const getBoardSizeX = (board) => board.length;
+const getBoardSizeX = (board) => board[0].length;
 /**
  * Take a board: IPosition[][] an return the number of rows(Y)
  */
-const getBoardSizeY = (board) => board[0].length;
+const getBoardSizeY = (board) => board.length;
 /**
  * Take a board: IPosition[][] an return the number of columns and rows {x, y}
  */

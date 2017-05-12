@@ -33,7 +33,7 @@ var defaultBoardSize = { x: 8, y: 8 };
  * Check if position exists on board
  */
 var hasPosition = function hasPosition(board, position) {
-    return position && position.x >= 0 && position.y >= 0 && board.length > position.x && board[position.x].length > position.y;
+    return position && position.x >= 0 && position.y >= 0 && board.length > position.y && board[position.y].length > position.x;
 };
 /**
  * Map some function in all board positions and return a new board
@@ -74,13 +74,13 @@ var defaultBoardConf = getBoardConf(defaultBoardSize);
 // tslint:disable-next-line:variable-name
 var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
     // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    (0, _ptzLog2.default)('_getInitialBoard for', boardConf);
+    (0, _ptzLog2.default)('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardConf);
     var board = [],
         blackPieces = [],
         whitePieces = [];
     for (var x = 0; x < boardConf.size.x; x++) {
         for (var y = 0; y < boardConf.size.y; y++) {
-            if (!board[x]) board[x] = [];
+            if (!board[y]) board[y] = [];
             var position = { x: x, y: y };
             if (y === 0) {
                 position.isBlack = true;
@@ -90,7 +90,7 @@ var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
                 position.isBlack = false;
                 whitePieces.push({ position: position });
             }
-            board[x][y] = position;
+            board[y][x] = position;
         }
     }
     return {
@@ -107,23 +107,21 @@ function getInitialBoard(boardConf) {
 }
 function getPosition(board, position) {
     try {
-        return board[position.x][position.y];
+        return board[position.y][position.x];
     } catch (e) {
-        (0, _ptzLog2.default)('Error getting position:', position, ' \n board:', board);
         throw new Error('Error getting position');
     }
 }
 function setPosition(board, position) {
     try {
-        board[position.x][position.y] = position;
+        board[position.y][position.x] = position;
         return board;
     } catch (e) {
-        (0, _ptzLog2.default)('Error getting position: ', position);
         throw new Error('Error getting position');
     }
 }
 var setPieceOnBoard = function setPieceOnBoard(board, position, isBlack) {
-    return setPosition(board, Position.setPiece(position, isBlack));
+    return setPosition(board, Position.setPiece(isBlack, position));
 };
 var removePieceOnBoard = function removePieceOnBoard(board, position) {
     return setPosition(board, Position.removePiece(position));
@@ -135,13 +133,13 @@ var getCleanBoard = function getCleanBoard(board) {
  * Take a board: IPosition[][] an return the number of rows(X)
  */
 var getBoardSizeX = function getBoardSizeX(board) {
-    return board.length;
+    return board[0].length;
 };
 /**
  * Take a board: IPosition[][] an return the number of rows(Y)
  */
 var getBoardSizeY = function getBoardSizeY(board) {
-    return board[0].length;
+    return board.length;
 };
 /**
  * Take a board: IPosition[][] an return the number of columns and rows {x, y}

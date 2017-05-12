@@ -86,7 +86,7 @@ describe('Board', () => {
             let { board } = Board.getInitialBoard(Board.defaultBoardConf);
             const position = { x: 2, y: 3 };
             board = Board.setPosition(board, position);
-            assert.equal(board[position.x][position.y], position);
+            assert.equal(board[position.y][position.x], position);
         });
         it('invalid position', () => {
             const { board } = Board.getInitialBoard(Board.defaultBoardConf);
@@ -180,14 +180,14 @@ describe('Board', () => {
             assert.notOk(Board.getJumpPosition(board, from, toJumpPosition));
         });
     });
-    describe.skip('print', () => {
+    describe('print', () => {
         it('printUnicode', function printUnicodeTest() {
             const actual = Board.printUnicodeBoard(TestData.defaultInitialBoard);
             assert.equal(actual, TestData.unicodeStartBoard);
         });
         it('printXAndY', function printUnicodeTest() {
             const actual = Board.printXAndYBoard(TestData.defaultInitialBoard);
-            assert.equal(actual, TestData.unicodeStartBoard);
+            assert.equal(actual, TestData.xAndYStartBoard);
         });
     });
     describe('getColorStartEndRow', () => {

@@ -1,6 +1,11 @@
 import { IPiece } from './IPiece';
 import { IPosition } from './IPosition';
 
+/**
+ * Board = IPosition[position.y][position.x]
+ *
+ * x = rows, y = columns
+ */
 export type IBoard = IPosition[][];
 
 export interface IBoardSize {

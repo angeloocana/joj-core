@@ -111,7 +111,7 @@ describe('Board', function () {
 
             var position = { x: 2, y: 3 };
             board = _index.Board.setPosition(board, position);
-            assert.equal(board[position.x][position.y], position);
+            assert.equal(board[position.y][position.x], position);
         });
         it('invalid position', function () {
             var _Board$getInitialBoar5 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
@@ -225,14 +225,14 @@ describe('Board', function () {
             assert.notOk(_index.Board.getJumpPosition(board, from, toJumpPosition));
         });
     });
-    describe.skip('print', function () {
+    describe('print', function () {
         it('printUnicode', function printUnicodeTest() {
             var actual = _index.Board.printUnicodeBoard(TestData.defaultInitialBoard);
             assert.equal(actual, TestData.unicodeStartBoard);
         });
         it('printXAndY', function printUnicodeTest() {
             var actual = _index.Board.printXAndYBoard(TestData.defaultInitialBoard);
-            assert.equal(actual, TestData.unicodeStartBoard);
+            assert.equal(actual, TestData.xAndYStartBoard);
         });
     });
     describe('getColorStartEndRow', function () {

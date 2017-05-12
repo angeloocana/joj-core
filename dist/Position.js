@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPiece = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXAndY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXAndY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
 
 var _ramda = require('ramda');
 
@@ -44,10 +44,13 @@ function hasSamePosition(p1, p2) {
     return p1.x === p2.x && p1.y === p2.y;
 }
 var hasSamePieceAndPosition = _ramda2.default.allPass([hasSamePiece, hasSamePosition]);
-function setPiece(position, isBlack) {
+function setPiece(isBlack, position) {
     position.isBlack = isBlack;
     return position;
 }
+var setPieceCurried = _ramda2.default.curry(setPiece);
+var setPieceToBlack = setPieceCurried(true);
+var setPieceToWhite = setPieceCurried(false);
 /**
  * Deletes .isBlack prop from position
  */
@@ -140,5 +143,7 @@ exports.printXAndYPosition = printXAndYPosition;
 exports.printUnicodePosition = printUnicodePosition;
 exports.removePiece = removePiece;
 exports.setPiece = setPiece;
+exports.setPieceToBlack = setPieceToBlack;
+exports.setPieceToWhite = setPieceToWhite;
 //# sourceMappingURL=Position.js.map
 //# sourceMappingURL=Position.js.map

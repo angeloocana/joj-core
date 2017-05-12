@@ -25,10 +25,13 @@ function hasSamePosition(p1, p2) {
     return p1.x === p2.x && p1.y === p2.y;
 }
 const hasSamePieceAndPosition = R.allPass([hasSamePiece, hasSamePosition]);
-function setPiece(position, isBlack) {
+function setPiece(isBlack, position) {
     position.isBlack = isBlack;
     return position;
 }
+const setPieceCurried = R.curry(setPiece);
+const setPieceToBlack = setPieceCurried(true);
+const setPieceToWhite = setPieceCurried(false);
 /**
  * Deletes .isBlack prop from position
  */
@@ -119,5 +122,5 @@ function printUnicodePosition(position) {
             return '\u{2588}';
     }
 }
-export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setPiece };
+export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

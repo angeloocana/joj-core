@@ -35,10 +35,16 @@ function hasSamePosition(p1: IPosition, p2: IPosition): boolean {
 
 const hasSamePieceAndPosition = R.allPass([hasSamePiece, hasSamePosition]);
 
-function setPiece(position: IPosition, isBlack: boolean): IPosition {
+function setPiece(isBlack: boolean, position: IPosition): IPosition {
     position.isBlack = isBlack;
     return position;
 }
+
+const setPieceCurried = R.curry(setPiece);
+
+const setPieceToBlack = setPieceCurried(true);
+
+const setPieceToWhite = setPieceCurried(false);
 
 /**
  * Deletes .isBlack prop from position
@@ -158,5 +164,7 @@ export {
     printXAndYPosition,
     printUnicodePosition,
     removePiece,
-    setPiece
+    setPiece,
+    setPieceToBlack,
+    setPieceToWhite
 };
