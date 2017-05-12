@@ -16,6 +16,9 @@
 > JumpOverJump is an opensource AI game board.
 > Be welcome to learn, help and play!!!
 
+## Docs
+[Full docs](https://angeloocana.github.io/joj-core/)
+
 
 ## Use
 
