@@ -55,24 +55,11 @@ function removePiece(position: IPosition): IPosition {
     return position;
 }
 
-function setICanGoHere(positionsWhereCanIGo: IPosition[], position: IPosition): IPosition {
-    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
-    return position;
-}
-
-function isBackGroundBlack(x: number, y: number): boolean {
-    if (x % 2 === 0) {
-        if (y % 2 === 0)
-            return true;
-        else
-            return false;
-    } else {
-        if (y % 2 === 0)
-            return false;
-        else
-            return true;
-    }
-}
+/**
+ * Get the board background color of a position
+ */
+const isBackGroundBlack = (x: number, y: number): boolean =>
+    (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0);
 
 /**
  * Returns the index to store the position in orderedPositions
@@ -148,6 +135,11 @@ function printUnicodePosition(position: IPosition): string {
         else
             return '\u{2588}';
     }
+}
+
+function setICanGoHere(positionsWhereCanIGo: IPosition[], position: IPosition): IPosition {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
+    return position;
 }
 
 export {

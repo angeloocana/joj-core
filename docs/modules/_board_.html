@@ -130,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">IPrint<wbr>Position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L159">Board.ts:159</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L159">Board.ts:159</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -164,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">_get<wbr>Initial<wbr>Board<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> =&nbsp;R.memoize((boardConf: IBoardConf) &#x3D;&gt; {// Do NOT remove the log below. We use it to check if cache works and this code run once.log(&#x27;--&gt; You MUST see this msg only once, otherwise memoize is not working &lt;-- \n _getInitialBoard for&#x27;, boardConf);const board &#x3D; [],blackPieces: IPiece[] &#x3D; [],whitePieces: IPiece[] &#x3D; [];for (let x &#x3D; 0; x &lt; boardConf.size.x; x++) {for (let y &#x3D; 0; y &lt; boardConf.size.y; y++) {if (!board[y])board[y] &#x3D; [];const position: IPosition &#x3D; { x, y };if (y &#x3D;&#x3D;&#x3D; 0) {position.isBlack &#x3D; true;blackPieces.push({ position });}if (y &#x3D;&#x3D;&#x3D; boardConf.endRow) {position.isBlack &#x3D; false;whitePieces.push({ position });}board[y][x] &#x3D; position;}}return {board,blackPieces,whitePieces};})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L70">Board.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L70">Board.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -182,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">_get<wbr>Near<wbr>Positions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> =&nbsp;R.memoize((boardSize: IBoardSize, position: IPosition) &#x3D;&gt; // tslint:disable-line:variable-namegetAllNearPositions(position).filter(p &#x3D;&gt; hasPositionByBoardSize(boardSize, p)))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L251">Board.ts:251</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L251">Board.ts:251</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -197,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Board<wbr>Conf<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_iboard_d_.iboardconf.html" class="tsd-signature-type">IBoardConf</a><span class="tsd-signature-symbol"> =&nbsp;getBoardConf(defaultBoardSize)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L60">Board.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L60">Board.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -212,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">print<wbr>Board<wbr>Curried<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CurriedFunction2</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;R.curry(printBoard)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L172">Board.ts:172</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L172">Board.ts:172</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +222,7 @@
 					<div class="tsd-signature tsd-kind-icon">print<wbr>Unicode<wbr>Board<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;printBoardCurried(Position.printUnicodePosition)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L177">Board.ts:177</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L177">Board.ts:177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -258,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">printXAndYBoard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;printBoardCurried(Position.printXAndYPosition)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L182">Board.ts:182</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L182">Board.ts:182</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -301,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L228">Board.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L228">Board.ts:228</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,7 +329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L46">Board.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L46">Board.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -352,7 +352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L152">Board.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L152">Board.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -380,7 +380,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L142">Board.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L142">Board.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -408,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L147">Board.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L147">Board.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -436,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L338">Board.ts:338</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L338">Board.ts:338</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -470,7 +470,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L137">Board.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L137">Board.ts:137</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -493,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L39">Board.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L39">Board.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -519,7 +519,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L266">Board.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L266">Board.ts:266</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -550,7 +550,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L110">Board.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L110">Board.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -578,7 +578,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L277">Board.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L277">Board.ts:277</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -607,7 +607,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L258">Board.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L258">Board.ts:258</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -638,7 +638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L273">Board.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L273">Board.ts:273</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -669,7 +669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L114">Board.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L114">Board.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -695,7 +695,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L184">Board.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L184">Board.ts:184</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -724,7 +724,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L31">Board.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L31">Board.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -755,7 +755,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L24">Board.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L24">Board.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -786,7 +786,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L36">Board.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L36">Board.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -817,7 +817,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L164">Board.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L164">Board.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -848,7 +848,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L134">Board.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L134">Board.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -874,7 +874,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L131">Board.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L131">Board.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -903,7 +903,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L122">Board.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L122">Board.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -929,7 +929,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L307">Board.ts:307</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L307">Board.ts:307</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -963,7 +963,7 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Board<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L19">Board.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L19">Board.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -977,7 +977,7 @@
 						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L19">Board.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L19">Board.ts:19</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -987,7 +987,7 @@
 						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;8</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/32e2e0f/src/Board.ts#L19">Board.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Board.ts#L19">Board.ts:19</a></li>
 							</ul>
 						</aside>
 					</section>

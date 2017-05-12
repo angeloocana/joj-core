@@ -40,24 +40,10 @@ function removePiece(position) {
     delete position.isBlack;
     return position;
 }
-function setICanGoHere(positionsWhereCanIGo, position) {
-    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
-    return position;
-}
-function isBackGroundBlack(x, y) {
-    if (x % 2 === 0) {
-        if (y % 2 === 0)
-            return true;
-        else
-            return false;
-    }
-    else {
-        if (y % 2 === 0)
-            return false;
-        else
-            return true;
-    }
-}
+/**
+ * Get the board background color of a position
+ */
+const isBackGroundBlack = (x, y) => (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0);
 /**
  * Returns the index to store the position in orderedPositions
  *
@@ -126,6 +112,10 @@ function printUnicodePosition(position) {
         else
             return '\u{2588}';
     }
+}
+function setICanGoHere(positionsWhereCanIGo, position) {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
+    return position;
 }
 export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

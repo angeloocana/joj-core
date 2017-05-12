@@ -64,17 +64,12 @@ function removePiece(position) {
     delete position.isBlack;
     return position;
 }
-function setICanGoHere(positionsWhereCanIGo, position) {
-    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
-    return position;
-}
-function isBackGroundBlack(x, y) {
-    if (x % 2 === 0) {
-        if (y % 2 === 0) return true;else return false;
-    } else {
-        if (y % 2 === 0) return false;else return true;
-    }
-}
+/**
+ * Get the board background color of a position
+ */
+var isBackGroundBlack = function isBackGroundBlack(x, y) {
+    return x % 2 === 0 ? y % 2 === 0 : y % 2 !== 0;
+};
 /**
  * Returns the index to store the position in orderedPositions
  *
@@ -132,6 +127,10 @@ function printUnicodePosition(position) {
     } else {
         if (hasWhitePiece(position)) return '\u25D9';else if (hasBlackPiece(position)) return '\u25D8';else return '\u2588';
     }
+}
+function setICanGoHere(positionsWhereCanIGo, position) {
+    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
+    return position;
 }
 exports.isBackGroundBlack = isBackGroundBlack;
 exports.getCleanPosition = getCleanPosition;
