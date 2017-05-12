@@ -19,14 +19,6 @@ function assertPosition(actualPosition: IPosition, expectedPosition: IPosition):
     assert.equal(actualPosition.isBlack, expectedPosition.isBlack, 'Is same piece');
 }
 
-function assertPositions(actual: IPosition[], expected: IPosition[]): void {
-    assert.equal(actual.length, expected.length, 'different length of actual and expected positions');
-
-    for (let i = 0; i < actual.length; i++) {
-        assertPosition(actual[i], expected[i]);
-    }
-}
-
 describe('Board', () => {
     describe('getInitialBoard', () => {
         it('8x8', () => {
@@ -123,42 +115,40 @@ describe('Board', () => {
         });
     });
 
-    describe('getNearPositions', () => {
-        it('onlyEmpty=false should return only filled near positions', () => {
-            const { board } = Board.getInitialBoard(Board.defaultBoardConf);
+    describe('getNotEmptyNearPositions', () => {
+        it('return only filled near positions', () => {
             const position: IPosition = { x: 7, y: 7 };
-
-            const onlyEmpty = false;
             const expected = [{ x: 6, y: 7, isBlack: false }];
-            const actual = Board.getNearPositions(board, position, onlyEmpty);
 
-            assertPositions(actual, expected);
+            const actual = Board.getNotEmptyNearPositions(TestData.defaultInitialBoard, position);
+
+            assert.deepEqual(actual, expected);
         });
+    });
 
-        it('onlyEmpty=true should return all empty near positions', () => {
-            const { board } = Board.getInitialBoard(Board.defaultBoardConf);
+    describe('getEmptyNearPositions', () => {
+        it('return all empty near positions', () => {
             const position: IPosition = { x: 7, y: 7 };
-
-            const onlyEmpty = true;
             const expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }];
 
-            const actual = Board.getNearPositions(board, position, onlyEmpty);
-            assertPositions(actual, expected);
+            const actual = Board.getEmptyNearPositions(TestData.defaultInitialBoard, position);
+
+            assert.deepEqual(actual, expected);
         });
+    });
 
-        it('onlyEmpty=undefined should return all near positions', () => {
-            const { board } = Board.getInitialBoard(Board.defaultBoardConf);
+    describe('getNearPositions', () => {
+        it('return all near positions', () => {
             const position: IPosition = { x: 7, y: 7 };
-
-            const onlyEmpty = undefined;
             const expected = [
                 { x: 6, y: 6 },
                 { x: 7, y: 6 },
                 { x: 6, y: 7, isBlack: false }
             ];
-            const actual = Board.getNearPositions(board, position, onlyEmpty);
 
-            assertPositions(actual, expected);
+            const actual = Board.getNearPositions(TestData.defaultInitialBoard, position);
+
+            assert.deepEqual(actual, expected);
         });
     });
 

@@ -7,11 +7,15 @@ import log from 'ptz-log';
  */
 const defaultBoardSize = { x: 8, y: 8 };
 /**
+ * Checks if position exists in this board size
+ */
+const hasPositionByBoardSize = (boardSize, position) => position
+    && position.x >= 0 && position.y >= 0
+    && boardSize.y > position.y && boardSize.x > position.x;
+/**
  * Check if position exists on board
  */
-const hasPosition = (board, position) => position
-    && position.x >= 0 && position.y >= 0
-    && board.length > position.y && board[position.y].length > position.x;
+const hasPosition = (board, position) => hasPositionByBoardSize(getBoardSize(board), position);
 /**
  * Map some function in all board positions and return a new board
  */
@@ -134,7 +138,7 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from)
         return null;
-    const allNearPositions = getNearPositions(board, from, undefined);
+    const allNearPositions = getNearPositions(board, from);
     const positions = [];
     const orderedPositions = [];
     for (let i = 0; i < allNearPositions.length; i++) {
@@ -164,33 +168,40 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         orderedPositions
     };
 }
-function getNearPositions(board, position, onlyEmpty) {
-    const positions = [];
-    function add(plusX, plusY) {
-        var newPosition = {
-            x: position.x + plusX,
-            y: position.y + plusY
+/**
+ * Get all valid and invalid near positions.
+ */
+function getAllNearPositions(position) {
+    return [
+        [-1, -1],
+        [0, -1],
+        [1, -1],
+        [-1, 0],
+        [1, 0],
+        [-1, 1],
+        [0, 1],
+        [1, 1]
+    ].map(toAdd => {
+        return {
+            x: position.x + toAdd[0],
+            y: position.y + toAdd[1]
         };
-        if (!hasPosition(board, newPosition))
-            return;
-        newPosition = getPosition(board, newPosition);
-        if (typeof onlyEmpty !== 'undefined') {
-            if (onlyEmpty === Position.hasNoPiece(newPosition))
-                positions.push(newPosition);
-        }
-        else
-            positions.push(newPosition);
-    }
-    add(-1, -1);
-    add(0, -1);
-    add(+1, -1);
-    add(-1, 0);
-    add(+1, 0);
-    add(-1, +1);
-    add(0, +1);
-    add(+1, +1);
-    return positions;
+    });
 }
+/**
+ * Caches near positions by each boardSize
+ */
+// tslint:disable-next-line:variable-name
+const _getNearPositions = R.memoize((boardSize, position) => getAllNearPositions(position)
+    .filter(p => hasPositionByBoardSize(boardSize, p)));
+function getNearPositions(board, position) {
+    return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
+        .map(p => getPosition(board, p));
+}
+const getEmptyNearPositions = (board, position) => getNearPositions(board, position)
+    .filter(p => Position.hasNoPiece(p));
+const getNotEmptyNearPositions = (board, position) => getNearPositions(board, position)
+    .filter(p => Position.hasPiece(p));
 function getJumpPosition(board, from, toJumpPosition) {
     var jumpPosition = { x: 0, y: 0 };
     if (from.x < toJumpPosition.x)
@@ -216,7 +227,7 @@ function getJumpPosition(board, from, toJumpPosition) {
 }
 // tslint:disable-next-line:max-line-length
 function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
-    const nearFilledPositions = getNearPositions(board, jumpFrom, false);
+    const nearFilledPositions = getNotEmptyNearPositions(board, jumpFrom);
     nearFilledPositions.forEach(nearFilledPosition => {
         const jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
@@ -238,5 +249,5 @@ function getBoardWhereCanIGo(board, from, blackPiece) {
     const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
-export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

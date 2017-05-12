@@ -19,11 +19,16 @@ import { IPositionsWhereCanIGo } from './IPositionsWhereCanIGo';
 const defaultBoardSize: IBoardSize = { x: 8, y: 8 };
 
 /**
+ * Checks if position exists in this board size
+ */
+const hasPositionByBoardSize = (boardSize: IBoardSize, position: IPosition) => position
+    && position.x >= 0 && position.y >= 0
+    && boardSize.y > position.y && boardSize.x > position.x;
+
+/**
  * Check if position exists on board
  */
-const hasPosition = (board: IBoard, position: IPosition) => position
-    && position.x >= 0 && position.y >= 0
-    && board.length > position.y && board[position.y].length > position.x;
+const hasPosition = (board: IBoard, position: IPosition) => hasPositionByBoardSize(getBoardSize(board), position);
 
 /**
  * Map some function in all board positions and return a new board
@@ -180,7 +185,7 @@ function getPositionsWhereCanIGo(board: IBoard, from: IPosition, isBlack: boolea
     if (!from)
         return null;
 
-    const allNearPositions = getNearPositions(board, from, undefined);
+    const allNearPositions = getNearPositions(board, from);
     const positions = [];
     const orderedPositions = [];
 
@@ -217,40 +222,49 @@ function getPositionsWhereCanIGo(board: IBoard, from: IPosition, isBlack: boolea
     };
 }
 
-function getNearPositions(board: IBoard, position, onlyEmpty): IPosition[] {
-    const positions: IPosition[] = [];
+/**
+ * Get all valid and invalid near positions.
+ */
+function getAllNearPositions(position): IPosition[] {
+    return [
+        [-1, -1],
+        [0, -1],
+        [1, -1],
 
-    function add(plusX: number, plusY: number): IPosition[] {
-        var newPosition: IPosition = {
-            x: position.x + plusX,
-            y: position.y + plusY
+        [-1, 0],
+        [1, 0],
+
+        [-1, 1],
+        [0, 1],
+        [1, 1]
+    ].map(toAdd => {
+        return {
+            x: position.x + toAdd[0],
+            y: position.y + toAdd[1]
         };
-
-        if (!hasPosition(board, newPosition))
-            return;
-
-        newPosition = getPosition(board, newPosition);
-
-        if (typeof onlyEmpty !== 'undefined') {
-            if (onlyEmpty === Position.hasNoPiece(newPosition))
-                positions.push(newPosition);
-        } else
-            positions.push(newPosition);
-    }
-
-    add(-1, -1);
-    add(0, -1);
-    add(+1, -1);
-
-    add(-1, 0);
-    add(+1, 0);
-
-    add(-1, +1);
-    add(0, +1);
-    add(+1, +1);
-
-    return positions;
+    });
 }
+
+/**
+ * Caches near positions by each boardSize
+ */
+// tslint:disable-next-line:variable-name
+const _getNearPositions = R.memoize((boardSize: IBoardSize, position: IPosition) =>
+    getAllNearPositions(position)
+        .filter(p => hasPositionByBoardSize(boardSize, p)));
+
+function getNearPositions(board: IBoard, position: IPosition): IPosition[] {
+    return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
+        .map(p => getPosition(board, p));
+}
+
+const getEmptyNearPositions = (board: IBoard, position: IPosition) =>
+    getNearPositions(board, position)
+        .filter(p => Position.hasNoPiece(p));
+
+const getNotEmptyNearPositions = (board: IBoard, position: IPosition) =>
+    getNearPositions(board, position)
+        .filter(p => Position.hasPiece(p));
 
 function getJumpPosition(board: IBoard, from: IPosition, toJumpPosition: IPosition): IPosition {
 
@@ -284,8 +298,7 @@ function getJumpPosition(board: IBoard, from: IPosition, toJumpPosition: IPositi
 // tslint:disable-next-line:max-line-length
 function whereCanIJump(board: IBoard, jumpFrom: IPosition, positions, orderedPositions: IPosition[][], isBlack: boolean): void {
 
-    const nearFilledPositions: IPosition[]
-        = getNearPositions(board, jumpFrom, false);
+    const nearFilledPositions: IPosition[] = getNotEmptyNearPositions(board, jumpFrom);
 
     nearFilledPositions.forEach(nearFilledPosition => {
         const jumpPosition: IPosition
@@ -324,8 +337,10 @@ export {
     getBoardConf,
     getBoardWhereCanIGo,
     getColorStartEndRow,
+    getEmptyNearPositions,
     getJumpPosition,
     getNearPositions,
+    getNotEmptyNearPositions,
     getPosition,
     getPositionsWhereCanIGo,
     printBoard,
@@ -336,5 +351,6 @@ export {
     setPieceOnBoard,
     setPosition,
     removePieceOnBoard,
-    hasPosition
+    hasPosition,
+    hasPositionByBoardSize
 };

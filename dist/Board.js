@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -30,10 +30,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 var defaultBoardSize = { x: 8, y: 8 };
 /**
+ * Checks if position exists in this board size
+ */
+var hasPositionByBoardSize = function hasPositionByBoardSize(boardSize, position) {
+    return position && position.x >= 0 && position.y >= 0 && boardSize.y > position.y && boardSize.x > position.x;
+};
+/**
  * Check if position exists on board
  */
 var hasPosition = function hasPosition(board, position) {
-    return position && position.x >= 0 && position.y >= 0 && board.length > position.y && board[position.y].length > position.x;
+    return hasPositionByBoardSize(getBoardSize(board), position);
 };
 /**
  * Map some function in all board positions and return a new board
@@ -171,7 +177,7 @@ var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
 var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
-    var allNearPositions = getNearPositions(board, from, undefined);
+    var allNearPositions = getNearPositions(board, from);
     var positions = [];
     var orderedPositions = [];
     for (var i = 0; i < allNearPositions.length; i++) {
@@ -198,29 +204,41 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         orderedPositions: orderedPositions
     };
 }
-function getNearPositions(board, position, onlyEmpty) {
-    var positions = [];
-    function add(plusX, plusY) {
-        var newPosition = {
-            x: position.x + plusX,
-            y: position.y + plusY
+/**
+ * Get all valid and invalid near positions.
+ */
+function getAllNearPositions(position) {
+    return [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]].map(function (toAdd) {
+        return {
+            x: position.x + toAdd[0],
+            y: position.y + toAdd[1]
         };
-        if (!hasPosition(board, newPosition)) return;
-        newPosition = getPosition(board, newPosition);
-        if (typeof onlyEmpty !== 'undefined') {
-            if (onlyEmpty === Position.hasNoPiece(newPosition)) positions.push(newPosition);
-        } else positions.push(newPosition);
-    }
-    add(-1, -1);
-    add(0, -1);
-    add(+1, -1);
-    add(-1, 0);
-    add(+1, 0);
-    add(-1, +1);
-    add(0, +1);
-    add(+1, +1);
-    return positions;
+    });
 }
+/**
+ * Caches near positions by each boardSize
+ */
+// tslint:disable-next-line:variable-name
+var _getNearPositions = _ramda2.default.memoize(function (boardSize, position) {
+    return getAllNearPositions(position).filter(function (p) {
+        return hasPositionByBoardSize(boardSize, p);
+    });
+});
+function getNearPositions(board, position) {
+    return _getNearPositions(getBoardSize(board), Position.getXAndY(position)).map(function (p) {
+        return getPosition(board, p);
+    });
+}
+var getEmptyNearPositions = function getEmptyNearPositions(board, position) {
+    return getNearPositions(board, position).filter(function (p) {
+        return Position.hasNoPiece(p);
+    });
+};
+var getNotEmptyNearPositions = function getNotEmptyNearPositions(board, position) {
+    return getNearPositions(board, position).filter(function (p) {
+        return Position.hasPiece(p);
+    });
+};
 function getJumpPosition(board, from, toJumpPosition) {
     var jumpPosition = { x: 0, y: 0 };
     if (from.x < toJumpPosition.x) jumpPosition.x = toJumpPosition.x + 1;else if (from.x > toJumpPosition.x) jumpPosition.x = toJumpPosition.x - 1;else jumpPosition.x = toJumpPosition.x;
@@ -236,7 +254,7 @@ function getJumpPosition(board, from, toJumpPosition) {
 }
 // tslint:disable-next-line:max-line-length
 function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
-    var nearFilledPositions = getNearPositions(board, jumpFrom, false);
+    var nearFilledPositions = getNotEmptyNearPositions(board, jumpFrom);
     nearFilledPositions.forEach(function (nearFilledPosition) {
         var jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
@@ -268,8 +286,10 @@ exports.getInitialBoard = getInitialBoard;
 exports.getBoardConf = getBoardConf;
 exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
 exports.getColorStartEndRow = getColorStartEndRow;
+exports.getEmptyNearPositions = getEmptyNearPositions;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
+exports.getNotEmptyNearPositions = getNotEmptyNearPositions;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
 exports.printBoard = printBoard;
@@ -281,5 +301,6 @@ exports.setPieceOnBoard = setPieceOnBoard;
 exports.setPosition = setPosition;
 exports.removePieceOnBoard = removePieceOnBoard;
 exports.hasPosition = hasPosition;
+exports.hasPositionByBoardSize = hasPositionByBoardSize;
 //# sourceMappingURL=Board.js.map
 //# sourceMappingURL=Board.js.map
