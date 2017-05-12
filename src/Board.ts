@@ -58,7 +58,7 @@ const defaultBoardConf = getBoardConf(defaultBoardSize);
  * Get cached initial board, using memoize from ramda
  *
  * The _getInitialBoard returns :Function Type,
- * that's why we created getInitialBoard wich returns :IGetInitialBoardResult
+ * that's why we created getInitialBoard witch returns :IGetInitialBoardResult
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
@@ -153,37 +153,59 @@ function getBoardSize(board: IBoard): IBoardSize {
     };
 }
 
+type IPrintPosition = (position: IPosition) => string;
+
+/**
+ * Takes a function to printPosition and print board.
+ */
+function printBoard(printPosition: IPrintPosition, board: IBoard): string {
+    return board.reduce((txtCol, col) => {
+        return col.reduce((txtRow, position) => {
+            return txtRow + printPosition(position);
+        }, txtCol) + '\n';
+    }, '');
+}
+
+const printBoardCurried = R.curry(printBoard);
+
 /**
  * Get board in a nice format to print it on console
  */
-function printUnicode(board: IBoard): string {
-    var txt = '';
-    for (var y = 0; y < board.length; y++) {
-        for (var x = 0; x < board[y].length; x++) {
-            const position = board[x][y];
+const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
 
-            if (Position.isBackGroundBlack(x, y)) {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25CF}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25CB}';
-                else
-                    txt += ' ';
-            } else {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25D9}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25D8}';
-                else
-                    txt += '\u{2588}';
-            }
-        }
+/**
+ * Prints only X and Y positions of a board.
+ */
+const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 
-        txt += '\n';
-    }
+// function printUnicodeBK(board: IBoard): string {
+//     var txt = '';
+//     for (var y = 0; y < board.length; y++) {
+//         for (var x = 0; x < board[y].length; x++) {
+//             const position = board[x][y];
 
-    return txt;
-}
+//             if (Position.isBackGroundBlack(x, y)) {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25CF}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25CB}';
+//                 else
+//                     txt += ' ';
+//             } else {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25D9}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25D8}';
+//                 else
+//                     txt += '\u{2588}';
+//             }
+//         }
+
+//         txt += '\n';
+//     }
+
+//     return txt;
+// }
 
 function getPositionsWhereCanIGo(board: IBoard, from: IPosition, isBlack: boolean): IPositionsWhereCanIGo {
     if (!from)
@@ -291,22 +313,22 @@ function getJumpPosition(board: IBoard, from: IPosition, toJumpPosition: IPositi
 }
 
 // tslint:disable-next-line:max-line-length
-function whereCanIJump(board: IBoard, jumpfrom: IPosition, positions, orderedPositions: IPosition[][], isBlack: boolean): void {
+function whereCanIJump(board: IBoard, jumpFrom: IPosition, positions, orderedPositions: IPosition[][], isBlack: boolean): void {
 
     const nearFilledPositions: IPosition[]
-        = getNearPositions(board, jumpfrom, false);
+        = getNearPositions(board, jumpFrom, false);
 
     nearFilledPositions.forEach(nearFilledPosition => {
         const jumpPosition: IPosition
-            = getJumpPosition(board, jumpfrom,
+            = getJumpPosition(board, jumpFrom,
                 nearFilledPosition);
 
         if (jumpPosition) {
             if (Positions.notContains(positions, jumpPosition)) {
 
-                jumpPosition.lastPosition = jumpfrom;
+                jumpPosition.lastPosition = jumpFrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
-                jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
+                jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
 
                 positions.push(jumpPosition);
                 const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
@@ -341,7 +363,10 @@ export {
     getNearPositions,
     getPosition,
     getPositionsWhereCanIGo,
-    printUnicode,
+    printBoard,
+    printBoardCurried,
+    printUnicodeBoard,
+    printXAndYBoard,
     whereCanIJump,
     setPieceOnBoard,
     setPosition,

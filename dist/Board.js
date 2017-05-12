@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printUnicode = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
+exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNearPositions = exports.getJumpPosition = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = undefined;
 
 var _ramda = require('ramda');
 
@@ -68,7 +68,7 @@ var defaultBoardConf = getBoardConf(defaultBoardSize);
  * Get cached initial board, using memoize from ramda
  *
  * The _getInitialBoard returns :Function Type,
- * that's why we created getInitialBoard wich returns :IGetInitialBoardResult
+ * that's why we created getInitialBoard witch returns :IGetInitialBoardResult
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
@@ -153,23 +153,49 @@ function getBoardSize(board) {
     };
 }
 /**
+ * Takes a function to printPosition and print board.
+ */
+function printBoard(printPosition, board) {
+    return board.reduce(function (txtCol, col) {
+        return col.reduce(function (txtRow, position) {
+            return txtRow + printPosition(position);
+        }, txtCol) + '\n';
+    }, '');
+}
+var printBoardCurried = _ramda2.default.curry(printBoard);
+/**
  * Get board in a nice format to print it on console
  */
-function printUnicode(board) {
-    var txt = '';
-    for (var y = 0; y < board.length; y++) {
-        for (var x = 0; x < board[y].length; x++) {
-            var position = board[x][y];
-            if (Position.isBackGroundBlack(x, y)) {
-                if (Position.hasWhitePiece(position)) txt += '\u25CF';else if (Position.hasBlackPiece(position)) txt += '\u25CB';else txt += ' ';
-            } else {
-                if (Position.hasWhitePiece(position)) txt += '\u25D9';else if (Position.hasBlackPiece(position)) txt += '\u25D8';else txt += '\u2588';
-            }
-        }
-        txt += '\n';
-    }
-    return txt;
-}
+var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
+/**
+ * Prints only X and Y positions of a board.
+ */
+var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+// function printUnicodeBK(board: IBoard): string {
+//     var txt = '';
+//     for (var y = 0; y < board.length; y++) {
+//         for (var x = 0; x < board[y].length; x++) {
+//             const position = board[x][y];
+//             if (Position.isBackGroundBlack(x, y)) {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25CF}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25CB}';
+//                 else
+//                     txt += ' ';
+//             } else {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25D9}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25D8}';
+//                 else
+//                     txt += '\u{2588}';
+//             }
+//         }
+//         txt += '\n';
+//     }
+//     return txt;
+// }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
     var allNearPositions = getNearPositions(board, from, undefined);
@@ -236,15 +262,15 @@ function getJumpPosition(board, from, toJumpPosition) {
     return jumpPosition;
 }
 // tslint:disable-next-line:max-line-length
-function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
-    var nearFilledPositions = getNearPositions(board, jumpfrom, false);
+function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
+    var nearFilledPositions = getNearPositions(board, jumpFrom, false);
     nearFilledPositions.forEach(function (nearFilledPosition) {
-        var jumpPosition = getJumpPosition(board, jumpfrom, nearFilledPosition);
+        var jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
             if (Positions.notContains(positions, jumpPosition)) {
-                jumpPosition.lastPosition = jumpfrom;
+                jumpPosition.lastPosition = jumpFrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
-                jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
+                jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
                 positions.push(jumpPosition);
                 var y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y]) orderedPositions[y] = [];
@@ -272,7 +298,10 @@ exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
-exports.printUnicode = printUnicode;
+exports.printBoard = printBoard;
+exports.printBoardCurried = printBoardCurried;
+exports.printUnicodeBoard = printUnicodeBoard;
+exports.printXAndYBoard = printXAndYBoard;
 exports.whereCanIJump = whereCanIJump;
 exports.setPieceOnBoard = setPieceOnBoard;
 exports.setPosition = setPosition;

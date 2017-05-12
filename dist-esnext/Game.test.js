@@ -1,5 +1,4 @@
 import * as assert from 'ptz-assert';
-import log from 'ptz-log';
 import { Game, Move } from './index';
 import { initialGame } from './__tests__/game.data.test';
 describe('Game', () => {
@@ -23,11 +22,7 @@ describe('Game', () => {
                 from: { x: 4, y: 7 },
                 to: { x: 4, y: 6 }
             };
-            log('before initialGame.movements', initialGame.movements);
             const game = Move.getGameAfterMove(initialGame, move, false);
-            log('game === initialGame: ', game === initialGame);
-            log('after initialGame.movements', initialGame.movements);
-            log('game.movements', game.movements);
             const cleanGame = Game.getCleanGameToSaveOnServer(game);
             assert.equal(game.ended, cleanGame.ended);
             assert.equal(cleanGame.movements.length, 1);
@@ -47,7 +42,6 @@ describe('Game', () => {
         });
         it('returns false for white piece and black turn', () => {
             const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
-            log('initialGame', initialGame);
             const game = Move.getGameAfterMove(initialGame, firstMove);
             const from = { x: 7, y: 7 };
             assert.notOk(Game.isMyTurn(game, from));

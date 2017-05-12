@@ -15,10 +15,10 @@ function getBackMove(move) {
 /**
  * Takes a move and returns it with clean positions {from: {x,y}, to: {x,y}}.
  */
-function getMoveXandY(move) {
+function getMoveXAndY(move) {
     return {
-        from: Position.getXandY(move.from),
-        to: Position.getXandY(move.to)
+        from: Position.getXAndY(move.from),
+        to: Position.getXAndY(move.to)
     };
 }
 function canMove(game, move) {
@@ -60,7 +60,7 @@ function getGameAfterMove(game, move, backMove = false) {
     game.black = GameColor.getColorAfterMove(game.black, move);
     game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
-        game.movements = game.movements.concat(getMoveXandY(move));
+        game.movements = game.movements.concat(getMoveXAndY(move));
         game.ended = game.black.score.won || game.white.score.won;
     }
     return game;
@@ -77,5 +77,5 @@ function getGameBeforeLastMove(game) {
     }
     return game;
 }
-export { canMove, getBackMove, getGameAfterMove, getGameBeforeLastMove, getMoveXandY };
+export { canMove, getBackMove, getGameAfterMove, getGameBeforeLastMove, getMoveXAndY };
 //# sourceMappingURL=Move.js.map

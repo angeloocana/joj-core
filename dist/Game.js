@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getCleanGameToSaveOnServer = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.getColorTurn = exports.createGame = undefined;
 
-var _ptzLog = require('ptz-log');
-
-var _ptzLog2 = _interopRequireDefault(_ptzLog);
-
 var _ramda = require('ramda');
 
 var _Board = require('./Board');
@@ -28,8 +24,6 @@ var _Position = require('./Position');
 var Position = _interopRequireWildcard(_Position);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createGame(args) {
     var boardConf = args.boardConf || Board.defaultBoardConf;
@@ -69,9 +63,7 @@ var isBlackTurn = (0, _ramda.compose)(_ramda.not, isWhiteTurn);
 function isMyTurn(game, from) {
     if (game.ended) return false;
     from = Board.getPosition(game.board, from);
-    var isMyTurn = isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
-    if (isMyTurn === false) (0, _ptzLog2.default)('from: ', from, 'isWhiteTurn', isWhiteTurn(game), ' movements: ', game.movements);
-    return isMyTurn;
+    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 var getColorTurn = function getColorTurn(game) {
     return isWhiteTurn(game) ? game.white : game.black;

@@ -6,7 +6,7 @@ import { IPosition } from './IPosition';
 /**
  * Takes a position and return only {x, y, isBlack}.
  *
- * Remove unnecessery props like lastMoviment, lastPosition,
+ * Remove unnecessary props like lastMovement, lastPosition,
  * jumpingBlackPiece, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
  */
 function getCleanPosition({ x, y, isBlack }: IPosition): IPosition {
@@ -16,7 +16,7 @@ function getCleanPosition({ x, y, isBlack }: IPosition): IPosition {
 /**
  * Takes a position and return only {x, y}.
  */
-function getXandY({ x, y }: IPosition): IPosition {
+function getXAndY({ x, y }: IPosition): IPosition {
     return { x, y };
 }
 
@@ -116,12 +116,34 @@ function getYAsWhite(boardSizeY: number, y: number, isBlack: boolean): number {
 
 const getYAsWhiteCurried = R.curry(getYAsWhite);
 
+function printXAndYPosition(position: IPosition): string {
+    return ` ${position.x},${position.y} |`;
+}
+
+function printUnicodePosition(position: IPosition): string {
+    if (isBackGroundBlack(position.x, position.y)) {
+        if (hasWhitePiece(position))
+            return '\u{25CF}';
+        else if (hasBlackPiece(position))
+            return '\u{25CB}';
+        else
+            return ' ';
+    } else {
+        if (hasWhitePiece(position))
+            return '\u{25D9}';
+        else if (hasBlackPiece(position))
+            return '\u{25D8}';
+        else
+            return '\u{2588}';
+    }
+}
+
 export {
     isBackGroundBlack,
     getCleanPosition,
     getToSearchOrder,
     getToSearchOrderCurried,
-    getXandY,
+    getXAndY,
     getYAsBlack,
     getYAsBlackCurried,
     getYAsWhite,
@@ -133,6 +155,8 @@ export {
     hasPiece,
     hasNoPiece,
     hasWhitePiece,
+    printXAndYPosition,
+    printUnicodePosition,
     removePiece,
     setPiece
 };

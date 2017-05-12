@@ -1,4 +1,3 @@
-import log from 'ptz-log';
 import { compose, not } from 'ramda';
 import * as Board from './Board';
 import * as GameColor from './GameColor';
@@ -33,10 +32,7 @@ function isMyTurn(game, from) {
     if (game.ended)
         return false;
     from = Board.getPosition(game.board, from);
-    const isMyTurn = isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
-    if (isMyTurn === false)
-        log('from: ', from, 'isWhiteTurn', isWhiteTurn(game), ' movements: ', game.movements);
-    return isMyTurn;
+    return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 const getColorTurn = (game) => isWhiteTurn(game) ? game.white : game.black;
 const getPlayerTurn = (game) => isWhiteTurn(game) ? game.players.white : game.players.black;

@@ -2,7 +2,7 @@ import R from 'ramda';
 /**
  * Takes a position and return only {x, y, isBlack}.
  *
- * Remove unnecessery props like lastMoviment, lastPosition,
+ * Remove unnecessary props like lastMovement, lastPosition,
  * jumpingBlackPiece, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
  */
 function getCleanPosition({ x, y, isBlack }) {
@@ -11,7 +11,7 @@ function getCleanPosition({ x, y, isBlack }) {
 /**
  * Takes a position and return only {x, y}.
  */
-function getXandY({ x, y }) {
+function getXAndY({ x, y }) {
     return { x, y };
 }
 const hasBlackPiece = R.propEq('isBlack', true);
@@ -98,5 +98,26 @@ function getYAsWhite(boardSizeY, y, isBlack) {
     return isBlack ? (boardSizeY - 1) - y : y;
 }
 const getYAsWhiteCurried = R.curry(getYAsWhite);
-export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXandY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, removePiece, setPiece };
+function printXAndYPosition(position) {
+    return ` ${position.x},${position.y} |`;
+}
+function printUnicodePosition(position) {
+    if (isBackGroundBlack(position.x, position.y)) {
+        if (hasWhitePiece(position))
+            return '\u{25CF}';
+        else if (hasBlackPiece(position))
+            return '\u{25CB}';
+        else
+            return ' ';
+    }
+    else {
+        if (hasWhitePiece(position))
+            return '\u{25D9}';
+        else if (hasBlackPiece(position))
+            return '\u{25D8}';
+        else
+            return '\u{2588}';
+    }
+}
+export { isBackGroundBlack, getCleanPosition, getToSearchOrder, getToSearchOrderCurried, getXAndY, getYAsBlack, getYAsBlackCurried, getYAsWhite, getYAsWhiteCurried, hasSamePiece, hasSamePosition, hasSamePieceAndPosition, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, printXAndYPosition, printUnicodePosition, removePiece, setPiece };
 //# sourceMappingURL=Position.js.map

@@ -39,7 +39,7 @@ const defaultBoardConf = getBoardConf(defaultBoardSize);
  * Get cached initial board, using memoize from ramda
  *
  * The _getInitialBoard returns :Function Type,
- * that's why we created getInitialBoard wich returns :IGetInitialBoardResult
+ * that's why we created getInitialBoard witch returns :IGetInitialBoardResult
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
@@ -115,34 +115,49 @@ function getBoardSize(board) {
     };
 }
 /**
+ * Takes a function to printPosition and print board.
+ */
+function printBoard(printPosition, board) {
+    return board.reduce((txtCol, col) => {
+        return col.reduce((txtRow, position) => {
+            return txtRow + printPosition(position);
+        }, txtCol) + '\n';
+    }, '');
+}
+const printBoardCurried = R.curry(printBoard);
+/**
  * Get board in a nice format to print it on console
  */
-function printUnicode(board) {
-    var txt = '';
-    for (var y = 0; y < board.length; y++) {
-        for (var x = 0; x < board[y].length; x++) {
-            const position = board[x][y];
-            if (Position.isBackGroundBlack(x, y)) {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25CF}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25CB}';
-                else
-                    txt += ' ';
-            }
-            else {
-                if (Position.hasWhitePiece(position))
-                    txt += '\u{25D9}';
-                else if (Position.hasBlackPiece(position))
-                    txt += '\u{25D8}';
-                else
-                    txt += '\u{2588}';
-            }
-        }
-        txt += '\n';
-    }
-    return txt;
-}
+const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
+/**
+ * Prints only X and Y positions of a board.
+ */
+const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+// function printUnicodeBK(board: IBoard): string {
+//     var txt = '';
+//     for (var y = 0; y < board.length; y++) {
+//         for (var x = 0; x < board[y].length; x++) {
+//             const position = board[x][y];
+//             if (Position.isBackGroundBlack(x, y)) {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25CF}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25CB}';
+//                 else
+//                     txt += ' ';
+//             } else {
+//                 if (Position.hasWhitePiece(position))
+//                     txt += '\u{25D9}';
+//                 else if (Position.hasBlackPiece(position))
+//                     txt += '\u{25D8}';
+//                 else
+//                     txt += '\u{2588}';
+//             }
+//         }
+//         txt += '\n';
+//     }
+//     return txt;
+// }
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from)
         return null;
@@ -227,15 +242,15 @@ function getJumpPosition(board, from, toJumpPosition) {
     return jumpPosition;
 }
 // tslint:disable-next-line:max-line-length
-function whereCanIJump(board, jumpfrom, positions, orderedPositions, isBlack) {
-    const nearFilledPositions = getNearPositions(board, jumpfrom, false);
+function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
+    const nearFilledPositions = getNearPositions(board, jumpFrom, false);
     nearFilledPositions.forEach(nearFilledPosition => {
-        const jumpPosition = getJumpPosition(board, jumpfrom, nearFilledPosition);
+        const jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
             if (Positions.notContains(positions, jumpPosition)) {
-                jumpPosition.lastPosition = jumpfrom;
+                jumpPosition.lastPosition = jumpFrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
-                jumpPosition.jumps = jumpfrom.jumps ? jumpfrom.jumps++ : 2;
+                jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
                 positions.push(jumpPosition);
                 const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y])
@@ -253,5 +268,5 @@ function getBoardWhereCanIGo(board, from, blackPiece) {
         return position;
     });
 }
-export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printUnicode, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition };
+export { defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getJumpPosition, getNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition };
 //# sourceMappingURL=Board.js.map

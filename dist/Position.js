@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPiece = exports.removePiece = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXandY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
+exports.setPiece = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndPosition = exports.hasSamePosition = exports.hasSamePiece = exports.getYAsWhiteCurried = exports.getYAsWhite = exports.getYAsBlackCurried = exports.getYAsBlack = exports.getXAndY = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getCleanPosition = exports.isBackGroundBlack = undefined;
 
 var _ramda = require('ramda');
 
@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Takes a position and return only {x, y, isBlack}.
  *
- * Remove unnecessery props like lastMoviment, lastPosition,
+ * Remove unnecessary props like lastMovement, lastPosition,
  * jumpingBlackPiece, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
  */
 function getCleanPosition(_ref) {
@@ -27,7 +27,7 @@ function getCleanPosition(_ref) {
 /**
  * Takes a position and return only {x, y}.
  */
-function getXandY(_ref2) {
+function getXAndY(_ref2) {
     var x = _ref2.x,
         y = _ref2.y;
 
@@ -110,11 +110,21 @@ function getYAsWhite(boardSizeY, y, isBlack) {
     return isBlack ? boardSizeY - 1 - y : y;
 }
 var getYAsWhiteCurried = _ramda2.default.curry(getYAsWhite);
+function printXAndYPosition(position) {
+    return ' ' + position.x + ',' + position.y + ' |';
+}
+function printUnicodePosition(position) {
+    if (isBackGroundBlack(position.x, position.y)) {
+        if (hasWhitePiece(position)) return '\u25CF';else if (hasBlackPiece(position)) return '\u25CB';else return ' ';
+    } else {
+        if (hasWhitePiece(position)) return '\u25D9';else if (hasBlackPiece(position)) return '\u25D8';else return '\u2588';
+    }
+}
 exports.isBackGroundBlack = isBackGroundBlack;
 exports.getCleanPosition = getCleanPosition;
 exports.getToSearchOrder = getToSearchOrder;
 exports.getToSearchOrderCurried = getToSearchOrderCurried;
-exports.getXandY = getXandY;
+exports.getXAndY = getXAndY;
 exports.getYAsBlack = getYAsBlack;
 exports.getYAsBlackCurried = getYAsBlackCurried;
 exports.getYAsWhite = getYAsWhite;
@@ -126,6 +136,8 @@ exports.hasBlackPiece = hasBlackPiece;
 exports.hasPiece = hasPiece;
 exports.hasNoPiece = hasNoPiece;
 exports.hasWhitePiece = hasWhitePiece;
+exports.printXAndYPosition = printXAndYPosition;
+exports.printUnicodePosition = printUnicodePosition;
 exports.removePiece = removePiece;
 exports.setPiece = setPiece;
 //# sourceMappingURL=Position.js.map

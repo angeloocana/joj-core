@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getMoveXandY = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getBackMove = exports.canMove = undefined;
+exports.getMoveXAndY = exports.getGameBeforeLastMove = exports.getGameAfterMove = exports.getBackMove = exports.canMove = undefined;
 
 var _Board = require('./Board');
 
@@ -39,10 +39,10 @@ function getBackMove(move) {
 /**
  * Takes a move and returns it with clean positions {from: {x,y}, to: {x,y}}.
  */
-function getMoveXandY(move) {
+function getMoveXAndY(move) {
     return {
-        from: Position.getXandY(move.from),
-        to: Position.getXandY(move.to)
+        from: Position.getXAndY(move.from),
+        to: Position.getXAndY(move.to)
     };
 }
 function canMove(game, move) {
@@ -85,7 +85,7 @@ function getGameAfterMove(game, move) {
     game.black = GameColor.getColorAfterMove(game.black, move);
     game.white = GameColor.getColorAfterMove(game.white, move);
     if (!backMove) {
-        game.movements = game.movements.concat(getMoveXandY(move));
+        game.movements = game.movements.concat(getMoveXAndY(move));
         game.ended = game.black.score.won || game.white.score.won;
     }
     return game;
@@ -105,6 +105,6 @@ exports.canMove = canMove;
 exports.getBackMove = getBackMove;
 exports.getGameAfterMove = getGameAfterMove;
 exports.getGameBeforeLastMove = getGameBeforeLastMove;
-exports.getMoveXandY = getMoveXandY;
+exports.getMoveXAndY = getMoveXAndY;
 //# sourceMappingURL=Move.js.map
 //# sourceMappingURL=Move.js.map

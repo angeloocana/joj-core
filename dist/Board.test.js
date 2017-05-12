@@ -25,7 +25,7 @@ function assertPosition(actualPosition, expectedPosition) {
     assert.equal(actualPosition.isBlack, expectedPosition.isBlack, 'Is same piece');
 }
 function assertPositions(actual, expected) {
-    assert.equal(actual.length, expected.length, 'diferent length of actual and expected positions');
+    assert.equal(actual.length, expected.length, 'different length of actual and expected positions');
     for (var i = 0; i < actual.length; i++) {
         assertPosition(actual[i], expected[i]);
     }
@@ -156,7 +156,7 @@ describe('Board', function () {
         });
     });
     describe('getJumpPosition', function () {
-        it('jumping up and rigth', function () {
+        it('jumping up and right', function () {
             var _Board$getInitialBoar9 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
                 board = _Board$getInitialBoar9.board;
 
@@ -186,7 +186,7 @@ describe('Board', function () {
             var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
             assertPosition(actual, expected);
         });
-        it('jumping down and rigth', function () {
+        it('jumping down and right', function () {
             var _Board$getInitialBoar12 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
                 board = _Board$getInitialBoar12.board;
 
@@ -225,12 +225,15 @@ describe('Board', function () {
             assert.notOk(_index.Board.getJumpPosition(board, from, toJumpPosition));
         });
     });
-    it('printUnicode', function printUnicodeTest() {
-        var _Board$getInitialBoar16 = _index.Board.getInitialBoard(_index.Board.defaultBoardConf),
-            board = _Board$getInitialBoar16.board;
-
-        var actual = _index.Board.printUnicode(board);
-        assert.equal(actual, TestData.unicodeStartBoard);
+    describe.skip('print', function () {
+        it('printUnicode', function printUnicodeTest() {
+            var actual = _index.Board.printUnicodeBoard(TestData.defaultInitialBoard);
+            assert.equal(actual, TestData.unicodeStartBoard);
+        });
+        it('printXAndY', function printUnicodeTest() {
+            var actual = _index.Board.printXAndYBoard(TestData.defaultInitialBoard);
+            assert.equal(actual, TestData.unicodeStartBoard);
+        });
     });
     describe('getColorStartEndRow', function () {
         it('return {startRow: 0, endRow } for black', function () {

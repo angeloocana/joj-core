@@ -4,15 +4,9 @@ var _ptzAssert = require('ptz-assert');
 
 var assert = _interopRequireWildcard(_ptzAssert);
 
-var _ptzLog = require('ptz-log');
-
-var _ptzLog2 = _interopRequireDefault(_ptzLog);
-
 var _index = require('./index');
 
 var _gameData = require('./__tests__/game.data.test');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37,11 +31,7 @@ describe('Game', function () {
                 from: { x: 4, y: 7 },
                 to: { x: 4, y: 6 }
             };
-            (0, _ptzLog2.default)('before initialGame.movements', _gameData.initialGame.movements);
             var game = _index.Move.getGameAfterMove(_gameData.initialGame, move, false);
-            (0, _ptzLog2.default)('game === initialGame: ', game === _gameData.initialGame);
-            (0, _ptzLog2.default)('after initialGame.movements', _gameData.initialGame.movements);
-            (0, _ptzLog2.default)('game.movements', game.movements);
             var cleanGame = _index.Game.getCleanGameToSaveOnServer(game);
             assert.equal(game.ended, cleanGame.ended);
             assert.equal(cleanGame.movements.length, 1);
@@ -61,7 +51,6 @@ describe('Game', function () {
         });
         it('returns false for white piece and black turn', function () {
             var firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
-            (0, _ptzLog2.default)('initialGame', _gameData.initialGame);
             var game = _index.Move.getGameAfterMove(_gameData.initialGame, firstMove);
             var from = { x: 7, y: 7 };
             assert.notOk(_index.Game.isMyTurn(game, from));

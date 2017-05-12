@@ -21,10 +21,10 @@ function getBackMove(move: IMove): IMove {
 /**
  * Takes a move and returns it with clean positions {from: {x,y}, to: {x,y}}.
  */
-function getMoveXandY(move: IMove): IMove {
+function getMoveXAndY(move: IMove): IMove {
     return {
-        from: Position.getXandY(move.from),
-        to: Position.getXandY(move.to)
+        from: Position.getXAndY(move.from),
+        to: Position.getXAndY(move.to)
     };
 }
 
@@ -80,7 +80,7 @@ function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): 
     game.white = GameColor.getColorAfterMove(game.white, move);
 
     if (!backMove) {
-        game.movements = game.movements.concat(getMoveXandY(move));
+        game.movements = game.movements.concat(getMoveXAndY(move));
         game.ended = game.black.score.won || game.white.score.won;
     }
 
@@ -108,5 +108,5 @@ export {
     getBackMove,
     getGameAfterMove,
     getGameBeforeLastMove,
-    getMoveXandY
+    getMoveXAndY
 };
