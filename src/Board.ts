@@ -246,21 +246,30 @@ function getAllNearPositions(position): IPosition[] {
 }
 
 /**
- * Caches near positions by each boardSize
+ * Get near positions and CACHES it for each boardSize
  */
 const _getNearPositions = R.memoize((boardSize: IBoardSize, position: IPosition) => // tslint:disable-line:variable-name
     getAllNearPositions(position)
         .filter(p => hasPositionByBoardSize(boardSize, p)));
 
+/**
+ * Get near positions
+ */
 function getNearPositions(board: IBoard, position: IPosition): IPosition[] {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
         .map(p => getPosition(board, p));
 }
 
+/**
+ * Get empty near positions
+ */
 const getEmptyNearPositions = (board: IBoard, position: IPosition) =>
     getNearPositions(board, position)
         .filter(p => Position.hasNoPiece(p));
 
+/**
+ * Get not empty near positions
+ */
 const getNotEmptyNearPositions = (board: IBoard, position: IPosition) =>
     getNearPositions(board, position)
         .filter(p => Position.hasPiece(p));
@@ -323,6 +332,9 @@ function whereCanIJump(board: IBoard, jumpFrom: IPosition, positions, orderedPos
     });
 }
 
+/**
+ * Get board with checked where can I go positions
+ */
 function getBoardWhereCanIGo(board: IBoard, from: IPosition, blackPiece: boolean): IBoard {
     const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));

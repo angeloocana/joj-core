@@ -216,23 +216,32 @@ function getAllNearPositions(position) {
     });
 }
 /**
- * Caches near positions by each boardSize
+ * Get near positions and CACHES it for each boardSize
  */
 var _getNearPositions = _ramda2.default.memoize(function (boardSize, position) {
     return getAllNearPositions(position).filter(function (p) {
         return hasPositionByBoardSize(boardSize, p);
     });
 });
+/**
+ * Get near positions
+ */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position)).map(function (p) {
         return getPosition(board, p);
     });
 }
+/**
+ * Get empty near positions
+ */
 var getEmptyNearPositions = function getEmptyNearPositions(board, position) {
     return getNearPositions(board, position).filter(function (p) {
         return Position.hasNoPiece(p);
     });
 };
+/**
+ * Get not empty near positions
+ */
 var getNotEmptyNearPositions = function getNotEmptyNearPositions(board, position) {
     return getNearPositions(board, position).filter(function (p) {
         return Position.hasPiece(p);
@@ -270,6 +279,9 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
         }
     });
 }
+/**
+ * Get board with checked where can I go positions
+ */
 function getBoardWhereCanIGo(board, from, blackPiece) {
     var _getPositionsWhereCan = getPositionsWhereCanIGo(board, from, blackPiece),
         positions = _getPositionsWhereCan.positions;

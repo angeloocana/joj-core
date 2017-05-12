@@ -189,16 +189,25 @@ function getAllNearPositions(position) {
     });
 }
 /**
- * Caches near positions by each boardSize
+ * Get near positions and CACHES it for each boardSize
  */
 const _getNearPositions = R.memoize((boardSize, position) => getAllNearPositions(position)
     .filter(p => hasPositionByBoardSize(boardSize, p)));
+/**
+ * Get near positions
+ */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
         .map(p => getPosition(board, p));
 }
+/**
+ * Get empty near positions
+ */
 const getEmptyNearPositions = (board, position) => getNearPositions(board, position)
     .filter(p => Position.hasNoPiece(p));
+/**
+ * Get not empty near positions
+ */
 const getNotEmptyNearPositions = (board, position) => getNearPositions(board, position)
     .filter(p => Position.hasPiece(p));
 function getJumpPosition(board, from, toJumpPosition) {
@@ -244,6 +253,9 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
         }
     });
 }
+/**
+ * Get board with checked where can I go positions
+ */
 function getBoardWhereCanIGo(board, from, blackPiece) {
     const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
