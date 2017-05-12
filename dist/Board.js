@@ -38,13 +38,13 @@ var hasPosition = function hasPosition(board, position) {
 /**
  * Map some function in all board positions and return a new board
  */
-function mapBoard(board, func) {
+var mapBoard = function mapBoard(board, func) {
     return board.map(function (col) {
-        return col.map(function (position) {
-            return func(position);
+        return col.map(function (p) {
+            return func(p);
         });
     });
-}
+};
 function getColorStartEndRow(boardEndRow, isBlack) {
     return {
         startRow: isBlack ? 0 : boardEndRow,

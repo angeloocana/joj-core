@@ -28,9 +28,8 @@ const hasPosition = (board: IBoard, position: IPosition) => position
 /**
  * Map some function in all board positions and return a new board
  */
-function mapBoard(board: IBoard, func: IMapBoardFunc): IBoard {
-    return board.map(col => col.map(position => func(position)));
-}
+const mapBoard = (board: IBoard, func: IMapBoardFunc) =>
+    board.map(col => col.map(p => func(p)));
 
 function getColorStartEndRow(boardEndRow: number, isBlack: boolean): IStartEndRow {
     return {
