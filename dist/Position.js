@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndXY = exports.hasSameXY = exports.hasSamePiece = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -38,14 +38,10 @@ var hasWhitePiece = function hasWhitePiece(p) {
     return p.isBlack === false;
 };
 var hasPiece = _ramda2.default.anyPass([hasBlackPiece, hasWhitePiece]);
-var hasNoPiece = _ramda2.default.compose(_ramda2.default.not, hasPiece);
-var hasSamePiece = function hasSamePiece(p1, p2) {
-    return p1.isBlack === p2.isBlack;
-};
+var hasNoPiece = _ramda2.default.Compose(_ramda2.default.not, hasPiece);
 var hasSameXY = function hasSameXY(p1, p2) {
     return p1.x === p2.x && p1.y === p2.y;
 };
-var hasSamePieceAndXY = _ramda2.default.allPass([hasSamePiece, hasSameXY]);
 var setPiece = function setPiece(isBlack, position) {
     return Object.assign({}, position, { isBlack: isBlack });
 };
@@ -187,9 +183,7 @@ exports.getY0Start = getY0Start;
 exports.getY0StartCurried = getY0StartCurried;
 exports.getY0End = getY0End;
 exports.getY0EndCurried = getY0EndCurried;
-exports.hasSamePiece = hasSamePiece;
 exports.hasSameXY = hasSameXY;
-exports.hasSamePieceAndXY = hasSamePieceAndXY;
 exports.hasBlackPiece = hasBlackPiece;
 exports.hasPiece = hasPiece;
 exports.hasNoPiece = hasNoPiece;

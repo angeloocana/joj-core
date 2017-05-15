@@ -20,9 +20,7 @@ const hasBlackPiece = (p) => p.isBlack === true;
 const hasWhitePiece = (p) => p.isBlack === false;
 const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
 const hasNoPiece = R.compose(R.not, hasPiece);
-const hasSamePiece = (p1, p2) => p1.isBlack === p2.isBlack;
 const hasSameXY = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
-const hasSamePieceAndXY = R.allPass([hasSamePiece, hasSameXY]);
 const setPiece = (isBlack, position) => Object.assign({}, position, { isBlack });
 const setPieceCurried = R.curry(setPiece);
 const setPieceToBlack = setPieceCurried(true);
@@ -149,5 +147,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSamePiece, hasSameXY, hasSamePieceAndXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map
