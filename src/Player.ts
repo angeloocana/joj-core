@@ -1,7 +1,7 @@
 import { curry } from 'ramda';
-import { IPlayer, IPlayerArgs } from './IPlayer';
+import * as I from './typings';
 
-function create(isBlack: boolean, args: IPlayerArgs): IPlayer {
+function createPlayer(isBlack: boolean, args: I.IPlayerArgs): I.IPlayer {
     return {
         ai: args.ai,
         name: args.name,
@@ -10,18 +10,39 @@ function create(isBlack: boolean, args: IPlayerArgs): IPlayer {
     };
 }
 
-const curriedCreate = curry(create);
+const createPlayerCurried = curry(createPlayer);
 
-const createWhite = curriedCreate(false);
+const createWhitePlayer = createPlayerCurried(false);
 
-const createBlack = curriedCreate(true);
+const createBlackPlayer = createPlayerCurried(true);
 
-function isComputer(player: IPlayer): boolean {
+function isComputer(player: I.IPlayer): boolean {
     return player.ai ? true : false;
 }
 
+const initialPlayers: I.IPlayers = {
+    white: {
+        isBlack: false,
+        name: 'White'
+    },
+    black: {
+        isBlack: true,
+        name: 'Black'
+    }
+};
+
+function createPlayers(args: I.IPlayersArgs): I.IPlayers {
+    return args ? {
+        white: createWhitePlayer(args.white),
+        black: createBlackPlayer(args.black)
+    } : initialPlayers;
+}
+
 export {
-    createBlack,
-    createWhite,
+    createPlayer,
+    createPlayerCurried,
+    createBlackPlayer,
+    createWhitePlayer,
+    createPlayers,
     isComputer
 };

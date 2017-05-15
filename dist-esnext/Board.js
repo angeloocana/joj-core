@@ -1,6 +1,5 @@
 import R from 'ramda';
 import * as Position from './Position';
-import * as Positions from './Positions';
 import log from 'ptz-log';
 /**
  * Default 8x8 board size
@@ -20,25 +19,35 @@ const hasPosition = (board, position) => hasPositionByBoardSize(getBoardSize(boa
  * Map some function in all board positions and return a new board
  */
 const mapBoard = (board, func) => board.map(col => col.map(p => func(p)));
-function getColorStartEndRow(boardEndRow, isBlack) {
+/**
+ * Get START and END rows
+ *
+ * returns { startRow, endRow }
+ */
+function getStartEndRow(boardEndRow, isBlack) {
     return {
         startRow: isBlack ? 0 : boardEndRow,
         endRow: isBlack ? boardEndRow : 0
     };
 }
-function getBoardConf(boardSize) {
+/**
+ * Takes a boardSize and return START and END rows for WHITE and BLACK.
+ *
+ * returns { white:{startRow, endRow}, black:{startRow, endRow} }
+ */
+function getStartEndRowsFromBoardSize(boardSize) {
     const endRow = boardSize.y - 1;
     return {
-        size: boardSize,
-        endRow,
-        white: getColorStartEndRow(endRow, false),
-        black: getColorStartEndRow(endRow, true)
+        white: getStartEndRow(endRow, false),
+        black: getStartEndRow(endRow, true)
     };
 }
 /**
- * Default configuration for 8x8 board
+ * Takes a board and return START and END rows for WHITE and BLACK.
+ *
+ * returns { white:{startRow, endRow}, black:{startRow, endRow} }
  */
-const defaultBoardConf = getBoardConf(defaultBoardSize);
+const getStartEndRows = R.compose(getStartEndRowsFromBoardSize, getBoardSize);
 /**
  * Get cached initial board, using memoize from ramda
  *
@@ -47,37 +56,30 @@ const defaultBoardConf = getBoardConf(defaultBoardSize);
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
-const _getInitialBoard = R.memoize((boardConf) => {
+const _getInitialBoard = R.memoize((boardSize) => {
     // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    log('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardConf);
-    const board = [], blackPieces = [], whitePieces = [];
-    for (let x = 0; x < boardConf.size.x; x++) {
-        for (let y = 0; y < boardConf.size.y; y++) {
+    log('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardSize);
+    const endRow = boardSize.y - 1;
+    const board = [];
+    for (let x = 0; x < boardSize.x; x++) {
+        for (let y = 0; y < boardSize.y; y++) {
             if (!board[y])
                 board[y] = [];
             const position = { x, y };
-            if (y === 0) {
+            if (y === 0)
                 position.isBlack = true;
-                blackPieces.push({ position });
-            }
-            if (y === boardConf.endRow) {
+            if (y === endRow)
                 position.isBlack = false;
-                whitePieces.push({ position });
-            }
             board[y][x] = position;
         }
     }
-    return {
-        board,
-        blackPieces,
-        whitePieces
-    };
+    return board;
 });
 /**
  * Get cached initial board, using memoize from ramda
  */
-function getInitialBoard(boardConf) {
-    return _getInitialBoard(boardConf);
+function getInitialBoard(boardSize) {
+    return _getInitialBoard(boardSize);
 }
 function getPosition(board, position) {
     try {
@@ -87,28 +89,20 @@ function getPosition(board, position) {
         throw new Error('Error getting position');
     }
 }
-function setPosition(board, position) {
-    try {
-        board[position.y][position.x] = position;
-        return board;
-    }
-    catch (e) {
-        throw new Error('Error getting position');
-    }
-}
+const setPosition = (board, position) => mapBoard(board, p => Position.hasSameXY(p, position) ? position : p);
 const setPieceOnBoard = (board, position, isBlack) => setPosition(board, Position.setPiece(isBlack, position));
 const removePieceOnBoard = (board, position) => setPosition(board, Position.removePiece(position));
 const getCleanBoard = (board) => mapBoard(board, Position.getCleanPosition);
 /**
- * Take a board: IPosition[][] an return the number of rows(X)
+ * Take a board: I.IPosition[][] an return the number of rows(X)
  */
 const getBoardSizeX = (board) => board[0].length;
 /**
- * Take a board: IPosition[][] an return the number of rows(Y)
+ * Take a board: I.IPosition[][] an return the number of rows(Y)
  */
 const getBoardSizeY = (board) => board.length;
 /**
- * Take a board: IPosition[][] an return the number of columns and rows {x, y}
+ * Take a board: I.IPosition[][] an return the number of columns and rows {x, y}
  */
 function getBoardSize(board) {
     return {
@@ -120,10 +114,10 @@ function getBoardSize(board) {
  * Takes a function to printPosition and print board.
  */
 function printBoard(printPosition, board) {
-    return board.reduce((txtCol, col) => {
-        return col.reduce((txtRow, position) => {
-            return txtRow + printPosition(position);
-        }, txtCol) + '\n';
+    return board.reduce((txtRow, col) => {
+        return col.reduce((txt, position) => {
+            return txt + printPosition(position);
+        }, txtRow) + '\n';
     }, '');
 }
 const printBoardCurried = R.curry(printBoard);
@@ -145,7 +139,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         const nearPosition = allNearPositions[i];
         if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
-            const y = Position.getYAsBlack(getBoardSizeY(board), nearPosition.y, isBlack);
+            const y = Position.getY0Start(getBoardSizeY(board), nearPosition.y, isBlack);
             if (!orderedPositions[y])
                 orderedPositions[y] = [];
             orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
@@ -155,7 +149,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
-                const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
+                const y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y])
                     orderedPositions[y] = [];
                 orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
@@ -191,10 +185,11 @@ function getAllNearPositions(position) {
 /**
  * Get near positions and CACHES it for each boardSize
  */
-const _getNearPositions = R.memoize((boardSize, position) => getAllNearPositions(position)
+// tslint:disable-next-line:variable-name
+const _getNearPositions = R.memoize((boardSize, xy) => getAllNearPositions(xy)
     .filter(p => hasPositionByBoardSize(boardSize, p)));
 /**
- * Get near positions
+ * Get near positions from the given board instance.
  */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
@@ -239,12 +234,12 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     nearFilledPositions.forEach(nearFilledPosition => {
         const jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
-            if (Positions.notContains(positions, jumpPosition)) {
+            if (Position.notContainsXY(positions, jumpPosition)) {
                 jumpPosition.lastPosition = jumpFrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
                 jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
                 positions.push(jumpPosition);
-                const y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
+                const y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y])
                     orderedPositions[y] = [];
                 orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
@@ -256,9 +251,29 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
 /**
  * Get board with checked where can I go positions
  */
-function getBoardWhereCanIGo(board, from, blackPiece) {
-    const { positions } = getPositionsWhereCanIGo(board, from, blackPiece);
+function getBoardWhereCanIGo(board, from, isBlack) {
+    const { positions } = getPositionsWhereCanIGo(board, from, isBlack);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
-export { _getInitialBoard, _getNearPositions, defaultBoardSize, defaultBoardConf, getCleanBoard, getInitialBoard, getBoardConf, getBoardWhereCanIGo, getColorStartEndRow, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
+/**
+ * Get Pieces from board
+ *
+ * returns { white: [{x,y}], black: [{x,y}] }
+ */
+function getPiecesFromBoard(board) {
+    const initialPieces = {
+        white: [],
+        black: []
+    };
+    return board.reduce((piecesRow, row) => {
+        return row.reduce((pieces, position) => {
+            if (Position.hasBlackPiece(position))
+                pieces.black = pieces.black.concat(position);
+            else if (Position.hasWhitePiece(position))
+                pieces.white = pieces.white.concat(position);
+            return pieces;
+        }, piecesRow);
+    }, initialPieces);
+}
+export { _getInitialBoard, _getNearPositions, defaultBoardSize, getCleanBoard, getInitialBoard, getBoardWhereCanIGo, getStartEndRow, getStartEndRows, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

@@ -1,31 +1,15 @@
 import * as Board from './Board';
 import * as Game from './Game';
-import * as GameColor from './GameColor';
 import * as Move from './Move';
-import * as Piece from './Piece';
-import * as Pieces from './Pieces';
 import * as Player from './Player';
-import * as Players from './Players';
 import * as Position from './Position';
-import * as Positions from './Positions';
-
-export * from './IPosition';
-export * from './IBoard';
-export * from './IGame';
-export * from './IGameColor';
-export * from './IPiece';
-export * from './IPlayer';
-export * from './IPlayers';
+import * as Score from './Score';
 
 export {
     Board,
     Game,
-    GameColor,
+    Score,
     Move,
-    Piece,
-    Pieces,
     Player,
-    Players,
-    Position,
-    Positions
+    Position
 };

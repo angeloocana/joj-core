@@ -69,16 +69,67 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#cannotmove" class="tsd-kind-icon">can<wbr>Not<wbr>Move</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#canmove" class="tsd-kind-icon">can<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getbackmove" class="tsd-kind-icon">get<wbr>Back<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getboardaftermove" class="tsd-kind-icon">get<wbr>Board<wbr>After<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgameaftermove" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgameaftermoves" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Moves</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgamebeforelastmove" class="tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovefromarray" class="tsd-kind-icon">get<wbr>Move<wbr>From<wbr>Array</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovexandy" class="tsd-kind-icon">get<wbr>MoveXAndY</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovesfromarray" class="tsd-kind-icon">get<wbr>Moves<wbr>From<wbr>Array</a></li>
 							</ul>
 						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="cannotmove" class="tsd-anchor"></a>
+					<h3>can<wbr>Not<wbr>Move</h3>
+					<div class="tsd-signature tsd-kind-icon">can<wbr>Not<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.compose(R.not, canMove)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L46">Move.ts:46</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Can not move</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>x0<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V0</span>, x1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T2</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>x0: <span class="tsd-signature-type">V0</span></h5>
+											</li>
+											<li>
+												<h5>x1: <span class="tsd-signature-type">V1</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T2</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</section>
 			</section>
@@ -88,22 +139,32 @@
 					<a name="canmove" class="tsd-anchor"></a>
 					<h3>can<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">can<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">can<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L31">Move.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L35">Move.ts:35</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes game and move then:</p>
+									<ul>
+										<li>Checks if it is my turn to play otherwise returns false.</li>
+										<li>Get positions where can i go.</li>
+										<li>Returns true if move.to is in the positions where can i go.</li>
+									</ul>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>game: <a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
+									<h5>game: <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
 								</li>
 								<li>
-									<h5>move: <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
+									<h5>move: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -114,13 +175,13 @@
 					<a name="getbackmove" class="tsd-anchor"></a>
 					<h3>get<wbr>Back<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Back<wbr>Move<span class="tsd-signature-symbol">(</span>move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Back<wbr>Move<span class="tsd-signature-symbol">(</span>move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L14">Move.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L12">Move.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -131,10 +192,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>move: <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
+									<h5>move: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -142,25 +203,25 @@
 					<a name="getboardaftermove" class="tsd-anchor"></a>
 					<h3>get<wbr>Board<wbr>After<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Board<wbr>After<wbr>Move<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Board<wbr>After<wbr>Move<span class="tsd-signature-symbol">(</span>board<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">I.IBoard</span>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">I.IBoard</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L42">Move.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L48">Move.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>board: <a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></h5>
+									<h5>board: <span class="tsd-signature-type">I.IBoard</span></h5>
 								</li>
 								<li>
-									<h5>move: <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
+									<h5>move: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_iboard_d_.html#iboard" class="tsd-signature-type">IBoard</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">I.IBoard</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -168,13 +229,13 @@
 					<a name="getgameaftermove" class="tsd-anchor"></a>
 					<h3>get<wbr>Game<wbr>After<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a>, backMove<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a>, move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a>, backMove<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L67">Move.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L72">Move.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,25 +244,55 @@
 								</div>
 								<p>Updates:</p>
 								<ul>
-									<li>.board (Cleans board, set positions and move breadcrumb)</li>
-									<li>.black (Calculate score)</li>
-									<li>.white (Calculate score)</li>
-									<li>.movements (add new move)</li>
+									<li>.board (It cleans board, set new positions and move breadcrumb)</li>
+									<li>.score</li>
+									<li>.moves (add new move if valid)</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>game: <a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
+									<h5>game: <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
 								</li>
 								<li>
-									<h5>move: <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
+									<h5>move: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> backMove: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getgameaftermoves" class="tsd-anchor"></a>
+					<h3>get<wbr>Game<wbr>After<wbr>Moves</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Moves<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a>, moves<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L131">Move.ts:131</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get game after n moves.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>game: <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
+								</li>
+								<li>
+									<h5>moves: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -209,22 +300,52 @@
 					<a name="getgamebeforelastmove" class="tsd-anchor"></a>
 					<h3>get<wbr>Game<wbr>Before<wbr>Last<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move<span class="tsd-signature-symbol">(</span>game<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L90">Move.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L86">Move.ts:86</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>game: <a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
+									<h5>game: <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_igame_d_.igame.html" class="tsd-signature-type">IGame</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getmovefromarray" class="tsd-anchor"></a>
+					<h3>get<wbr>Move<wbr>From<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Move<wbr>From<wbr>Array<span class="tsd-signature-symbol">(</span>move<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L108">Move.ts:108</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get IMove from an array like
+									[[fromX,fromY], [toX, toY]]</p>
+								</div>
+								<p>const move = [[5, 7], [5, 6]];</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>move: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -232,13 +353,13 @@
 					<a name="getmovexandy" class="tsd-anchor"></a>
 					<h3>get<wbr>MoveXAndY</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>MoveXAndY<span class="tsd-signature-symbol">(</span>move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>MoveXAndY<span class="tsd-signature-symbol">(</span>move<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/67cfa7b/src/Move.ts#L24">Move.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L22">Move.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -249,10 +370,44 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>move: <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
+									<h5>move: <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getmovesfromarray" class="tsd-anchor"></a>
+					<h3>get<wbr>Moves<wbr>From<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Moves<wbr>From<wbr>Array<span class="tsd-signature-symbol">(</span>moves<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/5ec5557/src/Move.ts#L125">Move.ts:125</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get IMove[] from an array like
+									[[fromX,fromY], [toX, toY]]</p>
+								</div>
+								<p>const moves = [
+									[[5, 7], [5, 6]],
+									[[2, 0], [2, 1]],
+									[[7, 7], [5, 5]]
+								];</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>moves: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -270,70 +425,55 @@
 					<li class=" tsd-kind-external-module">
 						<a href="_game_.html">"<wbr>Game"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_gamecolor_.html">"<wbr>Game<wbr>Color"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_iai_d_.html">"IAi.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_iboard_d_.html">"IBoard.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_icleangame_d_.html">"IClean<wbr>Game.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_igame_d_.html">"IGame.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_igamecolor_d_.html">"IGame<wbr>Color.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_imove_d_.html">"IMove.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_ipiece_d_.html">"IPiece.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_iplayer_d_.html">"IPlayer.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_iplayers_d_.html">"IPlayers.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_iposition_d_.html">"IPosition.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_ipositionswherecanigo_d_.html">"IPositions<wbr>Where<wbr>CanIGo.d"</a>
-					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_move_.html">"<wbr>Move"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_piece_.html">"<wbr>Piece"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_pieces_.html">"<wbr>Pieces"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_player_.html">"<wbr>Player"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_players_.html">"<wbr>Players"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="_position_.html">"<wbr>Position"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_positions_.html">"<wbr>Positions"</a>
+						<a href="_score_.html">"<wbr>Score"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_iai_d_.html">"typings/IAi.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_iboard_d_.html">"typings/IBoard.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_igame_d_.html">"typings/IGame.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_imove_d_.html">"typings/IMove.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_iplayer_d_.html">"typings/IPlayer.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_iposition_d_.html">"typings/IPosition.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_ipositionswherecanigo_d_.html">"typings/IPositions<wbr>Where<wbr>CanIGo.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_iscore_d_.html">"typings/IScore.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_typings_index_d_.html">"typings/index.d"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#cannotmove" class="tsd-kind-icon">can<wbr>Not<wbr>Move</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#canmove" class="tsd-kind-icon">can<wbr>Move</a>
 					</li>
@@ -347,10 +487,19 @@
 						<a href="_move_.html#getgameaftermove" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getgameaftermoves" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Moves</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#getgamebeforelastmove" class="tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getmovefromarray" class="tsd-kind-icon">get<wbr>Move<wbr>From<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#getmovexandy" class="tsd-kind-icon">get<wbr>MoveXAndY</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getmovesfromarray" class="tsd-kind-icon">get<wbr>Moves<wbr>From<wbr>Array</a>
 					</li>
 				</ul>
 			</nav>

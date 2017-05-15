@@ -15,7 +15,8 @@
     "predebug": "npm run pretest",
     "debug": "node --nolazy --debug-brk=5858 dist/index.js",
     "docs:build": "typedoc --out ./docs ./ --includeDeclarations --excludeExternals --exclude '**/*.test.ts'",
-    "docs": "npm run docs:build && opn ./docs/index.html"
+    "docs:open": "opn ./docs/index.html",
+    "docs": "npm run docs:build && npm run docs:open"
   },
   "repository": {
     "type": "git",

@@ -1,17 +1,15 @@
 import * as assert from 'ptz-assert';
-import {
-    IPlayer,
-    Player
-} from './index';
+import { Player } from './index';
+import * as I from './typings';
 
 describe('Player', () => {
 
-    let player: IPlayer;
+    let player: I.IPlayer;
 
-    describe('createBlack', () => {
+    describe('createBlackPlayer', () => {
         const name = 'John';
         beforeEach(() => {
-            player = Player.createBlack({ name });
+            player = Player.createBlackPlayer({ name });
         });
 
         it('set name', () => {
@@ -23,10 +21,10 @@ describe('Player', () => {
         });
     });
 
-    describe('createWhite', () => {
+    describe('createWhitePlayer', () => {
         const name = 'John';
         beforeEach(() => {
-            player = Player.createWhite({ name });
+            player = Player.createWhitePlayer({ name });
         });
 
         it('set name', () => {
@@ -35,6 +33,39 @@ describe('Player', () => {
 
         it('set isBlack = true', () => {
             assert.notOk(player.isBlack);
+        });
+    });
+
+    describe('Players', () => {
+
+        let players: I.IPlayers;
+        const white: I.IPlayerArgs = { name: 'P White' };
+        const black: I.IPlayerArgs = { name: 'P Black' };
+
+        beforeEach(() => {
+            players = Player.createPlayers({
+                black,
+                white
+            });
+        });
+
+        describe('New setting players', () => {
+
+            it('Set white player name', () => {
+                assert.ok(players.white.name === white.name);
+            });
+
+            it('Set black player name', () => {
+                assert.ok(players.black.name === black.name);
+            });
+
+            it('Set white player ai', () => {
+                assert.ok(players.white.ai === white.ai);
+            });
+
+            it('Set black player ai', () => {
+                assert.ok(players.black.ai === black.ai);
+            });
         });
     });
 });

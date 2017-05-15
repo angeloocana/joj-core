@@ -1,9 +1,6 @@
 import * as assert from 'ptz-assert';
-import {
-    Game,
-    IGame,
-    Move
-} from './index';
+import { Game, Move } from './index';
+import * as I from './typings';
 
 describe('Move', () => {
     describe('getBackMove', () => {
@@ -35,13 +32,13 @@ describe('Move', () => {
 
             game = Move.getGameBeforeLastMove(game);
 
-            assert.equal(gameBeforeLastMove.movements.length, game.movements.length);
-            assert.deepEqual(gameBeforeLastMove.movements, game.movements);
+            assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
+            assert.deepEqual(gameBeforeLastMove.moves, game.moves);
         });
     });
 
     describe('getGameAfterMove', () => {
-        var game: IGame;
+        var game: I.IGame;
 
         beforeEach(() => {
             game = Game.createGame({
@@ -62,5 +59,22 @@ describe('Move', () => {
                 game = Move.getGameAfterMove(game, move);
             });
         });
+    });
+
+    it('getGameAfterMoves', () => {
+        const gameBeforeMoves = Game.createGame({
+            boardSize: { x: 8, y: 8 }
+        });
+
+        const moves = Move.getMovesFromArray([
+            [[5, 7], [5, 6]],
+            [[2, 0], [2, 1]],
+            [[7, 7], [5, 5]]
+        ]);
+
+        const gameAfterMoves = Move.getGameAfterMoves(gameBeforeMoves, moves);
+
+        assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');
+        assert.equal(gameAfterMoves.moves.length, moves.length);
     });
 });

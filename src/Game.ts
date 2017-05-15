@@ -1,63 +1,45 @@
 import { compose, not } from 'ramda';
 import * as Board from './Board';
-import * as GameColor from './GameColor';
-import * as Players from './Players';
+import * as Player from './Player';
 import * as Position from './Position';
+import * as Score from './Score';
 
-import { ICleanGame } from './ICleanGame';
-import { IGame, IGameArgs } from './IGame';
-import { IPosition } from './IPosition';
+import I from './typings';
 
-function createGame(args: IGameArgs): IGame {
-    const boardConf = args.boardConf || Board.defaultBoardConf;
+function createGame(args: I.IGameArgs): I.IGame {
+    const boardSize = args.boardSize || Board.defaultBoardSize;
 
-    const { board, blackPieces, whitePieces } = Board.getInitialBoard(boardConf);
-
-    const game: IGame = {
-        ended: false,
-        movements: args.movements || [],
-        players: Players.create(args.players),
-        boardConf,
-        white: GameColor.create(boardConf, false, whitePieces),
-        black: GameColor.create(boardConf, true, blackPieces),
-        board
+    const game: I.IGame = {
+        moves: args.moves || [],
+        players: Player.createPlayers(args.players),
+        score: Score.getInitialScore(),
+        board: Board.getInitialBoard(boardSize)
     };
 
     return game;
 }
 
-function getCleanGameToSaveOnServer({ ended, movements }: IGame): ICleanGame {
-    return {
-        ended,
-        movements
-    };
-}
-
-const isWhiteTurn = (game: IGame) => game.movements.length % 2 === 0;
+const isWhiteTurn = (game: I.IGame) => game.moves.length % 2 === 0;
 
 const isBlackTurn = compose(not, isWhiteTurn);
 
 /**
  * Returns true if from piece can be played.
  */
-function isMyTurn(game: IGame, from: IPosition): boolean {
-    if (game.ended)
+function isMyTurn(game: I.IGame, from: I.IPosition): boolean {
+    if (game.score.ended)
         return false;
 
     from = Board.getPosition(game.board, from);
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 
-const getColorTurn = (game: IGame) => isWhiteTurn(game) ? game.white : game.black;
-
-const getPlayerTurn = (game: IGame) => isWhiteTurn(game) ? game.players.white : game.players.black;
+const getPlayerTurn = (game: I.IGame) => isWhiteTurn(game) ? game.players.white : game.players.black;
 
 export {
     createGame,
-    getColorTurn,
     getPlayerTurn,
     isBlackTurn,
     isWhiteTurn,
-    isMyTurn,
-    getCleanGameToSaveOnServer
+    isMyTurn
 };

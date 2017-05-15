@@ -1,17 +1,15 @@
+import R from 'ramda';
 import * as Board from './Board';
 import * as Game from './Game';
-import * as GameColor from './GameColor';
 import * as Player from './Player';
 import * as Position from './Position';
-
-import { IBoard } from './IBoard';
-import { IGame } from './IGame';
-import { IMove } from './IMove';
+import * as Score from './Score';
+import * as I from './typings';
 
 /**
  * Returns reverse move: from = to, to = from
  */
-function getBackMove(move: IMove): IMove {
+function getBackMove(move: I.IMove): I.IMove {
     return {
         from: move.to,
         to: move.from
@@ -21,25 +19,33 @@ function getBackMove(move: IMove): IMove {
 /**
  * Takes a move and returns it with clean positions {from: {x,y}, to: {x,y}}.
  */
-function getMoveXAndY(move: IMove): IMove {
+function getMoveXAndY(move: I.IMove): I.IMove {
     return {
         from: Position.getXAndY(move.from),
         to: Position.getXAndY(move.to)
     };
 }
 
-function canMove(game: IGame, move: IMove): boolean {
+/**
+ * Takes game and move then:
+ *  - Checks if it is my turn to play otherwise returns false.
+ *  - Get positions where can i go.
+ *  - Returns true if move.to is in the positions where can i go.
+ */
+function canMove(game: I.IGame, move: I.IMove): boolean {
     if (!Game.isMyTurn(game, move.from))
         return false;
 
     const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, Game.isBlackTurn(game)).positions;
-    return positionsWhereCanIGo.findIndex(position =>
-        position.x === move.to.x
-        && position.y === move.to.y
-    ) >= 0;
+    return positionsWhereCanIGo.some(position => Position.hasSameXY(position, move.to));
 }
 
-function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
+/**
+ * Can not move
+ */
+const canNotMove = R.compose(R.not, canMove);
+
+function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
     move.to.lastMove = true;
     move.from.lastMove = true;
 
@@ -59,42 +65,32 @@ function getBoardAfterMove(board: IBoard, move: IMove): IBoard {
  * Takes game and move and returns new game after move.
  *
  * Updates:
- *  - .board (Cleans board, set positions and move breadcrumb)
- *  - .black (Calculate score)
- *  - .white (Calculate score)
- *  - .movements (add new move)
+ *  - .board (It cleans board, set new positions and move breadcrumb)
+ *  - .score
+ *  - .moves (add new move if valid)
  */
-function getGameAfterMove(game: IGame, move: IMove, backMove: boolean = false): IGame {
-    // Fix to be immutable
-    // I dont know if it is the best way
-    game = Object.assign({}, game);
-
-    game.board = Board.getCleanBoard(game.board);
-
-    if (!backMove && !canMove(game, move))
+function getGameAfterMove(game: I.IGame, move: I.IMove, backMove: boolean = false): I.IGame {
+    if (!backMove && canNotMove(game, move))
         throw new Error('ERROR_CANT_MOVE_TO_POSITION');
 
-    game.board = getBoardAfterMove(game.board, move);
+    const board = getBoardAfterMove(game.board, move);
 
-    game.black = GameColor.getColorAfterMove(game.black, move);
-    game.white = GameColor.getColorAfterMove(game.white, move);
-
-    if (!backMove) {
-        game.movements = game.movements.concat(getMoveXAndY(move));
-        game.ended = game.black.score.won || game.white.score.won;
-    }
-
-    return game;
+    return {
+        players: game.players,
+        board,
+        score: Score.getScore(game.board),
+        moves: backMove ? game.moves : game.moves.concat(getMoveXAndY(move))
+    };
 }
 
-function getGameBeforeLastMove(game: IGame): IGame {
-    let lastMove = game.movements.pop();
+function getGameBeforeLastMove(game: I.IGame): I.IGame {
+    let lastMove = game.moves.pop();
 
     if (lastMove)
         game = getGameAfterMove(game, getBackMove(lastMove), true);
 
     if (Player.isComputer(Game.getPlayerTurn(game))) {
-        lastMove = game.movements.pop();
+        lastMove = game.moves.pop();
         if (lastMove) {
             game = getGameAfterMove(game, getBackMove(lastMove), true);
         }
@@ -103,10 +99,48 @@ function getGameBeforeLastMove(game: IGame): IGame {
     return game;
 }
 
+/**
+ * Get IMove from an array like
+ * [[fromX,fromY], [toX, toY]]
+ *
+ * const move = [[5, 7], [5, 6]];
+ */
+function getMoveFromArray(move: number[][]): I.IMove {
+    return {
+        from: Position.getPositionFromArray(move[0]),
+        to: Position.getPositionFromArray(move[1])
+    };
+}
+
+/**
+ * Get IMove[] from an array like
+ * [[fromX,fromY], [toX, toY]]
+ *
+ * const moves = [
+ *      [[5, 7], [5, 6]],
+ *      [[2, 0], [2, 1]],
+ *      [[7, 7], [5, 5]]
+ * ];
+ */
+const getMovesFromArray = (moves: number[][][]): I.IMove[] =>
+    moves.map(move => getMoveFromArray(move));
+
+/**
+ * Get game after n moves.
+ */
+function getGameAfterMoves(game: I.IGame, moves: I.IMove[]): I.IGame {
+    return moves.reduce((lastGame: I.IGame, move: I.IMove) => {
+        return getGameAfterMove(lastGame, move);
+    }, game);
+}
+
 export {
     canMove,
     getBackMove,
     getGameAfterMove,
+    getGameAfterMoves,
     getGameBeforeLastMove,
+    getMoveFromArray,
+    getMovesFromArray,
     getMoveXAndY
 };

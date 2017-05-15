@@ -22,8 +22,8 @@ describe('Move', () => {
             const gameBeforeLastMove = Move.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
             game = Move.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
             game = Move.getGameBeforeLastMove(game);
-            assert.equal(gameBeforeLastMove.movements.length, game.movements.length);
-            assert.deepEqual(gameBeforeLastMove.movements, game.movements);
+            assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
+            assert.deepEqual(gameBeforeLastMove.moves, game.moves);
         });
     });
     describe('getGameAfterMove', () => {
@@ -45,6 +45,19 @@ describe('Move', () => {
                 game = Move.getGameAfterMove(game, move);
             });
         });
+    });
+    it('getGameAfterMoves', () => {
+        const gameBeforeMoves = Game.createGame({
+            boardSize: { x: 8, y: 8 }
+        });
+        const moves = Move.getMovesFromArray([
+            [[5, 7], [5, 6]],
+            [[2, 0], [2, 1]],
+            [[7, 7], [5, 5]]
+        ]);
+        const gameAfterMoves = Move.getGameAfterMoves(gameBeforeMoves, moves);
+        assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');
+        assert.equal(gameAfterMoves.moves.length, moves.length);
     });
 });
 //# sourceMappingURL=Move.test.js.map

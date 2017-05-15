@@ -1,45 +1,51 @@
 import R from 'ramda';
-import * as Positions from './Positions';
+import * as I from './typings';
 
-import { IBoardSize } from './IBoard';
-import { IPosition } from './IPosition';
+/**
+ * Get [x,y] and returns {x, y}
+ *
+ * const position = [5, 7];
+ */
+function getPositionFromArray(position: number[]): I.IPosition {
+    return {
+        x: position[0],
+        y: position[1]
+    };
+}
 
 /**
  * Takes a position and return only {x, y, isBlack}.
  *
  * Remove unnecessary props like lastMovement, lastPosition,
- * jumpingBlackPiece, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
+ * jumpingBlackPosition, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
  */
-function getCleanPosition({ x, y, isBlack }: IPosition): IPosition {
+function getCleanPosition({ x, y, isBlack }: I.IPosition): I.IPosition {
     return { x, y, isBlack };
 }
 
 /**
  * Takes a position and return only {x, y}.
  */
-function getXAndY({ x, y }: IPosition): IPosition {
+function getXAndY({ x, y }: I.IPosition): I.IPosition {
     return { x, y };
 }
 
-const hasBlackPiece = R.propEq('isBlack', true);
-const hasWhitePiece = R.propEq('isBlack', false);
+const hasBlackPiece = (p: I.IPosition) => p.isBlack === true;
+
+const hasWhitePiece = (p: I.IPosition) => p.isBlack === false;
+
 const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
+
 const hasNoPiece = R.compose(R.not, hasPiece);
 
-function hasSamePiece(p1: IPosition, p2: IPosition): boolean {
-    return p1.isBlack === p2.isBlack;
-}
+const hasSamePiece = (p1: I.IPosition, p2: I.IPosition) => p1.isBlack === p2.isBlack;
 
-function hasSamePosition(p1: IPosition, p2: IPosition): boolean {
-    return p1.x === p2.x && p1.y === p2.y;
-}
+const hasSameXY = (p1: I.IXY, p2: I.IXY) => p1.x === p2.x && p1.y === p2.y;
 
-const hasSamePieceAndPosition = R.allPass([hasSamePiece, hasSamePosition]);
+const hasSamePieceAndXY = R.allPass([hasSamePiece, hasSameXY]);
 
-function setPiece(isBlack: boolean, position: IPosition): IPosition {
-    position.isBlack = isBlack;
-    return position;
-}
+const setPiece = (isBlack: boolean, position: I.IPosition) =>
+    Object.assign({}, position, { isBlack });
 
 const setPieceCurried = R.curry(setPiece);
 
@@ -50,7 +56,8 @@ const setPieceToWhite = setPieceCurried(false);
 /**
  * Deletes .isBlack prop from position
  */
-function removePiece(position: IPosition): IPosition {
+function removePiece(position: I.IPosition): I.IPosition {
+    position = Object.assign({}, position);
     delete position.isBlack;
     return position;
 }
@@ -68,7 +75,7 @@ const isBackGroundBlack = (x: number, y: number): boolean =>
  *
  * The goal is to fill the corners first
  */
-function getToSearchOrder(boardSize: IBoardSize, x: number): number {
+function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
     switch (x) {
         case 0:
             return 0;
@@ -96,30 +103,30 @@ const getToSearchOrderCurried = R.curry(getToSearchOrder);
 /**
  * It Inverts white Y position.
  *
- * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white pieces.
+ * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-function getYAsBlack(boardSizeY: number, y: number, isBlack: boolean): number {
+function getY0Start(boardSizeY: number, y: number, isBlack: boolean): number {
     return isBlack ? y : (boardSizeY - 1) - y;
 }
 
-const getYAsBlackCurried = R.curry(getYAsBlack);
+const getY0StartCurried = R.curry(getY0Start);
 
 /**
  * It Inverts black Y position.
  *
- * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white pieces.
+ * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-function getYAsWhite(boardSizeY: number, y: number, isBlack: boolean): number {
+function getY0End(boardSizeY: number, y: number, isBlack: boolean): number {
     return isBlack ? (boardSizeY - 1) - y : y;
 }
 
-const getYAsWhiteCurried = R.curry(getYAsWhite);
+const getY0EndCurried = R.curry(getY0End);
 
-function printXAndYPosition(position: IPosition): string {
+function printXAndYPosition(position: I.IPosition): string {
     return ` ${position.x},${position.y} |`;
 }
 
-function printUnicodePosition(position: IPosition): string {
+function printUnicodePosition(position: I.IPosition): string {
     if (isBackGroundBlack(position.x, position.y)) {
         if (hasWhitePiece(position))
             return '\u{25CF}';
@@ -137,30 +144,94 @@ function printUnicodePosition(position: IPosition): string {
     }
 }
 
-function setICanGoHere(positionsWhereCanIGo: IPosition[], position: IPosition): IPosition {
-    position.iCanGoHere = Positions.contains(positionsWhereCanIGo, position);
-    return position;
+/**
+ * Takes a position and return a new position with iCanGoHere checked.
+ */
+const setICanGoHere = (positionsWhereCanIGo: I.IXY[], position: I.IPosition) =>
+    Object.assign({
+        iCanGoHere: containsXY(positionsWhereCanIGo, position)
+    }, position);
+
+/**
+ * Checks if an array of positions contains a position.
+ */
+const containsXY = (positions: I.IXY[], position: I.IXY) =>
+    positions.some(p => hasSameXY(p, position));
+
+/**
+ * Checks if an array of positions NOT contains a position.
+ */
+const notContainsXY = R.compose(R.not, containsXY);
+
+/**
+ * Get ordered positions IPosition[Y][positions]
+ */
+function getOrderedPositions(getYAs, boardSizeY: number, isBlack: boolean, positions: I.IPosition[]): I.IPosition[][] {
+    return positions.reduce((ordered: I.IPosition[][], position) => {
+        const y = getYAs(boardSizeY, position.y, isBlack);
+        ordered[y] = (ordered[y] || []).concat(position);
+        return ordered;
+    }, []);
 }
 
+const getOrderedPositionsCurried = R.curry(getOrderedPositions);
+
+/**
+ * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
+ */
+const getOrderedPositionsY0Start = getOrderedPositionsCurried(getY0Start);
+
+/**
+ * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
+ */
+const getOrderedPositionsY0StartCurried = R.curry(getOrderedPositionsY0Start);
+
+/**
+ * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
+ */
+const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
+
+/**
+ * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
+ */
+const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
+
 export {
+    containsXY,
     isBackGroundBlack,
     getCleanPosition,
+    getPositionFromArray,
+
     getToSearchOrder,
     getToSearchOrderCurried,
+
+    getOrderedPositions,
+    getOrderedPositionsY0Start,
+    getOrderedPositionsY0StartCurried,
+    getOrderedPositionsY0End,
+    getOrderedPositionsY0EndCurried,
+    getOrderedPositionsCurried,
+
     getXAndY,
-    getYAsBlack,
-    getYAsBlackCurried,
-    getYAsWhite,
-    getYAsWhiteCurried,
+
+    getY0Start,
+    getY0StartCurried,
+    getY0End,
+    getY0EndCurried,
+
     hasSamePiece,
-    hasSamePosition,
-    hasSamePieceAndPosition,
+    hasSameXY,
+    hasSamePieceAndXY,
     hasBlackPiece,
     hasPiece,
     hasNoPiece,
     hasWhitePiece,
+
+    notContainsXY,
+
     printXAndYPosition,
     printUnicodePosition,
+
     removePiece,
     setICanGoHere,
     setPiece,

@@ -1,10 +1,6 @@
 ﻿import * as assert from 'ptz-assert';
-import {
-    Game,
-    Move
-} from './index';
-
-import { initialGame } from './__tests__/game.data.test';
+import { initialGame } from './__testdata__/game.data.test';
+import { Game, Move } from './index';
 
 describe('Game', () => {
     describe('create', () => {
@@ -18,35 +14,14 @@ describe('Game', () => {
         it('when false should NOT validate');
     });
 
-    describe('getCleanGameToSaveOnServer', () => {
-        it('map no movements', () => {
-            const cleanGame = Game.getCleanGameToSaveOnServer(initialGame);
-
-            assert.equal(initialGame.ended, cleanGame.ended);
-            assert.deepEqual(initialGame.movements, cleanGame.movements);
-        });
-
-        it('map with movements', () => {
-            const move = {
-                from: { x: 4, y: 7 },
-                to: { x: 4, y: 6 }
-            };
-
-            const game = Move.getGameAfterMove(initialGame, move, false);
-            const cleanGame = Game.getCleanGameToSaveOnServer(game);
-
-            assert.equal(game.ended, cleanGame.ended);
-            assert.equal(cleanGame.movements.length, 1);
-            assert.deepEqual(game.movements, cleanGame.movements);
-        });
-    });
-
     describe('isMyTurn', () => {
         it('returns true for black piece and black turn', () => {
             const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
+            const moveFrom = { x: 5, y: 0 };
+
             const game = Move.getGameAfterMove(initialGame, firstMove);
-            const from = { x: 5, y: 0 };
-            assert.ok(Game.isMyTurn(game, from));
+
+            assert.ok(Game.isMyTurn(game, moveFrom));
         });
 
         it('returns true for white piece and white turn', () => {
@@ -71,9 +46,10 @@ describe('Game', () => {
             const game = Move.getGameAfterMove(initialGame, firstMove);
             const from = { x: 5, y: 0 };
 
+            // $Fix
             // I dont know if it is the best way
             // Are getGameAfterMove supposed to calculate if game is ended???
-            game.ended = true;
+            game.score.ended = true;
 
             assert.notOk(Game.isMyTurn(game, from));
         });
@@ -88,18 +64,6 @@ describe('Game', () => {
             const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
             const game = Move.getGameAfterMove(initialGame, firstMove);
             assert.equal(Game.getPlayerTurn(game), game.players.black);
-        });
-    });
-
-    describe('getColorTurn', () => {
-        it('return white color when white turn', () => {
-            assert.equal(Game.getColorTurn(initialGame), initialGame.white);
-        });
-
-        it('return black color when black turn', () => {
-            const firstMove = { from: { x: 5, y: 7 }, to: { x: 5, y: 6 } };
-            const game = Move.getGameAfterMove(initialGame, firstMove);
-            assert.equal(Game.getColorTurn(game), game.black);
         });
     });
 });

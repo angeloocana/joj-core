@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getColorStartEndRow = exports.getBoardWhereCanIGo = exports.getBoardConf = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardConf = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartEndRows = exports.getStartEndRow = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -12,10 +12,6 @@ var _ramda2 = _interopRequireDefault(_ramda);
 var _Position = require('./Position');
 
 var Position = _interopRequireWildcard(_Position);
-
-var _Positions = require('./Positions');
-
-var Positions = _interopRequireWildcard(_Positions);
 
 var _ptzLog = require('ptz-log');
 
@@ -51,25 +47,35 @@ var mapBoard = function mapBoard(board, func) {
         });
     });
 };
-function getColorStartEndRow(boardEndRow, isBlack) {
+/**
+ * Get START and END rows
+ *
+ * returns { startRow, endRow }
+ */
+function getStartEndRow(boardEndRow, isBlack) {
     return {
         startRow: isBlack ? 0 : boardEndRow,
         endRow: isBlack ? boardEndRow : 0
     };
 }
-function getBoardConf(boardSize) {
+/**
+ * Takes a boardSize and return START and END rows for WHITE and BLACK.
+ *
+ * returns { white:{startRow, endRow}, black:{startRow, endRow} }
+ */
+function getStartEndRowsFromBoardSize(boardSize) {
     var endRow = boardSize.y - 1;
     return {
-        size: boardSize,
-        endRow: endRow,
-        white: getColorStartEndRow(endRow, false),
-        black: getColorStartEndRow(endRow, true)
+        white: getStartEndRow(endRow, false),
+        black: getStartEndRow(endRow, true)
     };
 }
 /**
- * Default configuration for 8x8 board
+ * Takes a board and return START and END rows for WHITE and BLACK.
+ *
+ * returns { white:{startRow, endRow}, black:{startRow, endRow} }
  */
-var defaultBoardConf = getBoardConf(defaultBoardSize);
+var getStartEndRows = _ramda2.default.compose(getStartEndRowsFromBoardSize, getBoardSize);
 /**
  * Get cached initial board, using memoize from ramda
  *
@@ -78,38 +84,27 @@ var defaultBoardConf = getBoardConf(defaultBoardSize);
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
-var _getInitialBoard = _ramda2.default.memoize(function (boardConf) {
+var _getInitialBoard = _ramda2.default.memoize(function (boardSize) {
     // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    (0, _ptzLog2.default)('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardConf);
-    var board = [],
-        blackPieces = [],
-        whitePieces = [];
-    for (var x = 0; x < boardConf.size.x; x++) {
-        for (var y = 0; y < boardConf.size.y; y++) {
+    (0, _ptzLog2.default)('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardSize);
+    var endRow = boardSize.y - 1;
+    var board = [];
+    for (var x = 0; x < boardSize.x; x++) {
+        for (var y = 0; y < boardSize.y; y++) {
             if (!board[y]) board[y] = [];
             var position = { x: x, y: y };
-            if (y === 0) {
-                position.isBlack = true;
-                blackPieces.push({ position: position });
-            }
-            if (y === boardConf.endRow) {
-                position.isBlack = false;
-                whitePieces.push({ position: position });
-            }
+            if (y === 0) position.isBlack = true;
+            if (y === endRow) position.isBlack = false;
             board[y][x] = position;
         }
     }
-    return {
-        board: board,
-        blackPieces: blackPieces,
-        whitePieces: whitePieces
-    };
+    return board;
 });
 /**
  * Get cached initial board, using memoize from ramda
  */
-function getInitialBoard(boardConf) {
-    return _getInitialBoard(boardConf);
+function getInitialBoard(boardSize) {
+    return _getInitialBoard(boardSize);
 }
 function getPosition(board, position) {
     try {
@@ -118,14 +113,11 @@ function getPosition(board, position) {
         throw new Error('Error getting position');
     }
 }
-function setPosition(board, position) {
-    try {
-        board[position.y][position.x] = position;
-        return board;
-    } catch (e) {
-        throw new Error('Error getting position');
-    }
-}
+var setPosition = function setPosition(board, position) {
+    return mapBoard(board, function (p) {
+        return Position.hasSameXY(p, position) ? position : p;
+    });
+};
 var setPieceOnBoard = function setPieceOnBoard(board, position, isBlack) {
     return setPosition(board, Position.setPiece(isBlack, position));
 };
@@ -136,19 +128,19 @@ var getCleanBoard = function getCleanBoard(board) {
     return mapBoard(board, Position.getCleanPosition);
 };
 /**
- * Take a board: IPosition[][] an return the number of rows(X)
+ * Take a board: I.IPosition[][] an return the number of rows(X)
  */
 var getBoardSizeX = function getBoardSizeX(board) {
     return board[0].length;
 };
 /**
- * Take a board: IPosition[][] an return the number of rows(Y)
+ * Take a board: I.IPosition[][] an return the number of rows(Y)
  */
 var getBoardSizeY = function getBoardSizeY(board) {
     return board.length;
 };
 /**
- * Take a board: IPosition[][] an return the number of columns and rows {x, y}
+ * Take a board: I.IPosition[][] an return the number of columns and rows {x, y}
  */
 function getBoardSize(board) {
     return {
@@ -160,10 +152,10 @@ function getBoardSize(board) {
  * Takes a function to printPosition and print board.
  */
 function printBoard(printPosition, board) {
-    return board.reduce(function (txtCol, col) {
-        return col.reduce(function (txtRow, position) {
-            return txtRow + printPosition(position);
-        }, txtCol) + '\n';
+    return board.reduce(function (txtRow, col) {
+        return col.reduce(function (txt, position) {
+            return txt + printPosition(position);
+        }, txtRow) + '\n';
     }, '');
 }
 var printBoardCurried = _ramda2.default.curry(printBoard);
@@ -184,7 +176,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         var nearPosition = allNearPositions[i];
         if (Position.hasNoPiece(nearPosition)) {
             positions.push(nearPosition);
-            var y = Position.getYAsBlack(getBoardSizeY(board), nearPosition.y, isBlack);
+            var y = Position.getY0Start(getBoardSizeY(board), nearPosition.y, isBlack);
             if (!orderedPositions[y]) orderedPositions[y] = [];
             orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
         } else {
@@ -192,7 +184,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
-                var _y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
+                var _y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[_y]) orderedPositions[_y] = [];
                 orderedPositions[_y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
@@ -218,13 +210,14 @@ function getAllNearPositions(position) {
 /**
  * Get near positions and CACHES it for each boardSize
  */
-var _getNearPositions = _ramda2.default.memoize(function (boardSize, position) {
-    return getAllNearPositions(position).filter(function (p) {
+// tslint:disable-next-line:variable-name
+var _getNearPositions = _ramda2.default.memoize(function (boardSize, xy) {
+    return getAllNearPositions(xy).filter(function (p) {
         return hasPositionByBoardSize(boardSize, p);
     });
 });
 /**
- * Get near positions
+ * Get near positions from the given board instance.
  */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position)).map(function (p) {
@@ -266,12 +259,12 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     nearFilledPositions.forEach(function (nearFilledPosition) {
         var jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
         if (jumpPosition) {
-            if (Positions.notContains(positions, jumpPosition)) {
+            if (Position.notContainsXY(positions, jumpPosition)) {
                 jumpPosition.lastPosition = jumpFrom;
                 jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
                 jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
                 positions.push(jumpPosition);
-                var y = Position.getYAsBlack(getBoardSizeY(board), jumpPosition.y, isBlack);
+                var y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
                 if (!orderedPositions[y]) orderedPositions[y] = [];
                 orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
                 whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
@@ -282,29 +275,46 @@ function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
 /**
  * Get board with checked where can I go positions
  */
-function getBoardWhereCanIGo(board, from, blackPiece) {
-    var _getPositionsWhereCan = getPositionsWhereCanIGo(board, from, blackPiece),
+function getBoardWhereCanIGo(board, from, isBlack) {
+    var _getPositionsWhereCan = getPositionsWhereCanIGo(board, from, isBlack),
         positions = _getPositionsWhereCan.positions;
 
     return mapBoard(board, function (position) {
         return Position.setICanGoHere(positions, position);
     });
 }
+/**
+ * Get Pieces from board
+ *
+ * returns { white: [{x,y}], black: [{x,y}] }
+ */
+function getPiecesFromBoard(board) {
+    var initialPieces = {
+        white: [],
+        black: []
+    };
+    return board.reduce(function (piecesRow, row) {
+        return row.reduce(function (pieces, position) {
+            if (Position.hasBlackPiece(position)) pieces.black = pieces.black.concat(position);else if (Position.hasWhitePiece(position)) pieces.white = pieces.white.concat(position);
+            return pieces;
+        }, piecesRow);
+    }, initialPieces);
+}
 exports._getInitialBoard = _getInitialBoard;
 exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;
-exports.defaultBoardConf = defaultBoardConf;
 exports.getCleanBoard = getCleanBoard;
 exports.getInitialBoard = getInitialBoard;
-exports.getBoardConf = getBoardConf;
 exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
-exports.getColorStartEndRow = getColorStartEndRow;
+exports.getStartEndRow = getStartEndRow;
+exports.getStartEndRows = getStartEndRows;
 exports.getEmptyNearPositions = getEmptyNearPositions;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
 exports.getNotEmptyNearPositions = getNotEmptyNearPositions;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
+exports.getPiecesFromBoard = getPiecesFromBoard;
 exports.printBoard = printBoard;
 exports.printBoardCurried = printBoardCurried;
 exports.printUnicodeBoard = printUnicodeBoard;
