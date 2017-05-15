@@ -14,16 +14,6 @@ function getPositionFromArray(position: number[]): I.IPosition {
 }
 
 /**
- * Takes a position and return only {x, y, isBlack}.
- *
- * Remove unnecessary props like lastMovement, lastPosition,
- * jumpingBlackPosition, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
- */
-function getCleanPosition({ x, y, isBlack }: I.IPosition): I.IPosition {
-    return { x, y, isBlack };
-}
-
-/**
  * Takes a position and return only {x, y}.
  */
 function getXAndY({ x, y }: I.IPosition): I.IPosition {
@@ -199,7 +189,6 @@ const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
 export {
     containsXY,
     isBackGroundBlack,
-    getCleanPosition,
     getPositionFromArray,
 
     getToSearchOrder,

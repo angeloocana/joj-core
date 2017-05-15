@@ -11,15 +11,6 @@ function getPositionFromArray(position) {
     };
 }
 /**
- * Takes a position and return only {x, y, isBlack}.
- *
- * Remove unnecessary props like lastMovement, lastPosition,
- * jumpingBlackPosition, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
- */
-function getCleanPosition({ x, y, isBlack }) {
-    return { x, y, isBlack };
-}
-/**
  * Takes a position and return only {x, y}.
  */
 function getXAndY({ x, y }) {
@@ -158,5 +149,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getCleanPosition, getPositionFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSamePiece, hasSameXY, hasSamePieceAndXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSamePiece, hasSameXY, hasSamePieceAndXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

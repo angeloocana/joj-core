@@ -92,7 +92,6 @@ function getPosition(board, position) {
 const setPosition = (board, position) => mapBoard(board, p => Position.hasSameXY(p, position) ? position : p);
 const setPieceOnBoard = (board, position, isBlack) => setPosition(board, Position.setPiece(isBlack, position));
 const removePieceOnBoard = (board, position) => setPosition(board, Position.removePiece(position));
-const getCleanBoard = (board) => mapBoard(board, Position.getCleanPosition);
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
  */
@@ -275,5 +274,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getInitialBoard, _getNearPositions, defaultBoardSize, getCleanBoard, getInitialBoard, getBoardWhereCanIGo, getStartEndRow, getStartEndRows, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
+export { _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWhereCanIGo, getStartEndRow, getStartEndRows, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

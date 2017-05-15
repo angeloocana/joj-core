@@ -121,8 +121,6 @@ const setPieceOnBoard = (board: I.IBoard, position: I.IPosition, isBlack: boolea
 const removePieceOnBoard = (board: I.IBoard, position: I.IPosition) =>
     setPosition(board, Position.removePiece(position));
 
-const getCleanBoard = (board: I.IBoard) => mapBoard(board, Position.getCleanPosition);
-
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
  */
@@ -354,7 +352,6 @@ export {
     _getInitialBoard,
     _getNearPositions,
     defaultBoardSize,
-    getCleanBoard,
     getInitialBoard,
     getBoardWhereCanIGo,
     getStartEndRow,

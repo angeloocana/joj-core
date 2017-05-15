@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartEndRows = exports.getStartEndRow = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.getCleanBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartEndRows = exports.getStartEndRow = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -123,9 +123,6 @@ var setPieceOnBoard = function setPieceOnBoard(board, position, isBlack) {
 };
 var removePieceOnBoard = function removePieceOnBoard(board, position) {
     return setPosition(board, Position.removePiece(position));
-};
-var getCleanBoard = function getCleanBoard(board) {
-    return mapBoard(board, Position.getCleanPosition);
 };
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
@@ -303,7 +300,6 @@ function getPiecesFromBoard(board) {
 exports._getInitialBoard = _getInitialBoard;
 exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;
-exports.getCleanBoard = getCleanBoard;
 exports.getInitialBoard = getInitialBoard;
 exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
 exports.getStartEndRow = getStartEndRow;

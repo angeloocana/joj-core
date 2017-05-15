@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndXY = exports.hasSameXY = exports.hasSamePiece = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromArray = exports.getCleanPosition = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSamePieceAndXY = exports.hasSameXY = exports.hasSamePiece = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -23,24 +23,11 @@ function getPositionFromArray(position) {
     };
 }
 /**
- * Takes a position and return only {x, y, isBlack}.
- *
- * Remove unnecessary props like lastMovement, lastPosition,
- * jumpingBlackPosition, jumps, iCanGoHere, lastMove, lastMoveJump, etc.
- */
-function getCleanPosition(_ref) {
-    var x = _ref.x,
-        y = _ref.y,
-        isBlack = _ref.isBlack;
-
-    return { x: x, y: y, isBlack: isBlack };
-}
-/**
  * Takes a position and return only {x, y}.
  */
-function getXAndY(_ref2) {
-    var x = _ref2.x,
-        y = _ref2.y;
+function getXAndY(_ref) {
+    var x = _ref.x,
+        y = _ref.y;
 
     return { x: x, y: y };
 }
@@ -186,7 +173,6 @@ var getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
 var getOrderedPositionsY0EndCurried = _ramda2.default.curry(getOrderedPositionsY0End);
 exports.containsXY = containsXY;
 exports.isBackGroundBlack = isBackGroundBlack;
-exports.getCleanPosition = getCleanPosition;
 exports.getPositionFromArray = getPositionFromArray;
 exports.getToSearchOrder = getToSearchOrder;
 exports.getToSearchOrderCurried = getToSearchOrderCurried;
