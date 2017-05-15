@@ -164,34 +164,23 @@ var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
  * Prints only X and Y positions of a board.
  */
 var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+/**
+ * Gets all near positions and reduce. Foreach near position checks:
+ *  - Has no piece: concat positions and return.
+ *  - Has piece:
+ *      1. Get jump position, if jump position do not exists return prev positions.
+ *      2. Concat jump to positions then call whereCanIJump() and return it.
+ */
 function getPositionsWhereCanIGo(board, from, isBlack) {
     if (!from) return null;
     var allNearPositions = getNearPositions(board, from);
-    var positions = [];
-    var orderedPositions = [];
-    for (var i = 0; i < allNearPositions.length; i++) {
-        var nearPosition = allNearPositions[i];
-        if (Position.hasNoPiece(nearPosition)) {
-            positions.push(nearPosition);
-            var y = Position.getY0Start(getBoardSizeY(board), nearPosition.y, isBlack);
-            if (!orderedPositions[y]) orderedPositions[y] = [];
-            orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
-        } else {
-            var jumpPosition = getJumpPosition(from, nearPosition, board);
-            if (jumpPosition) {
-                jumpPosition.jumps = 1;
-                positions.push(jumpPosition);
-                var _y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
-                if (!orderedPositions[_y]) orderedPositions[_y] = [];
-                orderedPositions[_y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
-                whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
-            }
-        }
-    }
-    return {
-        positions: positions,
-        orderedPositions: orderedPositions
-    };
+    return allNearPositions.reduce(function (positions, nearPosition) {
+        if (Position.hasNoPiece(nearPosition)) return positions.concat(nearPosition);
+        var jumpTo = getJumpPosition(from, nearPosition, board);
+        if (!jumpTo) return positions;
+        jumpTo.jumps = 1;
+        return whereCanIJump(board, jumpTo, positions.concat(jumpTo), isBlack);
+    }, []);
 }
 /**
  * Get all valid and invalid near positions.
@@ -243,6 +232,9 @@ var getNotEmptyNearPositions = function getNotEmptyNearPositions(board, position
 function getJump(from, toJump) {
     if (from < toJump) return toJump + 1;else if (from > toJump) return toJump - 1;else return toJump;
 }
+/**
+ * Returns the target position from a jump.
+ */
 function getJumpXY(from, toJump) {
     return {
         x: getJump(from.x, toJump.x),
@@ -250,7 +242,7 @@ function getJumpXY(from, toJump) {
     };
 }
 /**
- * Returns the target position from a jump if this position exists and is empty.
+ * Returns the target board position from a jump if this position exists and is empty.
  */
 function getJumpPosition(from, toJump, board) {
     var jumpXY = getJumpXY(from, toJump);
@@ -259,32 +251,34 @@ function getJumpPosition(from, toJump, board) {
     if (Position.hasPiece(jumpPosition)) return;
     return jumpPosition;
 }
-// tslint:disable-next-line:max-line-length
-function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
-    var nearFilledPositions = getNotEmptyNearPositions(board, jumpFrom);
-    nearFilledPositions.forEach(function (nearFilledPosition) {
-        var jumpPosition = getJumpPosition(jumpFrom, nearFilledPosition, board);
-        if (jumpPosition) {
-            if (Position.notContainsXY(positions, jumpPosition)) {
-                jumpPosition.lastPosition = jumpFrom;
-                jumpPosition.jumpingBlackPiece = nearFilledPosition.isBlack;
-                jumpPosition.jumps = jumpFrom.jumps ? jumpFrom.jumps++ : 2;
-                positions.push(jumpPosition);
-                var y = Position.getY0Start(getBoardSizeY(board), jumpPosition.y, isBlack);
-                if (!orderedPositions[y]) orderedPositions[y] = [];
-                orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), jumpPosition.x)] = jumpPosition;
-                whereCanIJump(board, jumpPosition, positions, orderedPositions, isBlack);
-            }
-        }
-    });
+/**
+ * Gets all positions where can I jump recursively.
+ * 1. Get not empty near positions from board.
+ * 2. Foreach not empty near position:
+ *  - Get jump position.
+ *  - If jump position do NOT exists or accumulated positions
+ *      contains jump position then return accumulated positions.
+ *  - Set last position equals from.
+ *  - Set Jumping black piece to true if is black piece.
+ *  - Set Jumps to from jumps +1.
+ *  - Call and return this method again recursively to get next jump positions.
+ */
+function whereCanIJump(board, from, positions, isBlack) {
+    var nearPieces = getNotEmptyNearPositions(board, from);
+    return nearPieces.reduce(function (accPositions, nearPiece) {
+        var jumpTo = getJumpPosition(from, nearPiece, board);
+        if (!jumpTo || Position.containsXY(accPositions, jumpTo)) return accPositions;
+        jumpTo.lastPosition = from;
+        jumpTo.jumpingBlackPiece = nearPiece.isBlack;
+        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
+        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
+    }, positions);
 }
 /**
  * Get board with checked where can I go positions
  */
 function getBoardWhereCanIGo(board, from, isBlack) {
-    var _getPositionsWhereCan = getPositionsWhereCanIGo(board, from, isBlack),
-        positions = _getPositionsWhereCan.positions;
-
+    var positions = getPositionsWhereCanIGo(board, from, isBlack);
     return mapBoard(board, function (position) {
         return Position.setICanGoHere(positions, position);
     });
