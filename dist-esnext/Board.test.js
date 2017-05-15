@@ -212,5 +212,34 @@ describe('Board', () => {
             assert.notOk(positions);
         });
     });
+    describe('getCleanBoard', () => {
+        it('8x8', () => {
+            const board = Board.getCleanBoard({ x: 8, y: 8 });
+            const board2 = Board.getCleanBoard({ x: 8, y: 8 });
+            console.log(Board.printXAndYBoard(TestData.cleanBoardExpected));
+            console.log(Board.printXAndYBoard(board));
+            assert.deepEqual(board, TestData.cleanBoardExpected);
+            assert.equal(board, board2, 'Cache did not worked');
+        });
+    });
+    describe('whereCanIJump', () => {
+        it('jump up 5,7 5,5 5,3 5,1'
+        // , () => {
+        // const board = [
+        // ];
+        // const from = ;
+        // const position = [];
+        // const isBlack = true;
+        // }
+        );
+    });
+    describe('getStartPieces', () => {
+        it('8x8', () => {
+            const pieces = Board.getStartPieces({ x: 8, y: 8 });
+            console.log('pieces \n', pieces);
+            console.log('expected \n', TestData.startPiecesExpected);
+            assert.deepEqual(pieces, TestData.startPiecesExpected);
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map

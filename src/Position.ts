@@ -14,6 +14,12 @@ function getPositionFromArray(position: number[]): I.IPosition {
 }
 
 /**
+ * Returns a position from an array of positions with equal X an Y.
+ */
+const getPositionFromPositions = (positions: I.IPosition[], position: I.IPosition): I.IPosition =>
+    positions.find(p => hasSameXY(p, position));
+
+/**
  * Takes a position and return only {x, y}.
  */
 function getXAndY({ x, y }: I.IPosition): I.IPosition {
@@ -186,6 +192,7 @@ export {
     containsXY,
     isBackGroundBlack,
     getPositionFromArray,
+    getPositionFromPositions,
 
     getToSearchOrder,
     getToSearchOrderCurried,

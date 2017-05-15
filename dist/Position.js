@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -22,6 +22,14 @@ function getPositionFromArray(position) {
         y: position[1]
     };
 }
+/**
+ * Returns a position from an array of positions with equal X an Y.
+ */
+var getPositionFromPositions = function getPositionFromPositions(positions, position) {
+    return positions.find(function (p) {
+        return hasSameXY(p, position);
+    });
+};
 /**
  * Takes a position and return only {x, y}.
  */
@@ -170,6 +178,7 @@ var getOrderedPositionsY0EndCurried = _ramda2.default.curry(getOrderedPositionsY
 exports.containsXY = containsXY;
 exports.isBackGroundBlack = isBackGroundBlack;
 exports.getPositionFromArray = getPositionFromArray;
+exports.getPositionFromPositions = getPositionFromPositions;
 exports.getToSearchOrder = getToSearchOrder;
 exports.getToSearchOrderCurried = getToSearchOrderCurried;
 exports.getOrderedPositions = getOrderedPositions;

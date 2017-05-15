@@ -1,8 +1,5 @@
 import R from 'ramda';
 import * as Position from './Position';
-
-import log from 'ptz-log';
-
 import * as I from './typings';
 
 /**
@@ -62,40 +59,69 @@ function getStartEndRowsFromBoardSize(boardSize: I.IBoardSize): I.IStartEndRows 
 const getStartEndRows = R.compose(getStartEndRowsFromBoardSize, getBoardSize);
 
 /**
- * Get cached initial board, using memoize from ramda
+ * Create cols recursively
+ */
+const createCols = (x: number, y: number, cols?: I.IXY[]): I.IXY[] =>
+    x < 0 ? cols : createCols(x - 1, y, R.concat([{ x, y }], cols || []));
+
+/**
+ * Create rows recursively
+ */
+const createRows = (x: number, y: number, rows?: I.IXY[][]): I.IXY[][] =>
+    y < 0 ? rows : createRows(x, y - 1, R.concat([createCols(x, y)], rows || []));
+
+/**
+ * Get cached clean board, using memoize from ramda
  *
- * The _getInitialBoard returns :Function Type,
- * that's why we created getInitialBoard witch returns :IGetInitialBoardResult
+ * The _getCleanBoard returns :Function Type,
+ * that's why we created getCleanBoard witch returns :IPosition[y][x]
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
-const _getInitialBoard = R.memoize((boardSize: I.IBoardSize) => {
+const _getCleanBoard = R.memoize((boardSize: I.IBoardSize) =>
+    createRows(boardSize.x - 1, boardSize.y - 1));
 
-    // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    log('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardSize);
+/**
+ * Get cached clean board, using memoize from ramda
+ */
+function getCleanBoard(boardSize: I.IBoardSize): I.IBoard {
+    return _getCleanBoard(boardSize);
+}
 
-    const endRow = boardSize.y - 1;
-    const board = [];
+function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
+    return mapBoard(board, position => {
+        const piece = Position.getPositionFromPositions(pieces, position);
+        if (!piece)
+            return Position.removePiece(position);
 
-    for (let x = 0; x < boardSize.x; x++) {
-        for (let y = 0; y < boardSize.y; y++) {
-            if (!board[y])
-                board[y] = [];
+        return Position.setPiece(piece.isBlack, position);
+    });
+}
 
-            const position: I.IPosition = { x, y };
+const getStartWhiteBlack = (x: number, whiteY: number) => [
+    { x, y: 0, isBlack: true },
+    { x, y: whiteY, isBlack: false }
+];
 
-            if (y === 0)
-                position.isBlack = true;
+const addStartPieces = (x: number, whiteY: number, positions: I.IPosition[]) =>
+    x < 0
+        ? positions
+        : addStartPieces(x - 1, whiteY, positions.concat(getStartWhiteBlack(x, whiteY)));
 
-            if (y === endRow)
-                position.isBlack = false;
+function getStartPieces(boardSize: I.IBoardSize): I.IPosition[] {
+    return addStartPieces(boardSize.x - 1, boardSize.y - 1, []);
+}
 
-            board[y][x] = position;
-        }
-    }
-
-    return board;
-});
+/**
+ * Get cached initial board, using memoize from ramda
+ *
+ * The _getInitialBoard returns :Function Type,
+ * that's why we created getInitialBoard witch returns :IPosition[y][x]
+ * in order to reduce type errors.
+ */
+// tslint:disable-next-line:variable-name
+const _getInitialBoard = R.memoize((boardSize: I.IBoardSize) =>
+    getBoardWithPieces(getCleanBoard(boardSize), getStartPieces(boardSize)));
 
 /**
  * Get cached initial board, using memoize from ramda
@@ -163,6 +189,37 @@ const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
  * Prints only X and Y positions of a board.
  */
 const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+
+/**
+ * Gets all positions where can I jump recursively.
+ * 1. Get not empty near positions from board.
+ * 2. Foreach not empty near position:
+ *  - Get jump position.
+ *  - If jump position do NOT exists or accumulated positions
+ *      contains jump position then return accumulated positions.
+ *  - Set last position equals from.
+ *  - Set Jumping black piece to true if is black piece.
+ *  - Set Jumps to from jumps +1.
+ *  - Call and return this method again recursively to get next jump positions.
+ */
+function whereCanIJump(board: I.IBoard, from: I.IPosition, positions: I.IPosition[], isBlack: boolean): I.IPosition[] {
+
+    const nearPieces = getNotEmptyNearPositions(board, from);
+
+    return nearPieces.reduce((accPositions, nearPiece) => {
+        const jumpTo = getJumpPosition(from, nearPiece, board);
+
+        if (!jumpTo || Position.containsXY(accPositions, jumpTo))
+            return accPositions;
+
+        jumpTo.lastPosition = from;
+        jumpTo.jumpingBlackPiece = nearPiece.isBlack;
+        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
+
+        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
+
+    }, positions);
+}
 
 /**
  * Gets all near positions and reduce. Foreach near position checks:
@@ -284,37 +341,6 @@ function getJumpPosition(from: I.IXY, toJump: I.IXY, board: I.IBoard): I.IPositi
 }
 
 /**
- * Gets all positions where can I jump recursively.
- * 1. Get not empty near positions from board.
- * 2. Foreach not empty near position:
- *  - Get jump position.
- *  - If jump position do NOT exists or accumulated positions
- *      contains jump position then return accumulated positions.
- *  - Set last position equals from.
- *  - Set Jumping black piece to true if is black piece.
- *  - Set Jumps to from jumps +1.
- *  - Call and return this method again recursively to get next jump positions.
- */
-function whereCanIJump(board: I.IBoard, from: I.IPosition, positions: I.IPosition[], isBlack: boolean): I.IPosition[] {
-
-    const nearPieces = getNotEmptyNearPositions(board, from);
-
-    return nearPieces.reduce((accPositions, nearPiece) => {
-        const jumpTo = getJumpPosition(from, nearPiece, board);
-
-        if (!jumpTo || Position.containsXY(accPositions, jumpTo))
-            return accPositions;
-
-        jumpTo.lastPosition = from;
-        jumpTo.jumpingBlackPiece = nearPiece.isBlack;
-        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
-
-        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
-
-    }, positions);
-}
-
-/**
  * Get board with checked where can I go positions
  */
 function getBoardWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: boolean): I.IBoard {
@@ -348,13 +374,16 @@ function getPiecesFromBoard(board: I.IBoard): I.IPieces {
 }
 
 export {
+    _getCleanBoard,
     _getInitialBoard,
     _getNearPositions,
     defaultBoardSize,
     getInitialBoard,
     getBoardWhereCanIGo,
+    getCleanBoard,
     getStartEndRow,
     getStartEndRows,
+    getStartPieces,
     getEmptyNearPositions,
     getJumpPosition,
     getNearPositions,

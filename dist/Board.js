@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartEndRows = exports.getStartEndRow = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -12,10 +12,6 @@ var _ramda2 = _interopRequireDefault(_ramda);
 var _Position = require('./Position');
 
 var Position = _interopRequireWildcard(_Position);
-
-var _ptzLog = require('ptz-log');
-
-var _ptzLog2 = _interopRequireDefault(_ptzLog);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -77,28 +73,60 @@ function getStartEndRowsFromBoardSize(boardSize) {
  */
 var getStartEndRows = _ramda2.default.compose(getStartEndRowsFromBoardSize, getBoardSize);
 /**
+ * Create cols recursively
+ */
+var createCols = function createCols(x, y, cols) {
+    return x < 0 ? cols : createCols(x - 1, y, _ramda2.default.concat([{ x: x, y: y }], cols || []));
+};
+/**
+ * Create rows recursively
+ */
+var createRows = function createRows(x, y, rows) {
+    return y < 0 ? rows : createRows(x, y - 1, _ramda2.default.concat([createCols(x, y)], rows || []));
+};
+/**
+ * Get cached clean board, using memoize from ramda
+ *
+ * The _getCleanBoard returns :Function Type,
+ * that's why we created getCleanBoard witch returns :IPosition[y][x]
+ * in order to reduce type errors.
+ */
+// tslint:disable-next-line:variable-name
+var _getCleanBoard = _ramda2.default.memoize(function (boardSize) {
+    return createRows(boardSize.x - 1, boardSize.y - 1);
+});
+/**
+ * Get cached clean board, using memoize from ramda
+ */
+function getCleanBoard(boardSize) {
+    return _getCleanBoard(boardSize);
+}
+function getBoardWithPieces(board, pieces) {
+    return mapBoard(board, function (position) {
+        var piece = Position.getPositionFromPositions(pieces, position);
+        if (!piece) return Position.removePiece(position);
+        return Position.setPiece(piece.isBlack, position);
+    });
+}
+var getStartWhiteBlack = function getStartWhiteBlack(x, whiteY) {
+    return [{ x: x, y: 0, isBlack: true }, { x: x, y: whiteY, isBlack: false }];
+};
+var addStartPieces = function addStartPieces(x, whiteY, positions) {
+    return x < 0 ? positions : addStartPieces(x - 1, whiteY, positions.concat(getStartWhiteBlack(x, whiteY)));
+};
+function getStartPieces(boardSize) {
+    return addStartPieces(boardSize.x - 1, boardSize.y - 1, []);
+}
+/**
  * Get cached initial board, using memoize from ramda
  *
  * The _getInitialBoard returns :Function Type,
- * that's why we created getInitialBoard witch returns :IGetInitialBoardResult
+ * that's why we created getInitialBoard witch returns :IPosition[y][x]
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
 var _getInitialBoard = _ramda2.default.memoize(function (boardSize) {
-    // Do NOT remove the log below. We use it to check if cache works and this code run once.
-    (0, _ptzLog2.default)('--> You MUST see this msg only once, otherwise memoize is not working <-- \n _getInitialBoard for', boardSize);
-    var endRow = boardSize.y - 1;
-    var board = [];
-    for (var x = 0; x < boardSize.x; x++) {
-        for (var y = 0; y < boardSize.y; y++) {
-            if (!board[y]) board[y] = [];
-            var position = { x: x, y: y };
-            if (y === 0) position.isBlack = true;
-            if (y === endRow) position.isBlack = false;
-            board[y][x] = position;
-        }
-    }
-    return board;
+    return getBoardWithPieces(getCleanBoard(boardSize), getStartPieces(boardSize));
 });
 /**
  * Get cached initial board, using memoize from ramda
@@ -164,6 +192,29 @@ var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
  * Prints only X and Y positions of a board.
  */
 var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+/**
+ * Gets all positions where can I jump recursively.
+ * 1. Get not empty near positions from board.
+ * 2. Foreach not empty near position:
+ *  - Get jump position.
+ *  - If jump position do NOT exists or accumulated positions
+ *      contains jump position then return accumulated positions.
+ *  - Set last position equals from.
+ *  - Set Jumping black piece to true if is black piece.
+ *  - Set Jumps to from jumps +1.
+ *  - Call and return this method again recursively to get next jump positions.
+ */
+function whereCanIJump(board, from, positions, isBlack) {
+    var nearPieces = getNotEmptyNearPositions(board, from);
+    return nearPieces.reduce(function (accPositions, nearPiece) {
+        var jumpTo = getJumpPosition(from, nearPiece, board);
+        if (!jumpTo || Position.containsXY(accPositions, jumpTo)) return accPositions;
+        jumpTo.lastPosition = from;
+        jumpTo.jumpingBlackPiece = nearPiece.isBlack;
+        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
+        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
+    }, positions);
+}
 /**
  * Gets all near positions and reduce. Foreach near position checks:
  *  - Has no piece: concat positions and return.
@@ -252,29 +303,6 @@ function getJumpPosition(from, toJump, board) {
     return jumpPosition;
 }
 /**
- * Gets all positions where can I jump recursively.
- * 1. Get not empty near positions from board.
- * 2. Foreach not empty near position:
- *  - Get jump position.
- *  - If jump position do NOT exists or accumulated positions
- *      contains jump position then return accumulated positions.
- *  - Set last position equals from.
- *  - Set Jumping black piece to true if is black piece.
- *  - Set Jumps to from jumps +1.
- *  - Call and return this method again recursively to get next jump positions.
- */
-function whereCanIJump(board, from, positions, isBlack) {
-    var nearPieces = getNotEmptyNearPositions(board, from);
-    return nearPieces.reduce(function (accPositions, nearPiece) {
-        var jumpTo = getJumpPosition(from, nearPiece, board);
-        if (!jumpTo || Position.containsXY(accPositions, jumpTo)) return accPositions;
-        jumpTo.lastPosition = from;
-        jumpTo.jumpingBlackPiece = nearPiece.isBlack;
-        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
-        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
-    }, positions);
-}
-/**
  * Get board with checked where can I go positions
  */
 function getBoardWhereCanIGo(board, from, isBlack) {
@@ -301,13 +329,16 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
+exports._getCleanBoard = _getCleanBoard;
 exports._getInitialBoard = _getInitialBoard;
 exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;
 exports.getInitialBoard = getInitialBoard;
 exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
+exports.getCleanBoard = getCleanBoard;
 exports.getStartEndRow = getStartEndRow;
 exports.getStartEndRows = getStartEndRows;
+exports.getStartPieces = getStartPieces;
 exports.getEmptyNearPositions = getEmptyNearPositions;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
