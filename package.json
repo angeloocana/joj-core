@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "ptz-log": "^1.0.0",
-    "ptz-math": "^1.0.2",
     "ramda": "^0.23.0"
   },
   "keywords": [

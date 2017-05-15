@@ -1,5 +1,5 @@
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Board.js
+SF:/projects/joj/joj-core/dist-esnext/Board.js
 FN:11,hasPositionByBoardSize
 FN:17,hasPosition
 FN:21,mapBoard
@@ -257,7 +257,7 @@ BRF:51
 BRH:47
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Game.js
+SF:/projects/joj/joj-core/dist-esnext/Game.js
 FN:6,createGame
 FN:16,isWhiteTurn
 FN:21,isMyTurn
@@ -299,7 +299,7 @@ BRF:10
 BRH:10
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Move.js
+SF:/projects/joj/joj-core/dist-esnext/Move.js
 FN:10,getBackMove
 FN:19,getMoveXAndY
 FN:31,canMove
@@ -389,7 +389,7 @@ BRF:18
 BRH:14
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Player.js
+SF:/projects/joj/joj-core/dist-esnext/Player.js
 FN:2,createPlayer
 FN:13,isComputer
 FN:26,createPlayers
@@ -416,7 +416,7 @@ BRF:4
 BRH:3
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Position.js
+SF:/projects/joj/joj-core/dist-esnext/Position.js
 FN:7,getPositionFromArray
 FN:19,getCleanPosition
 FN:25,getXAndY
@@ -554,7 +554,7 @@ BRF:29
 BRH:29
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/Score.js
+SF:/projects/joj/joj-core/dist-esnext/Score.js
 FN:2,getInitialColorScore
 FN:9,getInitialScore
 FN:21,getColorScore
@@ -594,7 +594,7 @@ BRF:6
 BRH:6
 end_of_record
 TN:
-SF:/home/angeloocana/dev/joj/joj-core/dist-esnext/index.js
+SF:/projects/joj/joj-core/dist-esnext/index.js
 FNF:0
 FNH:0
 DA:1,1
