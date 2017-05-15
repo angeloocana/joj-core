@@ -184,10 +184,16 @@ describe('Board', function () {
             var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
-        it('should return undefined because position is not empty', function () {
+        it('return undefined if position is NOT empty', function () {
             var board = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
             var from = { x: 3, y: 0 };
             var toJumpPosition = { x: 4, y: 0 };
+            assert.notOk(_index.Board.getJumpPosition(from, toJumpPosition, board));
+        });
+        it('return undefined if position do NOT exists', function () {
+            var board = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
+            var from = { x: 0, y: 1 };
+            var toJumpPosition = { x: 0, y: 0 };
             assert.notOk(_index.Board.getJumpPosition(from, toJumpPosition, board));
         });
     });

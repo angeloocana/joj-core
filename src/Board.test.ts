@@ -225,10 +225,18 @@ describe('Board', () => {
             assertPosition(actual, expected);
         });
 
-        it('should return undefined because position is not empty', () => {
+        it('return undefined if position is NOT empty', () => {
             const board = Board.getInitialBoard(Board.defaultBoardSize);
             const from = { x: 3, y: 0 };
             const toJumpPosition = { x: 4, y: 0 };
+
+            assert.notOk(Board.getJumpPosition(from, toJumpPosition, board));
+        });
+
+        it('return undefined if position do NOT exists', () => {
+            const board = Board.getInitialBoard(Board.defaultBoardSize);
+            const from = { x: 0, y: 1 };
+            const toJumpPosition = { x: 0, y: 0 };
 
             assert.notOk(Board.getJumpPosition(from, toJumpPosition, board));
         });
