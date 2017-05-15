@@ -260,10 +260,31 @@ describe('Board', function () {
             assert.deepEqual(whereCanIJump, [p55, p53, p51]);
         });
     });
+    describe('getBoardWhereCanIGo', function () {
+        it('jump up 7,7 => 5,7 5,5 3,3 3,5 5,3', function () {
+            var pieces = [{ x: 7, y: 7, isBlack: true }, { x: 6, y: 7, isBlack: true }, { x: 5, y: 7, isBlack: true }, { x: 5, y: 6, isBlack: true }, { x: 4, y: 4, isBlack: false }, { x: 3, y: 4, isBlack: false }];
+            var board = _index.Board.getBoardWithPieces(TestData.cleanBoard, pieces);
+            var from = { x: 7, y: 7 };
+            var actual = _index.Board.getBoardWhereCanIGo(board, from, true);
+            // tslint:disable:max-line-length
+            var expected = [[{ iCanGoHere: false, x: 0, y: 0 }, { iCanGoHere: false, x: 1, y: 0 }, { iCanGoHere: false, x: 2, y: 0 }, { iCanGoHere: false, x: 3, y: 0 }, { iCanGoHere: false, x: 4, y: 0 }, { iCanGoHere: false, x: 5, y: 0 }, { iCanGoHere: false, x: 6, y: 0 }, { iCanGoHere: false, x: 7, y: 0 }], [{ iCanGoHere: false, x: 0, y: 1 }, { iCanGoHere: false, x: 1, y: 1 }, { iCanGoHere: false, x: 2, y: 1 }, { iCanGoHere: false, x: 3, y: 1 }, { iCanGoHere: false, x: 4, y: 1 }, { iCanGoHere: false, x: 5, y: 1 }, { iCanGoHere: false, x: 6, y: 1 }, { iCanGoHere: false, x: 7, y: 1 }], [{ iCanGoHere: false, x: 0, y: 2 }, { iCanGoHere: false, x: 1, y: 2 }, { iCanGoHere: false, x: 2, y: 2 }, { iCanGoHere: false, x: 3, y: 2 }, { iCanGoHere: false, x: 4, y: 2 }, { iCanGoHere: false, x: 5, y: 2 }, { iCanGoHere: false, x: 6, y: 2 }, { iCanGoHere: false, x: 7, y: 2 }], [{ iCanGoHere: false, x: 0, y: 3 }, { iCanGoHere: false, x: 1, y: 3 }, { iCanGoHere: false, x: 2, y: 3 }, { iCanGoHere: false, x: 3, y: 3 }, { iCanGoHere: false, x: 4, y: 3 }, { iCanGoHere: false, x: 5, y: 3 }, { iCanGoHere: false, x: 6, y: 3 }, { iCanGoHere: false, x: 7, y: 3 }], [{ iCanGoHere: false, x: 0, y: 4 }, { iCanGoHere: false, x: 1, y: 4 }, { iCanGoHere: false, x: 2, y: 4 }, { iCanGoHere: false, x: 3, y: 4, isBlack: false }, { iCanGoHere: false, x: 4, y: 4, isBlack: false }, { iCanGoHere: false, x: 5, y: 4 }, { iCanGoHere: false, x: 6, y: 4 }, { iCanGoHere: false, x: 7, y: 4 }], [{ iCanGoHere: false, x: 0, y: 5 }, { iCanGoHere: false, x: 1, y: 5 }, { iCanGoHere: false, x: 2, y: 5 }, { iCanGoHere: false, x: 3, y: 5 }, { iCanGoHere: false, x: 4, y: 5 }, { iCanGoHere: false, x: 5, y: 5 }, { iCanGoHere: false, x: 6, y: 5 }, { iCanGoHere: false, x: 7, y: 5 }], [{ iCanGoHere: false, x: 0, y: 6 }, { iCanGoHere: false, x: 1, y: 6 }, { iCanGoHere: false, x: 2, y: 6 }, { iCanGoHere: false, x: 3, y: 6 }, { iCanGoHere: false, x: 4, y: 6 }, { iCanGoHere: false, x: 5, y: 6, isBlack: true }, { iCanGoHere: true, x: 6, y: 6 }, { iCanGoHere: true, x: 7, y: 6 }], [{ iCanGoHere: false, x: 0, y: 7 }, { iCanGoHere: false, x: 1, y: 7 }, { iCanGoHere: false, x: 2, y: 7 }, { iCanGoHere: false, x: 3, y: 7 }, { iCanGoHere: false, x: 4, y: 7 }, { iCanGoHere: false, x: 5, y: 7, isBlack: true }, { iCanGoHere: false, x: 6, y: 7, isBlack: true }, { iCanGoHere: false, x: 7, y: 7, isBlack: true }]];
+            assert.deepEqual(actual, expected);
+        });
+    });
     describe('getStartPieces', function () {
         it('8x8', function () {
             var pieces = _index.Board.getStartPieces({ x: 8, y: 8 });
             assert.deepEqual(pieces, TestData.startPiecesExpected);
+        });
+    });
+    describe('getPiecesFromBoard', function () {
+        it('get initial pieces', function () {
+            var pieces = _index.Board.getPiecesFromBoard(TestData.initialBoard);
+            var expectedPieces = {
+                white: [{ x: 0, y: 7, isBlack: false }, { x: 1, y: 7, isBlack: false }, { x: 2, y: 7, isBlack: false }, { x: 3, y: 7, isBlack: false }, { x: 4, y: 7, isBlack: false }, { x: 5, y: 7, isBlack: false }, { x: 6, y: 7, isBlack: false }, { x: 7, y: 7, isBlack: false }],
+                black: [{ x: 0, y: 0, isBlack: true }, { x: 1, y: 0, isBlack: true }, { x: 2, y: 0, isBlack: true }, { x: 3, y: 0, isBlack: true }, { x: 4, y: 0, isBlack: true }, { x: 5, y: 0, isBlack: true }, { x: 6, y: 0, isBlack: true }, { x: 7, y: 0, isBlack: true }]
+            };
+            assert.deepEqual(pieces, expectedPieces);
         });
     });
 });
