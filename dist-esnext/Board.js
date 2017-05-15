@@ -65,21 +65,26 @@ const createRows = (x, y, rows) => y < 0 ? rows : createRows(x, y - 1, R.concat(
 // tslint:disable-next-line:variable-name
 const _getCleanBoard = R.memoize((boardSize) => createRows(boardSize.x - 1, boardSize.y - 1));
 /**
- * Get cached clean board, using memoize from ramda
+ * Get cached clean board, using memoize from ramda.
  */
 function getCleanBoard(boardSize) {
     return _getCleanBoard(boardSize);
 }
+/**
+ * Takes a board and return a new board with pieces.
+ */
 function getBoardWithPieces(board, pieces) {
-    return mapBoard(board, position => {
-        const piece = Position.getPositionFromPositions(pieces, position);
-        if (!piece)
-            return Position.removePiece(position);
-        return Position.setPiece(piece.isBlack, position);
+    return mapBoard(board, p => {
+        const { x, y } = p;
+        const piece = Position.getPositionFromPositions(pieces, p);
+        if (piece)
+            return { x, y, isBlack: piece.isBlack };
+        else
+            return { x, y };
     });
 }
 /**
- * Get start white and black pieces
+ * Get start white and black pieces.
  */
 const getStartWhiteBlack = (x, whiteY) => [
     { x, y: 0, isBlack: true },
@@ -120,9 +125,6 @@ function getPosition(board, position) {
         throw new Error('Error getting position');
     }
 }
-const setPosition = (board, position) => mapBoard(board, p => Position.hasSameXY(p, position) ? position : p);
-const setPieceOnBoard = (board, position, isBlack) => setPosition(board, Position.setPiece(isBlack, position));
-const removePieceOnBoard = (board, position) => setPosition(board, Position.removePiece(position));
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
  */
@@ -307,5 +309,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

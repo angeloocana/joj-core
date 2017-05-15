@@ -45,20 +45,39 @@ function canMove(game: I.IGame, move: I.IMove): boolean {
  */
 const canNotMove = R.compose(R.not, canMove);
 
+/**
+ * Get a position and recursively return all positions in .lastPosition
+ */
+function getJumps(to: I.IPosition, jumps?: I.IXY[]): I.IXY[] {
+    return to && to.lastPosition
+        ? getJumps(to.lastPosition).concat(to.lastPosition)
+        : jumps || [];
+}
+
+/**
+ * Get board after move, return a new board with:
+ *  - From: Remove piece and add .lastMove: true
+ *  - To: Set piece from move.from and add .lastMove: true
+ *  - Jumps: Create jump breadcrumb by setting .lastMoveJump: true
+ */
 function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
-    move.to.lastMove = true;
-    move.from.lastMove = true;
+    const jumps = getJumps(move.to);
+    const from = Board.getPosition(board, move.from);
 
-    board = Board.setPieceOnBoard(board, move.to, Position.hasBlackPiece(move.from));
-    board = Board.removePieceOnBoard(board, move.from);
+    return Board.mapBoard(board, p => {
+        const { x, y, isBlack } = p;
 
-    let jumpPosition = move.to.lastPosition;
-    while (jumpPosition) {
-        Board.getPosition(board, jumpPosition).lastMoveJump = true;
-        jumpPosition = jumpPosition.lastPosition;
-    }
+        if (Position.hasSameXY(from, p))
+            return { x, y, lastMove: true };
 
-    return board;
+        if (Position.hasSameXY(move.to, p))
+            return { x, y, isBlack: from.isBlack, lastMove: true };
+
+        if (Position.containsXY(jumps, p))
+            return { x, y, lastMoveJump: true };
+
+        return { x, y, isBlack };
+    });
 }
 
 /**

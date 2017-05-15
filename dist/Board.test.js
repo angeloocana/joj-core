@@ -93,16 +93,6 @@ describe('Board', function () {
             });
         });
     });
-    describe('setPosition', function () {
-        it('valid position', function () {
-            var oldBoard = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
-            var xy = { x: 2, y: 3 };
-            var newBoard = _index.Board.setPosition(oldBoard, xy);
-            assert.equal(_index.Board.getPosition(newBoard, xy), xy, 'different position');
-            assert.notEqual(newBoard, oldBoard, 'same instance');
-            assert.notEqual(_index.Board.getPosition(newBoard, xy), _index.Board.getPosition(oldBoard, xy), 'same instance');
-        });
-    });
     describe('_getNearPositions', function () {
         it('caches nearPositions', function () {
             // Repeat params to get different instances.

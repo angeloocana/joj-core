@@ -26,15 +26,25 @@ function getXAndY({ x, y }: I.IPosition): I.IPosition {
     return { x, y };
 }
 
+/**
+ * .isBlack equal true.
+ */
 const hasBlackPiece = (p: I.IPosition) => p.isBlack === true;
 
+/**
+ * .isBlack equal false.
+ */
 const hasWhitePiece = (p: I.IPosition) => p.isBlack === false;
 
+/**
+ * .isBlack is true or false.
+ */
 const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
 
+/**
+ * .isBlack is undefined or null.
+ */
 const hasNoPiece = R.compose(R.not, hasPiece);
-
-const hasSameXY = (p1: I.IXY, p2: I.IXY) => p1.x === p2.x && p1.y === p2.y;
 
 const setPiece = (isBlack: boolean, position: I.IPosition) =>
     Object.assign({}, position, { isBlack });
@@ -46,26 +56,30 @@ const setPieceToBlack = setPieceCurried(true);
 const setPieceToWhite = setPieceCurried(false);
 
 /**
- * Deletes .isBlack prop from position
+ * Takes a position and return a new position with iCanGoHere checked.
  */
-function removePiece(position: I.IPosition): I.IPosition {
-    position = Object.assign({}, position);
-    delete position.isBlack;
-    return position;
-}
+const setICanGoHere = (positionsWhereCanIGo: I.IXY[], position: I.IPosition) =>
+    Object.assign({
+        iCanGoHere: containsXY(positionsWhereCanIGo, position)
+    }, position);
 
 /**
- * Get the board background color of a position
+ * Takes 2 positions and return true when same x and y.
+ */
+const hasSameXY = (p1: I.IXY, p2: I.IXY) => p1.x === p2.x && p1.y === p2.y;
+
+/**
+ * Get the board background color of a position.
  */
 const isBackGroundBlack = (x: number, y: number): boolean =>
     (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0);
 
 /**
- * Returns the index to store the position in orderedPositions
+ * Returns the index to store the position in orderedPositions.
  *
- * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
+ * The order to search is 0, 7, 1, 6, 2, 5, 3, 1.
  *
- * The goal is to fill the corners first
+ * The goal is to fill the corners first.
  */
 function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
     switch (x) {
@@ -135,14 +149,6 @@ function printUnicodePosition(position: I.IPosition): string {
             return '\u{2588}';
     }
 }
-
-/**
- * Takes a position and return a new position with iCanGoHere checked.
- */
-const setICanGoHere = (positionsWhereCanIGo: I.IXY[], position: I.IPosition) =>
-    Object.assign({
-        iCanGoHere: containsXY(positionsWhereCanIGo, position)
-    }, position);
 
 /**
  * Checks if an array of positions contains a position.
@@ -222,9 +228,9 @@ export {
     printXAndYPosition,
     printUnicodePosition,
 
-    removePiece,
     setICanGoHere,
     setPiece,
+    setPieceCurried,
     setPieceToBlack,
     setPieceToWhite
 };

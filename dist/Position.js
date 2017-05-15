@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.removePiece = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -39,17 +39,26 @@ function getXAndY(_ref) {
 
     return { x: x, y: y };
 }
+/**
+ * .isBlack equal true.
+ */
 var hasBlackPiece = function hasBlackPiece(p) {
     return p.isBlack === true;
 };
+/**
+ * .isBlack equal false.
+ */
 var hasWhitePiece = function hasWhitePiece(p) {
     return p.isBlack === false;
 };
+/**
+ * .isBlack is true or false.
+ */
 var hasPiece = _ramda2.default.anyPass([hasBlackPiece, hasWhitePiece]);
+/**
+ * .isBlack is undefined or null.
+ */
 var hasNoPiece = _ramda2.default.compose(_ramda2.default.not, hasPiece);
-var hasSameXY = function hasSameXY(p1, p2) {
-    return p1.x === p2.x && p1.y === p2.y;
-};
 var setPiece = function setPiece(isBlack, position) {
     return Object.assign({}, position, { isBlack: isBlack });
 };
@@ -57,25 +66,31 @@ var setPieceCurried = _ramda2.default.curry(setPiece);
 var setPieceToBlack = setPieceCurried(true);
 var setPieceToWhite = setPieceCurried(false);
 /**
- * Deletes .isBlack prop from position
+ * Takes a position and return a new position with iCanGoHere checked.
  */
-function removePiece(position) {
-    position = Object.assign({}, position);
-    delete position.isBlack;
-    return position;
-}
+var setICanGoHere = function setICanGoHere(positionsWhereCanIGo, position) {
+    return Object.assign({
+        iCanGoHere: containsXY(positionsWhereCanIGo, position)
+    }, position);
+};
 /**
- * Get the board background color of a position
+ * Takes 2 positions and return true when same x and y.
+ */
+var hasSameXY = function hasSameXY(p1, p2) {
+    return p1.x === p2.x && p1.y === p2.y;
+};
+/**
+ * Get the board background color of a position.
  */
 var isBackGroundBlack = function isBackGroundBlack(x, y) {
     return x % 2 === 0 ? y % 2 === 0 : y % 2 !== 0;
 };
 /**
- * Returns the index to store the position in orderedPositions
+ * Returns the index to store the position in orderedPositions.
  *
- * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
+ * The order to search is 0, 7, 1, 6, 2, 5, 3, 1.
  *
- * The goal is to fill the corners first
+ * The goal is to fill the corners first.
  */
 function getToSearchOrder(boardSize, x) {
     switch (x) {
@@ -128,14 +143,6 @@ function printUnicodePosition(position) {
         if (hasWhitePiece(position)) return '\u25D9';else if (hasBlackPiece(position)) return '\u25D8';else return '\u2588';
     }
 }
-/**
- * Takes a position and return a new position with iCanGoHere checked.
- */
-var setICanGoHere = function setICanGoHere(positionsWhereCanIGo, position) {
-    return Object.assign({
-        iCanGoHere: containsXY(positionsWhereCanIGo, position)
-    }, position);
-};
 /**
  * Checks if an array of positions contains a position.
  */
@@ -200,9 +207,9 @@ exports.hasWhitePiece = hasWhitePiece;
 exports.notContainsXY = notContainsXY;
 exports.printXAndYPosition = printXAndYPosition;
 exports.printUnicodePosition = printUnicodePosition;
-exports.removePiece = removePiece;
 exports.setICanGoHere = setICanGoHere;
 exports.setPiece = setPiece;
+exports.setPieceCurried = setPieceCurried;
 exports.setPieceToBlack = setPieceToBlack;
 exports.setPieceToWhite = setPieceToWhite;
 //# sourceMappingURL=Position.js.map

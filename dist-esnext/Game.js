@@ -4,6 +4,7 @@ import * as Player from './Player';
 import * as Position from './Position';
 import * as Score from './Score';
 function createGame(args) {
+    args = args || [];
     const boardSize = args.boardSize || Board.defaultBoardSize;
     const game = {
         moves: args.moves || [],

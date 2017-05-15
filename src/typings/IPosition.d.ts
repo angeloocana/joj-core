@@ -27,8 +27,6 @@ export interface IPosition {
     // isWhiteHome?: boolean;
     // isBlackHome?: boolean;
 
-    lastMovement?: IMove;
-
     lastPosition?: IPosition;
     jumpingBlackPiece?: boolean;
     jumps?: number;

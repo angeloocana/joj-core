@@ -55,9 +55,7 @@ describe('Move', function () {
         });
     });
     it('getGameAfterMoves', function () {
-        var gameBeforeMoves = _index.Game.createGame({
-            boardSize: { x: 8, y: 8 }
-        });
+        var gameBeforeMoves = _index.Game.createGame();
         var moves = _index.Move.getMovesFromArray([[[5, 7], [5, 6]], [[2, 0], [2, 1]], [[7, 7], [5, 5]]]);
         var gameAfterMoves = _index.Move.getGameAfterMoves(gameBeforeMoves, moves);
         assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');

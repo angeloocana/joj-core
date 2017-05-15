@@ -83,24 +83,28 @@ const _getCleanBoard = R.memoize((boardSize: I.IBoardSize) =>
     createRows(boardSize.x - 1, boardSize.y - 1));
 
 /**
- * Get cached clean board, using memoize from ramda
+ * Get cached clean board, using memoize from ramda.
  */
 function getCleanBoard(boardSize: I.IBoardSize): I.IBoard {
     return _getCleanBoard(boardSize);
 }
 
+/**
+ * Takes a board and return a new board with pieces.
+ */
 function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
-    return mapBoard(board, position => {
-        const piece = Position.getPositionFromPositions(pieces, position);
-        if (!piece)
-            return Position.removePiece(position);
-
-        return Position.setPiece(piece.isBlack, position);
+      return mapBoard(board, p => {
+        const { x, y } = p;
+        const piece = Position.getPositionFromPositions(pieces, p);
+        if (piece)
+            return { x, y, isBlack: piece.isBlack };
+        else
+            return { x, y };
     });
 }
 
 /**
- * Get start white and black pieces
+ * Get start white and black pieces.
  */
 const getStartWhiteBlack = (x: number, whiteY: number) => [
     { x, y: 0, isBlack: true },
@@ -140,22 +144,13 @@ function getInitialBoard(boardSize: I.IBoardSize): I.IBoard {
     return _getInitialBoard(boardSize);
 }
 
-function getPosition(board: I.IBoard, position: I.IPosition): I.IPosition {
+function getPosition(board: I.IBoard, position: I.IXY): I.IPosition {
     try {
         return board[position.y][position.x];
     } catch (e) {
         throw new Error('Error getting position');
     }
 }
-
-const setPosition = (board: I.IBoard, position: I.IPosition) =>
-    mapBoard(board, p => Position.hasSameXY(p, position) ? position : p);
-
-const setPieceOnBoard = (board: I.IBoard, position: I.IPosition, isBlack: boolean) =>
-    setPosition(board, Position.setPiece(isBlack, position));
-
-const removePieceOnBoard = (board: I.IBoard, position: I.IPosition) =>
-    setPosition(board, Position.removePiece(position));
 
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
@@ -401,14 +396,12 @@ export {
     getPosition,
     getPositionsWhereCanIGo,
     getPiecesFromBoard,
+    mapBoard,
     printBoard,
     printBoardCurried,
     printUnicodeBoard,
     printXAndYBoard,
     whereCanIJump,
-    setPieceOnBoard,
-    setPosition,
-    removePieceOnBoard,
     hasPosition,
     hasPositionByBoardSize
 };

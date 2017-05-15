@@ -20,33 +20,46 @@ const getPositionFromPositions = (positions, position) => positions.find(p => ha
 function getXAndY({ x, y }) {
     return { x, y };
 }
+/**
+ * .isBlack equal true.
+ */
 const hasBlackPiece = (p) => p.isBlack === true;
+/**
+ * .isBlack equal false.
+ */
 const hasWhitePiece = (p) => p.isBlack === false;
+/**
+ * .isBlack is true or false.
+ */
 const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
+/**
+ * .isBlack is undefined or null.
+ */
 const hasNoPiece = R.compose(R.not, hasPiece);
-const hasSameXY = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
 const setPiece = (isBlack, position) => Object.assign({}, position, { isBlack });
 const setPieceCurried = R.curry(setPiece);
 const setPieceToBlack = setPieceCurried(true);
 const setPieceToWhite = setPieceCurried(false);
 /**
- * Deletes .isBlack prop from position
+ * Takes a position and return a new position with iCanGoHere checked.
  */
-function removePiece(position) {
-    position = Object.assign({}, position);
-    delete position.isBlack;
-    return position;
-}
+const setICanGoHere = (positionsWhereCanIGo, position) => Object.assign({
+    iCanGoHere: containsXY(positionsWhereCanIGo, position)
+}, position);
 /**
- * Get the board background color of a position
+ * Takes 2 positions and return true when same x and y.
+ */
+const hasSameXY = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
+/**
+ * Get the board background color of a position.
  */
 const isBackGroundBlack = (x, y) => (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0);
 /**
- * Returns the index to store the position in orderedPositions
+ * Returns the index to store the position in orderedPositions.
  *
- * The order to search is 0, 7, 1, 6, 2, 5, 3, 1
+ * The order to search is 0, 7, 1, 6, 2, 5, 3, 1.
  *
- * The goal is to fill the corners first
+ * The goal is to fill the corners first.
  */
 function getToSearchOrder(boardSize, x) {
     switch (x) {
@@ -111,12 +124,6 @@ function printUnicodePosition(position) {
     }
 }
 /**
- * Takes a position and return a new position with iCanGoHere checked.
- */
-const setICanGoHere = (positionsWhereCanIGo, position) => Object.assign({
-    iCanGoHere: containsXY(positionsWhereCanIGo, position)
-}, position);
-/**
  * Checks if an array of positions contains a position.
  */
 const containsXY = (positions, position) => positions.some(p => hasSameXY(p, position));
@@ -151,5 +158,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, removePiece, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

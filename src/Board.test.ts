@@ -102,19 +102,6 @@ describe('Board', () => {
         });
     });
 
-    describe('setPosition', () => {
-        it('valid position', () => {
-            const oldBoard = Board.getInitialBoard(Board.defaultBoardSize);
-            const xy = { x: 2, y: 3 };
-
-            const newBoard = Board.setPosition(oldBoard, xy);
-
-            assert.equal(Board.getPosition(newBoard, xy), xy, 'different position');
-            assert.notEqual(newBoard, oldBoard, 'same instance');
-            assert.notEqual(Board.getPosition(newBoard, xy), Board.getPosition(oldBoard, xy), 'same instance');
-        });
-    });
-
     describe('_getNearPositions', () => {
         it('caches nearPositions', () => {
             // Repeat params to get different instances.

@@ -6,7 +6,8 @@ import * as Score from './Score';
 
 import I from './typings';
 
-function createGame(args: I.IGameArgs): I.IGame {
+function createGame(args?: I.IGameArgs): I.IGame {
+    args = args || [];
     const boardSize = args.boardSize || Board.defaultBoardSize;
 
     const game: I.IGame = {

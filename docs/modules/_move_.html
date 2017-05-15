@@ -83,6 +83,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgameaftermove" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgameaftermoves" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Moves</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgamebeforelastmove" class="tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getjumps" class="tsd-kind-icon">get<wbr>Jumps</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovefromarray" class="tsd-kind-icon">get<wbr>Move<wbr>From<wbr>Array</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovexandy" class="tsd-kind-icon">get<wbr>MoveXAndY</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getmovesfromarray" class="tsd-kind-icon">get<wbr>Moves<wbr>From<wbr>Array</a></li>
@@ -99,7 +100,7 @@
 					<div class="tsd-signature tsd-kind-icon">can<wbr>Not<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.compose(R.not, canMove)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L46">Move.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L46">Move.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -145,7 +146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L35">Move.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L35">Move.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -181,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L12">Move.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L12">Move.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,9 +210,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L48">Move.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L63">Move.ts:63</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get board after move, return a new board with:</p>
+									<ul>
+										<li>From: Remove piece and add .lastMove: true</li>
+										<li>To: Set piece from move.from and add .lastMove: true</li>
+										<li>Jumps: Create jump breadcrumb by setting .lastMoveJump: true</li>
+									</ul>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -235,7 +246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L72">Move.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L91">Move.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -275,7 +286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L131">Move.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L150">Move.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,7 +317,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L86">Move.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L105">Move.ts:105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -320,6 +331,37 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getjumps" class="tsd-anchor"></a>
+					<h3>get<wbr>Jumps</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Jumps<span class="tsd-signature-symbol">(</span>to<span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a>, jumps<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_typings_iposition_d_.ixy.html" class="tsd-signature-type">IXY</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_iposition_d_.ixy.html" class="tsd-signature-type">IXY</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L51">Move.ts:51</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a position and recursively return all positions in .lastPosition</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>to: <a href="../interfaces/_typings_iposition_d_.iposition.html" class="tsd-signature-type">IPosition</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> jumps: <a href="../interfaces/_typings_iposition_d_.ixy.html" class="tsd-signature-type">IXY</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_iposition_d_.ixy.html" class="tsd-signature-type">IXY</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="getmovefromarray" class="tsd-anchor"></a>
 					<h3>get<wbr>Move<wbr>From<wbr>Array</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -329,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L108">Move.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L127">Move.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -359,7 +401,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L22">Move.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L22">Move.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -387,7 +429,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/902bb0e/src/Move.ts#L125">Move.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/4ca0b06/src/Move.ts#L144">Move.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,6 +530,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#getgamebeforelastmove" class="tsd-kind-icon">get<wbr>Game<wbr>Before<wbr>Last<wbr>Move</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getjumps" class="tsd-kind-icon">get<wbr>Jumps</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#getmovefromarray" class="tsd-kind-icon">get<wbr>Move<wbr>From<wbr>Array</a>

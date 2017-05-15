@@ -62,9 +62,7 @@ describe('Move', () => {
     });
 
     it('getGameAfterMoves', () => {
-        const gameBeforeMoves = Game.createGame({
-            boardSize: { x: 8, y: 8 }
-        });
+        const gameBeforeMoves = Game.createGame();
 
         const moves = Move.getMovesFromArray([
             [[5, 7], [5, 6]],
