@@ -24,12 +24,17 @@ const cleanBoardExpected = [
 ];
 
 /**
+ * Clean 8x8 board
+ */
+const cleanBoard = Board.getCleanBoard(Board.defaultBoardSize);
+
+/**
  * [ATTENTION] USE IT ONLY FOR TESTS!
  * Code for any board size =D
  *
  * Default 8x8 board in start position
  */
-const defaultInitialBoard = Board.getInitialBoard(Board.defaultBoardSize);
+const initialBoard = Board.getInitialBoard(Board.defaultBoardSize);
 
 // tslint:disable:no-string-literal
 // tslint:disable:max-line-length
@@ -69,8 +74,9 @@ const xAndYStartBoard =
   ' 0,7 | 1,7 | 2,7 | 3,7 | 4,7 | 5,7 | 6,7 | 7,7 |\n';
 
 export {
+  cleanBoard,
   cleanBoardExpected,
-  defaultInitialBoard,
+  initialBoard,
   initialBoardExpected,
   startPiecesExpected,
   unicodeStartBoard,

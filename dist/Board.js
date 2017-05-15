@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.removePieceOnBoard = exports.setPosition = exports.setPieceOnBoard = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -108,12 +108,21 @@ function getBoardWithPieces(board, pieces) {
         return Position.setPiece(piece.isBlack, position);
     });
 }
+/**
+ * Get start white and black pieces
+ */
 var getStartWhiteBlack = function getStartWhiteBlack(x, whiteY) {
     return [{ x: x, y: 0, isBlack: true }, { x: x, y: whiteY, isBlack: false }];
 };
+/**
+ * Add start pieces recursively
+ */
 var addStartPieces = function addStartPieces(x, whiteY, positions) {
     return x < 0 ? positions : addStartPieces(x - 1, whiteY, positions.concat(getStartWhiteBlack(x, whiteY)));
 };
+/**
+ * Get start white and black pieces
+ */
 function getStartPieces(boardSize) {
     return addStartPieces(boardSize.x - 1, boardSize.y - 1, []);
 }
@@ -204,7 +213,7 @@ var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Set Jumps to from jumps +1.
  *  - Call and return this method again recursively to get next jump positions.
  */
-function whereCanIJump(board, from, positions, isBlack) {
+function whereCanIJump(board, from, isBlack, positions) {
     var nearPieces = getNotEmptyNearPositions(board, from);
     return nearPieces.reduce(function (accPositions, nearPiece) {
         var jumpTo = getJumpPosition(from, nearPiece, board);
@@ -212,8 +221,8 @@ function whereCanIJump(board, from, positions, isBlack) {
         jumpTo.lastPosition = from;
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
         jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
-        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
-    }, positions);
+        return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
+    }, positions || []);
 }
 /**
  * Gets all near positions and reduce. Foreach near position checks:
@@ -230,7 +239,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         var jumpTo = getJumpPosition(from, nearPosition, board);
         if (!jumpTo) return positions;
         jumpTo.jumps = 1;
-        return whereCanIJump(board, jumpTo, positions.concat(jumpTo), isBlack);
+        return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
     }, []);
 }
 /**
@@ -334,6 +343,7 @@ exports._getInitialBoard = _getInitialBoard;
 exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;
 exports.getInitialBoard = getInitialBoard;
+exports.getBoardWithPieces = getBoardWithPieces;
 exports.getBoardWhereCanIGo = getBoardWhereCanIGo;
 exports.getCleanBoard = getCleanBoard;
 exports.getStartEndRow = getStartEndRow;

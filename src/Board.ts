@@ -17,7 +17,8 @@ const hasPositionByBoardSize = (boardSize: I.IBoardSize, position: I.IPosition) 
 /**
  * Check if position exists on board
  */
-const hasPosition = (board: I.IBoard, position: I.IPosition) => hasPositionByBoardSize(getBoardSize(board), position);
+const hasPosition = (board: I.IBoard, position: I.IPosition) =>
+    hasPositionByBoardSize(getBoardSize(board), position);
 
 /**
  * Map some function in all board positions and return a new board
@@ -98,16 +99,25 @@ function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
     });
 }
 
+/**
+ * Get start white and black pieces
+ */
 const getStartWhiteBlack = (x: number, whiteY: number) => [
     { x, y: 0, isBlack: true },
     { x, y: whiteY, isBlack: false }
 ];
 
+/**
+ * Add start pieces recursively
+ */
 const addStartPieces = (x: number, whiteY: number, positions: I.IPosition[]) =>
     x < 0
         ? positions
         : addStartPieces(x - 1, whiteY, positions.concat(getStartWhiteBlack(x, whiteY)));
 
+/**
+ * Get start white and black pieces
+ */
 function getStartPieces(boardSize: I.IBoardSize): I.IPosition[] {
     return addStartPieces(boardSize.x - 1, boardSize.y - 1, []);
 }
@@ -202,8 +212,7 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Set Jumps to from jumps +1.
  *  - Call and return this method again recursively to get next jump positions.
  */
-function whereCanIJump(board: I.IBoard, from: I.IPosition, positions: I.IPosition[], isBlack: boolean): I.IPosition[] {
-
+function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, positions?: I.IPosition[]): I.IPosition[] {
     const nearPieces = getNotEmptyNearPositions(board, from);
 
     return nearPieces.reduce((accPositions, nearPiece) => {
@@ -216,9 +225,9 @@ function whereCanIJump(board: I.IBoard, from: I.IPosition, positions: I.IPositio
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
         jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
 
-        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
+        return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
 
-    }, positions);
+    }, positions || []);
 }
 
 /**
@@ -244,7 +253,7 @@ function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: bo
 
         jumpTo.jumps = 1;
 
-        return whereCanIJump(board, jumpTo, positions.concat(jumpTo), isBlack);
+        return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
     }, []);
 }
 
@@ -379,6 +388,7 @@ export {
     _getNearPositions,
     defaultBoardSize,
     getInitialBoard,
+    getBoardWithPieces,
     getBoardWhereCanIGo,
     getCleanBoard,
     getStartEndRow,

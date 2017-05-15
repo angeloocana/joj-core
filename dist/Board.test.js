@@ -39,42 +39,42 @@ describe('Board', function () {
     });
     describe('hasPosition', function () {
         it('return false for null position', function () {
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, null));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, null));
         });
         it('return false for undefined position', function () {
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, undefined));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, undefined));
         });
         it('return false for negative x', function () {
             var position = { x: -1, y: 0 };
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for negative y', function () {
             var position = { x: 1, y: -1 };
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for negative x and y', function () {
             var position = { x: -1, y: -1 };
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for x > 7', function () {
             var position = { x: 8, y: 1 };
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for y > 7', function () {
             var position = { x: 7, y: 8 };
-            assert.notOk(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 0, y: 0', function () {
             var position = { x: 0, y: 0 };
-            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 1, y: 1', function () {
             var position = { x: 0, y: 0 };
-            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 7, y: 7', function () {
             var position = { x: 7, y: 7 };
-            assert.ok(_index.Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(_index.Board.hasPosition(TestData.initialBoard, position));
         });
     });
     describe('getPosition', function () {
@@ -115,7 +115,7 @@ describe('Board', function () {
         it('return only filled near positions', function () {
             var position = { x: 7, y: 7 };
             var expected = [{ x: 6, y: 7, isBlack: false }];
-            var actual = _index.Board.getNotEmptyNearPositions(TestData.defaultInitialBoard, position);
+            var actual = _index.Board.getNotEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -123,7 +123,7 @@ describe('Board', function () {
         it('return all empty near positions', function () {
             var position = { x: 7, y: 7 };
             var expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }];
-            var actual = _index.Board.getEmptyNearPositions(TestData.defaultInitialBoard, position);
+            var actual = _index.Board.getEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -131,7 +131,7 @@ describe('Board', function () {
         it('return all near positions', function () {
             var position = { x: 7, y: 7 };
             var expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }, { x: 6, y: 7, isBlack: false }];
-            var actual = _index.Board.getNearPositions(TestData.defaultInitialBoard, position);
+            var actual = _index.Board.getNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -199,11 +199,11 @@ describe('Board', function () {
     });
     describe('print', function () {
         it('printUnicode', function printUnicodeTest() {
-            var actual = _index.Board.printUnicodeBoard(TestData.defaultInitialBoard);
+            var actual = _index.Board.printUnicodeBoard(TestData.initialBoard);
             assert.equal(actual, TestData.unicodeStartBoard);
         });
         it('printXAndY', function printUnicodeTest() {
-            var actual = _index.Board.printXAndYBoard(TestData.defaultInitialBoard);
+            var actual = _index.Board.printXAndYBoard(TestData.initialBoard);
             assert.equal(actual, TestData.xAndYStartBoard);
         });
     });
@@ -221,7 +221,7 @@ describe('Board', function () {
     });
     describe('getPositionsWhereCanIGo', function () {
         it('return null for invalid from', function () {
-            var positions = _index.Board.getPositionsWhereCanIGo(TestData.defaultInitialBoard, null, true);
+            var positions = _index.Board.getPositionsWhereCanIGo(TestData.initialBoard, null, true);
             assert.notOk(positions);
         });
     });
@@ -229,28 +229,40 @@ describe('Board', function () {
         it('8x8', function () {
             var board = _index.Board.getCleanBoard({ x: 8, y: 8 });
             var board2 = _index.Board.getCleanBoard({ x: 8, y: 8 });
-            console.log(_index.Board.printXAndYBoard(TestData.cleanBoardExpected));
-            console.log(_index.Board.printXAndYBoard(board));
             assert.deepEqual(board, TestData.cleanBoardExpected);
             assert.equal(board, board2, 'Cache did not worked');
         });
     });
     describe('whereCanIJump', function () {
-        it('jump up 5,7 5,5 5,3 5,1'
-        // , () => {
-        // const board = [
-        // ];
-        // const from = ;
-        // const position = [];
-        // const isBlack = true;
-        // }
-        );
+        it('jump up 5,7 => 5,5 5,3 5,1', function () {
+            var pieces = [{ x: 5, y: 7, isBlack: true }, { x: 5, y: 6, isBlack: false }, { x: 5, y: 4, isBlack: false }, { x: 5, y: 2, isBlack: false }];
+            var board = _index.Board.getBoardWithPieces(TestData.cleanBoard, pieces);
+            var from = { x: 5, y: 7 };
+            var p55 = {
+                x: 5, y: 5,
+                lastPosition: from,
+                jumpingBlackPiece: false,
+                jumps: 2
+            };
+            var p53 = {
+                x: 5, y: 3,
+                lastPosition: p55,
+                jumpingBlackPiece: false,
+                jumps: 3
+            };
+            var p51 = {
+                x: 5, y: 1,
+                lastPosition: p53,
+                jumpingBlackPiece: false,
+                jumps: 4
+            };
+            var whereCanIJump = _index.Board.whereCanIJump(board, from, true);
+            assert.deepEqual(whereCanIJump, [p55, p53, p51]);
+        });
     });
     describe('getStartPieces', function () {
         it('8x8', function () {
             var pieces = _index.Board.getStartPieces({ x: 8, y: 8 });
-            console.log('pieces \n', pieces);
-            console.log('expected \n', TestData.startPiecesExpected);
             assert.deepEqual(pieces, TestData.startPiecesExpected);
         });
     });

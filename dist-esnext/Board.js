@@ -78,13 +78,22 @@ function getBoardWithPieces(board, pieces) {
         return Position.setPiece(piece.isBlack, position);
     });
 }
+/**
+ * Get start white and black pieces
+ */
 const getStartWhiteBlack = (x, whiteY) => [
     { x, y: 0, isBlack: true },
     { x, y: whiteY, isBlack: false }
 ];
+/**
+ * Add start pieces recursively
+ */
 const addStartPieces = (x, whiteY, positions) => x < 0
     ? positions
     : addStartPieces(x - 1, whiteY, positions.concat(getStartWhiteBlack(x, whiteY)));
+/**
+ * Get start white and black pieces
+ */
 function getStartPieces(boardSize) {
     return addStartPieces(boardSize.x - 1, boardSize.y - 1, []);
 }
@@ -162,7 +171,7 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Set Jumps to from jumps +1.
  *  - Call and return this method again recursively to get next jump positions.
  */
-function whereCanIJump(board, from, positions, isBlack) {
+function whereCanIJump(board, from, isBlack, positions) {
     const nearPieces = getNotEmptyNearPositions(board, from);
     return nearPieces.reduce((accPositions, nearPiece) => {
         const jumpTo = getJumpPosition(from, nearPiece, board);
@@ -171,8 +180,8 @@ function whereCanIJump(board, from, positions, isBlack) {
         jumpTo.lastPosition = from;
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
         jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
-        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo), isBlack);
-    }, positions);
+        return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
+    }, positions || []);
 }
 /**
  * Gets all near positions and reduce. Foreach near position checks:
@@ -192,7 +201,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         if (!jumpTo)
             return positions;
         jumpTo.jumps = 1;
-        return whereCanIJump(board, jumpTo, positions.concat(jumpTo), isBlack);
+        return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
     }, []);
 }
 /**
@@ -298,5 +307,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, setPieceOnBoard, setPosition, removePieceOnBoard, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

@@ -24,42 +24,42 @@ describe('Board', () => {
     });
     describe('hasPosition', () => {
         it('return false for null position', () => {
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, null));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, null));
         });
         it('return false for undefined position', () => {
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, undefined));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, undefined));
         });
         it('return false for negative x', () => {
             const position = { x: -1, y: 0 };
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for negative y', () => {
             const position = { x: 1, y: -1 };
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for negative x and y', () => {
             const position = { x: -1, y: -1 };
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for x > 7', () => {
             const position = { x: 8, y: 1 };
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return false for y > 7', () => {
             const position = { x: 7, y: 8 };
-            assert.notOk(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.notOk(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 0, y: 0', () => {
             const position = { x: 0, y: 0 };
-            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 1, y: 1', () => {
             const position = { x: 0, y: 0 };
-            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.initialBoard, position));
         });
         it('return true for x: 7, y: 7', () => {
             const position = { x: 7, y: 7 };
-            assert.ok(Board.hasPosition(TestData.defaultInitialBoard, position));
+            assert.ok(Board.hasPosition(TestData.initialBoard, position));
         });
     });
     describe('getPosition', () => {
@@ -98,7 +98,7 @@ describe('Board', () => {
         it('return only filled near positions', () => {
             const position = { x: 7, y: 7 };
             const expected = [{ x: 6, y: 7, isBlack: false }];
-            const actual = Board.getNotEmptyNearPositions(TestData.defaultInitialBoard, position);
+            const actual = Board.getNotEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -106,7 +106,7 @@ describe('Board', () => {
         it('return all empty near positions', () => {
             const position = { x: 7, y: 7 };
             const expected = [{ x: 6, y: 6 }, { x: 7, y: 6 }];
-            const actual = Board.getEmptyNearPositions(TestData.defaultInitialBoard, position);
+            const actual = Board.getEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -118,7 +118,7 @@ describe('Board', () => {
                 { x: 7, y: 6 },
                 { x: 6, y: 7, isBlack: false }
             ];
-            const actual = Board.getNearPositions(TestData.defaultInitialBoard, position);
+            const actual = Board.getNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
     });
@@ -186,11 +186,11 @@ describe('Board', () => {
     });
     describe('print', () => {
         it('printUnicode', function printUnicodeTest() {
-            const actual = Board.printUnicodeBoard(TestData.defaultInitialBoard);
+            const actual = Board.printUnicodeBoard(TestData.initialBoard);
             assert.equal(actual, TestData.unicodeStartBoard);
         });
         it('printXAndY', function printUnicodeTest() {
-            const actual = Board.printXAndYBoard(TestData.defaultInitialBoard);
+            const actual = Board.printXAndYBoard(TestData.initialBoard);
             assert.equal(actual, TestData.xAndYStartBoard);
         });
     });
@@ -208,7 +208,7 @@ describe('Board', () => {
     });
     describe('getPositionsWhereCanIGo', () => {
         it('return null for invalid from', () => {
-            const positions = Board.getPositionsWhereCanIGo(TestData.defaultInitialBoard, null, true);
+            const positions = Board.getPositionsWhereCanIGo(TestData.initialBoard, null, true);
             assert.notOk(positions);
         });
     });
@@ -216,28 +216,45 @@ describe('Board', () => {
         it('8x8', () => {
             const board = Board.getCleanBoard({ x: 8, y: 8 });
             const board2 = Board.getCleanBoard({ x: 8, y: 8 });
-            console.log(Board.printXAndYBoard(TestData.cleanBoardExpected));
-            console.log(Board.printXAndYBoard(board));
             assert.deepEqual(board, TestData.cleanBoardExpected);
             assert.equal(board, board2, 'Cache did not worked');
         });
     });
     describe('whereCanIJump', () => {
-        it('jump up 5,7 5,5 5,3 5,1'
-        // , () => {
-        // const board = [
-        // ];
-        // const from = ;
-        // const position = [];
-        // const isBlack = true;
-        // }
-        );
+        it('jump up 5,7 => 5,5 5,3 5,1', () => {
+            const pieces = [
+                { x: 5, y: 7, isBlack: true },
+                { x: 5, y: 6, isBlack: false },
+                { x: 5, y: 4, isBlack: false },
+                { x: 5, y: 2, isBlack: false },
+            ];
+            const board = Board.getBoardWithPieces(TestData.cleanBoard, pieces);
+            const from = { x: 5, y: 7 };
+            const p55 = {
+                x: 5, y: 5,
+                lastPosition: from,
+                jumpingBlackPiece: false,
+                jumps: 2
+            };
+            const p53 = {
+                x: 5, y: 3,
+                lastPosition: p55,
+                jumpingBlackPiece: false,
+                jumps: 3
+            };
+            const p51 = {
+                x: 5, y: 1,
+                lastPosition: p53,
+                jumpingBlackPiece: false,
+                jumps: 4
+            };
+            const whereCanIJump = Board.whereCanIJump(board, from, true);
+            assert.deepEqual(whereCanIJump, [p55, p53, p51]);
+        });
     });
     describe('getStartPieces', () => {
         it('8x8', () => {
             const pieces = Board.getStartPieces({ x: 8, y: 8 });
-            console.log('pieces \n', pieces);
-            console.log('expected \n', TestData.startPiecesExpected);
             assert.deepEqual(pieces, TestData.startPiecesExpected);
         });
     });

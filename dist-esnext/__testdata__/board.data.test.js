@@ -21,12 +21,16 @@ const cleanBoardExpected = [
     [{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }]
 ];
 /**
+ * Clean 8x8 board
+ */
+const cleanBoard = Board.getCleanBoard(Board.defaultBoardSize);
+/**
  * [ATTENTION] USE IT ONLY FOR TESTS!
  * Code for any board size =D
  *
  * Default 8x8 board in start position
  */
-const defaultInitialBoard = Board.getInitialBoard(Board.defaultBoardSize);
+const initialBoard = Board.getInitialBoard(Board.defaultBoardSize);
 // tslint:disable:no-string-literal
 // tslint:disable:max-line-length
 const initialBoardExpected = [
@@ -59,5 +63,5 @@ const xAndYStartBoard = ' 0,0 | 1,0 | 2,0 | 3,0 | 4,0 | 5,0 | 6,0 | 7,0 |\n' +
     ' 0,5 | 1,5 | 2,5 | 3,5 | 4,5 | 5,5 | 6,5 | 7,5 |\n' +
     ' 0,6 | 1,6 | 2,6 | 3,6 | 4,6 | 5,6 | 6,6 | 7,6 |\n' +
     ' 0,7 | 1,7 | 2,7 | 3,7 | 4,7 | 5,7 | 6,7 | 7,7 |\n';
-export { cleanBoardExpected, defaultInitialBoard, initialBoardExpected, startPiecesExpected, unicodeStartBoard, xAndYStartBoard };
+export { cleanBoard, cleanBoardExpected, initialBoard, initialBoardExpected, startPiecesExpected, unicodeStartBoard, xAndYStartBoard };
 //# sourceMappingURL=board.data.test.js.map
