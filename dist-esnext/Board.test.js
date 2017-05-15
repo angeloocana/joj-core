@@ -128,7 +128,7 @@ describe('Board', () => {
             const from = { x: 0, y: 0 };
             const toJumpPosition = { x: 1, y: 1 };
             const expected = { x: 2, y: 2 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping up and left', () => {
@@ -136,7 +136,7 @@ describe('Board', () => {
             const from = { x: 2, y: 0 };
             const toJumpPosition = { x: 1, y: 1 };
             const expected = { x: 0, y: 2 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping up', () => {
@@ -144,7 +144,7 @@ describe('Board', () => {
             const from = { x: 0, y: 0 };
             const toJumpPosition = { x: 1, y: 1 };
             const expected = { x: 2, y: 2 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down and right', () => {
@@ -152,7 +152,7 @@ describe('Board', () => {
             const from = { x: 0, y: 7 };
             const toJumpPosition = { x: 1, y: 6 };
             const expected = { x: 2, y: 5 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down and left', () => {
@@ -160,7 +160,7 @@ describe('Board', () => {
             const from = { x: 2, y: 7 };
             const toJumpPosition = { x: 1, y: 6 };
             const expected = { x: 0, y: 5 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down', () => {
@@ -168,14 +168,14 @@ describe('Board', () => {
             const from = { x: 1, y: 7 };
             const toJumpPosition = { x: 1, y: 6 };
             const expected = { x: 1, y: 5 };
-            const actual = Board.getJumpPosition(board, from, toJumpPosition);
+            const actual = Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('should return undefined because position is not empty', () => {
             const board = Board.getInitialBoard(Board.defaultBoardSize);
             const from = { x: 3, y: 0 };
             const toJumpPosition = { x: 4, y: 0 };
-            assert.notOk(Board.getJumpPosition(board, from, toJumpPosition));
+            assert.notOk(Board.getJumpPosition(from, toJumpPosition, board));
         });
     });
     describe('print', () => {

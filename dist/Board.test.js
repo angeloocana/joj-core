@@ -141,7 +141,7 @@ describe('Board', function () {
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
             var expected = { x: 2, y: 2 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping up and left', function () {
@@ -149,7 +149,7 @@ describe('Board', function () {
             var from = { x: 2, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
             var expected = { x: 0, y: 2 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping up', function () {
@@ -157,7 +157,7 @@ describe('Board', function () {
             var from = { x: 0, y: 0 };
             var toJumpPosition = { x: 1, y: 1 };
             var expected = { x: 2, y: 2 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down and right', function () {
@@ -165,7 +165,7 @@ describe('Board', function () {
             var from = { x: 0, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
             var expected = { x: 2, y: 5 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down and left', function () {
@@ -173,7 +173,7 @@ describe('Board', function () {
             var from = { x: 2, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
             var expected = { x: 0, y: 5 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('jumping down', function () {
@@ -181,14 +181,14 @@ describe('Board', function () {
             var from = { x: 1, y: 7 };
             var toJumpPosition = { x: 1, y: 6 };
             var expected = { x: 1, y: 5 };
-            var actual = _index.Board.getJumpPosition(board, from, toJumpPosition);
+            var actual = _index.Board.getJumpPosition(from, toJumpPosition, board);
             assertPosition(actual, expected);
         });
         it('should return undefined because position is not empty', function () {
             var board = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
             var from = { x: 3, y: 0 };
             var toJumpPosition = { x: 4, y: 0 };
-            assert.notOk(_index.Board.getJumpPosition(board, from, toJumpPosition));
+            assert.notOk(_index.Board.getJumpPosition(from, toJumpPosition, board));
         });
     });
     describe('print', function () {

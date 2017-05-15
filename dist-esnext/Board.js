@@ -144,7 +144,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
             orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
         }
         else {
-            const jumpPosition = getJumpPosition(board, from, nearPosition);
+            const jumpPosition = getJumpPosition(from, nearPosition, board);
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
@@ -188,7 +188,7 @@ function getAllNearPositions(position) {
 const _getNearPositions = R.memoize((boardSize, xy) => getAllNearPositions(xy)
     .filter(p => hasPositionByBoardSize(boardSize, p)));
 /**
- * Get near positions from the given board instance.
+ * Get all near positions from the given board instance.
  */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
@@ -204,34 +204,40 @@ const getEmptyNearPositions = (board, position) => getNearPositions(board, posit
  */
 const getNotEmptyNearPositions = (board, position) => getNearPositions(board, position)
     .filter(p => Position.hasPiece(p));
-function getJumpPosition(board, from, toJumpPosition) {
-    var jumpPosition = { x: 0, y: 0 };
-    if (from.x < toJumpPosition.x)
-        jumpPosition.x = toJumpPosition.x + 1;
-    else if (from.x > toJumpPosition.x)
-        jumpPosition.x = toJumpPosition.x - 1;
+/**
+ * Takes from position (x or y) and to jump position (x or y) then returns the x or y of the target position.
+ */
+function getJump(from, toJump) {
+    if (from < toJump)
+        return toJump + 1;
+    else if (from > toJump)
+        return toJump - 1;
     else
-        jumpPosition.x = toJumpPosition.x;
-    if (from.y < toJumpPosition.y)
-        jumpPosition.y = toJumpPosition.y + 1;
-    else if (from.y > toJumpPosition.y)
-        jumpPosition.y = toJumpPosition.y - 1;
-    else
-        jumpPosition.y = toJumpPosition.y;
-    if (!hasPosition(board, jumpPosition)) {
+        return toJump;
+}
+function getJumpXY(from, toJump) {
+    return {
+        x: getJump(from.x, toJump.x),
+        y: getJump(from.y, toJump.y)
+    };
+}
+/**
+ * Returns the target position from a jump if this position exists and is empty.
+ */
+function getJumpPosition(from, toJump, board) {
+    const jumpXY = getJumpXY(from, toJump);
+    if (!hasPosition(board, jumpXY))
         return;
-    }
-    jumpPosition = getPosition(board, jumpPosition);
-    if (Position.hasPiece(jumpPosition)) {
+    const jumpPosition = getPosition(board, jumpXY);
+    if (Position.hasPiece(jumpPosition))
         return;
-    }
     return jumpPosition;
 }
 // tslint:disable-next-line:max-line-length
 function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     const nearFilledPositions = getNotEmptyNearPositions(board, jumpFrom);
     nearFilledPositions.forEach(nearFilledPosition => {
-        const jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
+        const jumpPosition = getJumpPosition(jumpFrom, nearFilledPosition, board);
         if (jumpPosition) {
             if (Position.notContainsXY(positions, jumpPosition)) {
                 jumpPosition.lastPosition = jumpFrom;
@@ -255,7 +261,8 @@ function getBoardWhereCanIGo(board, from, isBlack) {
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
 /**
- * Get Pieces from board
+ * Takes a board and return white and black pieces.
+ * Used to calculate score from a board.
  *
  * returns { white: [{x,y}], black: [{x,y}] }
  */

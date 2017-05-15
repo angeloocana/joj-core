@@ -177,7 +177,7 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
             if (!orderedPositions[y]) orderedPositions[y] = [];
             orderedPositions[y][Position.getToSearchOrder(getBoardSize(board), nearPosition.x)] = nearPosition;
         } else {
-            var jumpPosition = getJumpPosition(board, from, nearPosition);
+            var jumpPosition = getJumpPosition(from, nearPosition, board);
             if (jumpPosition) {
                 jumpPosition.jumps = 1;
                 positions.push(jumpPosition);
@@ -214,7 +214,7 @@ var _getNearPositions = _ramda2.default.memoize(function (boardSize, xy) {
     });
 });
 /**
- * Get near positions from the given board instance.
+ * Get all near positions from the given board instance.
  */
 function getNearPositions(board, position) {
     return _getNearPositions(getBoardSize(board), Position.getXAndY(position)).map(function (p) {
@@ -237,24 +237,33 @@ var getNotEmptyNearPositions = function getNotEmptyNearPositions(board, position
         return Position.hasPiece(p);
     });
 };
-function getJumpPosition(board, from, toJumpPosition) {
-    var jumpPosition = { x: 0, y: 0 };
-    if (from.x < toJumpPosition.x) jumpPosition.x = toJumpPosition.x + 1;else if (from.x > toJumpPosition.x) jumpPosition.x = toJumpPosition.x - 1;else jumpPosition.x = toJumpPosition.x;
-    if (from.y < toJumpPosition.y) jumpPosition.y = toJumpPosition.y + 1;else if (from.y > toJumpPosition.y) jumpPosition.y = toJumpPosition.y - 1;else jumpPosition.y = toJumpPosition.y;
-    if (!hasPosition(board, jumpPosition)) {
-        return;
-    }
-    jumpPosition = getPosition(board, jumpPosition);
-    if (Position.hasPiece(jumpPosition)) {
-        return;
-    }
+/**
+ * Takes from position (x or y) and to jump position (x or y) then returns the x or y of the target position.
+ */
+function getJump(from, toJump) {
+    if (from < toJump) return toJump + 1;else if (from > toJump) return toJump - 1;else return toJump;
+}
+function getJumpXY(from, toJump) {
+    return {
+        x: getJump(from.x, toJump.x),
+        y: getJump(from.y, toJump.y)
+    };
+}
+/**
+ * Returns the target position from a jump if this position exists and is empty.
+ */
+function getJumpPosition(from, toJump, board) {
+    var jumpXY = getJumpXY(from, toJump);
+    if (!hasPosition(board, jumpXY)) return;
+    var jumpPosition = getPosition(board, jumpXY);
+    if (Position.hasPiece(jumpPosition)) return;
     return jumpPosition;
 }
 // tslint:disable-next-line:max-line-length
 function whereCanIJump(board, jumpFrom, positions, orderedPositions, isBlack) {
     var nearFilledPositions = getNotEmptyNearPositions(board, jumpFrom);
     nearFilledPositions.forEach(function (nearFilledPosition) {
-        var jumpPosition = getJumpPosition(board, jumpFrom, nearFilledPosition);
+        var jumpPosition = getJumpPosition(jumpFrom, nearFilledPosition, board);
         if (jumpPosition) {
             if (Position.notContainsXY(positions, jumpPosition)) {
                 jumpPosition.lastPosition = jumpFrom;
@@ -281,7 +290,8 @@ function getBoardWhereCanIGo(board, from, isBlack) {
     });
 }
 /**
- * Get Pieces from board
+ * Takes a board and return white and black pieces.
+ * Used to calculate score from a board.
  *
  * returns { white: [{x,y}], black: [{x,y}] }
  */

@@ -38,7 +38,7 @@ var hasWhitePiece = function hasWhitePiece(p) {
     return p.isBlack === false;
 };
 var hasPiece = _ramda2.default.anyPass([hasBlackPiece, hasWhitePiece]);
-var hasNoPiece = _ramda2.default.Compose(_ramda2.default.not, hasPiece);
+var hasNoPiece = _ramda2.default.compose(_ramda2.default.not, hasPiece);
 var hasSameXY = function hasSameXY(p1, p2) {
     return p1.x === p2.x && p1.y === p2.y;
 };
