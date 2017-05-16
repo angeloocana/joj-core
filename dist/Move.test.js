@@ -4,9 +4,9 @@ var _ptzAssert = require('ptz-assert');
 
 var assert = _interopRequireWildcard(_ptzAssert);
 
-var _boardData = require('./__testdata__/board.data.test');
+var _indexData = require('./__testdata__/index.data.test');
 
-var TestData = _interopRequireWildcard(_boardData);
+var TestData = _interopRequireWildcard(_indexData);
 
 var _index = require('./index');
 

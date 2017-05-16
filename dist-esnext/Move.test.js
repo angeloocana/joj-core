@@ -1,5 +1,5 @@
 import * as assert from 'ptz-assert';
-import * as TestData from './__testdata__/board.data.test';
+import * as TestData from './__testdata__/index.data.test';
 import { Board, Game, Move } from './index';
 describe('Move', () => {
     describe('getBackMove', () => {

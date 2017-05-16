@@ -1,7 +1,7 @@
 import * as assert from 'ptz-assert';
 import { Board, Position } from './index';
 import log from 'ptz-log';
-import * as TestData from './__testdata__/board.data.test';
+import * as TestData from './__testdata__/index.data.test';
 function assertPosition(actualPosition, expectedPosition) {
     const samePositionAs = Position.hasSameXY(actualPosition, expectedPosition);
     if (!samePositionAs)

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.createGame = undefined;
+exports.getTurnPieces = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.createGame = undefined;
 
 var _ramda = require('ramda');
 
@@ -51,10 +51,22 @@ function isMyTurn(game, from) {
 var getPlayerTurn = function getPlayerTurn(game) {
     return isWhiteTurn(game) ? game.players.white : game.players.black;
 };
+/**
+ * Gets all positions from current player turn.
+ */
+function getTurnPieces(game) {
+    var isBlack = isBlackTurn(game);
+    return game.board.reduce(function (piecesRow, row) {
+        return piecesRow.concat(row.reduce(function (pieces, position) {
+            return isBlack !== position.isBlack ? pieces : pieces.concat({ x: position.x, y: position.y, isBlack: isBlack });
+        }, []));
+    }, []);
+}
 exports.createGame = createGame;
 exports.getPlayerTurn = getPlayerTurn;
 exports.isBlackTurn = isBlackTurn;
 exports.isWhiteTurn = isWhiteTurn;
 exports.isMyTurn = isMyTurn;
+exports.getTurnPieces = getTurnPieces;
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map

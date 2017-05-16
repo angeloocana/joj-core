@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../dist-esnext/__testdata__/index.data.test.js"],"names":[],"mappings":";;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;;;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA","file":"index.data.test.js","sourcesContent":["export * from './board.data.test';\nexport * from './game.data.test';\n//# sourceMappingURL=index.data.test.js.map"]}

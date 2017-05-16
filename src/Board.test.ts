@@ -8,7 +8,7 @@ import * as I from './typings';
 
 import log from 'ptz-log';
 
-import * as TestData from './__testdata__/board.data.test';
+import * as TestData from './__testdata__/index.data.test';
 
 function assertPosition(actualPosition: I.IPosition, expectedPosition: I.IPosition): void {
     const samePositionAs = Position.hasSameXY(actualPosition, expectedPosition);

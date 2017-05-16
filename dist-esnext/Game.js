@@ -26,5 +26,16 @@ function isMyTurn(game, from) {
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 const getPlayerTurn = (game) => isWhiteTurn(game) ? game.players.white : game.players.black;
-export { createGame, getPlayerTurn, isBlackTurn, isWhiteTurn, isMyTurn };
+/**
+ * Gets all positions from current player turn.
+ */
+function getTurnPieces(game) {
+    const isBlack = isBlackTurn(game);
+    return game.board.reduce((piecesRow, row) => {
+        return piecesRow.concat(row.reduce((pieces, position) => (isBlack !== position.isBlack)
+            ? pieces
+            : pieces.concat({ x: position.x, y: position.y, isBlack }), []));
+    }, []);
+}
+export { createGame, getPlayerTurn, isBlackTurn, isWhiteTurn, isMyTurn, getTurnPieces };
 //# sourceMappingURL=Game.js.map

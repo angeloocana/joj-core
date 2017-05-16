@@ -1,5 +1,9 @@
 ## master
 
+* Add getTurnPieces().
+    - Gets all pieces from current player turn.
+* Add interface IPiece.
+
 ## 2.0.1 (May 16, 2017)
 
 * Export typings.

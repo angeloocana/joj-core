@@ -1,4 +1,24 @@
 import { Board, Position } from '../index';
+const startBlackPiecesExpected = [
+    { x: 0, y: 0, isBlack: true },
+    { x: 1, y: 0, isBlack: true },
+    { x: 2, y: 0, isBlack: true },
+    { x: 3, y: 0, isBlack: true },
+    { x: 4, y: 0, isBlack: true },
+    { x: 5, y: 0, isBlack: true },
+    { x: 6, y: 0, isBlack: true },
+    { x: 7, y: 0, isBlack: true }
+];
+const startWhitePiecesExpected = [
+    { x: 0, y: 7, isBlack: false },
+    { x: 1, y: 7, isBlack: false },
+    { x: 2, y: 7, isBlack: false },
+    { x: 3, y: 7, isBlack: false },
+    { x: 4, y: 7, isBlack: false },
+    { x: 5, y: 7, isBlack: false },
+    { x: 6, y: 7, isBlack: false },
+    { x: 7, y: 7, isBlack: false }
+];
 const startPiecesExpected = [
     { x: 7, y: 0, isBlack: true }, { x: 7, y: 7, isBlack: false },
     { x: 6, y: 0, isBlack: true }, { x: 6, y: 7, isBlack: false },
@@ -63,5 +83,5 @@ const xAndYStartBoard = ' 0,0 | 1,0 | 2,0 | 3,0 | 4,0 | 5,0 | 6,0 | 7,0 |\n' +
     ' 0,5 | 1,5 | 2,5 | 3,5 | 4,5 | 5,5 | 6,5 | 7,5 |\n' +
     ' 0,6 | 1,6 | 2,6 | 3,6 | 4,6 | 5,6 | 6,6 | 7,6 |\n' +
     ' 0,7 | 1,7 | 2,7 | 3,7 | 4,7 | 5,7 | 6,7 | 7,7 |\n';
-export { cleanBoard, cleanBoardExpected, initialBoard, initialBoardExpected, startPiecesExpected, unicodeStartBoard, xAndYStartBoard };
+export { cleanBoard, cleanBoardExpected, initialBoard, initialBoardExpected, startBlackPiecesExpected, startPiecesExpected, startWhitePiecesExpected, unicodeStartBoard, xAndYStartBoard };
 //# sourceMappingURL=board.data.test.js.map

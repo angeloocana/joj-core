@@ -37,10 +37,25 @@ function isMyTurn(game: I.IGame, from: I.IPosition): boolean {
 
 const getPlayerTurn = (game: I.IGame) => isWhiteTurn(game) ? game.players.white : game.players.black;
 
+/**
+ * Gets all positions from current player turn.
+ */
+function getTurnPieces(game: I.IGame): I.IPosition[] {
+    const isBlack = isBlackTurn(game);
+    return game.board.reduce((piecesRow, row) => {
+        return piecesRow.concat(row.reduce((pieces, position) =>
+            (isBlack !== position.isBlack)
+                ? pieces
+                : pieces.concat({ x: position.x, y: position.y, isBlack })
+            , []));
+    }, []);
+}
+
 export {
     createGame,
     getPlayerTurn,
     isBlackTurn,
     isWhiteTurn,
-    isMyTurn
+    isMyTurn,
+    getTurnPieces
 };
