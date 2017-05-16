@@ -120,22 +120,22 @@ var getToSearchOrderCurried = _ramda2.default.curry(getToSearchOrder);
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-function getY0Start(boardSizeY, y, isBlack) {
+var getY0Start = function getY0Start(boardSizeY, y, isBlack) {
     return isBlack ? y : boardSizeY - 1 - y;
-}
+};
 var getY0StartCurried = _ramda2.default.curry(getY0Start);
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-function getY0End(boardSizeY, y, isBlack) {
+var getY0End = function getY0End(boardSizeY, y, isBlack) {
     return isBlack ? boardSizeY - 1 - y : y;
-}
+};
 var getY0EndCurried = _ramda2.default.curry(getY0End);
-function printXAndYPosition(position) {
-    return ' ' + position.x + ',' + position.y + ' |';
-}
+var printXAndYPosition = function printXAndYPosition(p) {
+    return ' ' + p.x + ',' + p.y + ' |';
+};
 function printUnicodePosition(position) {
     if (isBackGroundBlack(position.x, position.y)) {
         if (hasWhitePiece(position)) return '\u25CF';else if (hasBlackPiece(position)) return '\u25CB';else return ' ';
@@ -158,13 +158,13 @@ var notContainsXY = _ramda2.default.compose(_ramda2.default.not, containsXY);
 /**
  * Get ordered positions IPosition[Y][positions]
  */
-function getOrderedPositions(getYAs, boardSizeY, isBlack, positions) {
+var getOrderedPositions = function getOrderedPositions(getYAs, boardSizeY, isBlack, positions) {
     return positions.reduce(function (ordered, position) {
         var y = getYAs(boardSizeY, position.y, isBlack);
         ordered[y] = (ordered[y] || []).concat(position);
         return ordered;
     }, []);
-}
+};
 var getOrderedPositionsCurried = _ramda2.default.curry(getOrderedPositions);
 /**
  * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]

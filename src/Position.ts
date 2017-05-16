@@ -111,9 +111,8 @@ const getToSearchOrderCurried = R.curry(getToSearchOrder);
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-function getY0Start(boardSizeY: number, y: number, isBlack: boolean): number {
-    return isBlack ? y : (boardSizeY - 1) - y;
-}
+const getY0Start = (boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? y : (boardSizeY - 1) - y;
 
 const getY0StartCurried = R.curry(getY0Start);
 
@@ -122,15 +121,12 @@ const getY0StartCurried = R.curry(getY0Start);
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-function getY0End(boardSizeY: number, y: number, isBlack: boolean): number {
-    return isBlack ? (boardSizeY - 1) - y : y;
-}
+const getY0End = (boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? (boardSizeY - 1) - y : y;
 
 const getY0EndCurried = R.curry(getY0End);
 
-function printXAndYPosition(position: I.IPosition): string {
-    return ` ${position.x},${position.y} |`;
-}
+const printXAndYPosition = (p: I.IPosition) => ` ${p.x},${p.y} |`;
 
 function printUnicodePosition(position: I.IPosition): string {
     if (isBackGroundBlack(position.x, position.y)) {
@@ -164,13 +160,12 @@ const notContainsXY = R.compose(R.not, containsXY);
 /**
  * Get ordered positions IPosition[Y][positions]
  */
-function getOrderedPositions(getYAs, boardSizeY: number, isBlack: boolean, positions: I.IPosition[]): I.IPosition[][] {
-    return positions.reduce((ordered: I.IPosition[][], position) => {
+const getOrderedPositions = (getYAs, boardSizeY: number, isBlack: boolean, positions: I.IPosition[]) =>
+    positions.reduce((ordered: I.IPosition[][], position) => {
         const y = getYAs(boardSizeY, position.y, isBlack);
         ordered[y] = (ordered[y] || []).concat(position);
         return ordered;
     }, []);
-}
 
 const getOrderedPositionsCurried = R.curry(getOrderedPositions);
 

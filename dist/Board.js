@@ -104,7 +104,7 @@ function getCleanBoard(boardSize) {
 /**
  * Takes a board and return a new board with pieces.
  */
-function getBoardWithPieces(board, pieces) {
+var getBoardWithPieces = function getBoardWithPieces(board, pieces) {
     return mapBoard(board, function (p) {
         var x = p.x,
             y = p.y;
@@ -112,7 +112,7 @@ function getBoardWithPieces(board, pieces) {
         var piece = Position.getPositionFromPositions(pieces, p);
         if (piece) return { x: x, y: y, isBlack: piece.isBlack };else return { x: x, y: y };
     });
-}
+};
 /**
  * Get start white and black pieces.
  */
@@ -179,13 +179,13 @@ function getBoardSize(board) {
 /**
  * Takes a function to printPosition and print board.
  */
-function printBoard(printPosition, board) {
+var printBoard = function printBoard(printPosition, board) {
     return board.reduce(function (txtRow, col) {
         return col.reduce(function (txt, position) {
             return txt + printPosition(position);
         }, txtRow) + '\n';
     }, '');
-}
+};
 var printBoardCurried = _ramda2.default.curry(printBoard);
 /**
  * Get board in a nice format to print it on console
@@ -236,14 +236,14 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
 /**
  * Get all valid and invalid near positions.
  */
-function getAllNearPositions(position) {
+var getAllNearPositions = function getAllNearPositions(position) {
     return [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]].map(function (toAdd) {
         return {
             x: position.x + toAdd[0],
             y: position.y + toAdd[1]
         };
     });
-}
+};
 /**
  * Get near positions and CACHES it for each boardSize
  */

@@ -151,11 +151,11 @@ var getMovesFromArray = function getMovesFromArray(moves) {
 /**
  * Get game after n moves.
  */
-function getGameAfterMoves(game, moves) {
+var getGameAfterMoves = function getGameAfterMoves(game, moves) {
     return moves.reduce(function (lastGame, move) {
         return getGameAfterMove(lastGame, move);
     }, game);
-}
+};
 exports.canMove = canMove;
 exports.getBackMove = getBackMove;
 exports.getBoardAfterMove = getBoardAfterMove;

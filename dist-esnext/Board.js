@@ -73,16 +73,14 @@ function getCleanBoard(boardSize) {
 /**
  * Takes a board and return a new board with pieces.
  */
-function getBoardWithPieces(board, pieces) {
-    return mapBoard(board, p => {
-        const { x, y } = p;
-        const piece = Position.getPositionFromPositions(pieces, p);
-        if (piece)
-            return { x, y, isBlack: piece.isBlack };
-        else
-            return { x, y };
-    });
-}
+const getBoardWithPieces = (board, pieces) => mapBoard(board, p => {
+    const { x, y } = p;
+    const piece = Position.getPositionFromPositions(pieces, p);
+    if (piece)
+        return { x, y, isBlack: piece.isBlack };
+    else
+        return { x, y };
+});
 /**
  * Get start white and black pieces.
  */
@@ -145,13 +143,11 @@ function getBoardSize(board) {
 /**
  * Takes a function to printPosition and print board.
  */
-function printBoard(printPosition, board) {
-    return board.reduce((txtRow, col) => {
-        return col.reduce((txt, position) => {
-            return txt + printPosition(position);
-        }, txtRow) + '\n';
-    }, '');
-}
+const printBoard = (printPosition, board) => board.reduce((txtRow, col) => {
+    return col.reduce((txt, position) => {
+        return txt + printPosition(position);
+    }, txtRow) + '\n';
+}, '');
 const printBoardCurried = R.curry(printBoard);
 /**
  * Get board in a nice format to print it on console
@@ -206,23 +202,21 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
 /**
  * Get all valid and invalid near positions.
  */
-function getAllNearPositions(position) {
-    return [
-        [-1, -1],
-        [0, -1],
-        [1, -1],
-        [-1, 0],
-        [1, 0],
-        [-1, 1],
-        [0, 1],
-        [1, 1]
-    ].map(toAdd => {
-        return {
-            x: position.x + toAdd[0],
-            y: position.y + toAdd[1]
-        };
-    });
-}
+const getAllNearPositions = (position) => [
+    [-1, -1],
+    [0, -1],
+    [1, -1],
+    [-1, 0],
+    [1, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1]
+].map(toAdd => {
+    return {
+        x: position.x + toAdd[0],
+        y: position.y + toAdd[1]
+    };
+});
 /**
  * Get near positions and CACHES it for each boardSize
  */

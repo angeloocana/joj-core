@@ -121,10 +121,8 @@ const getMovesFromArray = (moves) => moves.map(move => getMoveFromArray(move));
 /**
  * Get game after n moves.
  */
-function getGameAfterMoves(game, moves) {
-    return moves.reduce((lastGame, move) => {
-        return getGameAfterMove(lastGame, move);
-    }, game);
-}
+const getGameAfterMoves = (game, moves) => moves.reduce((lastGame, move) => {
+    return getGameAfterMove(lastGame, move);
+}, game);
 export { canMove, getBackMove, getBoardAfterMove, getGameAfterMove, getGameAfterMoves, getGameBeforeLastMove, getMoveFromArray, getMovesFromArray, getMoveXAndY };
 //# sourceMappingURL=Move.js.map

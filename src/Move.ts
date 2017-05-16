@@ -146,11 +146,10 @@ const getMovesFromArray = (moves: number[][][]): I.IMove[] =>
 /**
  * Get game after n moves.
  */
-function getGameAfterMoves(game: I.IGame, moves: I.IMove[]): I.IGame {
-    return moves.reduce((lastGame: I.IGame, move: I.IMove) => {
+const getGameAfterMoves = (game: I.IGame, moves: I.IMove[]) =>
+    moves.reduce((lastGame: I.IGame, move: I.IMove) => {
         return getGameAfterMove(lastGame, move);
     }, game);
-}
 
 export {
     canMove,

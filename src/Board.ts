@@ -92,8 +92,8 @@ function getCleanBoard(boardSize: I.IBoardSize): I.IBoard {
 /**
  * Takes a board and return a new board with pieces.
  */
-function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
-    return mapBoard(board, p => {
+const getBoardWithPieces = (board: I.IBoard, pieces: I.IXY[]) =>
+    mapBoard(board, p => {
         const { x, y } = p;
         const piece = Position.getPositionFromPositions(pieces, p);
         if (piece)
@@ -101,7 +101,6 @@ function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
         else
             return { x, y };
     });
-}
 
 /**
  * Get start white and black pieces.
@@ -175,13 +174,12 @@ function getBoardSize(board: I.IBoard): I.IBoardSize {
 /**
  * Takes a function to printPosition and print board.
  */
-function printBoard(printPosition: I.IPrintPosition, board: I.IBoard): string {
-    return board.reduce((txtRow, col) => {
+const printBoard = (printPosition: I.IPrintPosition, board: I.IBoard) =>
+    board.reduce((txtRow, col) => {
         return col.reduce((txt, position) => {
             return txt + printPosition(position);
         }, txtRow) + '\n';
     }, '');
-}
 
 const printBoardCurried = R.curry(printBoard);
 
@@ -251,8 +249,8 @@ function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: bo
 /**
  * Get all valid and invalid near positions.
  */
-function getAllNearPositions(position: I.IXY): I.IXY[] {
-    return [
+const getAllNearPositions = (position: I.IXY) =>
+    [
         [-1, -1],
         [0, -1],
         [1, -1],
@@ -269,7 +267,6 @@ function getAllNearPositions(position: I.IXY): I.IXY[] {
             y: position.y + toAdd[1]
         };
     });
-}
 
 /**
  * Get near positions and CACHES it for each boardSize

@@ -89,22 +89,16 @@ const getToSearchOrderCurried = R.curry(getToSearchOrder);
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-function getY0Start(boardSizeY, y, isBlack) {
-    return isBlack ? y : (boardSizeY - 1) - y;
-}
+const getY0Start = (boardSizeY, y, isBlack) => isBlack ? y : (boardSizeY - 1) - y;
 const getY0StartCurried = R.curry(getY0Start);
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-function getY0End(boardSizeY, y, isBlack) {
-    return isBlack ? (boardSizeY - 1) - y : y;
-}
+const getY0End = (boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y;
 const getY0EndCurried = R.curry(getY0End);
-function printXAndYPosition(position) {
-    return ` ${position.x},${position.y} |`;
-}
+const printXAndYPosition = (p) => ` ${p.x},${p.y} |`;
 function printUnicodePosition(position) {
     if (isBackGroundBlack(position.x, position.y)) {
         if (hasWhitePiece(position))
@@ -134,13 +128,11 @@ const notContainsXY = R.compose(R.not, containsXY);
 /**
  * Get ordered positions IPosition[Y][positions]
  */
-function getOrderedPositions(getYAs, boardSizeY, isBlack, positions) {
-    return positions.reduce((ordered, position) => {
-        const y = getYAs(boardSizeY, position.y, isBlack);
-        ordered[y] = (ordered[y] || []).concat(position);
-        return ordered;
-    }, []);
-}
+const getOrderedPositions = (getYAs, boardSizeY, isBlack, positions) => positions.reduce((ordered, position) => {
+    const y = getYAs(boardSizeY, position.y, isBlack);
+    ordered[y] = (ordered[y] || []).concat(position);
+    return ordered;
+}, []);
 const getOrderedPositionsCurried = R.curry(getOrderedPositions);
 /**
  * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
