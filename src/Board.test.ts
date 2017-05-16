@@ -371,4 +371,26 @@ describe('Board', () => {
             assert.deepEqual(pieces, expectedPieces);
         });
     });
+
+    describe('getPiecesWhereCanIGo', () => {
+        it('return white pieces', () => {
+            const board = TestData.initialBoard;
+            const positions = TestData.startWhitePiecesExpected;
+            const expectedPieces = TestData.startWhitePiecesWhereCanIGoExpected;
+
+            const pieces = Board.getPiecesWhereCanIGo(false, board, positions);
+
+            assert.deepEqual(pieces, expectedPieces);
+        });
+
+        it('return black pieces', () => {
+            const board = TestData.initialBoard;
+            const positions = TestData.startBlackPiecesExpected;
+            const expectedPieces = TestData.startBlackPiecesWhereCanIGoExpected;
+
+            const pieces = Board.getPiecesWhereCanIGo(true, board, positions);
+
+            assert.deepEqual(pieces, expectedPieces);
+        });
+    });
 });

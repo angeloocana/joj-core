@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getTurnPiecesWhereCanIGo = exports.getTurnPieces = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.createGame = undefined;
+exports.getTurnPieces = exports.isMyTurn = exports.isWhiteTurn = exports.isBlackTurn = exports.getPlayerTurn = exports.createGame = undefined;
 
 var _ramda = require('ramda');
 
@@ -62,18 +62,11 @@ function getTurnPieces(game) {
         }, []));
     }, []);
 }
-/**
- * Gets all pieces from current player turn with whereCanIGo positions.
- */
-var getTurnPiecesWhereCanIGo = function getTurnPiecesWhereCanIGo(game) {
-    return Board.getPiecesWhereCanIGo(game.board, getTurnPieces(game));
-};
 exports.createGame = createGame;
 exports.getPlayerTurn = getPlayerTurn;
 exports.isBlackTurn = isBlackTurn;
 exports.isWhiteTurn = isWhiteTurn;
 exports.isMyTurn = isMyTurn;
 exports.getTurnPieces = getTurnPieces;
-exports.getTurnPiecesWhereCanIGo = getTurnPiecesWhereCanIGo;
 //# sourceMappingURL=Game.js.map
 //# sourceMappingURL=Game.js.map

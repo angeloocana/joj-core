@@ -273,6 +273,22 @@ describe('Board', function () {
             assert.deepEqual(pieces, expectedPieces);
         });
     });
+    describe('getPiecesWhereCanIGo', function () {
+        it('return white pieces', function () {
+            var board = TestData.initialBoard;
+            var positions = TestData.startWhitePiecesExpected;
+            var expectedPieces = TestData.startWhitePiecesWhereCanIGoExpected;
+            var pieces = _index.Board.getPiecesWhereCanIGo(false, board, positions);
+            assert.deepEqual(pieces, expectedPieces);
+        });
+        it('return black pieces', function () {
+            var board = TestData.initialBoard;
+            var positions = TestData.startBlackPiecesExpected;
+            var expectedPieces = TestData.startBlackPiecesWhereCanIGoExpected;
+            var pieces = _index.Board.getPiecesWhereCanIGo(true, board, positions);
+            assert.deepEqual(pieces, expectedPieces);
+        });
+    });
 });
 //# sourceMappingURL=Board.test.js.map
 //# sourceMappingURL=Board.test.js.map

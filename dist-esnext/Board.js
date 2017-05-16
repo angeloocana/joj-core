@@ -202,9 +202,9 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
 /**
  * Gets all pieces with whereCanIGo positions.
  */
-function getPiecesWhereCanIGo(board, positions) {
+function getPiecesWhereCanIGo(isBlack, board, positions) {
     return positions.map(position => {
-        const { x, y, isBlack } = position;
+        const { x, y } = position;
         return {
             x, y, isBlack,
             whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
