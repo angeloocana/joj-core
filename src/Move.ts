@@ -46,22 +46,12 @@ function canMove(game: I.IGame, move: I.IMove): boolean {
 const canNotMove = R.compose(R.not, canMove);
 
 /**
- * Get a position and recursively return all positions in .lastPosition
- */
-function getJumps(to: I.IPosition, jumps?: I.IXY[]): I.IXY[] {
-    return to && to.lastPosition
-        ? getJumps(to.lastPosition).concat(to.lastPosition)
-        : jumps || [];
-}
-
-/**
  * Get board after move, return a new board with:
  *  - From: Remove piece and add .lastMove: true
  *  - To: Set piece from move.from and add .lastMove: true
  *  - Jumps: Create jump breadcrumb by setting .lastMoveJump: true
  */
 function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
-    const jumps = getJumps(move.to);
     const from = Board.getPosition(board, move.from);
 
     return Board.mapBoard(board, p => {
@@ -73,7 +63,7 @@ function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
         if (Position.hasSameXY(move.to, p))
             return { x, y, isBlack: from.isBlack, lastMove: true };
 
-        if (Position.containsXY(jumps, p))
+        if (Position.containsXY(move.to.jumps, p))
             return { x, y, lastMoveJump: true };
 
         return { x, y, isBlack };

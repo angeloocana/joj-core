@@ -23,26 +23,12 @@ export interface IPosition {
      */
     isBlack?: boolean;
 
-    // Moved to pure functions at Board
-    // isWhiteHome?: boolean;
-    // isBlackHome?: boolean;
-
-    lastPosition?: IPosition;
     jumpingBlackPiece?: boolean;
-    jumps?: number;
+    jumps?: IPosition[];
 
     iCanGoHere?: boolean;
     lastMove?: boolean;
     lastMoveJump?: boolean;
-
-    // Old methods
-    // setPiece(isBlack: boolean): void;
-    // move(to: IPosition): void;
-    // removePiece(): void;
-    // isEmpty(): boolean;
-    // isBlackPiece(): boolean;
-    // isWhitePiece(): boolean;
-    // isSamePositionAs(comparePosition: IPosition): boolean;
 }
 
 export interface IPositionArgs {

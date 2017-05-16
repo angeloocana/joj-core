@@ -168,9 +168,8 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Get jump position.
  *  - If jump position do NOT exists or accumulated positions
  *      contains jump position then return accumulated positions.
- *  - Set last position equals from.
  *  - Set Jumping black piece to true if is black piece.
- *  - Set Jumps to from jumps +1.
+ *  - Set Jumps to from + from.jumps.
  *  - Call and return this method again recursively to get next jump positions.
  */
 function whereCanIJump(board, from, isBlack, positions) {
@@ -179,9 +178,8 @@ function whereCanIJump(board, from, isBlack, positions) {
         const jumpTo = getJumpPosition(from, nearPiece, board);
         if (!jumpTo || Position.containsXY(accPositions, jumpTo))
             return accPositions;
-        jumpTo.lastPosition = from;
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
-        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
+        jumpTo.jumps = (from.jumps || []).concat(from);
         return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
     }, positions || []);
 }
@@ -202,7 +200,6 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
         const jumpTo = getJumpPosition(from, nearPosition, board);
         if (!jumpTo)
             return positions;
-        jumpTo.jumps = 1;
         return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
     }, []);
 }

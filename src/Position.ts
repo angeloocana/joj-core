@@ -154,7 +154,7 @@ function printUnicodePosition(position: I.IPosition): string {
  * Checks if an array of positions contains a position.
  */
 const containsXY = (positions: I.IXY[], position: I.IXY) =>
-    positions.some(p => hasSameXY(p, position));
+    positions ? positions.some(p => hasSameXY(p, position)) : false;
 
 /**
  * Checks if an array of positions NOT contains a position.

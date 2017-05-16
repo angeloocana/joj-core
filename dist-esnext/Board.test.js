@@ -222,21 +222,18 @@ describe('Board', () => {
             const from = { x: 5, y: 7 };
             const p55 = {
                 x: 5, y: 5,
-                lastPosition: from,
                 jumpingBlackPiece: false,
-                jumps: 2
+                jumps: [from]
             };
             const p53 = {
                 x: 5, y: 3,
-                lastPosition: p55,
                 jumpingBlackPiece: false,
-                jumps: 3
+                jumps: [from, p55]
             };
             const p51 = {
                 x: 5, y: 1,
-                lastPosition: p53,
                 jumpingBlackPiece: false,
-                jumps: 4
+                jumps: [from, p55, p53]
             };
             const whereCanIJump = Board.whereCanIJump(board, from, true);
             assert.deepEqual(whereCanIJump, [p55, p53, p51]);

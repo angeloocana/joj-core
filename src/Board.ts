@@ -93,7 +93,7 @@ function getCleanBoard(boardSize: I.IBoardSize): I.IBoard {
  * Takes a board and return a new board with pieces.
  */
 function getBoardWithPieces(board: I.IBoard, pieces: I.IXY[]): I.IBoard {
-      return mapBoard(board, p => {
+    return mapBoard(board, p => {
         const { x, y } = p;
         const piece = Position.getPositionFromPositions(pieces, p);
         if (piece)
@@ -202,9 +202,8 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Get jump position.
  *  - If jump position do NOT exists or accumulated positions
  *      contains jump position then return accumulated positions.
- *  - Set last position equals from.
  *  - Set Jumping black piece to true if is black piece.
- *  - Set Jumps to from jumps +1.
+ *  - Set Jumps to from + from.jumps.
  *  - Call and return this method again recursively to get next jump positions.
  */
 function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, positions?: I.IPosition[]): I.IPosition[] {
@@ -216,9 +215,8 @@ function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, pos
         if (!jumpTo || Position.containsXY(accPositions, jumpTo))
             return accPositions;
 
-        jumpTo.lastPosition = from;
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
-        jumpTo.jumps = from.jumps ? from.jumps + 1 : 2;
+        jumpTo.jumps = (from.jumps || []).concat(from);
 
         return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
 
@@ -245,8 +243,6 @@ function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: bo
         const jumpTo = getJumpPosition(from, nearPosition, board);
         if (!jumpTo)
             return positions;
-
-        jumpTo.jumps = 1;
 
         return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
     }, []);

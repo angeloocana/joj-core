@@ -236,7 +236,7 @@ describe('Position', () => {
         });
     });
 
-    describe('positionsContains', () => {
+    describe('containsXY', () => {
         it('not contains', () => {
             const position = { x: 5, y: 2 };
 
@@ -251,6 +251,13 @@ describe('Position', () => {
             const positions = [{ x: 4, y: 0 }, { x: 3, y: 0 }];
 
             assert.ok(Position.containsXY(positions, position));
+        });
+
+        it('undefined not contains', () => {
+            const position = { x: 5, y: 2 };
+            const positions = undefined;
+
+            assert.notOk(Position.containsXY(positions, position));
         });
     });
 

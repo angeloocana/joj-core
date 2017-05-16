@@ -339,7 +339,7 @@ describe('Position', function () {
             });
         });
     });
-    describe('positionsContains', function () {
+    describe('containsXY', function () {
         it('not contains', function () {
             var position = { x: 5, y: 2 };
             var positions = [{ x: 4, y: 0 }, { x: 3, y: 0 }];
@@ -349,6 +349,11 @@ describe('Position', function () {
             var position = { x: 3, y: 0 };
             var positions = [{ x: 4, y: 0 }, { x: 3, y: 0 }];
             assert.ok(_index.Position.containsXY(positions, position));
+        });
+        it('undefined not contains', function () {
+            var position = { x: 5, y: 2 };
+            var positions = undefined;
+            assert.notOk(_index.Position.containsXY(positions, position));
         });
     });
     describe('positionsNotContains', function () {

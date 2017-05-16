@@ -69,19 +69,12 @@ function canMove(game, move) {
  */
 var canNotMove = _ramda2.default.compose(_ramda2.default.not, canMove);
 /**
- * Get a position and recursively return all positions in .lastPosition
- */
-function getJumps(to, jumps) {
-    return to && to.lastPosition ? getJumps(to.lastPosition).concat(to.lastPosition) : jumps || [];
-}
-/**
  * Get board after move, return a new board with:
  *  - From: Remove piece and add .lastMove: true
  *  - To: Set piece from move.from and add .lastMove: true
  *  - Jumps: Create jump breadcrumb by setting .lastMoveJump: true
  */
 function getBoardAfterMove(board, move) {
-    var jumps = getJumps(move.to);
     var from = Board.getPosition(board, move.from);
     return Board.mapBoard(board, function (p) {
         var x = p.x,
@@ -90,7 +83,7 @@ function getBoardAfterMove(board, move) {
 
         if (Position.hasSameXY(from, p)) return { x: x, y: y, lastMove: true };
         if (Position.hasSameXY(move.to, p)) return { x: x, y: y, isBlack: from.isBlack, lastMove: true };
-        if (Position.containsXY(jumps, p)) return { x: x, y: y, lastMoveJump: true };
+        if (Position.containsXY(move.to.jumps, p)) return { x: x, y: y, lastMoveJump: true };
         return { x: x, y: y, isBlack: isBlack };
     });
 }

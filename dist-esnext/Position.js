@@ -126,7 +126,7 @@ function printUnicodePosition(position) {
 /**
  * Checks if an array of positions contains a position.
  */
-const containsXY = (positions, position) => positions.some(p => hasSameXY(p, position));
+const containsXY = (positions, position) => positions ? positions.some(p => hasSameXY(p, position)) : false;
 /**
  * Checks if an array of positions NOT contains a position.
  */

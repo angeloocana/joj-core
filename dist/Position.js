@@ -147,9 +147,9 @@ function printUnicodePosition(position) {
  * Checks if an array of positions contains a position.
  */
 var containsXY = function containsXY(positions, position) {
-    return positions.some(function (p) {
+    return positions ? positions.some(function (p) {
         return hasSameXY(p, position);
-    });
+    }) : false;
 };
 /**
  * Checks if an array of positions NOT contains a position.
