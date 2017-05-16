@@ -1,6 +1,11 @@
 ## master
 
 
+## 2.0.3 (May 16, 2017)
+
+* Add getTurnPiecesWhereCanIGo().
+    - Gets all pieces from current player turn with whereCanIGo.
+
 ## 2.0.2 (May 16, 2017)
 
 * Add getTurnPieces().
