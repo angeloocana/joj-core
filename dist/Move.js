@@ -85,12 +85,12 @@ function getBoardAfterMove(board, move) {
     });
 }
 /**
- * Takes game and move and returns new game after move.
+ * Takes game and move then returns new game after move.
  *
  * Updates:
  *  - .board (It cleans board, set new positions and move breadcrumb)
  *  - .score
- *  - .moves (add new move if valid)
+ *  - .moves (add new move if valid and it is not backMove)
  */
 function getGameAfterMove(game, move) {
     var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -104,7 +104,13 @@ function getGameAfterMove(game, move) {
         moves: backMove ? game.moves : game.moves.concat(getMoveXAndY(move))
     };
 }
+/**
+ * Get game before last move,
+ * if playing vs Ai rollback Ai move too.
+ */
 function getGameBeforeLastMove(game) {
+    // $Fix I do NOT know if it is the best way to make game immutable.
+    game = Object.assign({}, game);
     var lastMove = game.moves.pop();
     if (lastMove) game = getGameAfterMove(game, getBackMove(lastMove), true);
     if (Game.getPlayerTurn(game).isAi) {

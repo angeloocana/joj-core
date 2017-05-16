@@ -73,12 +73,12 @@ function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
 }
 
 /**
- * Takes game and move and returns new game after move.
+ * Takes game and move then returns new game after move.
  *
  * Updates:
  *  - .board (It cleans board, set new positions and move breadcrumb)
  *  - .score
- *  - .moves (add new move if valid)
+ *  - .moves (add new move if valid and it is not backMove)
  */
 function getGameAfterMove(game: I.IGame, move: I.IMove, backMove: boolean = false): I.IGame {
     if (!backMove && canNotMove(game, move))
@@ -94,7 +94,14 @@ function getGameAfterMove(game: I.IGame, move: I.IMove, backMove: boolean = fals
     };
 }
 
+/**
+ * Get game before last move,
+ * if playing vs Ai rollback Ai move too.
+ */
 function getGameBeforeLastMove(game: I.IGame): I.IGame {
+    // $Fix I do NOT know if it is the best way to make game immutable.
+    game = Object.assign({}, game);
+
     let lastMove = game.moves.pop();
 
     if (lastMove)

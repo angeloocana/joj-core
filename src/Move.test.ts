@@ -38,7 +38,6 @@ describe('Move', () => {
         });
 
         it('return AI move too', () => {
-
             const players: I.IPlayersArgs = {
                 white: { name: 'Angelo' },
                 black: { name: 'AI', isAi: true }
@@ -51,6 +50,31 @@ describe('Move', () => {
             const game2 = Move.getGameAfterMove(game1, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
 
             const gameBefore = Move.getGameBeforeLastMove(game2);
+
+            assert.equal(gameBefore.moves.length, game0.moves.length);
+            assert.deepEqual(gameBefore.moves, game0.moves);
+        });
+
+        it('no moves', () => {
+            const game = Game.createGame();
+
+            const gameBefore = Move.getGameBeforeLastMove(game);
+
+            assert.equal(gameBefore.moves.length, game.moves.length);
+            assert.deepEqual(gameBefore.moves, game.moves);
+        });
+
+        it('no AI move', () => {
+            const players: I.IPlayersArgs = {
+                white: { name: 'AI', isAi: true },
+                black: { name: 'Angelo' }
+            };
+
+            const game0 = Game.createGame({ players });
+
+            const game1 = Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+
+            const gameBefore = Move.getGameBeforeLastMove(game1);
 
             assert.equal(gameBefore.moves.length, game0.moves.length);
             assert.deepEqual(gameBefore.moves, game0.moves);

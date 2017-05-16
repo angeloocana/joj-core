@@ -49,6 +49,23 @@ describe('Move', function () {
             assert.equal(gameBefore.moves.length, game0.moves.length);
             assert.deepEqual(gameBefore.moves, game0.moves);
         });
+        it('no moves', function () {
+            var game = _index.Game.createGame();
+            var gameBefore = _index.Move.getGameBeforeLastMove(game);
+            assert.equal(gameBefore.moves.length, game.moves.length);
+            assert.deepEqual(gameBefore.moves, game.moves);
+        });
+        it('no AI move', function () {
+            var players = {
+                white: { name: 'AI', isAi: true },
+                black: { name: 'Angelo' }
+            };
+            var game0 = _index.Game.createGame({ players: players });
+            var game1 = _index.Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            var gameBefore = _index.Move.getGameBeforeLastMove(game1);
+            assert.equal(gameBefore.moves.length, game0.moves.length);
+            assert.deepEqual(gameBefore.moves, game0.moves);
+        });
     });
     describe('getGameAfterMove', function () {
         var game;
