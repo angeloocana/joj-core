@@ -4,6 +4,7 @@ import * as Move from './Move';
 import * as Player from './Player';
 import * as Position from './Position';
 import * as Score from './Score';
+export * from './typings';
 
 export {
     Board,
