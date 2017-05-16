@@ -1,5 +1,6 @@
 import * as assert from 'ptz-assert';
-import { Game, Move } from './index';
+import * as TestData from './__testdata__/board.data.test';
+import { Board, Game, Move } from './index';
 describe('Move', () => {
     describe('getBackMove', () => {
         it('invert move {from:0,7 to:1,6} => {from:1,6 to:0,7}', () => {
@@ -56,6 +57,50 @@ describe('Move', () => {
         const gameAfterMoves = Move.getGameAfterMoves(gameBeforeMoves, moves);
         assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');
         assert.equal(gameAfterMoves.moves.length, moves.length);
+    });
+    describe('getBoardAfterMove', () => {
+        it('5,7 => 5,6 5,5 5,3 => 5,1', () => {
+            const pieces = [
+                { x: 5, y: 7, isBlack: true },
+                { x: 5, y: 6, isBlack: false },
+                { x: 5, y: 4, isBlack: false },
+                { x: 5, y: 2, isBlack: false },
+            ];
+            const boardBefore = Board.getBoardWithPieces(TestData.cleanBoard, pieces);
+            const from = { x: 5, y: 7 };
+            const p55 = {
+                x: 5, y: 5,
+                jumpingBlackPiece: false,
+                jumps: [from]
+            };
+            const p53 = {
+                x: 5, y: 3,
+                jumpingBlackPiece: false,
+                jumps: [from, p55]
+            };
+            const p51 = {
+                x: 5, y: 1,
+                jumpingBlackPiece: false,
+                jumps: [from, p55, p53]
+            };
+            const move = {
+                from,
+                to: p51
+            };
+            const boardAfter = Move.getBoardAfterMove(boardBefore, move);
+            // tslint:disable:max-line-length
+            const boardAfterExpected = [
+                [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }],
+                [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }, { x: 5, y: 1, isBlack: true, lastMove: true }, { x: 6, y: 1 }, { x: 7, y: 1 }],
+                [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2, isBlack: false }, { x: 6, y: 2 }, { x: 7, y: 2 }],
+                [{ x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 5, y: 3, lastMoveJump: true }, { x: 6, y: 3 }, { x: 7, y: 3 }],
+                [{ x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 }, { x: 5, y: 4, isBlack: false }, { x: 6, y: 4 }, { x: 7, y: 4 }],
+                [{ x: 0, y: 5 }, { x: 1, y: 5 }, { x: 2, y: 5 }, { x: 3, y: 5 }, { x: 4, y: 5 }, { x: 5, y: 5, lastMoveJump: true }, { x: 6, y: 5 }, { x: 7, y: 5 }],
+                [{ x: 0, y: 6 }, { x: 1, y: 6 }, { x: 2, y: 6 }, { x: 3, y: 6 }, { x: 4, y: 6 }, { x: 5, y: 6, isBlack: false }, { x: 6, y: 6 }, { x: 7, y: 6 }],
+                [{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7, lastMove: true }, { x: 6, y: 7 }, { x: 7, y: 7 }]
+            ];
+            assert.deepEqual(boardAfter, boardAfterExpected);
+        });
     });
 });
 //# sourceMappingURL=Move.test.js.map

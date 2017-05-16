@@ -52,9 +52,11 @@ function getBoardAfterMove(board, move) {
             return { x, y, lastMove: true };
         if (Position.hasSameXY(move.to, p))
             return { x, y, isBlack: from.isBlack, lastMove: true };
+        if (Position.hasPiece(p))
+            return { x, y, isBlack };
         if (Position.containsXY(move.to.jumps, p))
             return { x, y, lastMoveJump: true };
-        return { x, y, isBlack };
+        return { x, y };
     });
 }
 /**
@@ -119,5 +121,5 @@ function getGameAfterMoves(game, moves) {
         return getGameAfterMove(lastGame, move);
     }, game);
 }
-export { canMove, getBackMove, getGameAfterMove, getGameAfterMoves, getGameBeforeLastMove, getMoveFromArray, getMovesFromArray, getMoveXAndY };
+export { canMove, getBackMove, getBoardAfterMove, getGameAfterMove, getGameAfterMoves, getGameBeforeLastMove, getMoveFromArray, getMovesFromArray, getMoveXAndY };
 //# sourceMappingURL=Move.js.map

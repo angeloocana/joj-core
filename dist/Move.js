@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBackMove = exports.canMove = undefined;
+exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBoardAfterMove = exports.getBackMove = exports.canMove = undefined;
 
 var _ramda = require('ramda');
 
@@ -83,8 +83,9 @@ function getBoardAfterMove(board, move) {
 
         if (Position.hasSameXY(from, p)) return { x: x, y: y, lastMove: true };
         if (Position.hasSameXY(move.to, p)) return { x: x, y: y, isBlack: from.isBlack, lastMove: true };
+        if (Position.hasPiece(p)) return { x: x, y: y, isBlack: isBlack };
         if (Position.containsXY(move.to.jumps, p)) return { x: x, y: y, lastMoveJump: true };
-        return { x: x, y: y, isBlack: isBlack };
+        return { x: x, y: y };
     });
 }
 /**
@@ -155,6 +156,7 @@ function getGameAfterMoves(game, moves) {
 }
 exports.canMove = canMove;
 exports.getBackMove = getBackMove;
+exports.getBoardAfterMove = getBoardAfterMove;
 exports.getGameAfterMove = getGameAfterMove;
 exports.getGameAfterMoves = getGameAfterMoves;
 exports.getGameBeforeLastMove = getGameBeforeLastMove;
