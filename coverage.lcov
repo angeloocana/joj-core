@@ -66,7 +66,7 @@ FNDA:16,getStartWhiteBlack
 FNDA:18,addStartPieces
 FNDA:2,getStartPieces
 FNDA:1,(anonymous_18)
-FNDA:19,getInitialBoard
+FNDA:21,getInitialBoard
 FNDA:189,getPosition
 FNDA:90,getBoardSizeX
 FNDA:90,getBoardSizeY
@@ -120,7 +120,7 @@ DA:89,16
 DA:96,18
 DA:103,2
 DA:113,1
-DA:118,19
+DA:118,21
 DA:121,189
 DA:122,189
 DA:125,1

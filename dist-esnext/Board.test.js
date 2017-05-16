@@ -16,10 +16,9 @@ describe('Board', () => {
             assert.deepEqual(board, TestData.initialBoardExpected);
         });
         it('memoize', () => {
-            // $FIX
-            // const board1 = Board.getInitialBoard(Board.getBoardConf Board.defaultBoardSize);
-            // const board2 = Board.getInitialBoard(Board.defaultBoardSize);
-            // assert.equal(board1, board2);
+            const board1 = Board.getInitialBoard(Board.defaultBoardSize);
+            const board2 = Board.getInitialBoard(Board.defaultBoardSize);
+            assert.equal(board1, board2);
         });
     });
     describe('hasPosition', () => {

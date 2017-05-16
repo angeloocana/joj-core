@@ -28,11 +28,10 @@ describe('Board', () => {
         });
 
         it('memoize', () => {
-            // $FIX
-            // const board1 = Board.getInitialBoard(Board.getBoardConf Board.defaultBoardSize);
-            // const board2 = Board.getInitialBoard(Board.defaultBoardSize);
+            const board1 = Board.getInitialBoard(Board.defaultBoardSize);
+            const board2 = Board.getInitialBoard(Board.defaultBoardSize);
 
-            // assert.equal(board1, board2);
+            assert.equal(board1, board2);
         });
     });
 

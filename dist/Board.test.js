@@ -31,10 +31,9 @@ describe('Board', function () {
             assert.deepEqual(board, TestData.initialBoardExpected);
         });
         it('memoize', function () {
-            // $FIX
-            // const board1 = Board.getInitialBoard(Board.getBoardConf Board.defaultBoardSize);
-            // const board2 = Board.getInitialBoard(Board.defaultBoardSize);
-            // assert.equal(board1, board2);
+            var board1 = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
+            var board2 = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
+            assert.equal(board1, board2);
         });
     });
     describe('hasPosition', function () {
