@@ -74,7 +74,7 @@
 				<a href="https://github.com/angeloocana/joj-core/blob/master/README.md">en-us</a></p>
 				<blockquote>
 					<p>JumpOverJump.com core library</p>
-					<p>JumpOverJump is an opensource AI game board.
+					<p>JumpOverJump is an open source functional programming AI game board.
 					Be welcome to learn, help and play!!!</p>
 				</blockquote>
 				<h2 id="docs">Docs</h2>
@@ -82,41 +82,20 @@
 				<h2 id="use">Use</h2>
 				<h3 id="install">Install</h3>
 				<pre><code>    npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save joj-core</span>
-</code></pre><h3 id="new-game-human-vs-human">New Game - Human vs Human</h3>
+</code></pre><h3 id="new-game">New Game</h3>
 				<pre><code class="lang-js">
-<span class="hljs-keyword">import</span> {Game, Players, Player} <span class="hljs-keyword">from</span> <span class="hljs-string">'joj-core'</span>;
+<span class="hljs-keyword">import</span> { Game, Move } <span class="hljs-keyword">from</span> <span class="hljs-string">'joj-core'</span>;
 
-<span class="hljs-keyword">let</span> players = <span class="hljs-keyword">new</span> Players({
-    <span class="hljs-attr">white</span>: <span class="hljs-keyword">new</span> Player({ <span class="hljs-attr">name</span>: <span class="hljs-string">"Angelo"</span> }),
-    <span class="hljs-attr">black</span>: <span class="hljs-keyword">new</span> Player({ <span class="hljs-attr">name</span>: <span class="hljs-string">"Gabi"</span> })
-});
+<span class="hljs-keyword">const</span> players = {
+    <span class="hljs-attr">white</span>: { <span class="hljs-attr">name</span>: <span class="hljs-string">"Angelo"</span> },
+    <span class="hljs-attr">black</span>: { <span class="hljs-attr">name</span>: <span class="hljs-string">"Gabi"</span> }
+};
 
-<span class="hljs-keyword">let</span> game = <span class="hljs-keyword">new</span> Game({
-    players
-});
+<span class="hljs-keyword">const</span> game = Game.createGame({ players });
 
-game.move({ <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">7</span> }, { <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">6</span> });
-</code></pre>
-				<h3 id="new-game-ai-vs-human">New Game - AI vs Human</h3>
-				<pre><code class="lang-js">
-<span class="hljs-keyword">import</span> {Game, Players, Player, AiMedium} <span class="hljs-keyword">from</span> <span class="hljs-string">'joj-core'</span>;
-<span class="hljs-keyword">import</span> ai <span class="hljs-keyword">from</span> <span class="hljs-string">'joj-ai'</span>;
+<span class="hljs-keyword">const</span> gameAfterMove = Move.getGameAfterMove(game, { <span class="hljs-attr">x</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">7</span> }, { <span class="hljs-attr">x</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">6</span> });
 
-<span class="hljs-keyword">let</span> players = <span class="hljs-keyword">new</span> Players({
-    <span class="hljs-attr">white</span>: <span class="hljs-keyword">new</span> Player({
-        <span class="hljs-attr">name</span>: <span class="hljs-string">"Computer"</span>,
-        ai
-    }),
-    <span class="hljs-attr">black</span>: <span class="hljs-keyword">new</span> Player({ <span class="hljs-attr">name</span>: <span class="hljs-string">"Gabi"</span> })
-});
-
-<span class="hljs-keyword">let</span> game = <span class="hljs-keyword">new</span> Game({
-    players
-});
-
-game.move({ <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">7</span> }, { <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">6</span> });
-<span class="hljs-comment">//Computer plays automatic after a move</span>
-game.move({ <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">0</span> }, { <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">1</span> });
+<span class="hljs-keyword">const</span> gameAfterMove2 = Move.getGameAfterMove(game, { <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">0</span> }, { <span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">1</span> });
 </code></pre>
 				<h2 id="contribute">Contribute</h2>
 				<h3 id="npm-global-packages">NPM Global packages</h3>

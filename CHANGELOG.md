@@ -1,11 +1,9 @@
 ## master
 
-## 1.. (..., 2017)
+## 2.0.0 (May 16, 2017)
 
-* getCleanGameToSaveOnServer()
-    - Remove for and use .map
-    - Make it pure function
-* Transpiling Typescript to esnext.
+* Complete rewrite to pure functions.
+* Transpiring Typescript to esnext.
 
 ## 1.0.0 (..., 2016)
 
