@@ -1,5 +1,9 @@
 ## master
 
+## 2.0.1 (May 16, 2017)
+
+* Export typings.
+
 ## 2.0.0 (May 16, 2017)
 
 * Complete rewrite to pure functions.
