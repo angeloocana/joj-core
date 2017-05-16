@@ -13,7 +13,7 @@
 
 > JumpOverJump.com core library
 > 
-> JumpOverJump is an opensource AI game board.
+> JumpOverJump is an open source functional programming AI game board.
 > Be welcome to learn, help and play!!!
 
 ## Docs
@@ -27,51 +27,24 @@
     npm install --save joj-core
 ```
 
-### New Game - Human vs Human
+### New Game
 
 ```js
 
-import {Game, Players, Player} from 'joj-core';
+import { Game, Move } from 'joj-core';
 
-let players = new Players({
-    white: new Player({ name: "Angelo" }),
-    black: new Player({ name: "Gabi" })
-});
+const players = {
+    white: { name: "Angelo" },
+    black: { name: "Gabi" }
+};
 
-let game = new Game({
-    players
-});
+const game = Game.createGame({ players });
 
-game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
+const gameAfterMove = Move.getGameAfterMove(game, { x: 5, y: 7 }, { x: 5, y: 6 });
 
-```
-
-### New Game - AI vs Human
-
-```js
-
-import {Game, Players, Player, AiMedium} from 'joj-core';
-import ai from 'joj-ai';
-
-let players = new Players({
-    white: new Player({
-        name: "Computer",
-        ai
-    }),
-    black: new Player({ name: "Gabi" })
-});
-
-let game = new Game({
-    players
-});
-
-game.move({ x: 2, y: 7 }, { x: 2, y: 6 });
-//Computer plays automatic after a move
-game.move({ x: 2, y: 0 }, { x: 2, y: 1 });
+const gameAfterMove2 = Move.getGameAfterMove(game, { x: 2, y: 0 }, { x: 2, y: 1 });
 
 ```
-
-
 
 ## Contribute
 

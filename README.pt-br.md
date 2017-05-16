@@ -11,8 +11,13 @@
 [pt-br](https://github.com/angeloocana/joj-core/blob/master/README.pt-br.md)
 [en-us](https://github.com/angeloocana/joj-core/blob/master/README.md)
 
-joj-core é um módulo angeloocana.
+> JumpOverJump.com core library
+> 
+> JumpOverJump é um jogo open source que usa functional programming e TDD.
+> Seja bem vindo para aprender, ajudar e jogar!!!
 
+## Docs
+[Full docs](https://angeloocana.github.io/joj-core/)
 
 ## Como usar
 
@@ -22,8 +27,20 @@ joj-core é um módulo angeloocana.
 ```
 
 ### Como usar
-```
-    import  from joj-core;
+```js
+
+import { Game, Move } from 'joj-core';
+
+const players = {
+    white: { name: "Angelo" },
+    black: { name: "Gabi" }
+};
+
+const game = Game.createGame({ players });
+
+const gameAfterMove = Move.getGameAfterMove(game, { x: 5, y: 7 }, { x: 5, y: 6 });
+
+const gameAfterMove2 = Move.getGameAfterMove(game, { x: 2, y: 0 }, { x: 2, y: 1 });
 
 ```
 
