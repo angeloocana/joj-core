@@ -37,5 +37,9 @@ function getTurnPieces(game) {
             : pieces.concat({ x: position.x, y: position.y, isBlack }), []));
     }, []);
 }
-export { createGame, getPlayerTurn, isBlackTurn, isWhiteTurn, isMyTurn, getTurnPieces };
+/**
+ * Gets all pieces from current player turn with whereCanIGo positions.
+ */
+const getTurnPiecesWhereCanIGo = (game) => Board.getPiecesWhereCanIGo(game.board, getTurnPieces(game));
+export { createGame, getPlayerTurn, isBlackTurn, isWhiteTurn, isMyTurn, getTurnPieces, getTurnPiecesWhereCanIGo };
 //# sourceMappingURL=Game.js.map

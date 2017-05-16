@@ -51,11 +51,18 @@ function getTurnPieces(game: I.IGame): I.IPosition[] {
     }, []);
 }
 
+/**
+ * Gets all pieces from current player turn with whereCanIGo positions.
+ */
+const getTurnPiecesWhereCanIGo = (game: I.IGame): I.IPiece[] =>
+    Board.getPiecesWhereCanIGo(game.board, getTurnPieces(game));
+
 export {
     createGame,
     getPlayerTurn,
     isBlackTurn,
     isWhiteTurn,
     isMyTurn,
-    getTurnPieces
+    getTurnPieces,
+    getTurnPiecesWhereCanIGo
 };

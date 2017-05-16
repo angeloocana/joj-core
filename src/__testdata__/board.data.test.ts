@@ -22,6 +22,28 @@ const startWhitePiecesExpected = [
   { x: 7, y: 7, isBlack: false }
 ];
 
+const startBlackPiecesWhereCanIGoExpected = Position.getPositionsWhereCanIGoFromArray(true, [
+  [[0, 0], [0, 1], [1, 1]],
+  [[1, 0], [0, 1], [1, 1], [2, 1]],
+  [[2, 0], [1, 1], [2, 1], [3, 1]],
+  [[3, 0], [2, 1], [3, 1], [4, 1]],
+  [[4, 0], [3, 1], [4, 1], [5, 1]],
+  [[5, 0], [4, 1], [5, 1], [6, 1]],
+  [[6, 0], [5, 1], [6, 1], [7, 1]],
+  [[7, 0], [6, 1], [7, 1]]
+]);
+
+const startWhitePiecesWhereCanIGoExpected = Position.getPositionsWhereCanIGoFromArray(false, [
+  [[0, 7], [0, 6], [1, 6]],
+  [[1, 7], [0, 6], [1, 6], [2, 6]],
+  [[2, 7], [1, 6], [2, 6], [3, 6]],
+  [[3, 7], [2, 6], [3, 6], [4, 6]],
+  [[4, 7], [3, 6], [4, 6], [5, 6]],
+  [[5, 7], [4, 6], [5, 6], [6, 6]],
+  [[6, 7], [5, 6], [6, 6], [7, 6]],
+  [[7, 7], [6, 6], [7, 6]]
+]);
+
 const startPiecesExpected = [
   { x: 7, y: 0, isBlack: true }, { x: 7, y: 7, isBlack: false },
   { x: 6, y: 0, isBlack: true }, { x: 6, y: 7, isBlack: false },
@@ -103,6 +125,8 @@ export {
   startBlackPiecesExpected,
   startPiecesExpected,
   startWhitePiecesExpected,
+  startBlackPiecesWhereCanIGoExpected,
+  startWhitePiecesWhereCanIGoExpected,
   unicodeStartBoard,
   xAndYStartBoard
 };

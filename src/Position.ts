@@ -14,6 +14,31 @@ function getPositionFromArray(position: number[]): I.IPosition {
 }
 
 /**
+ * Gets an array like [[0, 7], [0, 6], [1, 6]],
+ * where [[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]
+ * then returns IPiece.
+ *
+ * Used to create clean test data.
+ */
+function getPositionWhereCanIGoFromArray(isBlack: boolean, positions: number[][]): I.IPiece {
+    const { x, y } = getPositionFromArray(R.head(positions));
+    return {
+        x, y, isBlack,
+        whereCanIGo: R.tail(positions).map(getPositionFromArray)
+    };
+}
+
+/**
+ * Gets an array like [[[0, 7], [0, 6], [1, 6]]],
+ * where [[[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]]
+ * then returns IPiece[].
+ *
+ * Used to create clean test data.
+ */
+const getPositionsWhereCanIGoFromArray = (isBlack: boolean, positions: number[][][]) =>
+    positions.map(p => getPositionWhereCanIGoFromArray(isBlack, p));
+
+/**
  * Returns a position from an array of positions with equal X an Y.
  */
 const getPositionFromPositions = (positions: I.IPosition[], position: I.IPosition): I.IPosition =>
@@ -194,6 +219,9 @@ export {
     isBackGroundBlack,
     getPositionFromArray,
     getPositionFromPositions,
+
+    getPositionWhereCanIGoFromArray,
+    getPositionsWhereCanIGoFromArray,
 
     getToSearchOrder,
     getToSearchOrderCurried,

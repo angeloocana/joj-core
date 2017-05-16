@@ -11,6 +11,28 @@ function getPositionFromArray(position) {
     };
 }
 /**
+ * Gets an array like [[0, 7], [0, 6], [1, 6]],
+ * where [[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]
+ * then returns IPiece.
+ *
+ * Used to create clean test data.
+ */
+function getPositionWhereCanIGoFromArray(isBlack, positions) {
+    const { x, y } = getPositionFromArray(R.head(positions));
+    return {
+        x, y, isBlack,
+        whereCanIGo: R.tail(positions).map(getPositionFromArray)
+    };
+}
+/**
+ * Gets an array like [[[0, 7], [0, 6], [1, 6]]],
+ * where [[[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]]
+ * then returns IPiece[].
+ *
+ * Used to create clean test data.
+ */
+const getPositionsWhereCanIGoFromArray = (isBlack, positions) => positions.map(p => getPositionWhereCanIGoFromArray(isBlack, p));
+/**
  * Returns a position from an array of positions with equal X an Y.
  */
 const getPositionFromPositions = (positions, position) => positions.find(p => hasSameXY(p, position));
@@ -150,5 +172,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

@@ -78,6 +78,20 @@ describe('Game', function () {
             assert.deepEqual(pieces, expectedPieces);
         });
     });
+    describe('getTurnPiecesWhereCanIGo', function () {
+        it('return white pieces', function () {
+            var game = _index.Game.createGame();
+            var pieces = _index.Game.getTurnPiecesWhereCanIGo(game);
+            var expectedPieces = TestData.startWhitePiecesWhereCanIGoExpected;
+            assert.deepEqual(pieces, expectedPieces);
+        });
+        it('return black pieces', function () {
+            var game = _index.Move.getGameAfterMove(_index.Game.createGame(), { from: { x: 0, y: 7 }, to: { x: 0, y: 6 } });
+            var pieces = _index.Game.getTurnPiecesWhereCanIGo(game);
+            var expectedPieces = TestData.startBlackPiecesWhereCanIGoExpected;
+            assert.deepEqual(pieces, expectedPieces);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map
 //# sourceMappingURL=Game.test.js.map

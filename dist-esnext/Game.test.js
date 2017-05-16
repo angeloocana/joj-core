@@ -67,5 +67,19 @@ describe('Game', () => {
             assert.deepEqual(pieces, expectedPieces);
         });
     });
+    describe('getTurnPiecesWhereCanIGo', () => {
+        it('return white pieces', () => {
+            const game = Game.createGame();
+            const pieces = Game.getTurnPiecesWhereCanIGo(game);
+            const expectedPieces = TestData.startWhitePiecesWhereCanIGoExpected;
+            assert.deepEqual(pieces, expectedPieces);
+        });
+        it('return black pieces', () => {
+            const game = Move.getGameAfterMove(Game.createGame(), { from: { x: 0, y: 7 }, to: { x: 0, y: 6 } });
+            const pieces = Game.getTurnPiecesWhereCanIGo(game);
+            const expectedPieces = TestData.startBlackPiecesWhereCanIGoExpected;
+            assert.deepEqual(pieces, expectedPieces);
+        });
+    });
 });
 //# sourceMappingURL=Game.test.js.map

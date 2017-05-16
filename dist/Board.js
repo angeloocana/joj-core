@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPiecesFromBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -234,6 +234,21 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
     }, []);
 }
 /**
+ * Gets all pieces with whereCanIGo positions.
+ */
+function getPiecesWhereCanIGo(board, positions) {
+    return positions.map(function (position) {
+        var x = position.x,
+            y = position.y,
+            isBlack = position.isBlack;
+
+        return {
+            x: x, y: y, isBlack: isBlack,
+            whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
+        };
+    });
+}
+/**
  * Get all valid and invalid near positions.
  */
 var getAllNearPositions = function getAllNearPositions(position) {
@@ -344,9 +359,10 @@ exports.getEmptyNearPositions = getEmptyNearPositions;
 exports.getJumpPosition = getJumpPosition;
 exports.getNearPositions = getNearPositions;
 exports.getNotEmptyNearPositions = getNotEmptyNearPositions;
+exports.getPiecesFromBoard = getPiecesFromBoard;
+exports.getPiecesWhereCanIGo = getPiecesWhereCanIGo;
 exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
-exports.getPiecesFromBoard = getPiecesFromBoard;
 exports.mapBoard = mapBoard;
 exports.printBoard = printBoard;
 exports.printBoardCurried = printBoardCurried;

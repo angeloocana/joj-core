@@ -200,6 +200,18 @@ function getPositionsWhereCanIGo(board, from, isBlack) {
     }, []);
 }
 /**
+ * Gets all pieces with whereCanIGo positions.
+ */
+function getPiecesWhereCanIGo(board, positions) {
+    return positions.map(position => {
+        const { x, y, isBlack } = position;
+        return {
+            x, y, isBlack,
+            whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
+        };
+    });
+}
+/**
  * Get all valid and invalid near positions.
  */
 const getAllNearPositions = (position) => [
@@ -300,5 +312,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPosition, getPositionsWhereCanIGo, getPiecesFromBoard, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

@@ -3,12 +3,14 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.xAndYStartBoard = exports.unicodeStartBoard = exports.startWhitePiecesExpected = exports.startPiecesExpected = exports.startBlackPiecesExpected = exports.initialBoardExpected = exports.initialBoard = exports.cleanBoardExpected = exports.cleanBoard = undefined;
+exports.xAndYStartBoard = exports.unicodeStartBoard = exports.startWhitePiecesWhereCanIGoExpected = exports.startBlackPiecesWhereCanIGoExpected = exports.startWhitePiecesExpected = exports.startPiecesExpected = exports.startBlackPiecesExpected = exports.initialBoardExpected = exports.initialBoard = exports.cleanBoardExpected = exports.cleanBoard = undefined;
 
 var _index = require('../index');
 
 var startBlackPiecesExpected = [{ x: 0, y: 0, isBlack: true }, { x: 1, y: 0, isBlack: true }, { x: 2, y: 0, isBlack: true }, { x: 3, y: 0, isBlack: true }, { x: 4, y: 0, isBlack: true }, { x: 5, y: 0, isBlack: true }, { x: 6, y: 0, isBlack: true }, { x: 7, y: 0, isBlack: true }];
 var startWhitePiecesExpected = [{ x: 0, y: 7, isBlack: false }, { x: 1, y: 7, isBlack: false }, { x: 2, y: 7, isBlack: false }, { x: 3, y: 7, isBlack: false }, { x: 4, y: 7, isBlack: false }, { x: 5, y: 7, isBlack: false }, { x: 6, y: 7, isBlack: false }, { x: 7, y: 7, isBlack: false }];
+var startBlackPiecesWhereCanIGoExpected = _index.Position.getPositionsWhereCanIGoFromArray(true, [[[0, 0], [0, 1], [1, 1]], [[1, 0], [0, 1], [1, 1], [2, 1]], [[2, 0], [1, 1], [2, 1], [3, 1]], [[3, 0], [2, 1], [3, 1], [4, 1]], [[4, 0], [3, 1], [4, 1], [5, 1]], [[5, 0], [4, 1], [5, 1], [6, 1]], [[6, 0], [5, 1], [6, 1], [7, 1]], [[7, 0], [6, 1], [7, 1]]]);
+var startWhitePiecesWhereCanIGoExpected = _index.Position.getPositionsWhereCanIGoFromArray(false, [[[0, 7], [0, 6], [1, 6]], [[1, 7], [0, 6], [1, 6], [2, 6]], [[2, 7], [1, 6], [2, 6], [3, 6]], [[3, 7], [2, 6], [3, 6], [4, 6]], [[4, 7], [3, 6], [4, 6], [5, 6]], [[5, 7], [4, 6], [5, 6], [6, 6]], [[6, 7], [5, 6], [6, 6], [7, 6]], [[7, 7], [6, 6], [7, 6]]]);
 var startPiecesExpected = [{ x: 7, y: 0, isBlack: true }, { x: 7, y: 7, isBlack: false }, { x: 6, y: 0, isBlack: true }, { x: 6, y: 7, isBlack: false }, { x: 5, y: 0, isBlack: true }, { x: 5, y: 7, isBlack: false }, { x: 4, y: 0, isBlack: true }, { x: 4, y: 7, isBlack: false }, { x: 3, y: 0, isBlack: true }, { x: 3, y: 7, isBlack: false }, { x: 2, y: 0, isBlack: true }, { x: 2, y: 7, isBlack: false }, { x: 1, y: 0, isBlack: true }, { x: 1, y: 7, isBlack: false }, { x: 0, y: 0, isBlack: true }, { x: 0, y: 7, isBlack: false }];
 // tslint:disable:max-line-length
 var cleanBoardExpected = [[{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }, { x: 5, y: 0 }, { x: 6, y: 0 }, { x: 7, y: 0 }], [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }, { x: 5, y: 1 }, { x: 6, y: 1 }, { x: 7, y: 1 }], [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 5, y: 2 }, { x: 6, y: 2 }, { x: 7, y: 2 }], [{ x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 5, y: 3 }, { x: 6, y: 3 }, { x: 7, y: 3 }], [{ x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 }, { x: 5, y: 4 }, { x: 6, y: 4 }, { x: 7, y: 4 }], [{ x: 0, y: 5 }, { x: 1, y: 5 }, { x: 2, y: 5 }, { x: 3, y: 5 }, { x: 4, y: 5 }, { x: 5, y: 5 }, { x: 6, y: 5 }, { x: 7, y: 5 }], [{ x: 0, y: 6 }, { x: 1, y: 6 }, { x: 2, y: 6 }, { x: 3, y: 6 }, { x: 4, y: 6 }, { x: 5, y: 6 }, { x: 6, y: 6 }, { x: 7, y: 6 }], [{ x: 0, y: 7 }, { x: 1, y: 7 }, { x: 2, y: 7 }, { x: 3, y: 7 }, { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 6, y: 7 }, { x: 7, y: 7 }]];
@@ -39,6 +41,8 @@ exports.initialBoardExpected = initialBoardExpected;
 exports.startBlackPiecesExpected = startBlackPiecesExpected;
 exports.startPiecesExpected = startPiecesExpected;
 exports.startWhitePiecesExpected = startWhitePiecesExpected;
+exports.startBlackPiecesWhereCanIGoExpected = startBlackPiecesWhereCanIGoExpected;
+exports.startWhitePiecesWhereCanIGoExpected = startWhitePiecesWhereCanIGoExpected;
 exports.unicodeStartBoard = unicodeStartBoard;
 exports.xAndYStartBoard = xAndYStartBoard;
 //# sourceMappingURL=board.data.test.js.map

@@ -247,6 +247,19 @@ function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: bo
 }
 
 /**
+ * Gets all pieces with whereCanIGo positions.
+ */
+function getPiecesWhereCanIGo(board: I.IBoard, positions: I.IPosition[]): I.IPiece[] {
+    return positions.map(position => {
+        const { x, y, isBlack } = position;
+        return {
+            x, y, isBlack,
+            whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
+        };
+    });
+}
+
+/**
  * Get all valid and invalid near positions.
  */
 const getAllNearPositions = (position: I.IXY) =>
@@ -386,9 +399,10 @@ export {
     getJumpPosition,
     getNearPositions,
     getNotEmptyNearPositions,
+    getPiecesFromBoard,
+    getPiecesWhereCanIGo,
     getPosition,
     getPositionsWhereCanIGo,
-    getPiecesFromBoard,
     mapBoard,
     printBoard,
     printBoardCurried,

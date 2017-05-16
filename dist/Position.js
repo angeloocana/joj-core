@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -22,6 +22,35 @@ function getPositionFromArray(position) {
         y: position[1]
     };
 }
+/**
+ * Gets an array like [[0, 7], [0, 6], [1, 6]],
+ * where [[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]
+ * then returns IPiece.
+ *
+ * Used to create clean test data.
+ */
+function getPositionWhereCanIGoFromArray(isBlack, positions) {
+    var _getPositionFromArray = getPositionFromArray(_ramda2.default.head(positions)),
+        x = _getPositionFromArray.x,
+        y = _getPositionFromArray.y;
+
+    return {
+        x: x, y: y, isBlack: isBlack,
+        whereCanIGo: _ramda2.default.tail(positions).map(getPositionFromArray)
+    };
+}
+/**
+ * Gets an array like [[[0, 7], [0, 6], [1, 6]]],
+ * where [[[positionX, positionY], ...[[whereCanIGoX, whereCanIGoY]]]]
+ * then returns IPiece[].
+ *
+ * Used to create clean test data.
+ */
+var getPositionsWhereCanIGoFromArray = function getPositionsWhereCanIGoFromArray(isBlack, positions) {
+    return positions.map(function (p) {
+        return getPositionWhereCanIGoFromArray(isBlack, p);
+    });
+};
 /**
  * Returns a position from an array of positions with equal X an Y.
  */
@@ -186,6 +215,8 @@ exports.containsXY = containsXY;
 exports.isBackGroundBlack = isBackGroundBlack;
 exports.getPositionFromArray = getPositionFromArray;
 exports.getPositionFromPositions = getPositionFromPositions;
+exports.getPositionWhereCanIGoFromArray = getPositionWhereCanIGoFromArray;
+exports.getPositionsWhereCanIGoFromArray = getPositionsWhereCanIGoFromArray;
 exports.getToSearchOrder = getToSearchOrder;
 exports.getToSearchOrderCurried = getToSearchOrderCurried;
 exports.getOrderedPositions = getOrderedPositions;
