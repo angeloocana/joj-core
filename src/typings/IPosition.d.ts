@@ -31,6 +31,18 @@ export interface IPosition {
     lastMoveJump?: boolean;
 }
 
+export interface IPiece {
+    x: number;
+    y: number;
+
+    isBlack: boolean;
+
+    whereCanIGo: IPosition[];
+
+    // $Fix is this really needed?
+    movesToWin?: number;
+}
+
 export interface IPositionArgs {
     x: number;
     y: number;
