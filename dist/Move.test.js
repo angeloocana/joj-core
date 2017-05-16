@@ -37,6 +37,18 @@ describe('Move', function () {
             assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
             assert.deepEqual(gameBeforeLastMove.moves, game.moves);
         });
+        it('return AI move too', function () {
+            var players = {
+                white: { name: 'Angelo' },
+                black: { name: 'AI', isAi: true }
+            };
+            var game0 = _index.Game.createGame({ players: players });
+            var game1 = _index.Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            var game2 = _index.Move.getGameAfterMove(game1, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            var gameBefore = _index.Move.getGameBeforeLastMove(game2);
+            assert.equal(gameBefore.moves.length, game0.moves.length);
+            assert.deepEqual(gameBefore.moves, game0.moves);
+        });
     });
     describe('getGameAfterMove', function () {
         var game;

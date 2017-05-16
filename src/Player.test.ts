@@ -40,7 +40,7 @@ describe('Player', () => {
 
         let players: I.IPlayers;
         const white: I.IPlayerArgs = { name: 'P White' };
-        const black: I.IPlayerArgs = { name: 'P Black' };
+        const black: I.IPlayerArgs = { name: 'P Black', isAi: true };
 
         beforeEach(() => {
             players = Player.createPlayers({
@@ -60,11 +60,11 @@ describe('Player', () => {
             });
 
             it('Set white player ai', () => {
-                assert.ok(players.white.ai === white.ai);
+                assert.ok(players.white.isAi === white.isAi);
             });
 
             it('Set black player ai', () => {
-                assert.ok(players.black.ai === black.ai);
+                assert.ok(players.black.isAi === black.isAi);
             });
         });
     });

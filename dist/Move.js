@@ -17,10 +17,6 @@ var _Game = require('./Game');
 
 var Game = _interopRequireWildcard(_Game);
 
-var _Player = require('./Player');
-
-var Player = _interopRequireWildcard(_Player);
-
 var _Position = require('./Position');
 
 var Position = _interopRequireWildcard(_Position);
@@ -111,7 +107,7 @@ function getGameAfterMove(game, move) {
 function getGameBeforeLastMove(game) {
     var lastMove = game.moves.pop();
     if (lastMove) game = getGameAfterMove(game, getBackMove(lastMove), true);
-    if (Player.isComputer(Game.getPlayerTurn(game))) {
+    if (Game.getPlayerTurn(game).isAi) {
         lastMove = game.moves.pop();
         if (lastMove) {
             game = getGameAfterMove(game, getBackMove(lastMove), true);

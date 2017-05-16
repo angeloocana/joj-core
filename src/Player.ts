@@ -3,7 +3,7 @@ import * as I from './typings';
 
 function createPlayer(isBlack: boolean, args: I.IPlayerArgs): I.IPlayer {
     return {
-        ai: args.ai,
+        isAi: args.isAi,
         name: args.name,
         foto: args.foto,
         isBlack
@@ -15,10 +15,6 @@ const createPlayerCurried = curry(createPlayer);
 const createWhitePlayer = createPlayerCurried(false);
 
 const createBlackPlayer = createPlayerCurried(true);
-
-function isComputer(player: I.IPlayer): boolean {
-    return player.ai ? true : false;
-}
 
 const initialPlayers: I.IPlayers = {
     white: {
@@ -43,6 +39,5 @@ export {
     createPlayerCurried,
     createBlackPlayer,
     createWhitePlayer,
-    createPlayers,
-    isComputer
+    createPlayers
 };

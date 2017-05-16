@@ -26,6 +26,18 @@ describe('Move', () => {
             assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
             assert.deepEqual(gameBeforeLastMove.moves, game.moves);
         });
+        it('return AI move too', () => {
+            const players = {
+                white: { name: 'Angelo' },
+                black: { name: 'AI', isAi: true }
+            };
+            const game0 = Game.createGame({ players });
+            const game1 = Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            const game2 = Move.getGameAfterMove(game1, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            const gameBefore = Move.getGameBeforeLastMove(game2);
+            assert.equal(gameBefore.moves.length, game0.moves.length);
+            assert.deepEqual(gameBefore.moves, game0.moves);
+        });
     });
     describe('getGameAfterMove', () => {
         var game;

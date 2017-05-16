@@ -4,13 +4,15 @@ export interface IPlayer {
     name: string;
     isBlack: boolean;
     foto?: string;
-    ai?: IAi;
+    isAi?: boolean;
+    // ai?: IAi;
 }
 
 export interface IPlayerArgs {
     name: string;
     foto?: string;
-    ai?: IAi;
+    isAi?: boolean;
+    // ai?: IAi;
 }
 
 export interface IPlayers {

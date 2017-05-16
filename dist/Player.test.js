@@ -37,7 +37,7 @@ describe('Player', function () {
     describe('Players', function () {
         var players = void 0;
         var white = { name: 'P White' };
-        var black = { name: 'P Black' };
+        var black = { name: 'P Black', isAi: true };
         beforeEach(function () {
             players = _index.Player.createPlayers({
                 black: black,
@@ -52,10 +52,10 @@ describe('Player', function () {
                 assert.ok(players.black.name === black.name);
             });
             it('Set white player ai', function () {
-                assert.ok(players.white.ai === white.ai);
+                assert.ok(players.white.isAi === white.isAi);
             });
             it('Set black player ai', function () {
-                assert.ok(players.black.ai === black.ai);
+                assert.ok(players.black.isAi === black.isAi);
             });
         });
     });

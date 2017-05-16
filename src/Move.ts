@@ -1,7 +1,6 @@
 import R from 'ramda';
 import * as Board from './Board';
 import * as Game from './Game';
-import * as Player from './Player';
 import * as Position from './Position';
 import * as Score from './Score';
 import * as I from './typings';
@@ -101,7 +100,7 @@ function getGameBeforeLastMove(game: I.IGame): I.IGame {
     if (lastMove)
         game = getGameAfterMove(game, getBackMove(lastMove), true);
 
-    if (Player.isComputer(Game.getPlayerTurn(game))) {
+    if (Game.getPlayerTurn(game).isAi) {
         lastMove = game.moves.pop();
         if (lastMove) {
             game = getGameAfterMove(game, getBackMove(lastMove), true);

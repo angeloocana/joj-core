@@ -29,7 +29,7 @@ describe('Player', () => {
     describe('Players', () => {
         let players;
         const white = { name: 'P White' };
-        const black = { name: 'P Black' };
+        const black = { name: 'P Black', isAi: true };
         beforeEach(() => {
             players = Player.createPlayers({
                 black,
@@ -44,10 +44,10 @@ describe('Player', () => {
                 assert.ok(players.black.name === black.name);
             });
             it('Set white player ai', () => {
-                assert.ok(players.white.ai === white.ai);
+                assert.ok(players.white.isAi === white.isAi);
             });
             it('Set black player ai', () => {
-                assert.ok(players.black.ai === black.ai);
+                assert.ok(players.black.isAi === black.isAi);
             });
         });
     });
