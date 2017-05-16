@@ -40,7 +40,7 @@ const game = Game.createGame({ players });
 
 const gameAfterMove = Move.getGameAfterMove(game, { x: 5, y: 7 }, { x: 5, y: 6 });
 
-const gameAfterMove2 = Move.getGameAfterMove(game, { x: 2, y: 0 }, { x: 2, y: 1 });
+const gameAfterMove2 = Move.getGameAfterMove(gameAfterMove, { x: 2, y: 0 }, { x: 2, y: 1 });
 
 ```
 
