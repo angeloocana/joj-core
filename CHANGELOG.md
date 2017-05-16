@@ -1,5 +1,8 @@
 ## master
 
+
+## 2.0.2 (May 16, 2017)
+
 * Add getTurnPieces().
     - Gets all pieces from current player turn.
 * Add interface IPiece.
