@@ -1,54 +1,30 @@
 import * as assert from 'ptz-assert';
 import { Player } from './index';
 describe('Player', () => {
-    let player;
     describe('createBlackPlayer', () => {
         const name = 'John';
-        beforeEach(() => {
-            player = Player.createBlackPlayer({ name });
-        });
-        it('set name', () => {
-            assert.equal(player.name, name);
-        });
-        it('set isBlack = true', () => {
-            assert.ok(player.isBlack);
-        });
+        const player = Player.createBlackPlayer({ name });
+        assert.equal(player.name, name, 'set name');
+        assert.ok(player.isBlack, 'set isBlack = true');
     });
     describe('createWhitePlayer', () => {
         const name = 'John';
-        beforeEach(() => {
-            player = Player.createWhitePlayer({ name });
-        });
-        it('set name', () => {
-            assert.equal(player.name, name);
-        });
-        it('set isBlack = true', () => {
-            assert.notOk(player.isBlack);
-        });
+        const player = Player.createWhitePlayer({ name });
+        assert.equal(player.name, name, 'set name');
+        assert.notOk(player.isBlack, 'set isBlack = false');
     });
     describe('Players', () => {
-        let players;
-        const white = { name: 'P White' };
-        const black = { name: 'P Black', isAi: true };
-        beforeEach(() => {
-            players = Player.createPlayers({
+        describe('New setting players', () => {
+            const white = { name: 'P White' };
+            const black = { name: 'P Black', isAi: true };
+            const players = Player.createPlayers({
                 black,
                 white
             });
-        });
-        describe('New setting players', () => {
-            it('Set white player name', () => {
-                assert.ok(players.white.name === white.name);
-            });
-            it('Set black player name', () => {
-                assert.ok(players.black.name === black.name);
-            });
-            it('Set white player ai', () => {
-                assert.ok(players.white.isAi === white.isAi);
-            });
-            it('Set black player ai', () => {
-                assert.ok(players.black.isAi === black.isAi);
-            });
+            assert.ok(players.white.name === white.name, 'Set white player name');
+            assert.ok(players.black.name === black.name, 'Set black player name');
+            assert.ok(players.white.isAi === white.isAi, 'Set white player ai');
+            assert.ok(players.black.isAi === black.isAi, 'Set black player ai');
         });
     });
 });
