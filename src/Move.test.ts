@@ -25,16 +25,15 @@ describe('Move', () => {
                 black: { name: 'Gabi', foto: 'img/white_user.png' }
             };
 
-            let game = Game.createGame({ players });
+            const game0 = Game.createGame({ players });
 
-            const gameBeforeLastMove = Move.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            const game1 = Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
 
-            game = Move.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            const game2 = Move.getGameAfterMove(game1, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
 
-            game = Move.getGameBeforeLastMove(game);
+            const game_1 = Move.getGameBeforeLastMove(game2); // tslint:disable-line:variable-name
 
-            assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
-            assert.deepEqual(gameBeforeLastMove.moves, game.moves);
+            assert.deepEqual(game_1.moves, game1.moves);
         });
 
         it('return AI move too', () => {

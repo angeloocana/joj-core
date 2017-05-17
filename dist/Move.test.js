@@ -30,12 +30,11 @@ describe('Move', function () {
                 white: { name: 'Angelo', foto: 'img/black_user.png' },
                 black: { name: 'Gabi', foto: 'img/white_user.png' }
             };
-            var game = _index.Game.createGame({ players: players });
-            var gameBeforeLastMove = _index.Move.getGameAfterMove(game, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
-            game = _index.Move.getGameAfterMove(gameBeforeLastMove, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
-            game = _index.Move.getGameBeforeLastMove(game);
-            assert.equal(gameBeforeLastMove.moves.length, game.moves.length);
-            assert.deepEqual(gameBeforeLastMove.moves, game.moves);
+            var game0 = _index.Game.createGame({ players: players });
+            var game1 = _index.Move.getGameAfterMove(game0, { from: { x: 2, y: 7 }, to: { x: 2, y: 6 } });
+            var game2 = _index.Move.getGameAfterMove(game1, { from: { x: 2, y: 0 }, to: { x: 2, y: 1 } });
+            var game_1 = _index.Move.getGameBeforeLastMove(game2); // tslint:disable-line:variable-name
+            assert.deepEqual(game_1.moves, game1.moves);
         });
         it('return AI move too', function () {
             var players = {
