@@ -95,7 +95,7 @@ function getBoardAfterMove(board, move) {
 function getGameAfterMove(game, move) {
     var backMove = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-    if (!backMove && canNotMove(game, move)) throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+    if (!backMove && canNotMove(game, move)) return game;
     var board = getBoardAfterMove(game.board, move);
     return {
         players: game.players,

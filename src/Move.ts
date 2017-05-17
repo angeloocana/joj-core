@@ -82,7 +82,7 @@ function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
  */
 function getGameAfterMove(game: I.IGame, move: I.IMove, backMove: boolean = false): I.IGame {
     if (!backMove && canNotMove(game, move))
-        throw new Error('ERROR_CANT_MOVE_TO_POSITION');
+        return game;
 
     const board = getBoardAfterMove(game.board, move);
 

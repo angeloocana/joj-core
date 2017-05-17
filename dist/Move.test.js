@@ -68,23 +68,19 @@ describe('Move', function () {
         });
     });
     describe('getGameAfterMove', function () {
-        var game;
-        beforeEach(function () {
-            game = _index.Game.createGame({
+        it('Block moving to same position', function () {
+            var game = _index.Game.createGame({
                 players: {
                     white: { name: 'Angelo', foto: 'img/black_user.png' },
                     black: { name: 'Gabi', foto: 'img/white_user.png' }
                 }
             });
-        });
-        it('Block moving to same position', function () {
             var move = {
                 from: { x: 0, y: 0 },
                 to: { x: 0, y: 0 }
             };
-            assert.throws(function () {
-                game = _index.Move.getGameAfterMove(game, move);
-            });
+            var gameAfterMove = _index.Move.getGameAfterMove(game, move);
+            assert.equal(gameAfterMove, game, 'not the same game');
         });
     });
     it('getGameAfterMoves', function () {
