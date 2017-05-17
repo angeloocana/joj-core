@@ -206,14 +206,14 @@ var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Set Jumps to from + from.jumps.
  *  - Call and return this method again recursively to get next jump positions.
  */
-function whereCanIJump(board, from, isBlack, positions) {
+function whereCanIJump(board, from, positions) {
     var nearPieces = getNotEmptyNearPositions(board, from);
     return nearPieces.reduce(function (accPositions, nearPiece) {
         var jumpTo = getJumpPosition(from, nearPiece, board);
         if (!jumpTo || Position.containsXY(accPositions, jumpTo)) return accPositions;
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
         jumpTo.jumps = (from.jumps || []).concat(from);
-        return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
+        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo));
     }, positions || []);
 }
 /**
@@ -223,27 +223,28 @@ function whereCanIJump(board, from, isBlack, positions) {
  *      1. Get jump position, if jump position do not exists return prev positions.
  *      2. Concat jump to positions then call whereCanIJump() and return it.
  */
-function getPositionsWhereCanIGo(board, from, isBlack) {
+function getPositionsWhereCanIGo(board, from) {
     if (!from) return null;
     var allNearPositions = getNearPositions(board, from);
     return allNearPositions.reduce(function (positions, nearPosition) {
         if (Position.hasNoPiece(nearPosition)) return positions.concat(nearPosition);
         var jumpTo = getJumpPosition(from, nearPosition, board);
         if (!jumpTo) return positions;
-        return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
+        return whereCanIJump(board, jumpTo, positions.concat(jumpTo));
     }, []);
 }
 /**
  * Gets all pieces with whereCanIGo positions.
  */
-function getPiecesWhereCanIGo(isBlack, board, positions) {
+function getPiecesWhereCanIGo(board, positions) {
     return positions.map(function (position) {
         var x = position.x,
-            y = position.y;
+            y = position.y,
+            isBlack = position.isBlack;
 
         return {
             x: x, y: y, isBlack: isBlack,
-            whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
+            whereCanIGo: getPositionsWhereCanIGo(board, position)
         };
     });
 }
@@ -319,8 +320,8 @@ function getJumpPosition(from, toJump, board) {
 /**
  * Get board with checked where can I go positions
  */
-function getBoardWhereCanIGo(board, from, isBlack) {
-    var positions = getPositionsWhereCanIGo(board, from, isBlack);
+function getBoardWhereCanIGo(board, from) {
+    var positions = getPositionsWhereCanIGo(board, from);
     return mapBoard(board, function (position) {
         return Position.setICanGoHere(positions, position);
     });

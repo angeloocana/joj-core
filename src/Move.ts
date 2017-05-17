@@ -35,7 +35,7 @@ function canMove(game: I.IGame, move: I.IMove): boolean {
     if (!Game.isMyTurn(game, move.from))
         return false;
 
-    const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, Game.isBlackTurn(game));
+    const positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from);
     return positionsWhereCanIGo.some(position => Position.hasSameXY(position, move.to));
 }
 

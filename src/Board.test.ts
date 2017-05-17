@@ -255,7 +255,7 @@ describe('Board', () => {
 
     describe('getPositionsWhereCanIGo', () => {
         it('return null for invalid from', () => {
-            const positions = Board.getPositionsWhereCanIGo(TestData.initialBoard, null, true);
+            const positions = Board.getPositionsWhereCanIGo(TestData.initialBoard, null);
             assert.notOk(positions);
         });
     });
@@ -299,7 +299,7 @@ describe('Board', () => {
                 jumps: [from, p55, p53]
             };
 
-            const whereCanIJump = Board.whereCanIJump(board, from, true);
+            const whereCanIJump = Board.whereCanIJump(board, from);
 
             assert.deepEqual(whereCanIJump, [p55, p53, p51]);
         });
@@ -318,7 +318,7 @@ describe('Board', () => {
             const board = Board.getBoardWithPieces(TestData.cleanBoard, pieces);
             const from = { x: 7, y: 7 };
 
-            const actual = Board.getBoardWhereCanIGo(board, from, true);
+            const actual = Board.getBoardWhereCanIGo(board, from);
 
             // tslint:disable:max-line-length
             const expected = [
@@ -378,7 +378,7 @@ describe('Board', () => {
             const positions = TestData.startWhitePiecesExpected;
             const expectedPieces = TestData.startWhitePiecesWhereCanIGoExpected;
 
-            const pieces = Board.getPiecesWhereCanIGo(false, board, positions);
+            const pieces = Board.getPiecesWhereCanIGo(board, positions);
 
             assert.deepEqual(pieces, expectedPieces);
         });
@@ -388,7 +388,7 @@ describe('Board', () => {
             const positions = TestData.startBlackPiecesExpected;
             const expectedPieces = TestData.startBlackPiecesWhereCanIGoExpected;
 
-            const pieces = Board.getPiecesWhereCanIGo(true, board, positions);
+            const pieces = Board.getPiecesWhereCanIGo(board, positions);
 
             assert.deepEqual(pieces, expectedPieces);
         });

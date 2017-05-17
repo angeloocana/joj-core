@@ -204,7 +204,7 @@ const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
  *  - Set Jumps to from + from.jumps.
  *  - Call and return this method again recursively to get next jump positions.
  */
-function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, positions?: I.IPosition[]): I.IPosition[] {
+function whereCanIJump(board: I.IBoard, from: I.IPosition, positions?: I.IPosition[]): I.IPosition[] {
     const nearPieces = getNotEmptyNearPositions(board, from);
 
     return nearPieces.reduce((accPositions, nearPiece) => {
@@ -216,7 +216,7 @@ function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, pos
         jumpTo.jumpingBlackPiece = nearPiece.isBlack;
         jumpTo.jumps = (from.jumps || []).concat(from);
 
-        return whereCanIJump(board, jumpTo, isBlack, accPositions.concat(jumpTo));
+        return whereCanIJump(board, jumpTo, accPositions.concat(jumpTo));
 
     }, positions || []);
 }
@@ -228,7 +228,7 @@ function whereCanIJump(board: I.IBoard, from: I.IPosition, isBlack: boolean, pos
  *      1. Get jump position, if jump position do not exists return prev positions.
  *      2. Concat jump to positions then call whereCanIJump() and return it.
  */
-function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: boolean): I.IPosition[] {
+function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition): I.IPosition[] {
     if (!from)
         return null;
 
@@ -242,19 +242,19 @@ function getPositionsWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: bo
         if (!jumpTo)
             return positions;
 
-        return whereCanIJump(board, jumpTo, isBlack, positions.concat(jumpTo));
+        return whereCanIJump(board, jumpTo, positions.concat(jumpTo));
     }, []);
 }
 
 /**
  * Gets all pieces with whereCanIGo positions.
  */
-function getPiecesWhereCanIGo(isBlack: boolean, board: I.IBoard, positions: I.IPosition[]): I.IPiece[] {
+function getPiecesWhereCanIGo(board: I.IBoard, positions: I.IPosition[]): I.IPiece[] {
     return positions.map(position => {
-        const { x, y } = position;
+        const { x, y, isBlack } = position;
         return {
             x, y, isBlack,
-            whereCanIGo: getPositionsWhereCanIGo(board, position, isBlack)
+            whereCanIGo: getPositionsWhereCanIGo(board, position)
         };
     });
 }
@@ -353,8 +353,8 @@ function getJumpPosition(from: I.IXY, toJump: I.IXY, board: I.IBoard): I.IPositi
 /**
  * Get board with checked where can I go positions
  */
-function getBoardWhereCanIGo(board: I.IBoard, from: I.IPosition, isBlack: boolean): I.IBoard {
-    const positions = getPositionsWhereCanIGo(board, from, isBlack);
+function getBoardWhereCanIGo(board: I.IBoard, from: I.IPosition): I.IBoard {
+    const positions = getPositionsWhereCanIGo(board, from);
     return mapBoard(board, position => Position.setICanGoHere(positions, position));
 }
 

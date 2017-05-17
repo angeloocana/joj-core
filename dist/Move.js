@@ -55,7 +55,7 @@ function getMoveXAndY(move) {
  */
 function canMove(game, move) {
     if (!Game.isMyTurn(game, move.from)) return false;
-    var positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from, Game.isBlackTurn(game));
+    var positionsWhereCanIGo = Board.getPositionsWhereCanIGo(game.board, move.from);
     return positionsWhereCanIGo.some(function (position) {
         return Position.hasSameXY(position, move.to);
     });
