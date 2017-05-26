@@ -24,8 +24,8 @@ var defaultBoardSize = { x: 8, y: 8 };
 /**
  * Checks if position exists in this board size
  */
-var hasPositionByBoardSize = function hasPositionByBoardSize(boardSize, position) {
-    return position && position.x >= 0 && position.y >= 0 && boardSize.y > position.y && boardSize.x > position.x;
+var hasPositionByBoardSize = function hasPositionByBoardSize(boardSize, p) {
+    return p && p.x >= 0 && p.y >= 0 && boardSize.y > p.y && boardSize.x > p.x;
 };
 /**
  * Check if position exists on board

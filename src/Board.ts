@@ -10,9 +10,9 @@ const defaultBoardSize: I.IBoardSize = { x: 8, y: 8 };
 /**
  * Checks if position exists in this board size
  */
-const hasPositionByBoardSize = (boardSize: I.IBoardSize, position: I.IPosition) => position
-    && position.x >= 0 && position.y >= 0
-    && boardSize.y > position.y && boardSize.x > position.x;
+const hasPositionByBoardSize = (boardSize: I.IBoardSize, p: I.IPosition) => p
+    && p.x >= 0 && p.y >= 0
+    && boardSize.y > p.y && boardSize.x > p.x;
 
 /**
  * Check if position exists on board
