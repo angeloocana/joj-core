@@ -71,14 +71,12 @@ const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
  */
 const hasNoPiece = R.compose(R.not, hasPiece);
 
-const setPiece = (isBlack: boolean, position: I.IPosition) =>
-    Object.assign({}, position, { isBlack });
+const setPiece = R.curry((isBlack: boolean, position: I.IPosition) =>
+    Object.assign({}, position, { isBlack }));
 
-const setPieceCurried = R.curry(setPiece);
+const setPieceToBlack = setPiece(true);
 
-const setPieceToBlack = setPieceCurried(true);
-
-const setPieceToWhite = setPieceCurried(false);
+const setPieceToWhite = setPiece(false);
 
 /**
  * Takes a position and return a new position with iCanGoHere checked.
@@ -250,7 +248,6 @@ export {
 
     setICanGoHere,
     setPiece,
-    setPieceCurried,
     setPieceToBlack,
     setPieceToWhite
 };

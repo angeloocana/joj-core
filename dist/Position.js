@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -88,12 +88,11 @@ var hasPiece = _ramda2.default.anyPass([hasBlackPiece, hasWhitePiece]);
  * .isBlack is undefined or null.
  */
 var hasNoPiece = _ramda2.default.compose(_ramda2.default.not, hasPiece);
-var setPiece = function setPiece(isBlack, position) {
+var setPiece = _ramda2.default.curry(function (isBlack, position) {
     return Object.assign({}, position, { isBlack: isBlack });
-};
-var setPieceCurried = _ramda2.default.curry(setPiece);
-var setPieceToBlack = setPieceCurried(true);
-var setPieceToWhite = setPieceCurried(false);
+});
+var setPieceToBlack = setPiece(true);
+var setPieceToWhite = setPiece(false);
 /**
  * Takes a position and return a new position with iCanGoHere checked.
  */
@@ -238,7 +237,6 @@ exports.printXAndYPosition = printXAndYPosition;
 exports.printUnicodePosition = printUnicodePosition;
 exports.setICanGoHere = setICanGoHere;
 exports.setPiece = setPiece;
-exports.setPieceCurried = setPieceCurried;
 exports.setPieceToBlack = setPieceToBlack;
 exports.setPieceToWhite = setPieceToWhite;
 //# sourceMappingURL=Position.js.map

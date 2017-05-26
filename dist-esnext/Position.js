@@ -58,10 +58,9 @@ const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
  * .isBlack is undefined or null.
  */
 const hasNoPiece = R.compose(R.not, hasPiece);
-const setPiece = (isBlack, position) => Object.assign({}, position, { isBlack });
-const setPieceCurried = R.curry(setPiece);
-const setPieceToBlack = setPieceCurried(true);
-const setPieceToWhite = setPieceCurried(false);
+const setPiece = R.curry((isBlack, position) => Object.assign({}, position, { isBlack }));
+const setPieceToBlack = setPiece(true);
+const setPieceToWhite = setPiece(false);
 /**
  * Takes a position and return a new position with iCanGoHere checked.
  */
@@ -171,5 +170,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map
