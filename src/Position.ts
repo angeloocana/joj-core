@@ -132,10 +132,8 @@ const getToSearchOrder = R.curry((boardSize: I.IBoardSize, x: number): number =>
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-const getY0Start = (boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? y : (boardSizeY - 1) - y;
-
-const getY0StartCurried = R.curry(getY0Start);
+const getY0Start = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? y : (boardSizeY - 1) - y);
 
 /**
  * It Inverts black Y position.
@@ -231,7 +229,6 @@ export {
     getXAndY,
 
     getY0Start,
-    getY0StartCurried,
     getY0End,
     getY0EndCurried,
 
