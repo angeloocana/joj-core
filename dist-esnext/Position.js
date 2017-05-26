@@ -83,7 +83,7 @@ const isBackGroundBlack = (x, y) => (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0
  *
  * The goal is to fill the corners first.
  */
-function getToSearchOrder(boardSize, x) {
+const getToSearchOrder = R.curry((boardSize, x) => {
     switch (x) {
         case 0:
             return 0;
@@ -104,8 +104,7 @@ function getToSearchOrder(boardSize, x) {
         default:
             return null;
     }
-}
-const getToSearchOrderCurried = R.curry(getToSearchOrder);
+});
 /**
  * It Inverts white Y position.
  *
@@ -172,5 +171,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

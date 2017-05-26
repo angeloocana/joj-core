@@ -136,7 +136,7 @@ describe('Position', function () {
         });
     });
     describe('getToSearchOrder', function () {
-        var getToSearchOrder8x8 = _index.Position.getToSearchOrderCurried({ x: 8, y: 8 });
+        var getToSearchOrder8x8 = _index.Position.getToSearchOrder({ x: 8, y: 8 });
         it('return 0 for 0', function () {
             return assert.equal(getToSearchOrder8x8(0), 0);
         });

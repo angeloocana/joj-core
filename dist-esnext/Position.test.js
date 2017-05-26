@@ -123,7 +123,7 @@ describe('Position', () => {
         });
     });
     describe('getToSearchOrder', () => {
-        const getToSearchOrder8x8 = Position.getToSearchOrderCurried({ x: 8, y: 8 });
+        const getToSearchOrder8x8 = Position.getToSearchOrder({ x: 8, y: 8 });
         it('return 0 for 0', () => assert.equal(getToSearchOrder8x8(0), 0));
         it('return 1 for 7', () => assert.equal(getToSearchOrder8x8(7), 1));
         it('return 2 for 1', () => assert.equal(getToSearchOrder8x8(1), 2));

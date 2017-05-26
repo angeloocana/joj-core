@@ -106,7 +106,7 @@ const isBackGroundBlack = (x: number, y: number): boolean =>
  *
  * The goal is to fill the corners first.
  */
-function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
+const getToSearchOrder = R.curry((boardSize: I.IBoardSize, x: number): number => {
     switch (x) {
         case 0:
             return 0;
@@ -127,9 +127,7 @@ function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
         default:
             return null;
     }
-}
-
-const getToSearchOrderCurried = R.curry(getToSearchOrder);
+});
 
 /**
  * It Inverts white Y position.
@@ -224,7 +222,6 @@ export {
     getPositionsWhereCanIGoFromArray,
 
     getToSearchOrder,
-    getToSearchOrderCurried,
 
     getOrderedPositions,
     getOrderedPositionsY0Start,

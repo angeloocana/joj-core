@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -121,7 +121,7 @@ var isBackGroundBlack = function isBackGroundBlack(x, y) {
  *
  * The goal is to fill the corners first.
  */
-function getToSearchOrder(boardSize, x) {
+var getToSearchOrder = _ramda2.default.curry(function (boardSize, x) {
     switch (x) {
         case 0:
             return 0;
@@ -142,8 +142,7 @@ function getToSearchOrder(boardSize, x) {
         default:
             return null;
     }
-}
-var getToSearchOrderCurried = _ramda2.default.curry(getToSearchOrder);
+});
 /**
  * It Inverts white Y position.
  *
@@ -218,7 +217,6 @@ exports.getPositionFromPositions = getPositionFromPositions;
 exports.getPositionWhereCanIGoFromArray = getPositionWhereCanIGoFromArray;
 exports.getPositionsWhereCanIGoFromArray = getPositionsWhereCanIGoFromArray;
 exports.getToSearchOrder = getToSearchOrder;
-exports.getToSearchOrderCurried = getToSearchOrderCurried;
 exports.getOrderedPositions = getOrderedPositions;
 exports.getOrderedPositionsY0Start = getOrderedPositionsY0Start;
 exports.getOrderedPositionsY0StartCurried = getOrderedPositionsY0StartCurried;
