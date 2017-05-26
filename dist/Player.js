@@ -3,21 +3,24 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.createPlayers = exports.createWhitePlayer = exports.createBlackPlayer = exports.createPlayerCurried = exports.createPlayer = undefined;
+exports.createPlayers = exports.createWhitePlayer = exports.createBlackPlayer = exports.createPlayer = undefined;
 
 var _ramda = require('ramda');
 
-function createPlayer(isBlack, args) {
+var _ramda2 = _interopRequireDefault(_ramda);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var createPlayer = _ramda2.default.curry(function (isBlack, args) {
     return {
         isAi: args.isAi,
         name: args.name,
         foto: args.foto,
         isBlack: isBlack
     };
-}
-var createPlayerCurried = (0, _ramda.curry)(createPlayer);
-var createWhitePlayer = createPlayerCurried(false);
-var createBlackPlayer = createPlayerCurried(true);
+});
+var createWhitePlayer = createPlayer(false);
+var createBlackPlayer = createPlayer(true);
 var initialPlayers = {
     white: {
         isBlack: false,
@@ -35,7 +38,6 @@ function createPlayers(args) {
     } : initialPlayers;
 }
 exports.createPlayer = createPlayer;
-exports.createPlayerCurried = createPlayerCurried;
 exports.createBlackPlayer = createBlackPlayer;
 exports.createWhitePlayer = createWhitePlayer;
 exports.createPlayers = createPlayers;
