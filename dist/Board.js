@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -86,21 +86,10 @@ var createRows = function createRows(x, y, rows) {
 };
 /**
  * Get cached clean board, using memoize from ramda
- *
- * The _getCleanBoard returns :Function Type,
- * that's why we created getCleanBoard witch returns :IPosition[y][x]
- * in order to reduce type errors.
  */
-// tslint:disable-next-line:variable-name
-var _getCleanBoard = _ramda2.default.memoize(function (boardSize) {
+var getCleanBoard = _ramda2.default.memoize(function (boardSize) {
     return createRows(boardSize.x - 1, boardSize.y - 1);
 });
-/**
- * Get cached clean board, using memoize from ramda.
- */
-function getCleanBoard(boardSize) {
-    return _getCleanBoard(boardSize);
-}
 /**
  * Takes a board and return a new board with pieces.
  */
@@ -344,7 +333,6 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-exports._getCleanBoard = _getCleanBoard;
 exports._getInitialBoard = _getInitialBoard;
 exports._getNearPositions = _getNearPositions;
 exports.defaultBoardSize = defaultBoardSize;

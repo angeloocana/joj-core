@@ -57,19 +57,8 @@ const createCols = (x, y, cols) => x < 0 ? cols : createCols(x - 1, y, R.concat(
 const createRows = (x, y, rows) => y < 0 ? rows : createRows(x, y - 1, R.concat([createCols(x, y)], rows || []));
 /**
  * Get cached clean board, using memoize from ramda
- *
- * The _getCleanBoard returns :Function Type,
- * that's why we created getCleanBoard witch returns :IPosition[y][x]
- * in order to reduce type errors.
  */
-// tslint:disable-next-line:variable-name
-const _getCleanBoard = R.memoize((boardSize) => createRows(boardSize.x - 1, boardSize.y - 1));
-/**
- * Get cached clean board, using memoize from ramda.
- */
-function getCleanBoard(boardSize) {
-    return _getCleanBoard(boardSize);
-}
+const getCleanBoard = R.memoize((boardSize) => createRows(boardSize.x - 1, boardSize.y - 1));
 /**
  * Takes a board and return a new board with pieces.
  */
@@ -312,5 +301,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
+export { _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

@@ -73,21 +73,9 @@ const createRows = (x: number, y: number, rows?: I.IXY[][]): I.IXY[][] =>
 
 /**
  * Get cached clean board, using memoize from ramda
- *
- * The _getCleanBoard returns :Function Type,
- * that's why we created getCleanBoard witch returns :IPosition[y][x]
- * in order to reduce type errors.
  */
-// tslint:disable-next-line:variable-name
-const _getCleanBoard = R.memoize((boardSize: I.IBoardSize) =>
+const getCleanBoard = R.memoize((boardSize: I.IBoardSize) =>
     createRows(boardSize.x - 1, boardSize.y - 1));
-
-/**
- * Get cached clean board, using memoize from ramda.
- */
-function getCleanBoard(boardSize: I.IBoardSize): I.IBoard {
-    return _getCleanBoard(boardSize);
-}
 
 /**
  * Takes a board and return a new board with pieces.
@@ -384,7 +372,6 @@ function getPiecesFromBoard(board: I.IBoard): I.IPieces {
 }
 
 export {
-    _getCleanBoard,
     _getInitialBoard,
     _getNearPositions,
     defaultBoardSize,
