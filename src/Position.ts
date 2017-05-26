@@ -140,10 +140,8 @@ const getY0Start = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-const getY0End = (boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? (boardSizeY - 1) - y : y;
-
-const getY0EndCurried = R.curry(getY0End);
+const getY0End = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? (boardSizeY - 1) - y : y);
 
 const printXAndYPosition = (p: I.IPosition) => ` ${p.x},${p.y} |`;
 
@@ -230,7 +228,6 @@ export {
 
     getY0Start,
     getY0End,
-    getY0EndCurried,
 
     hasSameXY,
     hasBlackPiece,

@@ -174,7 +174,7 @@ describe('Position', () => {
     });
     describe('getY0End', () => {
         describe('4x4 Board', () => {
-            const getY0End4x4 = Position.getY0EndCurried(4);
+            const getY0End4x4 = Position.getY0End(4);
             describe('for white', () => {
                 it('return 0 for 0', () => assert.equal(getY0End4x4(0, false), 0));
                 it('return 1 for 1', () => assert.equal(getY0End4x4(1, false), 1));
@@ -189,7 +189,7 @@ describe('Position', () => {
             });
         });
         describe('8x8 Board', () => {
-            const getY0End8x8 = Position.getY0EndCurried(8);
+            const getY0End8x8 = Position.getY0End(8);
             describe('for white', () => {
                 it('return 0 for 0', () => assert.equal(getY0End8x8(0, false), 0));
                 it('return 1 for 1', () => assert.equal(getY0End8x8(1, false), 1));

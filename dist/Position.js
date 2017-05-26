@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0End = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -155,10 +155,9 @@ var getY0Start = _ramda2.default.curry(function (boardSizeY, y, isBlack) {
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-var getY0End = function getY0End(boardSizeY, y, isBlack) {
+var getY0End = _ramda2.default.curry(function (boardSizeY, y, isBlack) {
     return isBlack ? boardSizeY - 1 - y : y;
-};
-var getY0EndCurried = _ramda2.default.curry(getY0End);
+});
 var printXAndYPosition = function printXAndYPosition(p) {
     return ' ' + p.x + ',' + p.y + ' |';
 };
@@ -224,7 +223,6 @@ exports.getOrderedPositionsCurried = getOrderedPositionsCurried;
 exports.getXAndY = getXAndY;
 exports.getY0Start = getY0Start;
 exports.getY0End = getY0End;
-exports.getY0EndCurried = getY0EndCurried;
 exports.hasSameXY = hasSameXY;
 exports.hasBlackPiece = hasBlackPiece;
 exports.hasPiece = hasPiece;

@@ -115,8 +115,7 @@ const getY0Start = R.curry((boardSizeY, y, isBlack) => isBlack ? y : (boardSizeY
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-const getY0End = (boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y;
-const getY0EndCurried = R.curry(getY0End);
+const getY0End = R.curry((boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y);
 const printXAndYPosition = (p) => ` ${p.x},${p.y} |`;
 function printUnicodePosition(position) {
     if (isBackGroundBlack(position.x, position.y)) {
@@ -169,5 +168,5 @@ const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
 const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0End, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map
