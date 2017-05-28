@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "ptz-log": "^1.0.0",
-    "ramda": "^0.23.0"
+    "ramda": "^0.24.0"
   },
   "keywords": [
     "joj",
