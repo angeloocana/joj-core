@@ -1,5 +1,10 @@
 ## master
 
+
+## 2.0.5 (May 28, 2017)
+
+* Add getAllowedMovesFromArrays.
+
 ## 2.0.4 (May 16, 2017)
 
 * Remove unnecessary getTurnPiecesWhereCanIGo()
