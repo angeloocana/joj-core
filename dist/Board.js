@@ -73,19 +73,21 @@ function getStartEndRowsFromBoardSize(boardSize) {
  */
 var getStartEndRows = _ramda2.default.compose(getStartEndRowsFromBoardSize, getBoardSize);
 /**
- * Create cols recursively
+ * Create position {x, y}
  */
-var createCols = function createCols(x, y, cols) {
-    return x < 0 ? cols : createCols(x - 1, y, _ramda2.default.concat([{ x: x, y: y }], cols || []));
+function createCol(x, y) {
+    return { x: x, y: y };
+}
+/**
+ * Create positions row [{x,y},{x,y},{x,y}]
+ */
+var createRow = function createRow(boardSizeX, y) {
+    return _ramda2.default.range(0, boardSizeX).map(function (x) {
+        return createCol(x, y);
+    });
 };
 /**
- * Create rows recursively
- */
-var createRows = function createRows(x, y, rows) {
-    return y < 0 ? rows : createRows(x, y - 1, _ramda2.default.concat([createCols(x, y)], rows || []));
-};
-/**
- * Get cached clean board, using memoize from ramda
+ * Get cached clean board, using memoize from ramda.
  *
  * The _getCleanBoard returns :Function Type,
  * that's why we created getCleanBoard witch returns :IPosition[y][x]
@@ -93,7 +95,9 @@ var createRows = function createRows(x, y, rows) {
  */
 // tslint:disable-next-line:variable-name
 var _getCleanBoard = _ramda2.default.memoize(function (boardSize) {
-    return createRows(boardSize.x - 1, boardSize.y - 1);
+    return _ramda2.default.range(0, boardSize.y).map(function (y) {
+        return createRow(boardSize.x, y);
+    });
 });
 /**
  * Get cached clean board, using memoize from ramda.

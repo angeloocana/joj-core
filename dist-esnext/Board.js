@@ -48,22 +48,25 @@ function getStartEndRowsFromBoardSize(boardSize) {
  */
 const getStartEndRows = R.compose(getStartEndRowsFromBoardSize, getBoardSize);
 /**
- * Create cols recursively
+ * Create position {x, y}
  */
-const createCols = (x, y, cols) => x < 0 ? cols : createCols(x - 1, y, R.concat([{ x, y }], cols || []));
+function createCol(x, y) {
+    return { x, y };
+}
 /**
- * Create rows recursively
+ * Create positions row [{x,y},{x,y},{x,y}]
  */
-const createRows = (x, y, rows) => y < 0 ? rows : createRows(x, y - 1, R.concat([createCols(x, y)], rows || []));
+const createRow = (boardSizeX, y) => R.range(0, boardSizeX).map(x => createCol(x, y));
 /**
- * Get cached clean board, using memoize from ramda
+ * Get cached clean board, using memoize from ramda.
  *
  * The _getCleanBoard returns :Function Type,
  * that's why we created getCleanBoard witch returns :IPosition[y][x]
  * in order to reduce type errors.
  */
 // tslint:disable-next-line:variable-name
-const _getCleanBoard = R.memoize((boardSize) => createRows(boardSize.x - 1, boardSize.y - 1));
+const _getCleanBoard = R.memoize((boardSize) => R.range(0, boardSize.y)
+    .map(y => createRow(boardSize.x, y)));
 /**
  * Get cached clean board, using memoize from ramda.
  */
