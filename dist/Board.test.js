@@ -104,6 +104,8 @@ describe('Board', function () {
         it('return only filled near positions', function () {
             var position = { x: 7, y: 7 };
             var expected = [{ x: 6, y: 7, isBlack: false }];
+            (0, _ptzLog2.default)(_index.Board.printUnicodeBoard(TestData.initialBoard));
+            (0, _ptzLog2.default)(_index.Board.printXAndYBoard(TestData.initialBoard));
             var actual = _index.Board.getNotEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });

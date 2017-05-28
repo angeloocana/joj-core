@@ -80,7 +80,7 @@ describe('Move', () => {
         ]);
         const gameAfterMoves = Move.getGameAfterMoves(gameBeforeMoves, moves);
         assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');
-        assert.equal(gameAfterMoves.moves.length, moves.length);
+        assert.equal(gameAfterMoves.moves.length, moves.length, 'n moves');
     });
     describe('getBoardAfterMove', () => {
         it('5,7 => 5,6 5,5 5,3 => 5,1', () => {

@@ -87,7 +87,7 @@ describe('Move', function () {
         var moves = _index.Move.getMovesFromArray([[[5, 7], [5, 6]], [[2, 0], [2, 1]], [[7, 7], [5, 5]]]);
         var gameAfterMoves = _index.Move.getGameAfterMoves(gameBeforeMoves, moves);
         assert.notEqual(gameBeforeMoves, gameAfterMoves, 'immutable');
-        assert.equal(gameAfterMoves.moves.length, moves.length);
+        assert.equal(gameAfterMoves.moves.length, moves.length, 'n moves');
     });
     describe('getBoardAfterMove', function () {
         it('5,7 => 5,6 5,5 5,3 => 5,1', function () {

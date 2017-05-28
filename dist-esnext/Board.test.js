@@ -87,6 +87,8 @@ describe('Board', () => {
         it('return only filled near positions', () => {
             const position = { x: 7, y: 7 };
             const expected = [{ x: 6, y: 7, isBlack: false }];
+            log(Board.printUnicodeBoard(TestData.initialBoard));
+            log(Board.printXAndYBoard(TestData.initialBoard));
             const actual = Board.getNotEmptyNearPositions(TestData.initialBoard, position);
             assert.deepEqual(actual, expected);
         });
