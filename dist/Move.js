@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBoardAfterMove = exports.getBackMove = exports.canMove = undefined;
+exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBoardAfterMove = exports.getBackMove = exports.getAllowedMovesFromArrays = exports.getAllowedMovesFromArray = exports.canMove = undefined;
 
 var _ramda = require('ramda');
 
@@ -156,7 +156,42 @@ var getGameAfterMoves = function getGameAfterMoves(game, moves) {
         return getGameAfterMove(lastGame, move);
     }, game);
 };
+/**
+ * Takes an array like:
+ *
+ * [[fromX, fromY], ...[toX, toY]]
+ *
+ * and return IMove[]
+ */
+function getAllowedMovesFromArray(moves) {
+    var from = Position.getPositionFromArray(_ramda2.default.head(moves));
+    return _ramda2.default.tail(moves).map(function (to) {
+        return { from: from, to: Position.getPositionFromArray(to) };
+    });
+}
+/**
+ * Takes an array like:
+ *
+ * [
+ *
+ *   [[fromX, fromY], ...[toX, toY]],
+ *
+ *   [[fromX, fromY], ...[toX, toY]]
+ *
+ * ]
+ *
+ * and return IMove[].
+ *
+ * Used to create smaller test data.
+ */
+function getAllowedMovesFromArrays(arrMoves) {
+    return arrMoves.reduce(function (moves, a) {
+        return moves.concat(getAllowedMovesFromArray(a));
+    }, []);
+}
 exports.canMove = canMove;
+exports.getAllowedMovesFromArray = getAllowedMovesFromArray;
+exports.getAllowedMovesFromArrays = getAllowedMovesFromArrays;
 exports.getBackMove = getBackMove;
 exports.getBoardAfterMove = getBoardAfterMove;
 exports.getGameAfterMove = getGameAfterMove;

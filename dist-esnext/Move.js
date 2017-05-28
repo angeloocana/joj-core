@@ -124,5 +124,38 @@ const getMovesFromArray = (moves) => moves.map(move => getMoveFromArray(move));
 const getGameAfterMoves = (game, moves) => moves.reduce((lastGame, move) => {
     return getGameAfterMove(lastGame, move);
 }, game);
-export { canMove, getBackMove, getBoardAfterMove, getGameAfterMove, getGameAfterMoves, getGameBeforeLastMove, getMoveFromArray, getMovesFromArray, getMoveXAndY };
+/**
+ * Takes an array like:
+ *
+ * [[fromX, fromY], ...[toX, toY]]
+ *
+ * and return IMove[]
+ */
+function getAllowedMovesFromArray(moves) {
+    const from = Position.getPositionFromArray(R.head(moves));
+    return R.tail(moves).map(to => {
+        return { from, to: Position.getPositionFromArray(to) };
+    });
+}
+/**
+ * Takes an array like:
+ *
+ * [
+ *
+ *   [[fromX, fromY], ...[toX, toY]],
+ *
+ *   [[fromX, fromY], ...[toX, toY]]
+ *
+ * ]
+ *
+ * and return IMove[].
+ *
+ * Used to create smaller test data.
+ */
+function getAllowedMovesFromArrays(arrMoves) {
+    return arrMoves.reduce((moves, a) => {
+        return moves.concat(getAllowedMovesFromArray(a));
+    }, []);
+}
+export { canMove, getAllowedMovesFromArray, getAllowedMovesFromArrays, getBackMove, getBoardAfterMove, getGameAfterMove, getGameAfterMoves, getGameBeforeLastMove, getMoveFromArray, getMovesFromArray, getMoveXAndY };
 //# sourceMappingURL=Move.js.map

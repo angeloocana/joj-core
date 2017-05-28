@@ -119,6 +119,13 @@ describe('Move', function () {
             assert.deepEqual(boardAfter, boardAfterExpected);
         });
     });
+    describe('getAllowedMovesFromArrays', function () {
+        it('get from array', function () {
+            var moves = _index.Move.getAllowedMovesFromArrays([[[0, 7], [0, 6], [1, 6]], [[1, 7], [0, 6], [1, 6], [2, 6]]]);
+            var expectedMoves = [{ from: { x: 0, y: 7 }, to: { x: 0, y: 6 } }, { from: { x: 0, y: 7 }, to: { x: 1, y: 6 } }, { from: { x: 1, y: 7 }, to: { x: 0, y: 6 } }, { from: { x: 1, y: 7 }, to: { x: 1, y: 6 } }, { from: { x: 1, y: 7 }, to: { x: 2, y: 6 } }];
+            assert.deepEqual(moves, expectedMoves);
+        });
+    });
 });
 //# sourceMappingURL=Move.test.js.map
 //# sourceMappingURL=Move.test.js.map

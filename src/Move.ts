@@ -151,8 +151,45 @@ const getGameAfterMoves = (game: I.IGame, moves: I.IMove[]) =>
         return getGameAfterMove(lastGame, move);
     }, game);
 
+/**
+ * Takes an array like:
+ *
+ * [[fromX, fromY], ...[toX, toY]]
+ *
+ * and return IMove[]
+ */
+function getAllowedMovesFromArray(moves: number[][]): I.IMove[] {
+    const from = Position.getPositionFromArray(R.head(moves));
+    return R.tail(moves).map(to => {
+        return { from, to: Position.getPositionFromArray(to) };
+    });
+}
+
+/**
+ * Takes an array like:
+ *
+ * [
+ *
+ *   [[fromX, fromY], ...[toX, toY]],
+ *
+ *   [[fromX, fromY], ...[toX, toY]]
+ *
+ * ]
+ *
+ * and return IMove[].
+ *
+ * Used to create smaller test data.
+ */
+function getAllowedMovesFromArrays(arrMoves: number[][][]): I.IMove[] {
+    return arrMoves.reduce((moves: I.IMove[], a) => {
+        return moves.concat(getAllowedMovesFromArray(a));
+    }, []);
+}
+
 export {
     canMove,
+    getAllowedMovesFromArray,
+    getAllowedMovesFromArrays,
     getBackMove,
     getBoardAfterMove,
     getGameAfterMove,
