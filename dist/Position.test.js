@@ -136,7 +136,7 @@ describe('Position', function () {
         });
     });
     describe('getToSearchOrder', function () {
-        var getToSearchOrder8x8 = _index.Position.getToSearchOrder({ x: 8, y: 8 });
+        var getToSearchOrder8x8 = _index.Position.getToSearchOrderCurried({ x: 8, y: 8 });
         it('return 0 for 0', function () {
             return assert.equal(getToSearchOrder8x8(0), 0);
         });
@@ -253,7 +253,7 @@ describe('Position', function () {
     });
     describe('getY0End', function () {
         describe('4x4 Board', function () {
-            var getY0End4x4 = _index.Position.getY0End(4);
+            var getY0End4x4 = _index.Position.getY0EndCurried(4);
             describe('for white', function () {
                 it('return 0 for 0', function () {
                     return assert.equal(getY0End4x4(0, false), 0);
@@ -284,7 +284,7 @@ describe('Position', function () {
             });
         });
         describe('8x8 Board', function () {
-            var getY0End8x8 = _index.Position.getY0End(8);
+            var getY0End8x8 = _index.Position.getY0EndCurried(8);
             describe('for white', function () {
                 it('return 0 for 0', function () {
                     return assert.equal(getY0End8x8(0, false), 0);

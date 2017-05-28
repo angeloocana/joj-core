@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setPieceToWhite = exports.setPieceToBlack = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0End = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
+exports.setPieceToWhite = exports.setPieceToBlack = exports.setPieceCurried = exports.setPiece = exports.setICanGoHere = exports.printUnicodePosition = exports.printXAndYPosition = exports.notContainsXY = exports.hasWhitePiece = exports.hasNoPiece = exports.hasPiece = exports.hasBlackPiece = exports.hasSameXY = exports.getY0EndCurried = exports.getY0End = exports.getY0StartCurried = exports.getY0Start = exports.getXAndY = exports.getOrderedPositionsCurried = exports.getOrderedPositionsY0EndCurried = exports.getOrderedPositionsY0End = exports.getOrderedPositionsY0StartCurried = exports.getOrderedPositionsY0Start = exports.getOrderedPositions = exports.getToSearchOrderCurried = exports.getToSearchOrder = exports.getPositionsWhereCanIGoFromArray = exports.getPositionWhereCanIGoFromArray = exports.getPositionFromPositions = exports.getPositionFromArray = exports.isBackGroundBlack = exports.containsXY = undefined;
 
 var _ramda = require('ramda');
 
@@ -88,11 +88,12 @@ var hasPiece = _ramda2.default.anyPass([hasBlackPiece, hasWhitePiece]);
  * .isBlack is undefined or null.
  */
 var hasNoPiece = _ramda2.default.compose(_ramda2.default.not, hasPiece);
-var setPiece = _ramda2.default.curry(function (isBlack, position) {
+var setPiece = function setPiece(isBlack, position) {
     return Object.assign({}, position, { isBlack: isBlack });
-});
-var setPieceToBlack = setPiece(true);
-var setPieceToWhite = setPiece(false);
+};
+var setPieceCurried = _ramda2.default.curry(setPiece);
+var setPieceToBlack = setPieceCurried(true);
+var setPieceToWhite = setPieceCurried(false);
 /**
  * Takes a position and return a new position with iCanGoHere checked.
  */
@@ -120,7 +121,7 @@ var isBackGroundBlack = function isBackGroundBlack(x, y) {
  *
  * The goal is to fill the corners first.
  */
-var getToSearchOrder = _ramda2.default.curry(function (boardSize, x) {
+function getToSearchOrder(boardSize, x) {
     switch (x) {
         case 0:
             return 0;
@@ -141,23 +142,26 @@ var getToSearchOrder = _ramda2.default.curry(function (boardSize, x) {
         default:
             return null;
     }
-});
+}
+var getToSearchOrderCurried = _ramda2.default.curry(getToSearchOrder);
 /**
  * It Inverts white Y position.
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-var getY0Start = _ramda2.default.curry(function (boardSizeY, y, isBlack) {
+var getY0Start = function getY0Start(boardSizeY, y, isBlack) {
     return isBlack ? y : boardSizeY - 1 - y;
-});
+};
+var getY0StartCurried = _ramda2.default.curry(getY0Start);
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-var getY0End = _ramda2.default.curry(function (boardSizeY, y, isBlack) {
+var getY0End = function getY0End(boardSizeY, y, isBlack) {
     return isBlack ? boardSizeY - 1 - y : y;
-});
+};
+var getY0EndCurried = _ramda2.default.curry(getY0End);
 var printXAndYPosition = function printXAndYPosition(p) {
     return ' ' + p.x + ',' + p.y + ' |';
 };
@@ -214,6 +218,7 @@ exports.getPositionFromPositions = getPositionFromPositions;
 exports.getPositionWhereCanIGoFromArray = getPositionWhereCanIGoFromArray;
 exports.getPositionsWhereCanIGoFromArray = getPositionsWhereCanIGoFromArray;
 exports.getToSearchOrder = getToSearchOrder;
+exports.getToSearchOrderCurried = getToSearchOrderCurried;
 exports.getOrderedPositions = getOrderedPositions;
 exports.getOrderedPositionsY0Start = getOrderedPositionsY0Start;
 exports.getOrderedPositionsY0StartCurried = getOrderedPositionsY0StartCurried;
@@ -222,7 +227,9 @@ exports.getOrderedPositionsY0EndCurried = getOrderedPositionsY0EndCurried;
 exports.getOrderedPositionsCurried = getOrderedPositionsCurried;
 exports.getXAndY = getXAndY;
 exports.getY0Start = getY0Start;
+exports.getY0StartCurried = getY0StartCurried;
 exports.getY0End = getY0End;
+exports.getY0EndCurried = getY0EndCurried;
 exports.hasSameXY = hasSameXY;
 exports.hasBlackPiece = hasBlackPiece;
 exports.hasPiece = hasPiece;
@@ -233,6 +240,7 @@ exports.printXAndYPosition = printXAndYPosition;
 exports.printUnicodePosition = printUnicodePosition;
 exports.setICanGoHere = setICanGoHere;
 exports.setPiece = setPiece;
+exports.setPieceCurried = setPieceCurried;
 exports.setPieceToBlack = setPieceToBlack;
 exports.setPieceToWhite = setPieceToWhite;
 //# sourceMappingURL=Position.js.map

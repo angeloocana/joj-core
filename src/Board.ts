@@ -10,9 +10,9 @@ const defaultBoardSize: I.IBoardSize = { x: 8, y: 8 };
 /**
  * Checks if position exists in this board size
  */
-const hasPositionByBoardSize = (boardSize: I.IBoardSize, p: I.IPosition) => p
-    && p.x >= 0 && p.y >= 0
-    && boardSize.y > p.y && boardSize.x > p.x;
+const hasPositionByBoardSize = (boardSize: I.IBoardSize, position: I.IPosition) => position
+    && position.x >= 0 && position.y >= 0
+    && boardSize.y > position.y && boardSize.x > position.x;
 
 /**
  * Check if position exists on board
@@ -174,22 +174,24 @@ function getBoardSize(board: I.IBoard): I.IBoardSize {
 /**
  * Takes a function to printPosition and print board.
  */
-const printBoard = R.curry((printPosition: I.IPrintPosition, board: I.IBoard) =>
+const printBoard = (printPosition: I.IPrintPosition, board: I.IBoard) =>
     board.reduce((txtRow, col) => {
         return col.reduce((txt, position) => {
             return txt + printPosition(position);
         }, txtRow) + '\n';
-    }, ''));
+    }, '');
+
+const printBoardCurried = R.curry(printBoard);
 
 /**
  * Get board in a nice format to print it on console
  */
-const printUnicodeBoard = printBoard(Position.printUnicodePosition);
+const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
 
 /**
  * Prints only X and Y positions of a board.
  */
-const printXAndYBoard = printBoard(Position.printXAndYPosition);
+const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 
 /**
  * Gets all positions where can I jump recursively.
@@ -403,6 +405,7 @@ export {
     getPositionsWhereCanIGo,
     mapBoard,
     printBoard,
+    printBoardCurried,
     printUnicodeBoard,
     printXAndYBoard,
     whereCanIJump,

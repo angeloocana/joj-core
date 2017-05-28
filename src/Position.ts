@@ -71,12 +71,14 @@ const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
  */
 const hasNoPiece = R.compose(R.not, hasPiece);
 
-const setPiece = R.curry((isBlack: boolean, position: I.IPosition) =>
-    Object.assign({}, position, { isBlack }));
+const setPiece = (isBlack: boolean, position: I.IPosition) =>
+    Object.assign({}, position, { isBlack });
 
-const setPieceToBlack = setPiece(true);
+const setPieceCurried = R.curry(setPiece);
 
-const setPieceToWhite = setPiece(false);
+const setPieceToBlack = setPieceCurried(true);
+
+const setPieceToWhite = setPieceCurried(false);
 
 /**
  * Takes a position and return a new position with iCanGoHere checked.
@@ -104,7 +106,7 @@ const isBackGroundBlack = (x: number, y: number): boolean =>
  *
  * The goal is to fill the corners first.
  */
-const getToSearchOrder = R.curry((boardSize: I.IBoardSize, x: number): number => {
+function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
     switch (x) {
         case 0:
             return 0;
@@ -125,23 +127,29 @@ const getToSearchOrder = R.curry((boardSize: I.IBoardSize, x: number): number =>
         default:
             return null;
     }
-});
+}
+
+const getToSearchOrderCurried = R.curry(getToSearchOrder);
 
 /**
  * It Inverts white Y position.
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-const getY0Start = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? y : (boardSizeY - 1) - y);
+const getY0Start = (boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? y : (boardSizeY - 1) - y;
+
+const getY0StartCurried = R.curry(getY0Start);
 
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-const getY0End = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? (boardSizeY - 1) - y : y);
+const getY0End = (boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? (boardSizeY - 1) - y : y;
+
+const getY0EndCurried = R.curry(getY0End);
 
 const printXAndYPosition = (p: I.IPosition) => ` ${p.x},${p.y} |`;
 
@@ -216,6 +224,7 @@ export {
     getPositionsWhereCanIGoFromArray,
 
     getToSearchOrder,
+    getToSearchOrderCurried,
 
     getOrderedPositions,
     getOrderedPositionsY0Start,
@@ -227,7 +236,9 @@ export {
     getXAndY,
 
     getY0Start,
+    getY0StartCurried,
     getY0End,
+    getY0EndCurried,
 
     hasSameXY,
     hasBlackPiece,
@@ -242,6 +253,7 @@ export {
 
     setICanGoHere,
     setPiece,
+    setPieceCurried,
     setPieceToBlack,
     setPieceToWhite
 };

@@ -7,9 +7,9 @@ const defaultBoardSize = { x: 8, y: 8 };
 /**
  * Checks if position exists in this board size
  */
-const hasPositionByBoardSize = (boardSize, p) => p
-    && p.x >= 0 && p.y >= 0
-    && boardSize.y > p.y && boardSize.x > p.x;
+const hasPositionByBoardSize = (boardSize, position) => position
+    && position.x >= 0 && position.y >= 0
+    && boardSize.y > position.y && boardSize.x > position.x;
 /**
  * Check if position exists on board
  */
@@ -143,19 +143,20 @@ function getBoardSize(board) {
 /**
  * Takes a function to printPosition and print board.
  */
-const printBoard = R.curry((printPosition, board) => board.reduce((txtRow, col) => {
+const printBoard = (printPosition, board) => board.reduce((txtRow, col) => {
     return col.reduce((txt, position) => {
         return txt + printPosition(position);
     }, txtRow) + '\n';
-}, ''));
+}, '');
+const printBoardCurried = R.curry(printBoard);
 /**
  * Get board in a nice format to print it on console
  */
-const printUnicodeBoard = printBoard(Position.printUnicodePosition);
+const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
 /**
  * Prints only X and Y positions of a board.
  */
-const printXAndYBoard = printBoard(Position.printXAndYPosition);
+const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 /**
  * Gets all positions where can I jump recursively.
  * 1. Get not empty near positions from board.
@@ -311,5 +312,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

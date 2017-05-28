@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -24,8 +24,8 @@ var defaultBoardSize = { x: 8, y: 8 };
 /**
  * Checks if position exists in this board size
  */
-var hasPositionByBoardSize = function hasPositionByBoardSize(boardSize, p) {
-    return p && p.x >= 0 && p.y >= 0 && boardSize.y > p.y && boardSize.x > p.x;
+var hasPositionByBoardSize = function hasPositionByBoardSize(boardSize, position) {
+    return position && position.x >= 0 && position.y >= 0 && boardSize.y > position.y && boardSize.x > position.x;
 };
 /**
  * Check if position exists on board
@@ -179,21 +179,22 @@ function getBoardSize(board) {
 /**
  * Takes a function to printPosition and print board.
  */
-var printBoard = _ramda2.default.curry(function (printPosition, board) {
+var printBoard = function printBoard(printPosition, board) {
     return board.reduce(function (txtRow, col) {
         return col.reduce(function (txt, position) {
             return txt + printPosition(position);
         }, txtRow) + '\n';
     }, '');
-});
+};
+var printBoardCurried = _ramda2.default.curry(printBoard);
 /**
  * Get board in a nice format to print it on console
  */
-var printUnicodeBoard = printBoard(Position.printUnicodePosition);
+var printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
 /**
  * Prints only X and Y positions of a board.
  */
-var printXAndYBoard = printBoard(Position.printXAndYPosition);
+var printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
 /**
  * Gets all positions where can I jump recursively.
  * 1. Get not empty near positions from board.
@@ -364,6 +365,7 @@ exports.getPosition = getPosition;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
 exports.mapBoard = mapBoard;
 exports.printBoard = printBoard;
+exports.printBoardCurried = printBoardCurried;
 exports.printUnicodeBoard = printUnicodeBoard;
 exports.printXAndYBoard = printXAndYBoard;
 exports.whereCanIJump = whereCanIJump;

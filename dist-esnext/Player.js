@@ -1,14 +1,15 @@
-import R from 'ramda';
-const createPlayer = R.curry((isBlack, args) => {
+import { curry } from 'ramda';
+function createPlayer(isBlack, args) {
     return {
         isAi: args.isAi,
         name: args.name,
         foto: args.foto,
         isBlack
     };
-});
-const createWhitePlayer = createPlayer(false);
-const createBlackPlayer = createPlayer(true);
+}
+const createPlayerCurried = curry(createPlayer);
+const createWhitePlayer = createPlayerCurried(false);
+const createBlackPlayer = createPlayerCurried(true);
 const initialPlayers = {
     white: {
         isBlack: false,
@@ -25,5 +26,5 @@ function createPlayers(args) {
         black: createBlackPlayer(args.black)
     } : initialPlayers;
 }
-export { createPlayer, createBlackPlayer, createWhitePlayer, createPlayers };
+export { createPlayer, createPlayerCurried, createBlackPlayer, createWhitePlayer, createPlayers };
 //# sourceMappingURL=Player.js.map
