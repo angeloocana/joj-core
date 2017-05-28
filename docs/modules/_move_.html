@@ -78,6 +78,8 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#canmove" class="tsd-kind-icon">can<wbr>Move</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getallowedmovesfromarray" class="tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Array</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getallowedmovesfromarrays" class="tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Arrays</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getbackmove" class="tsd-kind-icon">get<wbr>Back<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getboardaftermove" class="tsd-kind-icon">get<wbr>Board<wbr>After<wbr>Move</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_move_.html#getgameaftermove" class="tsd-kind-icon">get<wbr>Game<wbr>After<wbr>Move</a></li>
@@ -99,7 +101,7 @@
 					<div class="tsd-signature tsd-kind-icon">can<wbr>Not<wbr>Move<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;R.compose(R.not, canMove)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L45">Move.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L45">Move.ts:45</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -145,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L34">Move.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L34">Move.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -172,6 +174,70 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getallowedmovesfromarray" class="tsd-anchor"></a>
+					<h3>get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Array<span class="tsd-signature-symbol">(</span>moves<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L161">Move.ts:161</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes an array like:</p>
+								</div>
+								<p>[[fromX, fromY], ...[toX, toY]]</p>
+								<p>and return IMove[]</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>moves: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getallowedmovesfromarrays" class="tsd-anchor"></a>
+					<h3>get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Arrays</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Arrays<span class="tsd-signature-symbol">(</span>arrMoves<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L183">Move.ts:183</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes an array like:</p>
+								</div>
+								<p>[</p>
+								<p>  [[fromX, fromY], ...[toX, toY]],</p>
+								<p>  [[fromX, fromY], ...[toX, toY]]</p>
+								<p>]</p>
+								<p>and return IMove[].</p>
+								<p>Used to create smaller test data.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arrMoves: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_typings_imove_d_.imove.html" class="tsd-signature-type">IMove</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 					<a name="getbackmove" class="tsd-anchor"></a>
 					<h3>get<wbr>Back<wbr>Move</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
@@ -181,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L11">Move.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L11">Move.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L53">Move.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L53">Move.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,7 +311,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L83">Move.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L83">Move.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -285,7 +351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L149">Move.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L149">Move.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -316,7 +382,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L101">Move.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L101">Move.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,7 +411,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L126">Move.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L126">Move.ts:126</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -375,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L21">Move.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L21">Move.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -403,7 +469,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/e28daf1/src/Move.ts#L143">Move.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/angeloocana/joj-core/blob/dcd5e1c/src/Move.ts#L143">Move.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -489,6 +555,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#canmove" class="tsd-kind-icon">can<wbr>Move</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getallowedmovesfromarray" class="tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_move_.html#getallowedmovesfromarrays" class="tsd-kind-icon">get<wbr>Allowed<wbr>Moves<wbr>From<wbr>Arrays</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_move_.html#getbackmove" class="tsd-kind-icon">get<wbr>Back<wbr>Move</a>
