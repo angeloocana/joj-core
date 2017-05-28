@@ -1,6 +1,10 @@
 ## master
 
 
+## 2.0.6 (May 28, 2017)
+
+* Add to Move.ts movesContains and sameMove.
+
 ## 2.0.5 (May 28, 2017)
 
 * Add getAllowedMovesFromArrays.
