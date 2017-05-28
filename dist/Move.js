@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBoardAfterMove = exports.getBackMove = exports.getAllowedMovesFromArrays = exports.getAllowedMovesFromArray = exports.canMove = undefined;
+exports.sameMove = exports.movesContains = exports.getMoveXAndY = exports.getMovesFromArray = exports.getMoveFromArray = exports.getGameBeforeLastMove = exports.getGameAfterMoves = exports.getGameAfterMove = exports.getBoardAfterMove = exports.getBackMove = exports.getAllowedMovesFromArrays = exports.getAllowedMovesFromArray = exports.canMove = undefined;
 
 var _ramda = require('ramda');
 
@@ -189,6 +189,20 @@ function getAllowedMovesFromArrays(arrMoves) {
         return moves.concat(getAllowedMovesFromArray(a));
     }, []);
 }
+/**
+ * Takes 2 moves and compares theirs **from** and **to** positions.
+ */
+var sameMove = function sameMove(a, b) {
+    return Position.hasSameXY(a.from, b.from) && Position.hasSameXY(a.to, b.to);
+};
+/**
+ * Checks if a list of moves contains some move.
+ */
+var movesContains = function movesContains(moves, move) {
+    return moves.some(function (m) {
+        return sameMove(move, m);
+    });
+};
 exports.canMove = canMove;
 exports.getAllowedMovesFromArray = getAllowedMovesFromArray;
 exports.getAllowedMovesFromArrays = getAllowedMovesFromArrays;
@@ -200,5 +214,7 @@ exports.getGameBeforeLastMove = getGameBeforeLastMove;
 exports.getMoveFromArray = getMoveFromArray;
 exports.getMovesFromArray = getMovesFromArray;
 exports.getMoveXAndY = getMoveXAndY;
+exports.movesContains = movesContains;
+exports.sameMove = sameMove;
 //# sourceMappingURL=Move.js.map
 //# sourceMappingURL=Move.js.map

@@ -186,16 +186,35 @@ function getAllowedMovesFromArrays(arrMoves: number[][][]): I.IMove[] {
     }, []);
 }
 
+/**
+ * Takes 2 moves and compares theirs **from** and **to** positions.
+ */
+const sameMove = (a: I.IMove, b: I.IMove) =>
+    Position.hasSameXY(a.from, b.from) && Position.hasSameXY(a.to, b.to);
+
+/**
+ * Checks if a list of moves contains some move.
+ */
+const movesContains = (moves: I.IMove[], move: I.IMove) =>
+    moves.some(m => sameMove(move, m));
+
 export {
     canMove,
+
     getAllowedMovesFromArray,
     getAllowedMovesFromArrays,
+
     getBackMove,
     getBoardAfterMove,
+
     getGameAfterMove,
     getGameAfterMoves,
     getGameBeforeLastMove,
+
     getMoveFromArray,
     getMovesFromArray,
-    getMoveXAndY
+    getMoveXAndY,
+
+    movesContains,
+    sameMove
 };

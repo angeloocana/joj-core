@@ -185,4 +185,30 @@ describe('Move', () => {
             assert.deepEqual(moves, expectedMoves);
         });
     });
+
+    describe('movesContains', () => {
+        it('contains', () => {
+            const moves = Move.getMovesFromArray([
+                [[0, 0], [0, 1]],
+                [[7, 6], [6, 6]],
+                [[2, 3], [3, 4]]
+            ]);
+
+            const move = Move.getMoveFromArray([[0, 0], [0, 1]]);
+
+            assert.ok(Move.movesContains(moves, move));
+        });
+
+        it('NOT contains', () => {
+            const moves = Move.getMovesFromArray([
+                [[0, 0], [0, 1]],
+                [[7, 6], [6, 6]],
+                [[2, 3], [3, 4]]
+            ]);
+
+            const move = Move.getMoveFromArray([[3, 3], [2, 2]]);
+
+            assert.notOk(Move.movesContains(moves, move));
+        });
+    });
 });

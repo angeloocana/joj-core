@@ -126,6 +126,18 @@ describe('Move', function () {
             assert.deepEqual(moves, expectedMoves);
         });
     });
+    describe('movesContains', function () {
+        it('contains', function () {
+            var moves = _index.Move.getMovesFromArray([[[0, 0], [0, 1]], [[7, 6], [6, 6]], [[2, 3], [3, 4]]]);
+            var move = _index.Move.getMoveFromArray([[0, 0], [0, 1]]);
+            assert.ok(_index.Move.movesContains(moves, move));
+        });
+        it('NOT contains', function () {
+            var moves = _index.Move.getMovesFromArray([[[0, 0], [0, 1]], [[7, 6], [6, 6]], [[2, 3], [3, 4]]]);
+            var move = _index.Move.getMoveFromArray([[3, 3], [2, 2]]);
+            assert.notOk(_index.Move.movesContains(moves, move));
+        });
+    });
 });
 //# sourceMappingURL=Move.test.js.map
 //# sourceMappingURL=Move.test.js.map
