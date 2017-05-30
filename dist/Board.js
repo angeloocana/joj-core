@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPosition = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
+exports.hasPositionByBoardSize = exports.hasPosition = exports.whereCanIJump = exports.printXAndYBoard = exports.printUnicodeBoard = exports.printBoardCurried = exports.printBoard = exports.mapBoard = exports.getPositionsWhereCanIGo = exports.getPositionsFromBoard = exports.getPositionFromBoard = exports.getPiecesWhereCanIGo = exports.getPiecesFromBoard = exports.getNotEmptyNearPositions = exports.getNearPositions = exports.getJumpPosition = exports.getEmptyNearPositions = exports.getStartPieces = exports.getStartEndRows = exports.getStartEndRow = exports.getCleanBoard = exports.getBoardWhereCanIGo = exports.getBoardWithPieces = exports.getInitialBoard = exports.defaultBoardSize = exports._getNearPositions = exports._getInitialBoard = exports._getCleanBoard = undefined;
 
 var _ramda = require('ramda');
 
@@ -147,18 +147,33 @@ var _getInitialBoard = _ramda2.default.memoize(function (boardSize) {
     return getBoardWithPieces(getCleanBoard(boardSize), getStartPieces(boardSize));
 });
 /**
- * Get cached initial board, using memoize from ramda
+ * Get cached initial board, using memoize from ramda.
  */
 function getInitialBoard(boardSize) {
     return _getInitialBoard(boardSize);
 }
-function getPosition(board, position) {
+/**
+ * Gets board position from x and y coordinates.
+ * @param board board to get the position.
+ * @param position desired x,y position.
+ */
+function getPositionFromBoard(board, position) {
     try {
         return board[position.y][position.x];
     } catch (e) {
         throw new Error('Error getting position');
     }
 }
+/**
+ * Get the desired x,y positions from a board.
+ * @param positions list of x,y positions.
+ * @param board board to get the positions from.
+ */
+var getPositionsFromBoard = function getPositionsFromBoard(board, positions) {
+    return positions.map(function (p) {
+        return getPositionFromBoard(board, p);
+    });
+};
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
  */
@@ -276,9 +291,8 @@ var _getNearPositions = _ramda2.default.memoize(function (boardSize, xy) {
  * Get all near positions from the given board instance.
  */
 function getNearPositions(board, position) {
-    return _getNearPositions(getBoardSize(board), Position.getXAndY(position)).map(function (p) {
-        return getPosition(board, p);
-    });
+    var nearPositions = _getNearPositions(getBoardSize(board), Position.getXAndY(position));
+    return getPositionsFromBoard(board, nearPositions);
 }
 /**
  * Get empty near positions
@@ -317,7 +331,7 @@ function getJumpXY(from, toJump) {
 function getJumpPosition(from, toJump, board) {
     var jumpXY = getJumpXY(from, toJump);
     if (!hasPosition(board, jumpXY)) return;
-    var jumpPosition = getPosition(board, jumpXY);
+    var jumpPosition = getPositionFromBoard(board, jumpXY);
     if (Position.hasPiece(jumpPosition)) return;
     return jumpPosition;
 }
@@ -365,7 +379,8 @@ exports.getNearPositions = getNearPositions;
 exports.getNotEmptyNearPositions = getNotEmptyNearPositions;
 exports.getPiecesFromBoard = getPiecesFromBoard;
 exports.getPiecesWhereCanIGo = getPiecesWhereCanIGo;
-exports.getPosition = getPosition;
+exports.getPositionFromBoard = getPositionFromBoard;
+exports.getPositionsFromBoard = getPositionsFromBoard;
 exports.getPositionsWhereCanIGo = getPositionsWhereCanIGo;
 exports.mapBoard = mapBoard;
 exports.printBoard = printBoard;

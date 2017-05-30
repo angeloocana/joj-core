@@ -45,7 +45,7 @@ var isBlackTurn = (0, _ramda.compose)(_ramda.not, isWhiteTurn);
  */
 function isMyTurn(game, from) {
     if (game.score.ended) return false;
-    from = Board.getPosition(game.board, from);
+    from = Board.getPositionFromBoard(game.board, from);
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 var getPlayerTurn = function getPlayerTurn(game) {

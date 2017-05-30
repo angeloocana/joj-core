@@ -71,7 +71,7 @@ var canNotMove = _ramda2.default.compose(_ramda2.default.not, canMove);
  *  - Jumps: Create jump breadcrumb by setting .lastMoveJump: true
  */
 function getBoardAfterMove(board, move) {
-    var from = Board.getPosition(board, move.from);
+    var from = Board.getPositionFromBoard(board, move.from);
     return Board.mapBoard(board, function (p) {
         var x = p.x,
             y = p.y,

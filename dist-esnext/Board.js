@@ -113,12 +113,17 @@ function getStartPieces(boardSize) {
 // tslint:disable-next-line:variable-name
 const _getInitialBoard = R.memoize((boardSize) => getBoardWithPieces(getCleanBoard(boardSize), getStartPieces(boardSize)));
 /**
- * Get cached initial board, using memoize from ramda
+ * Get cached initial board, using memoize from ramda.
  */
 function getInitialBoard(boardSize) {
     return _getInitialBoard(boardSize);
 }
-function getPosition(board, position) {
+/**
+ * Gets board position from x and y coordinates.
+ * @param board board to get the position.
+ * @param position desired x,y position.
+ */
+function getPositionFromBoard(board, position) {
     try {
         return board[position.y][position.x];
     }
@@ -126,6 +131,12 @@ function getPosition(board, position) {
         throw new Error('Error getting position');
     }
 }
+/**
+ * Get the desired x,y positions from a board.
+ * @param positions list of x,y positions.
+ * @param board board to get the positions from.
+ */
+const getPositionsFromBoard = (board, positions) => positions.map(p => getPositionFromBoard(board, p));
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
  */
@@ -236,14 +247,13 @@ const getAllNearPositions = (position) => [
  * Get near positions and CACHES it for each boardSize
  */
 // tslint:disable-next-line:variable-name
-const _getNearPositions = R.memoize((boardSize, xy) => getAllNearPositions(xy)
-    .filter(p => hasPositionByBoardSize(boardSize, p)));
+const _getNearPositions = R.memoize((boardSize, xy) => getAllNearPositions(xy).filter(p => hasPositionByBoardSize(boardSize, p)));
 /**
  * Get all near positions from the given board instance.
  */
 function getNearPositions(board, position) {
-    return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
-        .map(p => getPosition(board, p));
+    const nearPositions = _getNearPositions(getBoardSize(board), Position.getXAndY(position));
+    return getPositionsFromBoard(board, nearPositions);
 }
 /**
  * Get empty near positions
@@ -282,7 +292,7 @@ function getJumpPosition(from, toJump, board) {
     const jumpXY = getJumpXY(from, toJump);
     if (!hasPosition(board, jumpXY))
         return;
-    const jumpPosition = getPosition(board, jumpXY);
+    const jumpPosition = getPositionFromBoard(board, jumpXY);
     if (Position.hasPiece(jumpPosition))
         return;
     return jumpPosition;
@@ -315,5 +325,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPosition, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPositionFromBoard, getPositionsFromBoard, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

@@ -51,7 +51,7 @@ const canNotMove = R.compose(R.not, canMove);
  *  - Jumps: Create jump breadcrumb by setting .lastMoveJump: true
  */
 function getBoardAfterMove(board: I.IBoard, move: I.IMove): I.IBoard {
-    const from = Board.getPosition(board, move.from);
+    const from = Board.getPositionFromBoard(board, move.from);
 
     return Board.mapBoard(board, p => {
         const { x, y, isBlack } = p;

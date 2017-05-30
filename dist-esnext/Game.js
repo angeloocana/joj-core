@@ -22,7 +22,7 @@ const isBlackTurn = compose(not, isWhiteTurn);
 function isMyTurn(game, from) {
     if (game.score.ended)
         return false;
-    from = Board.getPosition(game.board, from);
+    from = Board.getPositionFromBoard(game.board, from);
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 const getPlayerTurn = (game) => isWhiteTurn(game) ? game.players.white : game.players.black;

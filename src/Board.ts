@@ -139,19 +139,32 @@ const _getInitialBoard = R.memoize((boardSize: I.IBoardSize) =>
     getBoardWithPieces(getCleanBoard(boardSize), getStartPieces(boardSize)));
 
 /**
- * Get cached initial board, using memoize from ramda
+ * Get cached initial board, using memoize from ramda.
  */
 function getInitialBoard(boardSize: I.IBoardSize): I.IBoard {
     return _getInitialBoard(boardSize);
 }
 
-function getPosition(board: I.IBoard, position: I.IXY): I.IPosition {
+/**
+ * Gets board position from x and y coordinates.
+ * @param board board to get the position.
+ * @param position desired x,y position.
+ */
+function getPositionFromBoard(board: I.IBoard, position: I.IXY): I.IPosition {
     try {
         return board[position.y][position.x];
     } catch (e) {
         throw new Error('Error getting position');
     }
 }
+
+/**
+ * Get the desired x,y positions from a board.
+ * @param positions list of x,y positions.
+ * @param board board to get the positions from.
+ */
+const getPositionsFromBoard = (board: I.IBoard, positions: I.IXY[]) =>
+    positions.map(p => getPositionFromBoard(board, p));
 
 /**
  * Take a board: I.IPosition[][] an return the number of rows(X)
@@ -288,15 +301,15 @@ const getAllNearPositions = (position: I.IXY) =>
  */
 // tslint:disable-next-line:variable-name
 const _getNearPositions = R.memoize((boardSize: I.IBoardSize, xy: I.IXY) =>
-    getAllNearPositions(xy)
-        .filter(p => hasPositionByBoardSize(boardSize, p)));
+    getAllNearPositions(xy).filter(p => hasPositionByBoardSize(boardSize, p))
+);
 
 /**
  * Get all near positions from the given board instance.
  */
 function getNearPositions(board: I.IBoard, position: I.IPosition): I.IPosition[] {
-    return _getNearPositions(getBoardSize(board), Position.getXAndY(position))
-        .map(p => getPosition(board, p));
+    const nearPositions = _getNearPositions(getBoardSize(board), Position.getXAndY(position));
+    return getPositionsFromBoard(board, nearPositions);
 }
 
 /**
@@ -344,7 +357,7 @@ function getJumpPosition(from: I.IXY, toJump: I.IXY, board: I.IBoard): I.IPositi
     if (!hasPosition(board, jumpXY))
         return;
 
-    const jumpPosition = getPosition(board, jumpXY);
+    const jumpPosition = getPositionFromBoard(board, jumpXY);
 
     if (Position.hasPiece(jumpPosition))
         return;
@@ -403,7 +416,8 @@ export {
     getNotEmptyNearPositions,
     getPiecesFromBoard,
     getPiecesWhereCanIGo,
-    getPosition,
+    getPositionFromBoard,
+    getPositionsFromBoard,
     getPositionsWhereCanIGo,
     mapBoard,
     printBoard,

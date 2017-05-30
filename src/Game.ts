@@ -31,7 +31,7 @@ function isMyTurn(game: I.IGame, from: I.IPosition): boolean {
     if (game.score.ended)
         return false;
 
-    from = Board.getPosition(game.board, from);
+    from = Board.getPositionFromBoard(game.board, from);
     return isWhiteTurn(game) ? Position.hasWhitePiece(from) : Position.hasBlackPiece(from);
 }
 

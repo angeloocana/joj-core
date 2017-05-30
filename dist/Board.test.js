@@ -76,11 +76,11 @@ describe('Board', function () {
             assert.ok(_index.Board.hasPosition(TestData.initialBoard, position));
         });
     });
-    describe('getPosition', function () {
+    describe('getPositionFromBoard', function () {
         it('valid position', function () {
             var board = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
             var position = { x: 2, y: 3 };
-            var actual = _index.Board.getPosition(board, position);
+            var actual = _index.Board.getPositionFromBoard(board, position);
             var expected = { x: 2, y: 3 };
             assertPosition(actual, expected);
         });
@@ -88,7 +88,7 @@ describe('Board', function () {
             var board = _index.Board.getInitialBoard(_index.Board.defaultBoardSize);
             var position = { x: -2, y: -3 };
             assert.throws(function () {
-                return _index.Board.getPosition(board, position);
+                return _index.Board.getPositionFromBoard(board, position);
             });
         });
     });

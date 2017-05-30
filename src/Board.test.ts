@@ -85,11 +85,11 @@ describe('Board', () => {
         });
     });
 
-    describe('getPosition', () => {
+    describe('getPositionFromBoard', () => {
         it('valid position', () => {
             const board = Board.getInitialBoard(Board.defaultBoardSize);
             const position = { x: 2, y: 3 };
-            const actual = Board.getPosition(board, position);
+            const actual = Board.getPositionFromBoard(board, position);
             const expected = { x: 2, y: 3 };
             assertPosition(actual, expected);
         });
@@ -97,7 +97,7 @@ describe('Board', () => {
         it('invalid position', () => {
             const board = Board.getInitialBoard(Board.defaultBoardSize);
             const position = { x: -2, y: -3 };
-            assert.throws(() => Board.getPosition(board, position));
+            assert.throws(() => Board.getPositionFromBoard(board, position));
         });
     });
 
