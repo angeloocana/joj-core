@@ -121,24 +121,37 @@ const getY0StartCurried = R.curry(getY0Start);
 const getY0End = (boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y;
 const getY0EndCurried = R.curry(getY0End);
 const printXAndYPosition = (p) => ` ${p.x},${p.y} |`;
-function printUnicodePosition(position) {
-    if (isBackGroundBlack(position.x, position.y)) {
-        if (hasWhitePiece(position))
-            return '\u{25CF}';
-        else if (hasBlackPiece(position))
-            return '\u{25CB}';
-        else
-            return ' ';
-    }
-    else {
-        if (hasWhitePiece(position))
-            return '\u{25D9}';
-        else if (hasBlackPiece(position))
-            return '\u{25D8}';
-        else
-            return '\u{2588}';
-    }
-}
+/**
+ * Print unicode position for black background.
+ * @param p position
+ */
+const printUnicodeBackgroundBlack = (p) => {
+    if (hasWhitePiece(p))
+        return '\u{25CF}';
+    else if (hasBlackPiece(p))
+        return '\u{25CB}';
+    else
+        return ' ';
+};
+/**
+ * Print unicode position for white background.
+ * @param p position
+ */
+const printUnicodeBackgroundWhite = (p) => {
+    if (hasWhitePiece(p))
+        return '\u{25D9}';
+    else if (hasBlackPiece(p))
+        return '\u{25D8}';
+    else
+        return '\u{2588}';
+};
+/**
+ * Print unicode position to print the board in console.
+ * @param p position
+ */
+const printUnicodePosition = (p) => isBackGroundBlack(p.x, p.y)
+    ? printUnicodeBackgroundBlack(p)
+    : printUnicodeBackgroundWhite(p);
 /**
  * Checks if an array of positions contains a position.
  */
