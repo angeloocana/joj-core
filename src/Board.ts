@@ -279,16 +279,9 @@ function getPiecesWhereCanIGo(board: I.IBoard, positions: I.IPosition[]): I.IPie
  */
 const getAllNearPositions = (position: I.IXY) =>
     [
-        [-1, -1],
-        [0, -1],
-        [1, -1],
-
-        [-1, 0],
-        [1, 0],
-
-        [-1, 1],
-        [0, 1],
-        [1, 1]
+        [-1, -1], [0, -1], [1, -1], // Above positions
+        [-1, 0], [1, 0], // Aside positions
+        [-1, 1], [0, 1], [1, 1] // Below positions
     ].map(toAdd => {
         return {
             x: position.x + toAdd[0],

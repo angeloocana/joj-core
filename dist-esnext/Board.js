@@ -229,14 +229,9 @@ function getPiecesWhereCanIGo(board, positions) {
  * Get all valid and invalid near positions.
  */
 const getAllNearPositions = (position) => [
-    [-1, -1],
-    [0, -1],
-    [1, -1],
-    [-1, 0],
-    [1, 0],
-    [-1, 1],
-    [0, 1],
-    [1, 1]
+    [-1, -1], [0, -1], [1, -1],
+    [-1, 0], [1, 0],
+    [-1, 1], [0, 1], [1, 1] // Below positions
 ].map(toAdd => {
     return {
         x: position.x + toAdd[0],
