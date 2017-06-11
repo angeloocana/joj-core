@@ -18,14 +18,14 @@ function getInitialScore() {
  *
  * returns { won, winners, preWinnersPoints }
  */
-function getColorScore(startEndRow, positions) {
-    const score = positions.reduce((newScore, position) => {
-        if (position.y === startEndRow.endRow)
+function getColorScore({ startRow, endRow }, positions) {
+    const score = positions.reduce((newScore, p) => {
+        if (p.y === endRow)
             newScore.winners += 1;
         else
-            newScore.preWinnersPoints += startEndRow.endRow === 0
-                ? startEndRow.startRow - position.y
-                : position.y;
+            newScore.preWinnersPoints += endRow === 0
+                ? startRow - p.y
+                : p.y;
         return newScore;
     }, getInitialColorScore());
     score.won = score.winners === positions.length;

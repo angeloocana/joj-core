@@ -22,14 +22,14 @@ function getInitialScore(): I.IScore {
  *
  * returns { won, winners, preWinnersPoints }
  */
-function getColorScore(startEndRow: I.IStartEndRow, positions: I.IPosition[]): I.IColorScore {
-    const score = positions.reduce((newScore, position) => {
-        if (position.y === startEndRow.endRow)
+function getColorScore({ startRow, endRow }: I.IStartEndRow, positions: I.IPosition[]): I.IColorScore {
+    const score = positions.reduce((newScore, p) => {
+        if (p.y === endRow)
             newScore.winners += 1;
         else
-            newScore.preWinnersPoints += startEndRow.endRow === 0
-                ? startEndRow.startRow - position.y
-                : position.y;
+            newScore.preWinnersPoints += endRow === 0
+                ? startRow - p.y
+                : p.y;
 
         return newScore;
     }, getInitialColorScore());
