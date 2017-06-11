@@ -79,10 +79,9 @@ function getCleanBoard(boardSize) {
 const getBoardWithPieces = (board, pieces) => mapBoard(board, p => {
     const { x, y } = p;
     const piece = Position.getPositionFromPositions(pieces, p);
-    if (piece)
-        return { x, y, isBlack: piece.isBlack };
-    else
-        return { x, y };
+    return piece
+        ? { x, y, isBlack: piece.isBlack }
+        : { x, y };
 });
 /**
  * Get start white and black pieces.

@@ -114,7 +114,7 @@ var getBoardWithPieces = function getBoardWithPieces(board, pieces) {
             y = p.y;
 
         var piece = Position.getPositionFromPositions(pieces, p);
-        if (piece) return { x: x, y: y, isBlack: piece.isBlack };else return { x: x, y: y };
+        return piece ? { x: x, y: y, isBlack: piece.isBlack } : { x: x, y: y };
     });
 };
 /**
