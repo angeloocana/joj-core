@@ -1,20 +1,18 @@
-import { curry } from 'ramda';
+import R from 'ramda';
 import * as I from './typings';
 
-function createPlayer(isBlack: boolean, args: I.IPlayerArgs): I.IPlayer {
+const createPlayer = R.curry((isBlack: boolean, args: I.IPlayerArgs): I.IPlayer => {
     return {
         isAi: args.isAi,
         name: args.name,
         foto: args.foto,
         isBlack
     };
-}
+});
 
-const createPlayerCurried = curry(createPlayer);
+const createWhitePlayer = createPlayer(false);
 
-const createWhitePlayer = createPlayerCurried(false);
-
-const createBlackPlayer = createPlayerCurried(true);
+const createBlackPlayer = createPlayer(true);
 
 const initialPlayers: I.IPlayers = {
     white: {
@@ -36,7 +34,6 @@ function createPlayers(args: I.IPlayersArgs): I.IPlayers {
 
 export {
     createPlayer,
-    createPlayerCurried,
     createBlackPlayer,
     createWhitePlayer,
     createPlayers

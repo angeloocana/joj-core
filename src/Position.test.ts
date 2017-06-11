@@ -141,7 +141,7 @@ describe('Position', () => {
     });
 
     describe('getToSearchOrder', () => {
-        const getToSearchOrder8x8 = Position.getToSearchOrderCurried({ x: 8, y: 8 });
+        const getToSearchOrder8x8 = Position.getToSearchOrder({ x: 8, y: 8 });
         it('return 0 for 0', () => assert.equal(getToSearchOrder8x8(0), 0));
         it('return 1 for 7', () => assert.equal(getToSearchOrder8x8(7), 1));
         it('return 2 for 1', () => assert.equal(getToSearchOrder8x8(1), 2));
@@ -194,7 +194,7 @@ describe('Position', () => {
 
     describe('getY0End', () => {
         describe('4x4 Board', () => {
-            const getY0End4x4 = Position.getY0EndCurried(4);
+            const getY0End4x4 = Position.getY0End(4);
 
             describe('for white', () => {
                 it('return 0 for 0', () => assert.equal(getY0End4x4(0, false), 0));
@@ -211,7 +211,7 @@ describe('Position', () => {
         });
 
         describe('8x8 Board', () => {
-            const getY0End8x8 = Position.getY0EndCurried(8);
+            const getY0End8x8 = Position.getY0End(8);
 
             describe('for white', () => {
                 it('return 0 for 0', () => assert.equal(getY0End8x8(0, false), 0));
@@ -294,7 +294,7 @@ describe('Position', () => {
 
     describe('getOrderedPositionsY0End', () => {
         describe('board=8x8', () => {
-            const getOrderedPositionsY0End8x8 = R.curry(Position.getOrderedPositionsY0EndCurried(8));
+            const getOrderedPositionsY0End8x8 = R.curry(Position.getOrderedPositionsY0End(8));
 
             describe('white positions', () => {
                 const getOrderedPositionsY0End8x8ForWhite = getOrderedPositionsY0End8x8(false);

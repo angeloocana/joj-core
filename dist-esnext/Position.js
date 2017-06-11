@@ -58,10 +58,9 @@ const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
  * .isBlack is undefined or null.
  */
 const hasNoPiece = R.compose(R.not, hasPiece);
-const setPiece = (isBlack, position) => Object.assign({}, position, { isBlack });
-const setPieceCurried = R.curry(setPiece);
-const setPieceToBlack = setPieceCurried(true);
-const setPieceToWhite = setPieceCurried(false);
+const setPiece = R.curry((isBlack, position) => Object.assign({}, position, { isBlack }));
+const setPieceToBlack = setPiece(true);
+const setPieceToWhite = setPiece(false);
 /**
  * Takes a position and return a new position with iCanGoHere checked.
  */
@@ -83,7 +82,7 @@ const isBackGroundBlack = (x, y) => (x % 2 === 0) ? (y % 2 === 0) : (y % 2 !== 0
  *
  * The goal is to fill the corners first.
  */
-function getToSearchOrder(boardSize, x) {
+const getToSearchOrder = R.curry((boardSize, x) => {
     switch (x) {
         case 0:
             return 0;
@@ -104,22 +103,19 @@ function getToSearchOrder(boardSize, x) {
         default:
             return null;
     }
-}
-const getToSearchOrderCurried = R.curry(getToSearchOrder);
+});
 /**
  * It Inverts white Y position.
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-const getY0Start = (boardSizeY, y, isBlack) => isBlack ? y : (boardSizeY - 1) - y;
-const getY0StartCurried = R.curry(getY0Start);
+const getY0Start = R.curry((boardSizeY, y, isBlack) => isBlack ? y : (boardSizeY - 1) - y);
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-const getY0End = (boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y;
-const getY0EndCurried = R.curry(getY0End);
+const getY0End = R.curry((boardSizeY, y, isBlack) => isBlack ? (boardSizeY - 1) - y : y);
 const printXAndYPosition = (p) => ` ${p.x},${p.y} |`;
 /**
  * Print unicode position for black background.
@@ -163,27 +159,18 @@ const notContainsXY = R.compose(R.not, containsXY);
 /**
  * Get ordered positions IPosition[Y][positions]
  */
-const getOrderedPositions = (getYAs, boardSizeY, isBlack, positions) => positions.reduce((ordered, position) => {
+const getOrderedPositions = R.curry((getYAs, boardSizeY, isBlack, positions) => positions.reduce((ordered, position) => {
     const y = getYAs(boardSizeY, position.y, isBlack);
     ordered[y] = (ordered[y] || []).concat(position);
     return ordered;
-}, []);
-const getOrderedPositionsCurried = R.curry(getOrderedPositions);
+}, []));
 /**
  * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
  */
-const getOrderedPositionsY0Start = getOrderedPositionsCurried(getY0Start);
-/**
- * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
- */
-const getOrderedPositionsY0StartCurried = R.curry(getOrderedPositionsY0Start);
+const getOrderedPositionsY0Start = R.curry(getOrderedPositions(getY0Start));
 /**
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
-const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
-/**
- * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
- */
-const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
-export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getToSearchOrderCurried, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0StartCurried, getOrderedPositionsY0End, getOrderedPositionsY0EndCurried, getOrderedPositionsCurried, getXAndY, getY0Start, getY0StartCurried, getY0End, getY0EndCurried, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceCurried, setPieceToBlack, setPieceToWhite };
+const getOrderedPositionsY0End = R.curry(getOrderedPositions(getY0End));
+export { containsXY, isBackGroundBlack, getPositionFromArray, getPositionFromPositions, getPositionWhereCanIGoFromArray, getPositionsWhereCanIGoFromArray, getToSearchOrder, getOrderedPositions, getOrderedPositionsY0Start, getOrderedPositionsY0End, getXAndY, getY0Start, getY0End, hasSameXY, hasBlackPiece, hasPiece, hasNoPiece, hasWhitePiece, notContainsXY, printXAndYPosition, printUnicodePosition, setICanGoHere, setPiece, setPieceToBlack, setPieceToWhite };
 //# sourceMappingURL=Position.js.map

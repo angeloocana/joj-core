@@ -157,20 +157,19 @@ function getBoardSize(board) {
 /**
  * Takes a function to printPosition and print board.
  */
-const printBoard = (printPosition, board) => board.reduce((txtRow, col) => {
+const printBoard = R.curry((printPosition, board) => board.reduce((txtRow, col) => {
     return col.reduce((txt, position) => {
         return txt + printPosition(position);
     }, txtRow) + '\n';
-}, '');
-const printBoardCurried = R.curry(printBoard);
+}, ''));
 /**
  * Get board in a nice format to print it on console
  */
-const printUnicodeBoard = printBoardCurried(Position.printUnicodePosition);
+const printUnicodeBoard = printBoard(Position.printUnicodePosition);
 /**
  * Prints only X and Y positions of a board.
  */
-const printXAndYBoard = printBoardCurried(Position.printXAndYPosition);
+const printXAndYBoard = printBoard(Position.printXAndYPosition);
 /**
  * Gets all positions where can I jump recursively.
  * 1. Get not empty near positions from board.
@@ -320,5 +319,5 @@ function getPiecesFromBoard(board) {
         }, piecesRow);
     }, initialPieces);
 }
-export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPositionFromBoard, getPositionsFromBoard, getPositionsWhereCanIGo, mapBoard, printBoard, printBoardCurried, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
+export { _getCleanBoard, _getInitialBoard, _getNearPositions, defaultBoardSize, getInitialBoard, getBoardWithPieces, getBoardWhereCanIGo, getCleanBoard, getStartEndRow, getStartEndRows, getStartPieces, getEmptyNearPositions, getJumpPosition, getNearPositions, getNotEmptyNearPositions, getPiecesFromBoard, getPiecesWhereCanIGo, getPositionFromBoard, getPositionsFromBoard, getPositionsWhereCanIGo, mapBoard, printBoard, printUnicodeBoard, printXAndYBoard, whereCanIJump, hasPosition, hasPositionByBoardSize };
 //# sourceMappingURL=Board.js.map

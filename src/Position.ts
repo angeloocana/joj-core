@@ -71,14 +71,12 @@ const hasPiece = R.anyPass([hasBlackPiece, hasWhitePiece]);
  */
 const hasNoPiece = R.compose(R.not, hasPiece);
 
-const setPiece = (isBlack: boolean, position: I.IPosition) =>
-    Object.assign({}, position, { isBlack });
+const setPiece = R.curry((isBlack: boolean, position: I.IPosition) =>
+    Object.assign({}, position, { isBlack }));
 
-const setPieceCurried = R.curry(setPiece);
+const setPieceToBlack = setPiece(true);
 
-const setPieceToBlack = setPieceCurried(true);
-
-const setPieceToWhite = setPieceCurried(false);
+const setPieceToWhite = setPiece(false);
 
 /**
  * Takes a position and return a new position with iCanGoHere checked.
@@ -106,7 +104,7 @@ const isBackGroundBlack = (x: number, y: number): boolean =>
  *
  * The goal is to fill the corners first.
  */
-function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
+const getToSearchOrder = R.curry((boardSize: I.IBoardSize, x: number) => {
     switch (x) {
         case 0:
             return 0;
@@ -127,29 +125,23 @@ function getToSearchOrder(boardSize: I.IBoardSize, x: number): number {
         default:
             return null;
     }
-}
-
-const getToSearchOrderCurried = R.curry(getToSearchOrder);
+});
 
 /**
  * It Inverts white Y position.
  *
  * For 8x8 board Get Y starting from 0 and ending on 7 for both black and white positions.
  */
-const getY0Start = (boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? y : (boardSizeY - 1) - y;
-
-const getY0StartCurried = R.curry(getY0Start);
+const getY0Start = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? y : (boardSizeY - 1) - y);
 
 /**
  * It Inverts black Y position.
  *
  * For 8x8 board Get Y starting from 7 and ending on 0 for both black and white positions.
  */
-const getY0End = (boardSizeY: number, y: number, isBlack: boolean) =>
-    isBlack ? (boardSizeY - 1) - y : y;
-
-const getY0EndCurried = R.curry(getY0End);
+const getY0End = R.curry((boardSizeY: number, y: number, isBlack: boolean) =>
+    isBlack ? (boardSizeY - 1) - y : y);
 
 const printXAndYPosition = (p: I.IPosition) => ` ${p.x},${p.y} |`;
 
@@ -202,34 +194,22 @@ const notContainsXY = R.compose(R.not, containsXY);
 /**
  * Get ordered positions IPosition[Y][positions]
  */
-const getOrderedPositions = (getYAs, boardSizeY: number, isBlack: boolean, positions: I.IPosition[]) =>
+const getOrderedPositions = R.curry((getYAs, boardSizeY: number, isBlack: boolean, positions: I.IPosition[]) =>
     positions.reduce((ordered: I.IPosition[][], position) => {
         const y = getYAs(boardSizeY, position.y, isBlack);
         ordered[y] = (ordered[y] || []).concat(position);
         return ordered;
-    }, []);
-
-const getOrderedPositionsCurried = R.curry(getOrderedPositions);
+    }, []));
 
 /**
  * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
  */
-const getOrderedPositionsY0Start = getOrderedPositionsCurried(getY0Start);
-
-/**
- * Get ordered positions as black IPosition[Y = 0 -> endRow][positions]
- */
-const getOrderedPositionsY0StartCurried = R.curry(getOrderedPositionsY0Start);
+const getOrderedPositionsY0Start = R.curry(getOrderedPositions(getY0Start));
 
 /**
  * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
  */
-const getOrderedPositionsY0End = getOrderedPositionsCurried(getY0End);
-
-/**
- * Get ordered positions as white IPosition[Y = endRow -> 0][positions]
- */
-const getOrderedPositionsY0EndCurried = R.curry(getOrderedPositionsY0End);
+const getOrderedPositionsY0End = R.curry(getOrderedPositions(getY0End));
 
 export {
     containsXY,
@@ -241,21 +221,15 @@ export {
     getPositionsWhereCanIGoFromArray,
 
     getToSearchOrder,
-    getToSearchOrderCurried,
 
     getOrderedPositions,
     getOrderedPositionsY0Start,
-    getOrderedPositionsY0StartCurried,
     getOrderedPositionsY0End,
-    getOrderedPositionsY0EndCurried,
-    getOrderedPositionsCurried,
 
     getXAndY,
 
     getY0Start,
-    getY0StartCurried,
     getY0End,
-    getY0EndCurried,
 
     hasSameXY,
     hasBlackPiece,
@@ -270,7 +244,6 @@ export {
 
     setICanGoHere,
     setPiece,
-    setPieceCurried,
     setPieceToBlack,
     setPieceToWhite
 };
