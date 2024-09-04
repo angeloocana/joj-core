@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> All code moved to new monorepo at https://github.com/angeloocana/JumpOverJump
+
 # joj-core
 
 [![Build Status](https://travis-ci.org/angeloocana/joj-core.svg)](https://travis-ci.org/angeloocana/joj-core)
